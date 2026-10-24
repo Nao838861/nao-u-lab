@@ -25,7 +25,7 @@ export const S01: React.FC = () => {
         <div style={{fontSize: 44, fontWeight: 900, color: C.red}}>ファミコンに「画面の回転」機能はない</div>
       </Card>
       <div style={{position: 'absolute', left: 1040, top: 760, opacity: useIn(k(3))}}>
-        <Tag color={C.amber}>Web版ランキング DRIFT 1位の走り（0:36.95）</Tag>
+        <Tag color={C.amber}>走行：keitoushi（Web版ランキング DRIFT 1位・0:36.95）</Tag>
       </div>
     </Bg>
   );
@@ -143,7 +143,7 @@ export const S04: React.FC = () => {
           <Txt x={1300} y={380} size={60}>× 128</Txt>
         </div>
         <Bar x={880} y={640} len={680} color={C.red} label="そのまま持つと" value="約27.6MB" o={ramp(f, c[2] + 30, c[2] + 44)} p={ramp(f, c[2] + 30, c[2] + 70)} />
-        <Bar x={880} y={770} len={680 / 27.6} color={C.green} label="ファミコンで最大の市販ソフト" value="1MB" o={ramp(f, c[3], c[3] + 14)} />
+        <Bar x={880} y={770} len={680 / 27.6 * 2} color={C.green} label="当時のファミコンで扱える最大のROM" value="2MB" o={ramp(f, c[3], c[3] + 14)} />
       </div>
       <div style={{opacity: ramp(f, c[4] - 4, c[4] + 12)}}>
         <div style={{position: 'absolute', left: 100, top: 140, width: dd.w * zoom, height: dd.h * zoom, borderRadius: 10, overflow: 'hidden'}}>
@@ -159,14 +159,14 @@ export const S04: React.FC = () => {
           <div style={{fontSize: 48, fontWeight: 900}}>172万マス → <span style={{color: C.cyan}}>約6万種類</span></div>
         </Card>
         <Card x={860} y={480} w={960} color={C.amber} o={ramp(f, c[6], c[6] + 14)}>
-          <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>キャラクターROM 1MB（65,536枚ぶんの枠）</div>
+          <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>キャラクターROM 1MB（当時のファミコンで扱える最大・65,536枚ぶんの枠）</div>
           <div style={{height: 50, background: '#1b2643', borderRadius: 8, marginTop: 14, overflow: 'hidden'}}>
             <div style={{width: `${95 * ramp(f, c[6] + 6, c[6] + 50)}%`, height: '100%', background: C.amber}} />
           </div>
           <div style={{fontSize: 34, fontWeight: 900, color: C.amber, marginTop: 10}}>約95%が使用済み</div>
         </Card>
         <Card x={860} y={720} w={960} color={C.violet} o={ramp(f, c[7], c[7] + 14)}>
-          <div style={{fontSize: 44, fontWeight: 900}}>ROM 全体 <span style={{color: C.violet}}>2MB</span>　＝ 市販最大ソフトの2倍</div>
+          <div style={{fontSize: 40, fontWeight: 900}}>ROM 全体 <span style={{color: C.violet}}>2MB</span>　＝ 当時のファミコンで扱える最大</div>
         </Card>
       </div>
     </Bg>

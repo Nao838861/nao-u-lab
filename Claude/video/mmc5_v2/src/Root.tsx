@@ -2,9 +2,10 @@ import React from 'react';
 import {AbsoluteFill, Audio, Composition, Sequence, staticFile} from 'remotion';
 import {FONT, FPS, H, W, Subtitle, sceneFrames, sceneOrder, sceneInfo} from './common';
 import {S01, S02, S03, S04, S05} from './scenesA';
-import {S06, S07, S08, S09, S10} from './scenesB';
+import {S06, S07, S08} from './scenesB';
+import {S09, S10, S11, S12} from './scenesC';
 
-const SCENES: Record<string, React.FC> = {S01, S02, S03, S04, S05, S06, S07, S08, S09, S10};
+const SCENES: Record<string, React.FC> = {S01, S02, S03, S04, S05, S06, S07, S08, S09, S10, S11, S12};
 const LEAD = 0.5;
 
 const Full: React.FC<{only?: string}> = ({only}) => {

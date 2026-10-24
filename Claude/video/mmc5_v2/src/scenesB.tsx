@@ -1,7 +1,7 @@
 import React from 'react';
 import {Img, staticFile, useCurrentFrame} from 'remotion';
 import {Bg, C, SceneTitle, Tag, cueOf, useIn} from './common';
-import {Big, Card, D, G, Grid, MONO, Nes, Pic, Txt, at, fmt, idx, pad3, ramp} from './parts';
+import {Big, Card, D, Grid, MONO, Nes, Pic, Txt, at, fmt, idx, pad3, ramp} from './parts';
 
 const K = (id: string) => (i: number) => cueOf(id, i);
 
@@ -211,60 +211,6 @@ export const S08: React.FC = () => {
         <Txt x={980} y={340} size={44} color={C.violet}>● 曲がり切れないと当たる（3本）</Txt>
         <Txt x={980} y={460} size={34} color={C.sub} w={820}>ぶつかると爆発して、ゲームオーバー</Txt>
       </div>
-    </Bg>
-  );
-};
-
-// ---------------- S09 右の4つの円 ----------------
-const Wheel: React.FC<{x: number; y: number; cap: number; lon: number; lat: number; over: number; label: string}> = ({x, y, cap, lon, lat, over, label}) => {
-  const r = 20 + cap * 1.25;
-  const col = over ? C.red : C.text;
-  const dx = Math.max(-r * 1.3, Math.min(r * 1.3, lat * 1.1)), dy = Math.max(-r * 1.3, Math.min(r * 1.3, -lon * 1.1));
-  return (
-    <div style={{position: 'absolute', left: x, top: y}}>
-      <div style={{position: 'absolute', left: -r, top: -r, width: r * 2, height: r * 2, borderRadius: '50%', border: `6px solid ${col}`, boxShadow: over ? `0 0 26px ${C.red}` : undefined}} />
-      <div style={{position: 'absolute', left: dx - 13, top: dy - 13, width: 26, height: 26, borderRadius: 13, background: col}} />
-      <div style={{position: 'absolute', left: -100, top: 160, width: 200, textAlign: 'center', fontSize: 30, fontWeight: 800, color: C.sub}}>{label}</div>
-    </div>
-  );
-};
-export const S09: React.FC = () => {
-  const f = useCurrentFrame(), k = K('S09');
-  const from = 2300, i = from + f;
-  const w = (n: number) => ({cap: at(G.cap, i)[n], lon: at(G.lon, i)[n], lat: at(G.lat, i)[n], over: at(G.over, i)[n]});
-  const s = 760 / 256;
-  return (
-    <Bg>
-      <SceneTitle label="右の4つの円" />
-      <Nes src="grip1" from={from} x={60} y={130} w={760}>
-        <div style={{position: 'absolute', left: 160 * s, top: 120 * s, width: 80 * s, height: 60 * s, border: `4px solid ${C.amber}`, borderRadius: 10, opacity: useIn(k(0))}} />
-      </Nes>
-      <div style={{opacity: useIn(k(1))}}>
-        <Wheel x={1120} y={350} {...w(0)} label="左前" />
-        <Wheel x={1560} y={350} {...w(1)} label="右前" />
-        <Wheel x={1120} y={690} {...w(2)} label="左後" />
-        <Wheel x={1560} y={690} {...w(3)} label="右後" />
-        <Txt x={880} y={100} size={30} color={C.sub} w={960} align="center">{'円の大きさ＝出せる力の限界（重さに比例）\n点＝タイヤに求められている力'}</Txt>
-      </div>
-      <div style={{position: 'absolute', left: 60, top: 860, opacity: useIn(k(2))}}>
-        <Tag color={C.amber}>GRIP 1位の走り（Nao_u 0:57.38）・毎秒60回の計算をそのまま表示</Tag>
-      </div>
-    </Bg>
-  );
-};
-
-// ---------------- S10 まとめ ----------------
-export const S10: React.FC = () => {
-  const f = useCurrentFrame(), k = K('S10');
-  const from = 1060;
-  const items = ['回さない。', '128枚、描き溜める。', '黒い帯の時間に、毎秒60回書き込む。', '2MBのROMと、1ラインずつ削り出した時間。'];
-  return (
-    <Bg>
-      <Nes src="drift1" from={from} x={70} y={40} w={900} volume={0.4} />
-      {items.map((s, n) => (
-        <Txt key={n} x={1010} y={140 + n * 150} size={n === 3 ? 40 : 50} w={880} color={n === 3 ? C.amber : C.text} o={useIn(k(n))}>{s}</Txt>
-      ))}
-      <Txt x={1030} y={800} size={30} color={C.sub} o={useIn(k(4))}>MMC5 RACING</Txt>
     </Bg>
   );
 };
