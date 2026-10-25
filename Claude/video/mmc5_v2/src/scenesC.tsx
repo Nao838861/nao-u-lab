@@ -125,10 +125,10 @@ export const S10: React.FC = () => {
         <Nes src="drift1" from={300} loop={1880} x={600} y={160} w={500} />
         <Txt x={60} y={650} size={34} color={C.green} w={520}>{'GRIP：補助なし\n計算だけで走る'}</Txt>
         <Txt x={600} y={650} size={34} color={C.amber} w={520}>{'DRIFT：後輪を\n滑らせやすくする補正'}</Txt>
-        <Card x={1150} y={200} w={720} color={C.violet} o={ramp(f, c[4], c[4] + 16)}>
-          <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>32ビット機の時代に登場した</div>
-          <div style={{fontSize: 46, fontWeight: 900, lineHeight: 1.35}}>シミュレーション志向の<br />車の挙動を</div>
-          <div style={{fontSize: 56, fontWeight: 900, color: C.violet, marginTop: 10}}>8ビットのファミコンで</div>
+        <Card x={1130} y={220} w={750} color={C.violet} o={ramp(f, c[4], c[4] + 16)} style={{padding: '30px 34px'}}>
+          <div style={{fontSize: 30, color: C.sub, fontWeight: 700, whiteSpace: 'nowrap'}}>32ビット機の時代に登場した</div>
+          <div style={{fontSize: 40, fontWeight: 900, whiteSpace: 'nowrap', marginTop: 8}}>シミュレーション志向の車の挙動を</div>
+          <div style={{fontSize: 64, fontWeight: 900, color: C.violet, whiteSpace: 'nowrap', marginTop: 18, lineHeight: 1.1}}>8ビットのファミコンで</div>
         </Card>
       </div>
     </Bg>
