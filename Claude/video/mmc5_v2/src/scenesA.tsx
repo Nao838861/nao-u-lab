@@ -22,9 +22,9 @@ export const S01: React.FC = () => {
         <div style={{fontSize: 28, color: C.sub, fontWeight: 700, marginTop: 10}}>画面の更新：毎秒60コマ・取りこぼし 0</div>
       </Card>
       <Card x={1040} y={600} w={800} color={C.red} o={useIn(k(2))}>
-        <div style={{fontSize: 44, fontWeight: 900, color: C.red}}>ファミコンに「画面の回転」機能はない</div>
+        <div style={{fontSize: 38, fontWeight: 900, color: C.red, whiteSpace: 'nowrap'}}>ファミコンに「画面の回転」機能はない</div>
       </Card>
-      <div style={{position: 'absolute', left: 1040, top: 760, opacity: useIn(k(3))}}>
+      <div style={{position: 'absolute', left: 1040, top: 730, opacity: useIn(k(3))}}>
         <Tag color={C.amber}>走行：keitoushi（Web版ランキング DRIFT 1位・0:36.95）</Tag>
       </div>
     </Bg>

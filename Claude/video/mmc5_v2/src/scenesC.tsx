@@ -127,7 +127,7 @@ export const S10: React.FC = () => {
         <Txt x={600} y={650} size={34} color={C.amber} w={520}>{'DRIFT：後輪を\n滑らせやすくする補正'}</Txt>
         <Card x={1150} y={200} w={720} color={C.violet} o={ramp(f, c[4], c[4] + 16)}>
           <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>32ビット機の時代に登場した</div>
-          <div style={{fontSize: 46, fontWeight: 900}}>シミュレーション志向の車の挙動を</div>
+          <div style={{fontSize: 46, fontWeight: 900, lineHeight: 1.35}}>シミュレーション志向の<br />車の挙動を</div>
           <div style={{fontSize: 56, fontWeight: 900, color: C.violet, marginTop: 10}}>8ビットのファミコンで</div>
         </Card>
       </div>
