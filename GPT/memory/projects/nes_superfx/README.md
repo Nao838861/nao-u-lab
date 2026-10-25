@@ -1,5 +1,7 @@
 # N8 Pro GSUマッパーのエミュレーター入口
 
+敵車対応・時間停止修正版 `a8d2a2d` のPC起動は `D:\HomeBrew\FxRacing\play_latest.cmd`。専用コアを追加し、両モードでゲーム内時計60秒超・敵車状態更新・エラーなしを確認。[取得元と検証](20261026_fx_racing_a8d2a2d.md)、[起動・ビルド・機能モデルの限界](../../../projects/nes_superfx/FX_RACING_PC.md)。下記v005は以前の試作版。
+
 2026年10月14日。ユーザーの「別スレッドのファミコン＋SuperFX2マッパーに先行してエミュレーターを用意する」依頼で作成。
 
 - 実装・起動・再ビルド・限界：[projects/nes_superfx/README.md](../../../projects/nes_superfx/README.md)

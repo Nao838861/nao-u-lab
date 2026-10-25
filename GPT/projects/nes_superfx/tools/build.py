@@ -13,6 +13,7 @@ from prepare import ROOT, SOURCE, LOCK, OUT, run, replace
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--fetch',action='store_true')
+    parser.add_argument('--fx-racing-pc',action='store_true',help='2026-10-25実機ROM用のPC機能モデルを追加')
     args=parser.parse_args()
     run(sys.executable,str(ROOT/'tools/prepare.py'),*(['--fetch'] if args.fetch else []))
     host=ROOT/'.cache/Mesen2_host'
@@ -48,6 +49,13 @@ def main():
             }
             return new NROM();
         }''')
+    if args.fx_racing_pc:
+        factory=factory.replace('#include <cstdlib>', '#include <cstdlib>\n#include "NES/Mappers/Homebrew/NesFx/NesFxRacingPc.h"')
+        factory=factory.replace('            if(selected && std::string(selected) == "n8pro-racing-gsu") {', '''            if(selected && std::string(selected) == "fx-racing-pc-20261025") {
+                if(romData.PrgRom.size()!=1048576 || romData.ChrRom.size()!=131072) return nullptr;
+                return new NesFxRacingPc();
+            }
+            if(selected && std::string(selected) == "n8pro-racing-gsu") {''')
     (host/factory_rel).write_text(factory,encoding='utf-8')
     palette_source=(SOURCE/'UI/Config/NesConfig.cs').read_text(encoding='utf-8-sig')
     palette=re.search(r'UserPalette.*?new UInt32\[64\] \{([^}]+)\}',palette_source)[1]
@@ -72,6 +80,9 @@ def main():
     dest.mkdir(parents=True,exist_ok=True)
     for source in (ROOT/'src/NesSuperFx.h',ROOT/'src/Board.hpp',ROOT/'src/NesBitmapFx.h',ROOT/'src/NesRacingFx.h',ROOT/'src/BitmapBoard.hpp',ROOT/'src/Mode7Ground.hpp',OUT/'NesFxGsu.hpp'):
         shutil.copy2(source,dest/source.name)
+    if args.fx_racing_pc:
+        for name in ('NesFxRacingPc.h','FxRacingBoard.hpp'):
+            shutil.copy2(ROOT/'src'/name,dest/name)
     # Full source diff is retained as reproducible evidence alongside the DLL.
     build=ROOT/'build'
     build.mkdir(exist_ok=True)
@@ -88,7 +99,7 @@ def main():
         print((build/'mesen_build.log').read_text(encoding='utf-8')[-14000:])
         raise SystemExit(result.returncode)
     dll=host/'bin/win-x64/Release/MesenCore.dll'
-    runtime=ROOT/'runtime'
+    runtime=ROOT/('runtime_fx_racing_pc' if args.fx_racing_pc else 'runtime')
     runtime.mkdir(exist_ok=True)
     shutil.copy2(dll,runtime/dll.name)
     shutil.copy2(SOURCE/'LICENSE',runtime/'Mesen-LICENSE.txt')

@@ -1,0 +1,13 @@
+{
+  "rom_commit": "a8d2a2d01fefc39665f01d22b80c80207ce088f7",
+  "rom_sha256": "b893f680e22fbd38b5aa47516bc7aef3564fb8e292b0403ab38aa33cba3b74dc",
+  "files": {
+    "src/FxRacingBoard.hpp": "895eca0954b6da9b2f76fe720fb5cc0b7e4e81462318b6510a1a9ffed82b4f55",
+    "src/NesFxRacingPc.h": "cfc3c914929e6b5555fcb232cf04a927464ef22db13bae0b611247fb0f362356",
+    "src/Mode7Ground.hpp": "804c23807d84da6d1f1a8ad498cf8c338cafc807996463d130aeb1e68684716d",
+    "build/generated/NesFxGsu.hpp": "7018556da6e6d3a98fa0de0a3d18ca09e6113a46ba95c12afd0ee595a1c2c6c0",
+    "runtime_fx_racing_pc/MesenCore.dll": "52d82f9032e349c8c413198eb552d99b7251d4794c5bea405eabdedb2b210dbd"
+  },
+  "ram_contract": "ctest racing_pc_contract: pass",
+  "scope": "PC functional adapter; not FPGA timing equivalence"
+}

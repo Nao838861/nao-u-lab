@@ -16,4 +16,14 @@
 
 配布には対応PC用Mesenコアが含まれていない。開発テストは`continuous-committed-idle-mesen/MesenCore.dll`と`n8pro-racing-d10-format-probe`を参照するが、そのDLLと完全なビルド依存は公開ツリーに見当たらない。旧v005用ランチャーは別形式のROMサイズ・マッパーを前提としており、そのまま流用しない。
 
-このPCのシリアルポートはCOM3/4/7/8のBluetoothリンクのみで、N8 Proは検出されなかった。旧版Mesenを新版起動済みと扱わない。ユーザーにPCかN8 Pro実機かを確認中。新版の起動・実プレイは未実施。
+このPCのシリアルポートはCOM3/4/7/8のBluetoothリンクのみで、N8 Proは検出されなかった。
+
+## PC用コアを実装して起動
+
+ユーザーの「PCで動かしたい」を受け、公開RTLを参照して専用Mesenの機能モデルを追加した。入口は [FX_RACING_PC.md](../../../projects/nes_superfx/FX_RACING_PC.md)。配布ROMは無変更。`NesFxRacingPc.h`・`FxRacingBoard.hpp`で実機版のRAM、画像保持、タイトル／HUD、地面合成へ対応する。
+
+- 起動：`D:\HomeBrew\FxRacing\play_latest.cmd`、または `projects/nes_superfx/run_fx_racing_pc.cmd`。
+- 専用実行先：`projects/nes_superfx/runtime_fx_racing_pc`。
+- 両モードで4500フレーム、ゲーム内時計3689tick、敵車状態の更新、表示世代1934、GSU／DSPエラーなしを確認。レース中は無アクセル。RAM・範囲フィルの単体試験も成功。
+- 通常UIを起動して新版タイトルを確認し、前面に表示した。
+- PSRAM・バス調停・地面DSPの時間は近似で、実機の無進行監視や外部停止は未再現。実機速度・5周完走・全画素一致の保証には使わない。

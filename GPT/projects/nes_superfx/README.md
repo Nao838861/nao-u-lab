@@ -1,6 +1,8 @@
 # N8 Pro GSUマッパー用エミュレーター
 
-走行版の標準は[Mode7地面＋SuperFXポリゴンのv004](demos/racing/v004/README.md)。原版の640×640地図を行アフィン変換し、FXの色0を抜いて背景を画素単位で残す。専用ランタイムは `runtime_mode7`。従来の[全ポリゴン版v003](demos/racing/v003/README.md)は `--version 003` で起動できる。
+敵車対応・時間停止修正版 `a8d2a2d` のPC起動は [run_fx_racing_pc.cmd](run_fx_racing_pc.cmd)。このPCでは `D:\HomeBrew\FxRacing\play_latest.cmd` からも起動できる。[対応ROM、操作、再ビルド、検証範囲](FX_RACING_PC.md)。専用ランタイムは `runtime_fx_racing_pc`。
+
+以前の走行試作は `run_racing_3d.cmd`（v005、`runtime_mode7`）。[Mode7地面＋SuperFXポリゴンのv004](demos/racing/v004/README.md)を継承し、原版の640×640地図を行アフィン変換し、FXの色0を抜いて背景を画素単位で残す。従来の[全ポリゴン版v003](demos/racing/v003/README.md)は `--version 003` で起動できる。
 
 2026年10月14日。無変更診断ROMの緑背景・結果0に加え、**GSU描画RAMのPPU直接表示、256×240の全画面、面塗り立方体の30fps回転、サイズ別個数ベンチマークまで実装した。** NES本体は固定版Mesen 2.1.1、GSUは同版の命令・キャッシュ・描画実装を分離して接続している。現行回路のABI1と、エミュレーターで先行実装した提案ABI2を明示選択する。
 
