@@ -2,13 +2,13 @@
 import json
 import os
 import subprocess
-from launch_fx_racing_pc import ROOT, DEFAULT_ROM, checked_rom, prepare_runtime
+from launch_fx_racing_pc import ROOT, BASE_ROM, checked_rom, prepare_runtime
 from native_lock import core_lock
 
 
 def main():
     runtime = prepare_runtime()
-    rom = checked_rom(DEFAULT_ROM)
+    rom = checked_rom(BASE_ROM)
     out = ROOT / 'build/fx_racing_select'
     out.mkdir(parents=True, exist_ok=True)
     script = out / 'test.lua'

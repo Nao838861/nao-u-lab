@@ -11,7 +11,9 @@ from native_lock import core_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 ROM_HASH = 'b893f680e22fbd38b5aa47516bc7aef3564fb8e292b0403ab38aa33cba3b74dc'
-DEFAULT_ROM = Path(r'D:\HomeBrew\FxRacing\releases\FX_Racing_3D_20261025\FX_RACING_3D.nes')
+SELECT_FIX_HASH = '1bfc54ca74800e207c2842b2a55fa0886b8f9c92a8e39b185d93bf23eb4da47f'
+BASE_ROM = Path(r'D:\HomeBrew\FxRacing\releases\FX_Racing_3D_20261025\FX_RACING_3D.nes')
+DEFAULT_ROM = ROOT / 'releases/FX_RACING_3D_SelectViewFix_20261026.nes'
 
 
 def prepare_runtime():
@@ -36,8 +38,8 @@ def prepare_runtime():
 
 def checked_rom(path):
     data = path.read_bytes()
-    if hashlib.sha256(data).hexdigest() != ROM_HASH:
-        raise ValueError('対象はa8d2a2dの敵車・時間停止修正版ROMです。SHA256が一致しません')
+    if hashlib.sha256(data).hexdigest() not in (ROM_HASH, SELECT_FIX_HASH):
+        raise ValueError('対象はa8d2a2dの配布ROMまたはSelect修正版です。SHA256が一致しません')
     return path.resolve()
 
 
@@ -50,13 +52,13 @@ def main():
     rom = checked_rom(args.rom)
     runtime = prepare_runtime()
     if args.install_launcher:
-        launcher = DEFAULT_ROM.parents[2] / 'play_latest.cmd'
+        launcher = BASE_ROM.parents[2] / 'play_latest.cmd'
         content = f'@echo off\ncd /d "{ROOT}"\npython tools\\launch_fx_racing_pc.py %*\n'
         if launcher.exists() and launcher.read_text(encoding='utf-8') != content:
             raise FileExistsError(f'既存の起動ファイルは置き換えません: {launcher}')
         launcher.write_text(content, encoding='utf-8')
         print(f'Launcher: {launcher}', flush=True)
-    print(f'ROM: {rom}\nSHA256: {ROM_HASH}\nPC機能モデル（実機タイミング未再現）', flush=True)
+    print(f'ROM: {rom}\nSHA256: {hashlib.sha256(rom.read_bytes()).hexdigest()}\nPC機能モデル（実機タイミング未再現）', flush=True)
     if not args.check_only:
         env = os.environ.copy()
         env['NES_GSU_MAPPER'] = 'fx-racing-pc-20261025'
