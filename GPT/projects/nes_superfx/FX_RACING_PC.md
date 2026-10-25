@@ -6,6 +6,8 @@
 
 このPCでは `D:\HomeBrew\FxRacing\play_latest.cmd` を実行する。実体は本ディレクトリの `run_fx_racing_pc.cmd`。タイトルで右Shiftがモード変更、Enterが開始、Zがアクセル、Xがブレーキ、左右矢印が操舵。
 
+現行PC版ではレース中のSelectによる視点変更は機能していない。無アクセルのレース中にSelectを4回押し、入力RAM `$0640` に値4が届くことと、各押下後も地面カメラ14バイトが同一であることを確認した。旧v005の4視点切替と混同しない。再検査は `python tools/verify_fx_racing_select.py`、結果は `results/fx_racing_pc_20261026/select_camera_result.json`。
+
 ROMは `D:\HomeBrew\FxRacing\releases\FX_Racing_3D_20261025\FX_RACING_3D.nes`。ランチャーはSHA256 `b893f680e22fbd38b5aa47516bc7aef3564fb8e292b0403ab38aa33cba3b74dc` を照合する。配布ROMのバイト変更や測定パッチは行わない。RBFはPCでは使用しない。
 
 ## ビルドと検証
