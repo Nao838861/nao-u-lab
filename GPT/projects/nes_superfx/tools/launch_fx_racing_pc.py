@@ -13,8 +13,9 @@ ROOT = Path(__file__).resolve().parents[1]
 ROM_HASH = 'b893f680e22fbd38b5aa47516bc7aef3564fb8e292b0403ab38aa33cba3b74dc'
 SELECT_FIX_HASH = '1bfc54ca74800e207c2842b2a55fa0886b8f9c92a8e39b185d93bf23eb4da47f'
 CAMERA_TUNE_HASH = '2f3ea730d58825f9aee76f029ae2b32b4201aa43593942d13c3df30b39921ff8'
+CAMERA_FRAMING_HASH = '053090050fc0a5554740219ef5ffdbe4e234cff413bebd65ecfeda1ec0e64da4'
 BASE_ROM = Path(r'D:\HomeBrew\FxRacing\releases\FX_Racing_3D_20261025\FX_RACING_3D.nes')
-DEFAULT_ROM = ROOT / 'releases/FX_RACING_3D_CameraTune_20261026.nes'
+DEFAULT_ROM = ROOT / 'releases/FX_RACING_3D_CameraFraming_20261026.nes'
 
 
 def prepare_runtime():
@@ -39,7 +40,7 @@ def prepare_runtime():
 
 def checked_rom(path):
     data = path.read_bytes()
-    if hashlib.sha256(data).hexdigest() not in (ROM_HASH, SELECT_FIX_HASH, CAMERA_TUNE_HASH):
+    if hashlib.sha256(data).hexdigest() not in (ROM_HASH, SELECT_FIX_HASH, CAMERA_TUNE_HASH, CAMERA_FRAMING_HASH):
         raise ValueError('対応するFxRacingの公開ROM・修正版とSHA256が一致しません')
     return path.resolve()
 
