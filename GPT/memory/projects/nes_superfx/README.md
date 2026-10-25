@@ -1,6 +1,6 @@
 # N8 Pro GSUマッパーのエミュレーター入口
 
-敵車対応・時間停止修正版 `a8d2a2d` を基にSelectの4視点切替を復旧したPC版の起動は `D:\HomeBrew\FxRacing\play_latest.cmd`。レース中の右Shiftで変更する。両モードで4視点循環・長押し時の単一切替・修正前後1667回のゲーム状態一致・時計60秒超を確認。[取得元と検証](20261026_fx_racing_a8d2a2d.md)、[起動・ビルド・機能モデルの限界](../../../projects/nes_superfx/FX_RACING_PC.md)。下記v005は以前の試作版。
+敵車対応・時間停止修正版 `a8d2a2d` を基にSelectの4視点切替を復旧したPC版の起動は `D:\HomeBrew\FxRacing\play_latest.cmd`。現在は②を低い近接追従、④を2D縮尺に近い真上へ調整したCameraTune版。レース中の右Shiftで変更する。両モードで4視点循環・長押し時の単一切替・修正前後1667回のゲーム状態一致を確認。[取得元と検証](20261026_fx_racing_a8d2a2d.md)、[起動・ビルド・機能モデルの限界](../../../projects/nes_superfx/FX_RACING_PC.md)。下記v005は以前の試作版。
 
 2026年10月14日。ユーザーの「別スレッドのファミコン＋SuperFX2マッパーに先行してエミュレーターを用意する」依頼で作成。
 

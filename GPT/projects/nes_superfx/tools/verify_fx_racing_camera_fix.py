@@ -8,8 +8,8 @@ from build_fx_racing_select_fix import SOURCE_ROM, OUTPUT
 from native_lock import core_lock
 
 
-def run_case(runtime, rom, mode, fixed):
-    out=ROOT/f'build/fx_racing_camera_fix/{"fixed" if fixed else "original"}_{mode}'
+def run_case(runtime, rom, mode, fixed, case_name=None):
+    out=ROOT/'build/fx_racing_camera_fix'/(case_name or f'{"fixed" if fixed else "original"}_{mode}')
     out.mkdir(parents=True,exist_ok=True)
     script=out/'test.lua'
     lua=r'''

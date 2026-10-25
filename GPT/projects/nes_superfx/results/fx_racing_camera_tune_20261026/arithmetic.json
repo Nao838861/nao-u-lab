@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "cases": 14364,
+  "coefficient_range": [
+    -256,
+    256
+  ],
+  "distance_factors": [
+    0,
+    13
+  ],
+  "paths": [
+    "foreground",
+    "NMI cache"
+  ]
+}
