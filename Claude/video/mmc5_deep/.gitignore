@@ -1,0 +1,7 @@
+node_modules
+rec/
+webcore/
+public/
+out/*.mp4
+out/stills/
+narration/raw/

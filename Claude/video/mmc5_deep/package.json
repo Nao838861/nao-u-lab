@@ -1,0 +1,10 @@
+{
+  "name": "mmc5racing-deep",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts MMC5Deep out/mmc5racing_deep.mp4 --codec=h264 --crf=18"
+  }
+}

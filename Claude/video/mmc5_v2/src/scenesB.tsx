@@ -158,8 +158,8 @@ export const S07: React.FC = () => {
         </Card>
         <Card x={1080} y={510} w={760} color={C.amber} o={ramp(f, c[7], c[7] + 14)}>
           <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>243万通りで最も重い場面</div>
-          <div style={{fontSize: 46, fontWeight: 900}}>7,347 / 7,449</div>
-          <div style={{fontSize: 46, fontWeight: 900, color: C.amber}}>残り 102サイクル</div>
+          <div style={{fontSize: 46, fontWeight: 900}}>7,308 / 7,449</div>
+          <div style={{fontSize: 46, fontWeight: 900, color: C.amber}}>残り 141サイクル</div>
         </Card>
       </div>
     </Bg>
