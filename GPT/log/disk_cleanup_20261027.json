@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-27",
+  "task": "DドライブにあるAI作業の再生成可能な出力を整理",
+  "disk": {
+    "free_bytes_before": 2697564160,
+    "free_bytes_after": 34442280960,
+    "observed_free_increase_bytes": 31744716800,
+    "note": "空き容量の実測差。削除ファイルの論理サイズとはNTFSの割り当て単位などにより異なる。"
+  },
+  "removed_files": 795370,
+  "removed_logical_bytes": 31230269094,
+  "deleted_categories": [
+    {
+      "category": "古い自動テストの連番PPM画像",
+      "files": 122866,
+      "logical_bytes": 22648504110,
+      "scope": "D:\\HomeBrew\\FamiBASIC_Turbo_*\\build、FamiBASIC_Turbo_main\\.tmp内のbuild、GPT\\.tmp\\fami_early_missile\\build",
+      "note": "数値付き連番で6枚以上ある系列を対象に、先頭・中央・末尾を保持。単独画像や小さい系列は残した。事前確認用の1枚も削除数に含む。"
+    },
+    {
+      "category": "古い自動テストの連番メモリダンプ",
+      "files": 672504,
+      "logical_bytes": 8581764984,
+      "root": "D:\\HomeBrew\\MonoSHSA1_4bpp60_20261010\\build\\sa1_game",
+      "filename_pattern": "^present[0-9]+_(background|fb|ground_h|meta|oam|palette|record|vram)\\.bin$",
+      "note": "6点以上ある系列を対象に、各系列の先頭・中央・末尾を保持。compiled_cache.binなどの生成バイナリやソース素材は対象外。"
+    }
+  ],
+  "cutoff_utc": "2026-10-20T00:00:00Z",
+  "preserved_representatives": 16293,
+  "retained": [
+    "ソースコード、未コミットの変更、記憶データ、元素材",
+    "配布用ファイル、ゲームの実行環境、起動中のMesen.exe",
+    "テストの集計JSON・CSV、解析ログ、系列ごとの代表画像・ダンプ",
+    "Git履歴、復旧バックアップ、ブラウザプロファイル、学習済みモデル"
+  ],
+  "verification": {
+    "planned_deleted_paths_remaining": 0,
+    "missing_preserved_representatives": 0,
+    "tracked_files_in_deletion_set": 0,
+    "frame_cleanup_repositories_with_unchanged_tracked_status": 17,
+    "memory_dump_repository_tracked_status_clean": true,
+    "active_emulator_executable_retained": true,
+    "audit_zip_crc_verified": true
+  },
+  "deferred_actions": [
+    {
+      "action": "Git復旧バックアップ内の古いtmp_pack_*の削除",
+      "root": "D:\\AI\\Nao_u_BOT\\.repo_repair_backups\\20260630_0100",
+      "files": 1203,
+      "logical_bytes": 27388800719,
+      "status": "not_deleted",
+      "reason": "自動承認審査で一括削除と絶対パスを明示した単体削除の両方が拒否された。返された理由はblocked by policyのみ。全1203ファイルの残存を確認。"
+    }
+  ],
+  "limitation": "古いテストの全フレーム画像や全時刻のメモリ状態を再解析する場合は、対応するキャプチャの再生成が必要。代表データと集計結果は保持。",
+  "audit_archive": {
+    "path": "C:\\Users\\owner\\AppData\\Local\\Temp\\codex_disk_cleanup_20261027\\cleanup_audit.zip",
+    "size_bytes": 8112333,
+    "sha256": "78a8585e1f61b8eba69a2ef397282af15a3cb8de57793646e7ba11c9e8e1bfc8",
+    "contents": "削除対象の全パス・サイズ、保持対象、事前状態、検証結果、容量調査。圧縮前の大きい一時マニフェストは検証済みZIPへ集約。"
+  }
+}
