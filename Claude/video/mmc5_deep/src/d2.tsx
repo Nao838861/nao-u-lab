@@ -1,7 +1,7 @@
 import React from 'react';
 import {Img, staticFile, useCurrentFrame} from 'remotion';
 import {Bg, C, SceneTitle, Tag, cueOf, useIn} from './common';
-import {Big, Box2, Card, Code, HArrow, MONO, Nes, Txt, fmt, ramp} from './parts';
+import {Big, Box2, Card, Code, Grid, HArrow, MONO, Nes, Txt, fmt, ramp} from './parts';
 import probe from './data/oam_probe.json';
 
 const K = (id: string) => (i: number) => cueOf(id, i);
@@ -28,8 +28,8 @@ export const B1: React.FC = () => {
   const c = [0, 1, 2, 3].map(k);
   return (
     <Bg>
-      <SceneTitle label="1-B　ここに至るまで：最初の形" />
-      <Big o={useIn(c[0]) * (1 - ramp(f, c[1] - 10, c[1]))} size={84}>1-B　ここに至るまで</Big>
+      <SceneTitle label="おまけ　ここに至るまで：最初の形" />
+      <Big o={useIn(c[0]) * (1 - ramp(f, c[1] - 10, c[1]))} size={84}>おまけ　ここに至るまで</Big>
       <div style={{opacity: ramp(f, c[1] - 4, c[1] + 12)}}>
         <Box2 x={80} y={170} w={300} h={130} color={C.amber} title="辞書" sub="PRG" />
         <HArrow x={390} y={235} w={200} color={C.amber} label="メインが展開" />
@@ -54,7 +54,7 @@ export const B2: React.FC = () => {
   const c = [0, 1, 2].map(k);
   return (
     <Bg>
-      <SceneTitle label="1-B　バッファをやめて直接送る" />
+      <SceneTitle label="おまけ　バッファをやめて直接送る" />
       <div style={{opacity: show(f, c[0], c[2])}}>
         <Box2 x={80} y={170} w={300} h={130} color={C.amber} title="辞書" sub="PRG" />
         <HArrow x={390} y={235} w={760} color={C.green} label="1回だけ読んで直行" />
@@ -93,7 +93,7 @@ export const B3: React.FC = () => {
   const lit = f < c[1] ? 3 : 4;
   return (
     <Bg>
-      <SceneTitle label="1-B　転置と書き換え" />
+      <SceneTitle label="おまけ　転置と書き換え" />
       {stages.map(([s, t, col], i) => (
         <div key={i} style={{position: 'absolute', left: 80, top: 160 + i * 96, width: 1000, height: 80, borderRadius: 12, background: i <= lit ? `${col}22` : '#131b31',
           border: `3px solid ${i === lit ? col : i < lit ? `${col}88` : '#2c3b63'}`, display: 'flex', alignItems: 'center', gap: 24, padding: '0 24px', boxSizing: 'border-box', fontSize: 30, fontWeight: 800,
@@ -123,7 +123,7 @@ export const B4: React.FC = () => {
   const n = 70 * 36;
   return (
     <Bg>
-      <SceneTitle label="1-B　全数検査" />
+      <SceneTitle label="おまけ　全数検査" />
       <div style={{position: 'absolute', left: 80, top: 150, display: 'grid', gridTemplateColumns: 'repeat(70, 11px)', gap: 3, opacity: useIn(c[0])}}>
         {Array.from({length: n}).map((_, i) => <div key={i} style={{width: 11, height: 11, borderRadius: 2, background: i < ramp(f, c[0], c[0] + 120, 0, n) ? '#3fa9c7' : '#1a2440'}} />)}
       </div>
@@ -194,67 +194,91 @@ export const C1: React.FC = () => {
   );
 };
 
-// ---------------- C2 白くなるコースの外 ----------------
-export const C2: React.FC = () => {
-  const f = useCurrentFrame(), k = K('C2');
-  const c = [0, 1, 2].map(k);
+// ---------------- C3 fine X で揺れる分割 ----------------
+// 全画面（コースのスクロール）と、ミニマップの拡大を同時に見せる。x=195 がミニマップの正しい左端。
+const FULL: [number, number, number, number] = [0, 24, 256, 204];
+const MM: [number, number, number, number] = [168, 120, 72, 96];
+const MmInset: React.FC<{src: string; x: number; y: number; w: number}> = ({src, x, y, w}) => {
+  const s = w / MM[2];
   return (
-    <Bg>
-      <SceneTitle label="2　白くなるコースの外（修正前のROM）" color={C.red} />
-      <Nes src="white_pre" from={0} loop={300} x={80} y={150} w={620} />
-      <Nes src="white_fixed" from={0} loop={300} x={760} y={150} w={620} style={{opacity: ramp(f, c[2], c[2] + 14)}} />
-      <Txt x={80} y={740} size={30} color={C.red}>修正前（TitlePolish版）</Txt>
-      <Txt x={760} y={740} size={30} color={C.green} o={ramp(f, c[2], c[2] + 14)}>修正後</Txt>
-      <Card x={1420} y={160} w={440} color={C.amber} o={ramp(f, c[1], c[1] + 14)}>
-        <div style={{fontSize: 26, fontWeight: 800, lineHeight: 1.6}}>場外＝タイル番号0<br />向きの下位2bitが1〜3の組では<br /><span style={{color: C.amber}}>縦分割用CHRページの先頭<br />（ミニマップの白）</span>と重なる</div>
-      </Card>
-    </Bg>
+    <Nes src={src} from={0} loop={240} x={x} y={y} w={w} crop={MM}>
+      <div style={{position: 'absolute', left: (195 - MM[0]) * s - 2, top: 0, width: 4, height: MM[3] * s, background: C.amber, opacity: 0.9}} />
+    </Nes>
   );
 };
-
-// ---------------- C3 fine X で揺れる分割 ----------------
 export const C3: React.FC = () => {
   const f = useCurrentFrame(), k = K('C3');
   const c = [0, 1, 2].map(k);
-  const crop: [number, number, number, number] = [144, 150, 112, 75];
+  const pre = 1 - ramp(f, c[2] - 10, c[2] + 4), post = ramp(f, c[2] - 4, c[2] + 12);
   return (
     <Bg>
       <SceneTitle label="2　fine X で揺れる縦分割" />
-      <Nes src="shake_prefix" from={0} loop={240} x={80} y={160} w={800} crop={crop} />
-      <Txt x={80} y={710} size={30} color={C.red} w={860}>修正前：横に流すと 0〜7 ドット揺れる</Txt>
-      <div style={{opacity: ramp(f, c[2], c[2] + 14)}}>
-        <Nes src="shake_fixed" from={0} loop={240} x={980} y={160} w={800} crop={crop} />
-        <Txt x={980} y={710} size={30} color={C.green} w={860}>修正後：逆向きの8種類のCHRで相殺</Txt>
+      <div style={{opacity: pre}}>
+        <Nes src="shake_prefix" from={0} loop={240} x={60} y={120} w={880} crop={FULL} />
+        <Txt x={60} y={835} size={30} color={C.red} w={880}>修正前：コースが横に流れると、右の分割側も一緒に揺れる</Txt>
+        <MmInset src="shake_prefix" x={1040} y={120} w={520} />
+        <Txt x={1600} y={120} size={26} color={C.sub} w={300} mono>{'拡大\n\n線＝正しい左端\nx=195\n\n実測\n195 → 188\n→ 195 …\n（8ドット周期）'}</Txt>
       </div>
-      <Card x={980} y={160} w={800} color={C.amber} o={ramp(f, c[0] + 20, c[0] + 34) * (1 - ramp(f, c[2] - 10, c[2]))}>
-        <div style={{fontSize: 30, fontWeight: 800, lineHeight: 1.6}}>分割側も本体の fine X を共有する</div>
-        <div style={{fontSize: 26, color: C.sub, fontFamily: MONO, marginTop: 8}}>実測：ミニマップの左端 x = 195 → 188 → 195 …（8ドット周期）</div>
-      </Card>
+      <div style={{opacity: post}}>
+        <Nes src="shake_fixed" from={0} loop={240} x={60} y={130} w={760} crop={FULL} />
+        <Txt x={60} y={760} size={30} color={C.green} w={760}>修正後：コースは流れても、分割側は止まる</Txt>
+        <Txt x={900} y={130} size={32} w={960}>CHR を8種類：右へ 0〜7 ドットずらした絵</Txt>
+        {[0, 1, 2, 3, 4, 5, 6, 7].map((n) => {
+          const sc = 4.5, x = 900 + (n % 4) * 240, y = 210 + Math.floor(n / 4) * 260, o = ramp(f, c[2] + 20 + n * 8, c[2] + 34 + n * 8);
+          return (
+            <div key={n} style={{position: 'absolute', left: x, top: y, opacity: o}}>
+              <div style={{position: 'relative', width: 40 * sc, height: 32 * sc, background: '#000', borderRadius: 6, overflow: 'hidden', border: `2px solid ${C.line}`}}>
+                <Img src={staticFile(`gen/finex_v${n}.png`)} style={{width: 40 * sc, height: 32 * sc, imageRendering: 'pixelated'}} />
+                <Grid cell={8 * sc} color="rgba(63,224,255,.35)" />
+              </div>
+              <div style={{fontFamily: MONO, fontSize: 26, color: C.cyan, marginTop: 8}}>{`fine X = ${n} 用`}</div>
+            </div>
+          );
+        })}
+        <Txt x={900} y={720} size={30} w={960} o={ramp(f, c[2] + 110, c[2] + 124)}>そのフレームの fine X で選ぶ → 揺れが打ち消される</Txt>
+        <Txt x={900} y={775} size={22} color={C.sub} w={960} o={ramp(f, c[2] + 110, c[2] + 124)}>※ 修正後の画面の絵から作った図（枠＝8ドットのタイル）</Txt>
+      </div>
     </Bg>
   );
 };
 
 // ---------------- C4 境界の黒帯 ----------------
+// 先に外した映像（崩れ）を見せ、次に12枚の配置を全画面に重ねる。座標は実OAM（x=136, Y=31〜207）。
+const BAND = probe['300'].oam.map((o, i) => ({i, y: o[0], t: o[1], x: o[3]})).filter((o) => o.t === 233 && o.x === 136 && o.y < 240).sort((a, b) => a.y - b.y);
+const EDGE: [number, number, number, number] = [112, 60, 40, 72];
 export const C4: React.FC = () => {
   const f = useCurrentFrame(), k = K('C4');
   const c = [0, 1, 2].map(k);
-  const crop: [number, number, number, number] = [112, 70, 40, 84];
+  const sw = ramp(f, c[1] - 4, c[1] + 12);
+  const W0 = 880, s = W0 / FULL[2];
   return (
     <Bg>
       <SceneTitle label="2　境界を隠す黒帯スプライト" />
-      <Nes src="drift1" from={300} loop={1800} x={100} y={150} w={300} crop={crop} />
-      <Txt x={100} y={930 - 120} size={28} color={C.green}>黒帯あり（通常）</Txt>
-      <div style={{opacity: ramp(f, c[1] + 40, c[1] + 54)}}>
-        <Nes src="nomask" from={300} loop={1800} x={460} y={150} w={300} crop={crop} />
-        <Txt x={460} y={930 - 120} size={28} color={C.red}>黒帯を外した状態</Txt>
+      <div style={{position: 'absolute', left: 0, top: 0, width: 1920, height: 1080, opacity: 1 - sw}}>
+        <Nes src="nomask" from={300} loop={1800} x={60} y={120} w={W0} crop={FULL} />
+        <Nes src="nomask" from={300} loop={1800} x={1000} y={160} w={280} crop={EDGE} />
+        <Txt x={60} y={835} size={30} color={C.red} w={880}>黒帯なし：コースの右端に崩れたタイルの列がはみ出す</Txt>
       </div>
-      <Card x={940} y={150} w={900} color={C.cyan} o={ramp(f, c[1], c[1] + 14)}>
-        <div style={{fontSize: 30, fontWeight: 900}}>不透明な黒の 8×16 スプライト × 12枚</div>
-        <div style={{fontSize: 26, color: C.sub, marginTop: 6, fontFamily: MONO}}>x=136、タイル233、OAM 0,7,14,18,20,21,22,26,28,30,32,35</div>
+      <div style={{position: 'absolute', left: 0, top: 0, width: 1920, height: 1080, opacity: sw}}>
+        <Nes src="drift1" from={300} loop={1800} x={60} y={120} w={W0} crop={FULL}>
+          {BAND.map((b, j) => (
+            <div key={b.i} style={{position: 'absolute', left: (b.x - FULL[0]) * s, top: (b.y + 1 - FULL[1]) * s, width: 8 * s, height: 16 * s, boxSizing: 'border-box',
+              border: `3px solid ${C.cyan}`, background: 'rgba(63,224,255,.18)', opacity: ramp(f, c[1] + 10 + j * 6, c[1] + 20 + j * 6) * (1 - ramp(f, c[2] + 60, c[2] + 90) * 0.7)}}>
+              <div style={{position: 'absolute', left: 8 * s + 6, top: 4 * s, fontFamily: MONO, fontSize: 20, color: C.cyan, whiteSpace: 'nowrap'}}>{`OAM ${b.i}`}</div>
+            </div>
+          ))}
+        </Nes>
+        <Nes src="drift1" from={300} loop={1800} x={1000} y={160} w={280} crop={EDGE} />
+        <Txt x={60} y={835} size={30} color={C.green} w={880}>黒帯あり（通常）：8×16 の黒スプライト × 12枚</Txt>
+      </div>
+      <Txt x={1000} y={115} size={26} color={C.sub} w={280}>境目の拡大</Txt>
+      <Card x={1320} y={160} w={560} color={C.cyan} o={ramp(f, c[1], c[1] + 14)}>
+        <div style={{fontSize: 30, fontWeight: 900}}>不透明な黒の 8×16 × 12枚</div>
+        <div style={{fontSize: 24, color: C.sub, marginTop: 6, fontFamily: MONO}}>{'x=136、タイル233\nY=31〜207（16ドットおき）'}</div>
       </Card>
-      <Card x={940} y={340} w={900} color={C.amber} o={ramp(f, c[2], c[2] + 14)}>
-        <div style={{fontSize: 30, fontWeight: 900}}>若いOAM番号＝先に評価される</div>
-        <div style={{fontSize: 26, color: C.sub, marginTop: 6}}>1ライン8枚の制限で消えないように</div>
+      <Card x={1320} y={380} w={560} color={C.amber} o={ramp(f, c[2], c[2] + 14)}>
+        <div style={{fontSize: 30, fontWeight: 900}}>若いOAM番号＝先に評価</div>
+        <div style={{fontSize: 24, color: C.sub, marginTop: 6}}>1ライン8枚の制限で消えないように</div>
       </Card>
     </Bg>
   );

@@ -10,7 +10,7 @@ const K = (id: string) => (i: number) => cueOf(id, i);
 const show = (f: number, a: number, b?: number) => ramp(f, a - 4, a + 12) * (b === undefined ? 1 : 1 - ramp(f, b - 10, b));
 
 // ---------------- P00 前置き ----------------
-const CHAPTERS: [string, string][] = [['A1', '1-A　背景：今の仕組み'], ['B1', '1-B　背景：ここに至るまで'], ['C1', '2　縦分割とスプライト'], ['D1', '3　物理と最適化'], ['E1', '4　サウンド'], ['F1', '5　メモリと開発環境']];
+const CHAPTERS: [string, string][] = [['A1', '1　背景の表示と転送'], ['C1', '2　縦分割とスプライト'], ['D1', '3　物理'], ['E1', '4　サウンド'], ['F2', '5　開発環境'], ['A3', 'おまけ　細かい話']];
 const startOf = (id: string) => { let t = 0; for (const s of sceneOrder) { if (s === id) return t; t += sceneFrames(s); } return t; };
 const mmss = (fr: number) => { const s = Math.round(fr / FPS); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
 export const P00: React.FC = () => {
@@ -57,7 +57,7 @@ export const A1: React.FC = () => {
   const s = 640 / 256;
   return (
     <Bg>
-      <SceneTitle label="1-A　背景：今の仕組み" />
+      <SceneTitle label="1　背景：今の仕組み" />
       <Big o={useIn(c[0]) * (1 - ramp(f, c[1] - 10, c[1]))} size={84}>第1章　背景の表現と転送</Big>
       <div style={{opacity: ramp(f, c[1] - 4, c[1] + 12)}}>
         <Nes src="drift1" from={900} loop={1200} x={60} y={130} w={640}>
@@ -94,7 +94,7 @@ export const A2: React.FC = () => {
   const showDict = ramp(f, c[2], c[2] + 20);
   return (
     <Bg>
-      <SceneTitle label="1-A　地図と辞書" />
+      <SceneTitle label="1　地図と辞書" />
       <Pic a={0} x={70} y={130} scale={0.7} style={{borderRadius: 10, opacity: 1 - ramp(f, c[0] + 60, c[0] + 90) * 0.85}} />
       <div style={{position: 'absolute', left: 70, top: 130, width: 29 * cell, height: 29 * cell, opacity: ramp(f, c[0] + 60, c[0] + 90), display: 'grid', gridTemplateColumns: `repeat(29, ${cell}px)`}}>
         {g.flatMap((row, y) => row.split('').map((kk, x) => {
@@ -140,7 +140,7 @@ export const A3: React.FC = () => {
   const W = 900, rows = 32, cols = 64;
   return (
     <Bg>
-      <SceneTitle label="1-A　転置した辞書" />
+      <SceneTitle label="おまけ　転置した辞書" />
       <div style={{position: 'absolute', left: 80, top: 160, width: W, height: 640, opacity: useIn(c[0])}}>
         <Txt x={0} y={-40} size={26} color={C.sub} w={960}>辞書バンクを $8000 に出したときの配置（縦＝k、横＝i）</Txt>
         <div style={{position: 'absolute', left: 60, top: 10, width: W - 60, height: 620, display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gridTemplateRows: `repeat(${rows}, 1fr)`, gap: 1}}>
@@ -180,7 +180,7 @@ export const A4: React.FC = () => {
   });
   return (
     <Bg>
-      <SceneTitle label="1-A　毎フレーム書き換える転送の型" />
+      <SceneTitle label="おまけ　毎フレーム書き換える転送の型" />
       <Code x={60} y={130} w={980} size={25} o={useIn(c[0])} title={`WRAM の型（1ブロックの1列分、実際の機械語）`} lines={lines}
         patch={f >= c[2] ? [0, 1] : []} />
       <div style={{opacity: show(f, c[3], c[4])}}>
@@ -202,36 +202,39 @@ export const A4: React.FC = () => {
   );
 };
 
-// ---------------- A5 生成された準備処理 ----------------
-const PRG: [string, number, number, string][] = [['辞書', 0, 61, C.amber], ['地図', 61, 18, C.cyan], ['準備処理（生成コード）', 79, 13, C.violet], ['起動データ', 92, 1, '#5d6b8f'], ['準備処理', 93, 12, C.violet], ['投影・起動', 105, 3, '#5d6b8f'], ['音・結果', 108, 1, C.green], ['物理・ゲーム・UI・固定', 109, 19, C.red]];
-export const A5: React.FC = () => {
-  const f = useCurrentFrame(), k = K('A5');
-  const c = [0, 1, 2, 3, 4].map(k);
-  const a = T.address;
-  const lo = (n: number) => (parseInt(a, 16) + n).toString(16).toUpperCase();
+// ---------------- A6 転送のしくみ（概要。細部はおまけの A3・A4） ----------------
+export const A6: React.FC = () => {
+  const f = useCurrentFrame(), k = K('A6');
+  const c = [0, 1, 2].map(k);
   return (
     <Bg>
-      <SceneTitle label="1-A　準備処理も生成コード" />
-      <Code x={60} y={130} w={900} size={26} o={show(f, c[0], c[4])} color={C.violet} title="準備処理（Pythonが位相・行・列ごとに生成）の一部"
-        lines={[{s: 'LDA ($26),Y      ; 地図のセルを読む'}, {s: 'CMP #208 / BCS normal'}, {s: 'normal:'}, {s: 'LDA $34          ; 辞書バンク'},
-          {s: `STA $${lo(3)}        ; LDX のオペランド`, c: C.amber}, {s: `STX $${lo(1)}        ; LDY のオペランド`, c: C.amber}, {s: 'LDA #$A0         ; LDY の命令'}, {s: `STA $${a}`, c: C.amber},
-          {s: 'LDA $29 / CLC / ADC #4 / STA $29   ; サイクル精算', c: C.green}]} />
-      <Card x={1010} y={140} w={850} color={C.violet} o={show(f, c[1], c[4])}>
-        <div style={{fontSize: 30, fontWeight: 900}}>縦の位相4 × ブロック行7 × 列 に専用化</div>
-        <div style={{fontSize: 26, color: C.sub, marginTop: 6}}>PRG 25バンク分の 6502 コード</div>
-      </Card>
-      <Card x={1010} y={300} w={850} color={C.green} o={show(f, c[2], c[4])}>
-        <div style={{fontSize: 30, fontWeight: 900}}>書き換えながら、転送サイクルを精算</div>
-        <div style={{fontSize: 26, color: C.sub, marginTop: 6}}>ブロックの種類ごとの表から加算 → 予算と比較</div>
-      </Card>
-      <Card x={1010} y={460} w={850} color={C.red} o={show(f, c[3], c[4])}>
-        <div style={{fontSize: 30, fontWeight: 900}}>間に合わない → 前の画面を保持</div>
-        <div style={{fontSize: 26, color: C.sub, marginTop: 6}}>転送は始めたら止められない</div>
-      </Card>
-      <div style={{opacity: ramp(f, c[4] - 4, c[4] + 12)}}>
+      <SceneTitle label="1　転送のしくみ" />
+      <Box2 x={80} y={200} w={340} h={150} color={C.amber} title="地図＋辞書" sub="PRG" o={useIn(c[0])} />
+      <HArrow x={430} y={275} w={1000} color={C.cyan} label="毎フレーム 432タイル" o={useIn(c[0] + 10)} />
+      <Box2 x={1440} y={200} w={400} h={150} color={C.cyan} title="PPU / ExRAM" o={useIn(c[0] + 16)} />
+      <Box2 x={560} y={470} w={400} h={170} color={C.violet} title="準備処理" sub="地図を読んで命令を書き換える" fs={34} o={useIn(c[1])} />
+      <HArrow x={970} y={555} w={150} color={C.violet} o={useIn(c[1] + 10)} />
+      <Box2 x={1130} y={470} w={460} h={170} color={C.green} title="WRAMの転送の型" sub="ループのない命令列" fs={34} o={useIn(c[1] + 16)} />
+      <Txt x={1130} y={380} w={460} size={26} color={C.green} align="center" o={useIn(c[1] + 60)}>画面を消している間に一気に流れる ↑</Txt>
+      <div style={{position: 'absolute', left: 560, top: 680, display: 'flex', gap: 16, opacity: useIn(c[2])}}>
+        <Tag color={C.violet}>準備処理も Python が生成した 6502 コード</Tag>
+        <Tag color={C.sub}>細部は最後のおまけで</Tag>
+      </div>
+    </Bg>
+  );
+};
+
+// ---------------- A5 PRGの内訳 ----------------
+const PRG: [string, number, number, string][] = [['辞書', 0, 61, C.amber], ['地図', 61, 18, C.cyan], ['準備処理（生成コード）', 79, 13, C.violet], ['起動データ', 92, 1, '#5d6b8f'], ['準備処理', 93, 12, C.violet], ['投影・起動', 105, 3, '#5d6b8f'], ['音・結果', 108, 1, C.green], ['物理・ゲーム・UI・固定', 109, 19, C.red]];
+export const A5: React.FC = () => {
+  const f = useCurrentFrame(), c0 = K('A5')(0);
+  return (
+    <Bg>
+      <SceneTitle label="1　PRGの内訳" />
+      <div style={{opacity: ramp(f, c0 - 4, c0 + 12)}}>
         <Txt x={60} y={170} size={40}>PRG 1MB（8KB × 128バンク）の内訳</Txt>
         <div style={{position: 'absolute', left: 60, top: 260, width: 1800, height: 120, display: 'flex', borderRadius: 10, overflow: 'hidden'}}>
-          {PRG.map(([n, s0, len, col], i) => <div key={i} style={{width: (len / 128) * 1800 * ramp(f, c[4] + i * 6, c[4] + i * 6 + 20), background: col, borderRight: '2px solid #0a0f1e'}} />)}
+          {PRG.map(([n, s0, len, col], i) => <div key={i} style={{width: (len / 128) * 1800 * ramp(f, c0 + i * 6, c0 + i * 6 + 20), background: col, borderRight: '2px solid #0a0f1e'}} />)}
         </div>
         {[['辞書', 61, C.amber], ['地図', 18, C.cyan], ['準備処理（生成コード）', 25, C.violet], ['物理・ゲーム・UI・音・固定など', 24, C.red]].map(([n, len, col], i) => (
           <Txt key={i} x={60 + (i % 2) * 900} y={420 + Math.floor(i / 2) * 80} size={38} color={col as string}>{`■ ${n}　${len}バンク`}</Txt>

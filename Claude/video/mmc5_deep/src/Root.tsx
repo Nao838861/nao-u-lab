@@ -1,12 +1,12 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Composition, Sequence, staticFile} from 'remotion';
 import {FONT, FPS, H, W, Subtitle, sceneFrames, sceneOrder, sceneInfo} from './common';
-import {P00, A1, A2, A3, A4, A5} from './d1';
-import {B1, B2, B3, B4, C1, C2, C3, C4} from './d2';
-import {C5, C6, C7, C8, D1, D2, D3, D4, D5} from './d3';
+import {P00, A1, A2, A3, A4, A5, A6} from './d1';
+import {B1, B2, B3, B4, C1, C3, C4} from './d2';
+import {C6, C7, D1, D2, D3, D4, D5} from './d3';
 import {E1, E2, E3, F1, F2, F3, Z9} from './d4';
 
-const SCENES: Record<string, React.FC> = {P00, A1, A2, A3, A4, A5, B1, B2, B3, B4, C1, C2, C3, C4, C5, C6, C7, C8, D1, D2, D3, D4, D5, E1, E2, E3, F1, F2, F3, Z9};
+const SCENES: Record<string, React.FC> = {P00, A1, A2, A3, A4, A5, A6, B1, B2, B3, B4, C1, C3, C4, C6, C7, D1, D2, D3, D4, D5, E1, E2, E3, F1, F2, F3, Z9};
 const LEAD = 0.5;
 const QUIET = new Set(['E1', 'E3', 'Z9']); // 音を聴かせる場面ではBGMを下げる
 

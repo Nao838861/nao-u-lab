@@ -7,34 +7,6 @@ import probe from './data/oam_probe.json';
 const K = (id: string) => (i: number) => cueOf(id, i);
 const show = (f: number, a: number, b?: number) => ramp(f, a - 4, a + 12) * (b === undefined ? 1 : 1 - ramp(f, b - 10, b));
 
-// ---------------- C5 実機でだけ欠けた黒帯 ----------------
-export const C5: React.FC = () => {
-  const f = useCurrentFrame(), k = K('C5');
-  const c = [0, 1, 2, 3].map(k);
-  const exps = ['白帯に差し替え', '黒パレットで表示', 'OAMの位置・順番', 'DMAの時期', '停止を216ドット遅らせる'];
-  return (
-    <Bg>
-      <SceneTitle label="2　実機でだけ欠けた黒帯" color={C.red} />
-      <div style={{position: 'absolute', left: 80, top: 150, opacity: useIn(c[0])}}>
-        <Img src={staticFile('gen/central-stop-phase-camera.png')} style={{width: 720, height: 690, imageRendering: 'auto', borderRadius: 10}} />
-      </div>
-      <Txt x={80} y={850} size={24} color={C.sub} o={useIn(c[0])}>実機のWebカメラ録画からの切り抜き（左：早い停止、右：スプライト取得後の停止）</Txt>
-      <div style={{position: 'absolute', left: 880, top: 160, display: 'flex', flexDirection: 'column', gap: 14}}>
-        {exps.map((t, i) => <div key={t} style={{opacity: ramp(f, c[1] + i * 18, c[1] + i * 18 + 12)}}><Tag color={i === 4 ? C.amber : C.sub}>{`${i + 1}. ${t}`}</Tag></div>)}
-      </div>
-      <Card x={880} y={500} w={980} color={C.amber} o={ramp(f, c[2], c[2] + 14)}>
-        <div style={{display: 'flex', gap: 30, fontSize: 30, fontWeight: 800}}>
-          <div><span style={{color: C.red}}>早い停止</span>：2回とも再発</div>
-          <div><span style={{color: C.green}}>取得後に停止</span>：2回・計1,652時点で再発なし</div>
-        </div>
-      </Card>
-      <Card x={880} y={660} w={980} color={C.line} o={ramp(f, c[3], c[3] + 14)}>
-        <div style={{fontSize: 28, fontWeight: 800}}>停止の位相が引き金。回路内の原因（OAM破損・取得状態など）は未確定</div>
-      </Card>
-    </Bg>
-  );
-};
-
 // ---------------- C6 スプライトの割り当て ----------------
 type OP = {oam: number[][]};
 const P600 = (probe as Record<string, OP>)['600'];
@@ -52,7 +24,7 @@ const ROLE = (s: number): [string, string] => {
 };
 export const C6: React.FC = () => {
   const f = useCurrentFrame(), k = K('C6');
-  const c = [0, 1, 2].map(k);
+  const c = [0, 1, 2, 3].map(k);
   const dot = Math.floor(f / 6) % 15;
   return (
     <Bg>
@@ -63,16 +35,22 @@ export const C6: React.FC = () => {
             <span style={{fontFamily: MONO, color: C.sub}}>{s}</span><span style={{color: col}}>{n}</span>
           </div>); })}
       </div>
-      <Txt x={80} y={790} size={24} color={C.sub} o={useIn(c[0])}>DRIFT 1位の走りのあるコマで OAM バッファ（$0200〜）を読んだもの。塗りつぶし＝そのコマで表示中</Txt>
-      <Card x={1020} y={160} w={840} color={C.green} o={ramp(f, c[1], c[1] + 14)}>
+      <Txt x={80} y={790} size={24} color={C.sub} w={890} o={useIn(c[0])}>DRIFT 1位の走りのあるコマで OAM バッファ（$0200〜）を読んだもの。塗りつぶし＝そのコマで表示中</Txt>
+      <Card x={1020} y={140} w={840} color={C.green} o={ramp(f, c[1], c[1] + 14)}>
         <div style={{fontSize: 30, fontWeight: 900}}>摩擦円の点：15種類のCHRから選ぶ</div>
-        <div style={{display: 'flex', gap: 10, marginTop: 14}}>
+        <div style={{position: 'relative', height: 340, marginTop: 12}}>
+          <Nes src="drift1" from={300} loop={1800} x={0} y={0} w={340} crop={[176, 114, 60, 60]} />
+          <div style={{position: 'absolute', left: 370, top: 0, width: 400, fontSize: 24, lineHeight: 1.5, color: C.sub}}>
+            実際の画面（拡大）<br />4輪それぞれに1つ<br /><br /><span style={{color: C.text}}>円</span>＝タイヤが出せる力の上限（摩擦係数×荷重）<br /><span style={{color: C.text}}>点</span>＝制限する前の力の要求
+          </div>
+        </div>
+        <div style={{display: 'flex', gap: 10, marginTop: 14, opacity: ramp(f, c[2], c[2] + 14)}}>
           {Array.from({length: 15}).map((_, i) => <div key={i} style={{width: 44, height: 70, background: '#000', border: `2px solid ${i === dot ? C.amber : '#2c3b63'}`, position: 'relative'}}>
             <div style={{position: 'absolute', left: 18, top: 4 + i * 4, width: 8, height: 8, background: C.text}} /></div>)}
         </div>
-        <div style={{fontSize: 24, color: C.sub, marginTop: 10}}>スプライトのYは動かさない → 他の行の「1ライン8枚」に影響しない</div>
+        <div style={{fontSize: 24, color: C.sub, marginTop: 10, opacity: ramp(f, c[2], c[2] + 14)}}>スプライトのYは動かさない → 他の行の「1ライン8枚」に影響しない</div>
       </Card>
-      <Card x={1020} y={470} w={840} color={C.cyan} o={ramp(f, c[2], c[2] + 14)}>
+      <Card x={1020} y={735} w={840} color={C.cyan} o={ramp(f, c[3], c[3] + 14)}>
         <div style={{fontSize: 28, fontWeight: 800, lineHeight: 1.6}}>時計：分とコロンを1枚の8×16に、変わった行だけ書き直す<br />順位：英字2文字を8ドットに詰めて2枚</div>
       </Card>
     </Bg>
@@ -90,7 +68,7 @@ export const C7: React.FC = () => {
   );
   return (
     <Bg>
-      <SceneTitle label="2　1フレームの流れ" />
+      <SceneTitle label="おまけ　1フレームの流れ" />
       <div style={{position: 'absolute', left: 120, top: Y0, width: 300, height: H, opacity: useIn(c[0])}}>
         {seg(0, 32, C.amber, '強制ブランク（転送の続き）', 1)}
         {seg(32, 216, '#3b6c2c', '', 1)}
@@ -114,24 +92,6 @@ export const C7: React.FC = () => {
   );
 };
 
-// ---------------- C8 結果画面 ----------------
-export const C8: React.FC = () => {
-  const f = useCurrentFrame(), k = K('C8');
-  const c = [0, 1].map(k);
-  return (
-    <Bg>
-      <SceneTitle label="2　結果画面も縦分割" />
-      <Nes src="drift1" from={2140} x={80} y={140} w={760} />
-      <Card x={900} y={160} w={940} color={C.violet} o={useIn(c[0])}>
-        <div style={{fontSize: 30, fontWeight: 800, lineHeight: 1.6}}>右の128ドットを分割のBGに広げて結果を表示<br />左のコースは coarse X を0に詰め直し、fine X を0に</div>
-      </Card>
-      <Card x={900} y={420} w={940} color={C.red} o={ramp(f, c[1], c[1] + 14)}>
-        <div style={{fontSize: 28, fontWeight: 800, lineHeight: 1.6}}>不具合：結果画面用NMIと走行用の下部IRQの処理が混ざって明滅<br /><span style={{color: C.green}}>→ 処理を分けて修正</span></div>
-      </Card>
-    </Bg>
-  );
-};
-
 // ---------------- D1 物理の流れ ----------------
 export const D1: React.FC = () => {
   const f = useCurrentFrame(), k = K('D1');
@@ -139,7 +99,7 @@ export const D1: React.FC = () => {
   const steps = [['入力', C.sub], ['4輪の前後・横の\n力の要求', C.cyan], ['摩擦円で制限', C.green], ['合力・モーメント', C.amber], ['速度・角速度を積分', C.amber], ['ばね（ピッチ・ロール）', C.violet], ['4輪の荷重', C.violet]];
   return (
     <Bg>
-      <SceneTitle label="3　物理と最適化" />
+      <SceneTitle label="3　物理" />
       <Big o={useIn(c[0]) * (1 - ramp(f, c[1] - 10, c[1]))} size={84}>第3章　物理と最適化</Big>
       <div style={{opacity: ramp(f, c[1] - 4, c[1] + 12)}}>
         {steps.map(([t, col], i) => (
@@ -165,7 +125,7 @@ export const D2: React.FC = () => {
   const cap = at(G.cap, i);
   return (
     <Bg>
-      <SceneTitle label="3　荷重を決める2つのばね" />
+      <SceneTitle label="おまけ　荷重を決める2つのばね" />
       <Card x={70} y={150} w={1100} color={C.violet} o={useIn(c[0])}>
         <div style={{fontSize: 28, color: C.sub, fontWeight: 700}}>ピッチ（前後）とロール（左右）を同じ式で（F＝前後／横の力）</div>
         <div style={{fontFamily: MONO, fontSize: 38, lineHeight: 1.7, marginTop: 10, opacity: ramp(f, c[1], c[1] + 14)}}>
@@ -225,7 +185,7 @@ export const D4: React.FC = () => {
   const S = 0.17;
   return (
     <Bg>
-      <SceneTitle label="3　物理の重さ" />
+      <SceneTitle label="おまけ　物理の重さ" />
       <Txt x={80} y={160} size={30} color={C.sub} o={useIn(c[0])}>ある重い場面の物理 9,602サイクル（開発途中の計測）の内訳</Txt>
       <div style={{position: 'absolute', left: 80, top: 220, display: 'flex', height: 90, opacity: useIn(c[0])}}>
         {[[2548, '4輪の評価', C.cyan], [1766, '曲がる計算の補正', C.amber], [1429, 'エネルギー補正', C.violet], [3859, 'その他', '#5d6b8f']].map(([v, t, col], i) => (
@@ -248,7 +208,7 @@ export const D5: React.FC = () => {
   const c = [0, 1, 2, 3, 4].map(k);
   return (
     <Bg>
-      <SceneTitle label="3　1ビットも変えない最適化" />
+      <SceneTitle label="おまけ　1ビットも変えない最適化" />
       <Big o={useIn(c[0]) * (1 - ramp(f, c[1] - 10, c[1]))} size={76} color={C.amber}>結果を1ビットも変えない</Big>
       <div style={{opacity: show(f, c[1], c[3])}}>
         <Box2 x={80} y={170} w={340} h={130} color={C.sub} title="同じ直前状態" sub="（保存した実フレーム）" />

@@ -73,7 +73,7 @@ export const E2: React.FC = () => {
   const line = (s: number[][]) => Array.from({length: n}, (_, j) => `${(j / (n - 1)) * w},${h - Math.min(1, s[j][0] / 900) * h}`).join(' ');
   return (
     <Bg>
-      <SceneTitle label="4　エンジン音の合成" />
+      <SceneTitle label="おまけ　エンジン音の合成" />
       <div style={{position: 'absolute', left: 80, top: 160, opacity: useIn(c[0])}}>
         <svg width={w} height={h}><rect width={w} height={h} fill="#0b1226" stroke="#2c3b63" />
           <polyline points={line(p1)} fill="none" stroke={C.amber} strokeWidth={3} /><polyline points={line(m1)} fill="none" stroke={C.cyan} strokeWidth={3} /></svg>
@@ -124,7 +124,7 @@ export const F1: React.FC = () => {
   const c = [0, 1, 2, 3, 4].map(k);
   return (
     <Bg>
-      <SceneTitle label="5　メモリマップとゴースト" />
+      <SceneTitle label="おまけ　メモリマップとゴースト" />
       <Big o={useIn(c[0]) * (1 - ramp(f, c[0] + 60, c[0] + 70))} size={84}>第5章　メモリと開発環境</Big>
       <div style={{opacity: ramp(f, c[0] + 66, c[0] + 80)}}>
         {[['PRG 1MB', '辞書61・地図18・準備処理25・物理/ゲーム/音/固定など', C.amber], ['CHR 1MB', '256KB × 4組（向きの下位2bitで切替）', C.violet], ['WRAM 128KB', '8KB × 16バンク（バッテリー付き）', C.cyan]].map(([t, s, col], i) => (
@@ -167,26 +167,28 @@ export const F2: React.FC = () => {
 };
 
 // ---------------- F3 Webカメラで実機を見る ----------------
+// Webカメラで撮ったテレビの画像（public/gen/ に置いてファイル名を書く）。null の間は仮の枠を出す。
+const WEBCAM_IMG: string | null = null;
 export const F3: React.FC = () => {
   const f = useCurrentFrame(), k = K('F3');
-  const c = [0, 1, 2, 3].map(k);
+  const c = [0, 1, 2].map(k);
   const steps = ['Mesenで入力を確認', 'USBでN8 ProへROMを送って起動', 'ROMの固定入力で走行', '画面に診断値を表示', 'Webカメラで撮影・保存', 'メニュー復帰を確認'];
   return (
     <Bg>
       <SceneTitle label="5　Webカメラで実機を見る" />
       {steps.map((t, i) => (
-        <React.Fragment key={t}>
-          <Box2 x={80 + (i % 3) * 600} y={160 + Math.floor(i / 3) * 200} w={520} h={140} color={C.cyan} title={t} fs={28} o={ramp(f, c[0] + i * 12, c[0] + i * 12 + 12)} />
-          {i % 3 !== 2 ? <HArrow x={605 + (i % 3) * 600} y={230 + Math.floor(i / 3) * 200} w={70} o={ramp(f, c[0] + i * 12 + 8, c[0] + i * 12 + 16)} /> : null}
-        </React.Fragment>
+        <Box2 key={t} x={80} y={140 + i * 96} w={740} h={80} color={C.cyan} title={`${i + 1}. ${t}`} fs={28} o={ramp(f, c[0] + i * 12, c[0] + i * 12 + 12)} />
       ))}
-      <Card x={80} y={590} w={860} color={C.amber} o={ramp(f, c[1], c[1] + 14)}>
+      <div style={{position: 'absolute', left: 900, top: 140, width: 960, height: 540, borderRadius: 12, overflow: 'hidden', background: '#000', opacity: ramp(f, c[0] + 40, c[0] + 56),
+        border: WEBCAM_IMG ? 'none' : `4px dashed ${C.sub}`, boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        {WEBCAM_IMG
+          ? <Img src={staticFile(`gen/${WEBCAM_IMG}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+          : <div style={{fontSize: 36, fontWeight: 800, color: C.sub, textAlign: 'center', lineHeight: 1.6}}>Webカメラで撮ったテレビ画面<br />（仮・撮影待ち）</div>}
+      </div>
+      <Card x={80} y={730} w={740} color={C.amber} o={ramp(f, c[1], c[1] + 14)}>
         <div style={{fontSize: 26, fontWeight: 800, lineHeight: 1.6}}>AIがリアルタイムに操作したのではない<br />リセット・カメラの向き・操作感の確認は人</div>
       </Card>
-      <Card x={980} y={590} w={860} color={C.red} o={ramp(f, c[2], c[2] + 14)}>
-        <div style={{fontSize: 26, fontWeight: 800, lineHeight: 1.6}}>撮影側の偽の不具合<br />H.264のBフレームで時刻が逆行 → 物理の巻き戻りと誤認しかけた</div>
-      </Card>
-      <div style={{position: 'absolute', left: 80, top: 790, display: 'flex', gap: 14, opacity: ramp(f, c[3], c[3] + 14)}}>
+      <div style={{position: 'absolute', left: 900, top: 730, width: 960, display: 'flex', flexWrap: 'wrap', gap: 14, opacity: ramp(f, c[2], c[2] + 14)}}>
         {['エミュレーターで動く', '実機で絵が出る', 'メニューへ戻る'].map((t) => <Tag key={t} color={C.green}>{`✓ ${t}`}</Tag>)}
         <Tag color={C.sub}>＝それぞれ別の合格条件</Tag>
       </div>
