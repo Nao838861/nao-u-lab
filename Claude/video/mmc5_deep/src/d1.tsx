@@ -17,7 +17,7 @@ export const P00: React.FC = () => {
   const f = useCurrentFrame(), k = K('P00');
   return (
     <Bg>
-      <div style={{opacity: 0.25}}><Nes src="drift1" from={600} x={1080} y={60} w={780} /></div>
+      <Nes src="drift1" from={600} x={1080} y={60} w={780} />
       <Txt x={110} y={90} size={34} color={C.violet} o={useIn(k(0))}>MMC5 RACING ／ 技術詳解</Txt>
       <Txt x={110} y={150} size={76} o={useIn(k(0) + 6)}>{'今回の動画は、\nかなりマニアックです。'}</Txt>
       <div style={{position: 'absolute', left: 110, top: 380, display: 'flex', gap: 16, opacity: useIn(k(1))}}>
