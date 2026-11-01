@@ -106,7 +106,7 @@ export const A2: React.FC = () => {
       <Txt x={70} y={790} size={26} color={C.sub} o={ramp(f, c[0] + 60, c[0] + 90)}>向き000の地図（29×29ブロック、1ブロック＝4×4タイル）　最新ROMから読み出し</Txt>
       <Card x={780} y={140} w={1060} color={C.red} o={ramp(f, c[0] + 20, c[0] + 34)}>
         <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>そのまま持つと</div>
-        <div style={{fontSize: 44, fontWeight: 900}}>128方向 × 116 × 116 語 × 2バイト ＝ <span style={{color: C.red}}>約3.4MB</span></div>
+        <div style={{fontSize: 44, fontWeight: 900}}>128方向 × 116 × 116 語 × 2バイト ＝ <span style={{color: C.red}}>約3.3MB</span></div>
       </Card>
       <Card x={780} y={330} w={1060} color="#4c8a3a" o={ramp(f, c[1], c[1] + 14)}>
         <div style={{fontSize: 34, fontWeight: 900}}><span style={{color: '#7fd06a'}}>■芝生</span>・<span style={{color: '#aaa'}}>■道路</span>だけのブロック＝一様セル（直値）　<span style={{color: C.amber}}>約8割</span></div>
@@ -120,7 +120,7 @@ export const A2: React.FC = () => {
       </Card>
       <Card x={780} y={680} w={510} color={C.green} o={ramp(f, c[3], c[3] + 14)}>
         <div style={{fontSize: 26, color: C.sub, fontWeight: 700}}>辞書 約2万ブロック</div>
-        <div style={{fontSize: 36, fontWeight: 900}}>63万 → <span style={{color: C.green}}>46万バイト</span></div>
+        <div style={{fontSize: 36, fontWeight: 900}}>約620KB → <span style={{color: C.green}}>約450KB</span></div>
       </Card>
       <Card x={1330} y={680} w={510} color={C.cyan} o={ramp(f, c[4], c[4] + 14)}>
         <div style={{fontSize: 26, color: C.sub, fontWeight: 700}}>地図の行＝スパン形式</div>
