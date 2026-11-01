@@ -10,7 +10,7 @@ const K = (id: string) => (i: number) => cueOf(id, i);
 const show = (f: number, a: number, b?: number) => ramp(f, a - 4, a + 12) * (b === undefined ? 1 : 1 - ramp(f, b - 10, b));
 
 // ---------------- P00 前置き ----------------
-const CHAPTERS: [string, string][] = [['A1', '1　背景の表示と転送'], ['C1', '2　縦分割とスプライト'], ['D1', '3　物理と最適化'], ['E1', '4　サウンド'], ['F1', '5　メモリと開発環境'], ['A3', 'おまけ　転送の細部と、ここに至るまで']];
+const CHAPTERS: [string, string][] = [['A1', '1　背景の表示と転送'], ['C1', '2　縦分割とスプライト'], ['D1', '3　物理と最適化'], ['F1', '4　メモリと開発環境'], ['A3', 'おまけ　転送の細部と、ここに至るまで'], ['E1', 'おまけ　サウンド']];
 const startOf = (id: string) => { let t = 0; for (const s of sceneOrder) { if (s === id) return t; t += sceneFrames(s); } return t; };
 const mmss = (fr: number) => { const s = Math.round(fr / FPS); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
 export const P00: React.FC = () => {

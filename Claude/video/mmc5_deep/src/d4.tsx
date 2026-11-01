@@ -36,8 +36,8 @@ export const E1: React.FC = () => {
   const files = ['apu_pulse1', 'mmc5_pulse1', 'mmc5_pulse2', 'noise', 'apu_pulse2'];
   return (
     <Bg>
-      <SceneTitle label="4　サウンド：5つの音をすべてエンジンとタイヤに" />
-      <Big o={useIn(c[0]) * (1 - ramp(f, c[0] + 70, c[0] + 80))} size={84}>第4章　サウンド</Big>
+      <SceneTitle label="おまけ　サウンド：5つの音をすべてエンジンとタイヤに" />
+      <Big o={useIn(c[0]) * (1 - ramp(f, c[0] + 70, c[0] + 80))} size={84}>おまけ　サウンド</Big>
       {CH.map(([key2, name, role], j) => {
         const p = playing(j);
         const lit = p >= 0 || mixP >= 0;
@@ -73,7 +73,7 @@ export const E2: React.FC = () => {
   const line = (s: number[][]) => Array.from({length: n}, (_, j) => `${(j / (n - 1)) * w},${h - Math.min(1, s[j][0] / 900) * h}`).join(' ');
   return (
     <Bg>
-      <SceneTitle label="4　エンジン音の合成" />
+      <SceneTitle label="おまけ　エンジン音の合成" />
       <div style={{position: 'absolute', left: 80, top: 160, opacity: useIn(c[0])}}>
         <svg width={w} height={h}><rect width={w} height={h} fill="#0b1226" stroke="#2c3b63" />
           <polyline points={line(p1)} fill="none" stroke={C.amber} strokeWidth={3} /><polyline points={line(m1)} fill="none" stroke={C.cyan} strokeWidth={3} /></svg>
@@ -104,7 +104,7 @@ export const E3: React.FC = () => {
   const c = [0, 1].map(k);
   return (
     <Bg>
-      <SceneTitle label="4　ジングル" />
+      <SceneTitle label="おまけ　ジングル" />
       <Nes src="drift1" from={2130} x={80} y={140} w={760} volume={0.9} />
       <div style={{position: 'absolute', left: 900, top: 170, display: 'flex', flexWrap: 'wrap', gap: 14, width: 940, opacity: useIn(c[0])}}>
         {['MMC5 矩形波1', 'MMC5 矩形波2', 'APU 三角波', 'APU ノイズ'].map((t) => <Tag key={t} color={C.violet}>{t}</Tag>)}
@@ -121,11 +121,11 @@ export const E3: React.FC = () => {
 const WRAM: [string, string][] = [['ゲーム', C.amber], ['型', C.cyan], ['型', C.cyan], ['型', C.cyan], ['型', C.cyan], ['型', C.cyan], ['型', C.cyan], ['—', '#2c3b63'], ['ゴースト', '#ff9de1'], ['ゴースト', '#ff9de1'], ['ゴースト', '#ff9de1'], ['ゴースト', '#ff9de1'], ['ゴースト', '#ff9de1'], ['ゴースト', '#ff9de1'], ['—', '#2c3b63'], ['ゲーム', C.amber]];
 export const F1: React.FC = () => {
   const f = useCurrentFrame(), k = K('F1');
-  const c = [0, 1, 2, 3, 4].map(k);
+  const c = [0, 1, 2, 3].map(k);
   return (
     <Bg>
-      <SceneTitle label="5　メモリマップとゴースト" />
-      <Big o={useIn(c[0]) * (1 - ramp(f, c[0] + 60, c[0] + 70))} size={84}>第5章　メモリと開発環境</Big>
+      <SceneTitle label="4　メモリマップとゴースト" />
+      <Big o={useIn(c[0]) * (1 - ramp(f, c[0] + 60, c[0] + 70))} size={84}>第4章　メモリと開発環境</Big>
       <div style={{opacity: ramp(f, c[0] + 66, c[0] + 80)}}>
         {[['PRG 1MB', '辞書61・地図18・準備処理25・物理/ゲーム/音/固定など', C.amber], ['CHR 1MB', '256KB × 4組（向きの下位2bitで切替）', C.violet], ['WRAM 128KB', '8KB × 16バンク（バッテリー付き）', C.cyan]].map(([t, s, col], i) => (
           <Card key={t} x={80} y={150 + i * 120} w={900} color={col}><div style={{fontSize: 32, fontWeight: 900}}>{t}<span style={{fontSize: 24, color: C.sub, marginLeft: 16}}>{s}</span></div></Card>
@@ -144,9 +144,6 @@ export const F1: React.FC = () => {
         </div>
         <Txt x={0} y={86} size={28}>1コマ＝2バイト × 10,800コマ（180秒）</Txt>
       </div>
-      <Card x={80} y={690} w={1760} color={C.line} o={ramp(f, c[4], c[4] + 14)}>
-        <div style={{fontSize: 26, fontWeight: 800}}>記録できなかったコマは直前の姿勢で埋め、最後の1コマだけ現在の姿勢　／　起動時にチェックサムで全体を検査</div>
-      </Card>
     </Bg>
   );
 };
@@ -157,7 +154,7 @@ export const F2: React.FC = () => {
   const c = [0, 1, 2].map(k);
   return (
     <Bg>
-      <SceneTitle label="5　AIが自分で確かめる仕組み" />
+      <SceneTitle label="4　AIが自分で確かめる仕組み" />
       {[['Mesen（画面なし）＋ Lua', '毎フレームのサイクル・画素を計測'], ['6502 エミュレーター（py65）', 'same-PRE の同値照合'], ['全窓スキャン', '2,437,120通りの転送サイクル'], ['Web版と同じコア', 'リプレイを入力だけから再現（この動画の走行映像）']].map(([t, s], i) => (
         <Box2 key={t} x={80 + (i % 2) * 900} y={170 + Math.floor(i / 2) * 230} w={860} h={190} color={[C.cyan, C.amber, C.violet, C.green][i]} title={t} sub={s} fs={34} o={ramp(f, c[i < 2 ? 1 : 2] + (i % 2) * 15, c[i < 2 ? 1 : 2] + (i % 2) * 15 + 14)} />
       ))}
@@ -174,7 +171,7 @@ export const F3: React.FC = () => {
   const steps = ['Mesenで入力を確認', 'USBでN8 ProへROMを送って起動', 'ROMの固定入力で走行', '画面に診断値を表示', 'Webカメラで撮影・保存', 'メニュー復帰を確認'];
   return (
     <Bg>
-      <SceneTitle label="5　Webカメラで実機を見る" />
+      <SceneTitle label="4　Webカメラで実機を見る" />
       {steps.map((t, i) => (
         <Box2 key={t} x={80} y={140 + i * 96} w={740} h={80} color={C.cyan} title={`${i + 1}. ${t}`} fs={28} o={ramp(f, c[0] + i * 12, c[0] + i * 12 + 12)} />
       ))}
