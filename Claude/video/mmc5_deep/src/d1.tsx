@@ -58,7 +58,14 @@ export const A1: React.FC = () => {
   return (
     <Bg>
       <SceneTitle label="1　背景：今の仕組み" />
-      <Big o={useIn(c[0]) * (1 - ramp(f, c[1] - 10, c[1]))} size={84}>第1章　背景の表現と転送</Big>
+      <div style={{position: 'absolute', left: 0, top: 0, width: 1920, height: 1080, opacity: useIn(c[0]) * (1 - ramp(f, c[1] - 10, c[1]))}}>
+        <Txt x={0} y={150} w={1920} align="center" size={56}>第1章　背景</Txt>
+        <Txt x={160} y={300} w={700} align="center" size={36} color={C.sub}>普通のファミコン（背景の模様）</Txt>
+        <Txt x={160} y={380} w={700} align="center" size={180} color={C.sub}>256</Txt>
+        <Txt x={1060} y={300} w={700} align="center" size={36} color={C.cyan} o={ramp(f, c[0] + 400, c[0] + 416)}>MMC5 RACING（CHR 1MB すべて）</Txt>
+        <Txt x={1060} y={380} w={700} align="center" size={180} color={C.cyan} o={ramp(f, c[0] + 400, c[0] + 416)}>{fmt(65536 * ramp(f, c[0] + 410, c[0] + 560, 0, 1))}</Txt>
+        <Txt x={160} y={620} w={700} align="center" size={30} color={C.sub}>一度に使える数</Txt>
+      </div>
       <div style={{opacity: ramp(f, c[1] - 4, c[1] + 12)}}>
         <Nes src="drift1" from={900} loop={1200} x={60} y={130} w={640}>
           <div style={{position: 'absolute', left: 0, top: 32 * s, width: 144 * s, height: 192 * s, outline: `3px solid ${C.cyan}`}}>
