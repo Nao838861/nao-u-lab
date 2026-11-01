@@ -144,6 +144,8 @@ export const B4: React.FC = () => {
 // ---------------- C1 画面の分解 ----------------
 type OP = {oam: number[][]; ex: number[]};
 const P600 = (probe as Record<string, OP>)['600'];
+// LAP を BG に移したあと、旧 LAP スプライト（タイル129・131）は中身が空のまま OAM に残っている。透明なので枠を出さない。
+const BLANK = new Set([129, 131]);
 const sprCat = (slot: number, o: number[]): [string, string] => {
   if (o[1] === 233) return ['黒帯', '#ff5b6e'];
   if (slot >= 48 && slot <= 51) return ['自車', C.amber];
@@ -168,11 +170,11 @@ export const C1: React.FC = () => {
           <Img src={staticFile('gen/frame600.png')} style={{width: 256 * S, height: 240 * S, imageRendering: 'pixelated'}} />
           <div style={{position: 'absolute', left: 0, top: 32 * S, width: 136 * S, height: 184 * S, border: `4px solid ${C.cyan}`, opacity: ramp(f, c[1], c[1] + 14)}} />
           <div style={{position: 'absolute', left: 144 * S, top: 32 * S, width: 112 * S, height: 184 * S, border: `4px dashed ${C.violet}`, opacity: ramp(f, c[1] + 20, c[1] + 34)}} />
-          {P600.oam.map((o, s) => o[0] < 239 ? (() => { const [n, col] = sprCat(s, o); return (
+          {P600.oam.map((o, s) => o[0] < 239 && !BLANK.has(o[1]) ? (() => { const [n, col] = sprCat(s, o); return (
             <div key={s} title={n} style={{position: 'absolute', left: o[3] * S, top: (o[0] + 1) * S, width: 8 * S, height: 16 * S, border: `2px solid ${col}`, opacity: ramp(f, c[2] + s * 0.6, c[2] + s * 0.6 + 8)}} />); })() : null)}
         </div>
         <Txt x={900} y={170} size={34} color={C.cyan} o={ramp(f, c[1], c[1] + 14)}>■ BG：コース（毎フレーム書き換え）</Txt>
-        <Txt x={900} y={230} size={34} color={C.violet} o={ramp(f, c[1] + 20, c[1] + 34)}>■ BG：MMC5 縦分割（TIME/TOTAL・ミニマップ）</Txt>
+        <Txt x={900} y={230} size={34} color={C.violet} o={ramp(f, c[1] + 20, c[1] + 34)}>■ BG：MMC5 縦分割（LAP/TIME/TOTAL・ミニマップ）</Txt>
         <div style={{position: 'absolute', left: 900, top: 320, display: 'flex', flexWrap: 'wrap', gap: 12, width: 940, opacity: ramp(f, c[2], c[2] + 14)}}>
           {[['自車（車体＋前輪）', C.amber], ['CPU車', C.violet], ['黒帯', '#ff5b6e'], ['摩擦円と点', C.green], ['時計・順位・表示', C.cyan]].map(([t, col]) => <Tag key={t} color={col}>{`□ スプライト：${t}`}</Tag>)}
         </div>

@@ -100,7 +100,7 @@ export const C7: React.FC = () => {
   );
   return (
     <Bg>
-      <SceneTitle label="おまけ　1フレームの流れ" />
+      <SceneTitle label="2　1フレームの流れ" />
       <div style={{position: 'absolute', left: 120, top: Y0, width: 300, height: H, opacity: useIn(c[0])}}>
         {seg(0, 32, C.amber, '強制ブランク（転送の続き）', 1)}
         {seg(32, 216, '#3b6c2c', '', 1)}
