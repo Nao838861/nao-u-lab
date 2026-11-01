@@ -3,6 +3,7 @@ import {Img, staticFile, useCurrentFrame} from 'remotion';
 import {Bg, C, SceneTitle, Tag, cueOf, useIn} from './common';
 import {Big, Box2, Card, Code, Grid, HArrow, MONO, Nes, Txt, fmt, ramp} from './parts';
 import probe from './data/oam_probe.json';
+import finexPan from './data/finex_pan.json';
 
 const K = (id: string) => (i: number) => cueOf(id, i);
 const show = (f: number, a: number, b?: number) => ramp(f, a - 4, a + 12) * (b === undefined ? 1 : 1 - ramp(f, b - 10, b));
@@ -196,6 +197,44 @@ export const C1: React.FC = () => {
   );
 };
 
+// C3 の最後：ほぼ満杯の CHR 1MB（4KB × 256ページ）から、ずらした絵の8ページ（BANKS）を空けるため、模様107個を同じ四半分の隙間へ移した。
+// 移動先の位置は図解用（実際の移動先ではない）。ページ番号と個数はミニマップの build.py／README による。
+const SPLIT_PAGES = [60, 61, 64, 128, 192, 127, 191, 254];
+const ChrMove: React.FC<{f: number; at: number}> = ({f, at}) => {
+  const cell = 30, gap = 3, X0 = 900, Y0 = 200;
+  const pos = (pg: number) => [X0 + (pg % 16) * (cell + gap) + cell / 2, Y0 + Math.floor(pg / 16) * (cell + gap) + cell / 2];
+  const rnd = (i: number) => { const x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); };
+  const movers = Array.from({length: 107}, (_, i) => {
+    const src = SPLIT_PAGES[i % 8], q = Math.floor(src / 64);
+    let dst = q * 64 + Math.floor(rnd(i) * 64);
+    if (SPLIT_PAGES.includes(dst)) dst = q * 64 + ((dst + 7) % 64);
+    return {src, dst, t0: at + 70 + i * 1.2};
+  });
+  const o = ramp(f, at - 4, at + 12);
+  return (
+    <div style={{position: 'absolute', left: 0, top: 0, width: 1920, height: 1080, opacity: o}}>
+      <Txt x={X0} y={130} size={32} w={960}>CHR 1MB（4KB × 256ページ）はコースの模様でほぼ満杯</Txt>
+      {Array.from({length: 256}, (_, pg) => {
+        const split = SPLIT_PAGES.includes(pg), [x, y] = pos(pg), hi = split ? ramp(f, at + 30, at + 50) : 0;
+        return <div key={pg} style={{position: 'absolute', left: x - cell / 2, top: y - cell / 2, width: cell, height: cell, borderRadius: 4,
+          background: split ? `rgba(255,225,74,${0.15 + 0.25 * ramp(f, at + 200, at + 240)})` : ['#1f5a3a', '#25507a', '#4a3a78', '#6a3a4a'][Math.floor(pg / 64)],
+          border: split ? `${2 + 2 * hi}px solid ${hi ? '#ffe14a' : 'transparent'}` : 'none', boxSizing: 'border-box'}} />;
+      })}
+      {movers.map((m, i) => {
+        const t = ramp(f, m.t0, m.t0 + 40);
+        if (t <= 0 || t >= 1) return null;
+        const [x1, y1] = pos(m.src), [x2, y2] = pos(m.dst);
+        return <div key={i} style={{position: 'absolute', left: x1 + (x2 - x1) * t - 5, top: y1 + (y2 - y1) * t - 5 - Math.sin(t * Math.PI) * 40, width: 10, height: 10, borderRadius: 2, background: '#ffe14a'}} />;
+      })}
+      <Txt x={1470} y={210} w={400} size={28} color="#ffe14a" o={ramp(f, at + 30, at + 50)}>ずらした絵を置く 8ページ</Txt>
+      <Txt x={1470} y={300} w={400} size={26} color={C.sub} o={ramp(f, at + 70, at + 86)}>中にあった模様を引っ越し</Txt>
+      <Txt x={1470} y={340} w={400} size={110} color="#ffe14a" o={ramp(f, at + 70, at + 86)}>{fmt(107 * ramp(f, at + 70, at + 70 + 107 * 1.2 + 40))}</Txt>
+      <Txt x={1470} y={480} w={400} size={30} color="#ffe14a" o={ramp(f, at + 70, at + 86)}>個</Txt>
+      <Txt x={1470} y={560} w={400} size={24} color={C.green} o={ramp(f, at + 260, at + 276)}>{'引っ越し後も、全128方向で\nコースの絵は1ドットも\n変わらないことを確認'}</Txt>
+    </div>
+  );
+};
+
 // ---------------- C3 fine X で揺れる分割 ----------------
 // 全画面（コースのスクロール）と、ミニマップの拡大を同時に見せる。x=195 がミニマップの正しい左端。
 const FULL: [number, number, number, number] = [0, 24, 256, 204];
@@ -226,12 +265,14 @@ export const C3: React.FC = () => {
       <div style={{opacity: post}}>
         <Nes src="pan_latest" from={0} loop={240} x={60} y={130} w={760} crop={FULL} />
         <Txt x={60} y={760} size={30} color={C.green} w={760}>修正後：コースは流れても、分割側は止まる</Txt>
+        <div style={{position: 'absolute', left: 0, top: 0, width: 1920, height: 1080, opacity: 1 - ramp(f, c[4] - 10, c[4] + 6)}}>
         <Txt x={900} y={130} size={32} w={960}>CHR を8種類：右へ 0〜7 ドットずらした絵</Txt>
         {[0, 1, 2, 3, 4, 5, 6, 7].map((n) => {
           const sc = 4.5, x = 900 + (n % 4) * 240, y = 210 + Math.floor(n / 4) * 260, o = ramp(f, c[3] + 20 + n * 8, c[3] + 34 + n * 8);
+          const sel = f > c[3] + 110 && n === (finexPan as number[])[f % 240]; // 映像のこのフレームで選ばれている絵
           return (
             <div key={n} style={{position: 'absolute', left: x, top: y, opacity: o}}>
-              <div style={{position: 'relative', width: 40 * sc, height: 32 * sc, background: '#000', borderRadius: 6, overflow: 'hidden', border: `2px solid ${C.line}`}}>
+              <div style={{position: 'relative', width: 40 * sc, height: 32 * sc, background: '#000', borderRadius: 6, overflow: 'hidden', border: sel ? '5px solid #ffe14a' : `2px solid ${C.line}`, boxShadow: sel ? '0 0 24px #ffe14a88' : 'none'}}>
                 <Img src={staticFile(`gen/finex_v${n}.png`)} style={{width: 40 * sc, height: 32 * sc, imageRendering: 'pixelated'}} />
                 <Grid cell={8 * sc} color="rgba(63,224,255,.35)" />
               </div>
@@ -240,8 +281,9 @@ export const C3: React.FC = () => {
           );
         })}
         <Txt x={900} y={720} size={30} w={960} o={ramp(f, c[3] + 110, c[3] + 124)}>そのフレームの fine X で選ぶ → 揺れが打ち消される</Txt>
-        <Txt x={900} y={770} size={28} color={C.amber} w={960} o={ramp(f, c[4], c[4] + 14)}>代わりに CHR のパターンを8倍使う</Txt>
         <Txt x={900} y={815} size={22} color={C.sub} w={960} o={ramp(f, c[3] + 110, c[3] + 124)}>※ 修正後の画面の絵から作った図（枠＝8ドットのタイル）</Txt>
+        </div>
+        <ChrMove f={f} at={c[4]} />
       </div>
     </Bg>
   );

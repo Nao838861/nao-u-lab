@@ -152,56 +152,50 @@ export const D1: React.FC = () => {
 // ---------------- D2 荷重を決めるばね ----------------
 export const D2: React.FC = () => {
   const f = useCurrentFrame(), k = K('D2');
-  const c = [0, 1, 2, 3].map(k);
+  const c = [0, 1, 2].map(k);
   const i = idx(1200, f, 2200);
   const cap = at(G.cap, i);
+  const FULL: [number, number, number, number] = [0, 24, 256, 204];
   return (
     <Bg>
       <SceneTitle label="3　荷重を決める2つのばね" />
-      <Card x={70} y={150} w={1100} color={C.violet} o={useIn(c[0])}>
-        <div style={{fontSize: 28, color: C.sub, fontWeight: 700}}>ピッチ（前後）とロール（左右）を同じ式で（F＝前後／横の力）</div>
-        <div style={{fontFamily: MONO, fontSize: 38, lineHeight: 1.7, marginTop: 10, opacity: ramp(f, c[1], c[1] + 14)}}>
-          T ← 表(|F|) × sign(F)<br />
-          v ← v ＋ ⌊(T·256 − p) / 32⌋₀ − ⌊v / 4⌋₀<br />
-          p ← p ＋ v　　（|p| を上限で止め、静止付近は0へ）
-        </div>
-      </Card>
-      <Card x={70} y={520} w={1100} color={C.amber} o={ramp(f, c[2], c[2] + 14)}>
-        <div style={{fontSize: 28, fontWeight: 800}}>⌊ ⌋₀ ＝ 0方向への切り捨て</div>
-        <div style={{fontFamily: MONO, fontSize: 28, marginTop: 8, color: C.amber}}>負の数は +31（/32）、+3（/4）してから算術シフト → 元の丸めを1ビットも変えない</div>
-      </Card>
-      <Card x={70} y={700} w={1100} color={C.green} o={ramp(f, c[3], c[3] + 14)}>
-        <div style={{fontFamily: MONO, fontSize: 32, fontWeight: 800}}>(N<sub>左前</sub>, N<sub>右前</sub>, N<sub>左後</sub>, N<sub>右後</sub>) ＝ 表32×32×4[⌊p<sub>pitch</sub>/512⌋₀][⌊p<sub>roll</sub>/512⌋₀]</div>
-      </Card>
-      <div style={{opacity: ramp(f, c[3], c[3] + 14)}}>
-        <Nes src="grip1" from={1200} loop={2200} x={1230} y={150} w={620} />
-        <div style={{position: 'absolute', left: 1300, top: 760, display: 'grid', gridTemplateColumns: 'repeat(2, 230px)', gap: 12}}>
-          {['左前', '右前', '左後', '右後'].map((n, w) => <div key={n} style={{fontSize: 30, fontWeight: 900, fontFamily: MONO}}>{`${n} N=`}<span style={{color: C.amber}}>{cap[w]}</span></div>)}
-        </div>
+      <Nes src="grip1" from={1200} loop={2200} x={70} y={130} w={860} crop={FULL} />
+      <Nes src="grip1" from={1200} loop={2200} x={1010} y={130} w={400} crop={[176, 114, 60, 60]} />
+      <Txt x={1440} y={140} w={420} size={28} color={C.sub}>{'摩擦円の拡大\n（円の大きさ＝荷重）'}</Txt>
+      <div style={{position: 'absolute', left: 1010, top: 570, display: 'grid', gridTemplateColumns: 'repeat(2, 400px)', gap: 18, opacity: ramp(f, c[2] - 20, c[2])}}>
+        {['左前', '右前', '左後', '右後'].map((n, w) => (
+          <div key={n}>
+            <div style={{fontSize: 30, fontWeight: 900, fontFamily: MONO}}>{`${n} `}<span style={{color: C.amber}}>{cap[w]}</span></div>
+            <div style={{width: cap[w] * 2.8, height: 22, background: C.amber, borderRadius: 4, marginTop: 6}} />
+          </div>
+        ))}
+      </div>
+      <div style={{position: 'absolute', left: 1440, top: 260, display: 'flex', flexDirection: 'column', gap: 12, opacity: ramp(f, c[1], c[1] + 14)}}>
+        <Tag color={C.violet}>前後の傾き（ピッチ）</Tag>
+        <Tag color={C.violet}>左右の傾き（ロール）</Tag>
+        <Tag color={C.green}>→ 表32×32 → 4輪の荷重</Tag>
       </div>
     </Bg>
   );
 };
 
+
 // ---------------- D3 タイヤの力と乗算器 ----------------
 export const D3: React.FC = () => {
   const f = useCurrentFrame(), k = K('D3');
-  const c = [0, 1, 2, 3].map(k);
+  const c = [0, 1, 2].map(k);
   return (
     <Bg>
       <SceneTitle label="3　タイヤの力とMMC5の乗算器" />
-      <Code x={70} y={150} w={960} size={28} o={useIn(c[0])} color={C.cyan} title="タイヤの力（実際のコードの冒頭）"
-        lines={[{s: 'STA $5205      ; 滑りの索引 0〜127', c: C.amber}, {s: 'LDA $7D        ; ゲイン'}, {s: 'STA $5206      ; → すぐに 16bit の積', c: C.amber},
-          {s: 'LDX $5205      ; 積の下位', c: C.amber}, {s: 'LDA $BB00,X    ; 表で非線形カーブへ'}, {s: 'AND #15 / STA $92'}, {s: 'LDX $5206      ; 積の上位', c: C.amber}, {s: 'LDA $BA00,X / ORA $92'}, {s: '…（127で飽和）'}]} />
-      <Card x={1080} y={160} w={780} color={C.amber} o={ramp(f, c[1], c[1] + 14)}>
+      <Nes src="drift1" from={600} loop={1800} x={70} y={130} w={860} crop={[0, 24, 256, 204]} />
+      <Card x={1010} y={150} w={850} color={C.cyan} o={useIn(c[0])}>
+        <div style={{fontSize: 36, fontWeight: 900}}>タイヤの力 ＝ 滑り × ゲイン</div>
+      </Card>
+      <Card x={1010} y={300} w={850} color={C.amber} o={ramp(f, c[1], c[1] + 14)}>
         <div style={{fontSize: 30, fontWeight: 900}}>6502 には掛け算命令がない</div>
-        <div style={{fontSize: 26, marginTop: 8, fontFamily: MONO}}>$5205 × $5206 → 16bit（MMC5）</div>
+        <div style={{fontSize: 40, fontWeight: 900, color: C.amber, marginTop: 8}}>→ MMC5 の乗算器を使う</div>
       </Card>
-      <Card x={1080} y={330} w={780} color={C.cyan} o={ramp(f, c[2], c[2] + 14)}>
-        <div style={{fontSize: 30, fontWeight: 900}}>曲がる計算のコードだけで</div>
-        <div style={{fontSize: 44, fontWeight: 900, color: C.cyan}}>乗算器の読み書き 51か所</div>
-      </Card>
-      <div style={{position: 'absolute', left: 70, top: 700, display: 'flex', flexWrap: 'wrap', gap: 12, width: 1790, opacity: ramp(f, c[3], c[3] + 14)}}>
+      <div style={{position: 'absolute', left: 1010, top: 520, display: 'flex', flexWrap: 'wrap', gap: 12, width: 850, opacity: ramp(f, c[2], c[2] + 14)}}>
         <Tag color={C.amber}>DRIFTだけの補正：</Tag>
         {['後輪のグリップ低下', '追加の舵角', 'カウンター保持', 'ブースト', 'アクセルOFF時の回転補助'].map((t) => <Tag key={t} color={C.sub}>{t}</Tag>)}
         <Tag color={C.green}>GRIP：すべて外し、計算だけ</Tag>
@@ -209,6 +203,7 @@ export const D3: React.FC = () => {
     </Bg>
   );
 };
+
 
 // ---------------- D4 物理の重さ ----------------
 export const D4: React.FC = () => {
