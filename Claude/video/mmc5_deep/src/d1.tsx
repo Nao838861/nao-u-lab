@@ -87,7 +87,8 @@ export const A1: React.FC = () => {
 const KCOL: Record<string, string> = {G: '#2e6b1e', D: '#6d6d6d', S: C.cyan, E: C.amber, R: C.red, O: '#111', U: '#8a5'};
 export const A2: React.FC = () => {
   const f = useCurrentFrame(), k = K('A2');
-  const c = [0, 1, 2, 3, 4].map(k);
+  const c = [1, 2, 3, 4, 5].map(k); // 0行目は CHR の話からのつなぎ
+  const intro = useIn(k(0)) * (1 - ramp(f, c[0] - 10, c[0])), mainO = ramp(f, c[0] - 6, c[0] + 10);
   const g = (blocks0 as {grid: string[]}).grid;
   const cell = 22;
   const dimUniform = ramp(f, c[1], c[1] + 20);
@@ -95,6 +96,13 @@ export const A2: React.FC = () => {
   return (
     <Bg>
       <SceneTitle label="1　地図と辞書" />
+      <div style={{position: 'absolute', left: 0, top: 0, width: 1920, height: 1080, opacity: intro}}>
+        <Box2 x={160} y={300} w={640} h={220} color={C.sub} title="CHR ＝ 模様" sub="ここまでの話（1MB をすべて背景に）" fs={40} />
+        <HArrow x={830} y={410} w={220} color={C.cyan} />
+        <Box2 x={1080} y={300} w={680} h={220} color={C.cyan} title="ネームテーブル＋ExRAM" sub="どの模様をどこに置くか（毎フレーム432タイル）" fs={40} />
+        <Txt x={1080} y={560} w={680} size={30} color={C.cyan} align="center">ここから：この中身を何から作るか</Txt>
+      </div>
+      <div style={{position: 'absolute', left: 0, top: 0, width: 1920, height: 1080, opacity: mainO}}>
       <Pic a={0} x={70} y={130} scale={0.7} style={{borderRadius: 10, opacity: 1 - ramp(f, c[0] + 60, c[0] + 90) * 0.85}} />
       <div style={{position: 'absolute', left: 70, top: 130, width: 29 * cell, height: 29 * cell, opacity: ramp(f, c[0] + 60, c[0] + 90), display: 'grid', gridTemplateColumns: `repeat(29, ${cell}px)`}}>
         {g.flatMap((row, y) => row.split('').map((kk, x) => {
@@ -103,7 +111,7 @@ export const A2: React.FC = () => {
             opacity: uni ? 1 - 0.7 * dimUniform : 0.35 + 0.65 * showDict}} />;
         }))}
       </div>
-      <Txt x={70} y={790} size={26} color={C.sub} w={680} o={ramp(f, c[0] + 60, c[0] + 90)}>向き000の地図（29×29ブロック、1ブロック＝4×4タイル）　最新ROMから読み出し</Txt>
+      <Txt x={70} y={782} size={22} color={C.sub} w={680} o={ramp(f, c[0] + 60, c[0] + 90)}>{'向き000の地図（29×29ブロック、1ブロック＝4×4タイル）\n最新ROMから読み出し'}</Txt>
       <Card x={780} y={140} w={1060} color={C.red} o={ramp(f, c[0] + 20, c[0] + 34)}>
         <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>そのまま持つと</div>
         <div style={{fontSize: 44, fontWeight: 900}}>128方向 × 116 × 116 語 × 2バイト ＝ <span style={{color: C.red}}>約3.3MB</span></div>
@@ -127,6 +135,7 @@ export const A2: React.FC = () => {
         <div style={{fontSize: 28, fontWeight: 900, fontFamily: MONO}}>[左端][右端][ptr lo][ptr hi]</div>
         <div style={{fontSize: 24, color: C.cyan, fontWeight: 800}}>PRG 18バンク</div>
       </Card>
+      </div>
     </Bg>
   );
 };
