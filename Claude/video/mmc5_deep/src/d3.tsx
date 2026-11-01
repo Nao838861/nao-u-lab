@@ -3,6 +3,7 @@ import {Img, staticFile, useCurrentFrame} from 'remotion';
 import {Bg, C, SceneTitle, Tag, cueOf, useIn} from './common';
 import {Big, Box2, Card, Code, G, HArrow, MONO, Nes, Txt, at, fmt, idx, ramp} from './parts';
 import probe from './data/oam_probe.json';
+import dotOam from './data/dot_oam.json';
 
 const K = (id: string) => (i: number) => cueOf(id, i);
 const show = (f: number, a: number, b?: number) => ramp(f, a - 4, a + 12) * (b === undefined ? 1 : 1 - ramp(f, b - 10, b));
@@ -26,16 +27,47 @@ export const C6: React.FC = () => {
   const f = useCurrentFrame(), k = K('C6');
   const c = [0, 1, 2, 3].map(k);
   const dot = Math.floor(f / 6) % 15;
+  const gridO = 1 - ramp(f, c[2] - 10, c[2] + 6);
+  const dotO = ramp(f, c[2], c[2] + 16) * (1 - ramp(f, c[3] - 10, c[3] + 6)), clockO = ramp(f, c[3], c[3] + 16);
+  const FC: [number, number, number, number] = [176, 114, 60, 60], fs = 620 / 60;
+  const row = (dotOam as {frames: number[][][]}).frames[f % 1800];
+  const CK: [number, number, number, number] = [192, 66, 60, 42], cs = 700 / 60;
+  const RK: [number, number, number, number] = [108, 202, 28, 26], rs = 6;
   return (
     <Bg>
       <SceneTitle label="2　スプライトの割り当て（OAM 64枚）" />
-      <div style={{position: 'absolute', left: 80, top: 150, display: 'grid', gridTemplateColumns: 'repeat(8, 104px)', gap: 8, opacity: useIn(c[0])}}>
+      <div style={{position: 'absolute', left: 80, top: 150, display: 'grid', gridTemplateColumns: 'repeat(8, 104px)', gap: 8, opacity: useIn(c[0]) * gridO}}>
         {Array.from({length: 64}).map((_, s) => { const [n, col] = ROLE(s); const vis = P600.oam[s][0] < 239; return (
           <div key={s} style={{width: 104, height: 70, borderRadius: 8, border: `3px solid ${col}`, background: vis ? `${col}33` : '#131b31', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 800}}>
             <span style={{fontFamily: MONO, color: C.sub}}>{s}</span><span style={{color: col}}>{n}</span>
           </div>); })}
       </div>
-      <Txt x={80} y={790} size={24} color={C.sub} w={890} o={useIn(c[0])}>DRIFT 1位の走りのあるコマで OAM バッファ（$0200〜）を読んだもの。塗りつぶし＝そのコマで表示中</Txt>
+      <Txt x={80} y={790} size={24} color={C.sub} w={890} o={useIn(c[0]) * gridO}>DRIFT 1位の走りのあるコマで OAM バッファ（$0200〜）を読んだもの。塗りつぶし＝そのコマで表示中</Txt>
+      <div style={{opacity: dotO}}>
+        <Nes src="drift1" from={300} loop={1800} x={80} y={150} w={620} crop={FC}>
+          {row.map(([y, , x], j) => (
+            <div key={j} style={{position: 'absolute', left: (x - FC[0]) * fs, top: (y + 1 - FC[1]) * fs, width: 8 * fs, height: 16 * fs, boxSizing: 'border-box', border: `3px solid ${C.amber}`}}>
+              <div style={{position: 'absolute', top: -30, left: 0, fontFamily: MONO, fontSize: 20, color: C.amber, whiteSpace: 'nowrap'}}>{`OAM ${[15, 19, 23, 27][j]}`}</div>
+            </div>
+          ))}
+        </Nes>
+        <Txt x={80} y={790} size={26} color={C.amber} w={900}>枠＝点のスプライト（8×16）。縦は固定、横だけ動く</Txt>
+      </div>
+      <div style={{opacity: clockO}}>
+        <Nes src="drift1" from={300} loop={1800} x={80} y={130} w={700} crop={CK}>
+          {[72, 88].map((y) => [200, 208, 216, 228, 236].map((x, i) => (
+            <div key={`${y}-${x}`} style={{position: 'absolute', left: (x - CK[0]) * cs, top: (y - CK[1]) * cs, width: 8 * cs, height: 16 * cs, boxSizing: 'border-box',
+              border: `3px solid ${i === 0 ? C.amber : 'rgba(63,224,255,.6)'}`, background: i === 0 ? 'rgba(255,181,71,.18)' : 'none'}} />
+          )))}
+        </Nes>
+        <Txt x={80} y={640} size={26} color={C.amber} w={760}>■ 1枚目の 8×16 に「分＋コロン」</Txt>
+        <Nes src="drift1" from={300} loop={1800} x={80} y={700} w={RK[2] * rs} crop={RK}>
+          {[116, 124].map((x, i) => (
+            <div key={x} style={{position: 'absolute', left: (x - RK[0]) * rs, top: (209 - RK[1]) * rs, width: 8 * rs, height: 16 * rs, boxSizing: 'border-box', border: `3px solid ${i ? C.amber : 'rgba(63,224,255,.6)'}`}} />
+          ))}
+        </Nes>
+        <Txt x={280} y={720} size={26} color={C.sub} w={660}>{'順位：数字1枚＋\n英字2文字を8ドットに詰めた1枚'}</Txt>
+      </div>
       <Card x={1020} y={140} w={840} color={C.green} o={ramp(f, c[1], c[1] + 14)}>
         <div style={{fontSize: 30, fontWeight: 900}}>摩擦円の点：15種類のCHRから選ぶ</div>
         <div style={{position: 'relative', height: 340, marginTop: 12}}>
@@ -99,7 +131,7 @@ export const D1: React.FC = () => {
   const steps = [['入力', C.sub], ['4輪の前後・横の\n力の要求', C.cyan], ['摩擦円で制限', C.green], ['合力・モーメント', C.amber], ['速度・角速度を積分', C.amber], ['ばね（ピッチ・ロール）', C.violet], ['4輪の荷重', C.violet]];
   return (
     <Bg>
-      <SceneTitle label="3　物理" />
+      <SceneTitle label="3　物理と最適化" />
       <Big o={useIn(c[0]) * (1 - ramp(f, c[1] - 10, c[1]))} size={84}>第3章　物理と最適化</Big>
       <div style={{opacity: ramp(f, c[1] - 4, c[1] + 12)}}>
         {steps.map(([t, col], i) => (
@@ -125,7 +157,7 @@ export const D2: React.FC = () => {
   const cap = at(G.cap, i);
   return (
     <Bg>
-      <SceneTitle label="おまけ　荷重を決める2つのばね" />
+      <SceneTitle label="3　荷重を決める2つのばね" />
       <Card x={70} y={150} w={1100} color={C.violet} o={useIn(c[0])}>
         <div style={{fontSize: 28, color: C.sub, fontWeight: 700}}>ピッチ（前後）とロール（左右）を同じ式で（F＝前後／横の力）</div>
         <div style={{fontFamily: MONO, fontSize: 38, lineHeight: 1.7, marginTop: 10, opacity: ramp(f, c[1], c[1] + 14)}}>
@@ -185,7 +217,7 @@ export const D4: React.FC = () => {
   const S = 0.17;
   return (
     <Bg>
-      <SceneTitle label="おまけ　物理の重さ" />
+      <SceneTitle label="3　物理の重さ" />
       <Txt x={80} y={160} size={30} color={C.sub} o={useIn(c[0])}>ある重い場面の物理 9,602サイクル（開発途中の計測）の内訳</Txt>
       <div style={{position: 'absolute', left: 80, top: 220, display: 'flex', height: 90, opacity: useIn(c[0])}}>
         {[[2548, '4輪の評価', C.cyan], [1766, '曲がる計算の補正', C.amber], [1429, 'エネルギー補正', C.violet], [3859, 'その他', '#5d6b8f']].map(([v, t, col], i) => (
@@ -208,7 +240,7 @@ export const D5: React.FC = () => {
   const c = [0, 1, 2, 3, 4].map(k);
   return (
     <Bg>
-      <SceneTitle label="おまけ　1ビットも変えない最適化" />
+      <SceneTitle label="3　1ビットも変えない最適化" />
       <Big o={useIn(c[0]) * (1 - ramp(f, c[1] - 10, c[1]))} size={76} color={C.amber}>結果を1ビットも変えない</Big>
       <div style={{opacity: show(f, c[1], c[3])}}>
         <Box2 x={80} y={170} w={340} h={130} color={C.sub} title="同じ直前状態" sub="（保存した実フレーム）" />

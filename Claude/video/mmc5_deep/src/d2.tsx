@@ -208,23 +208,25 @@ const MmInset: React.FC<{src: string; x: number; y: number; w: number}> = ({src,
 };
 export const C3: React.FC = () => {
   const f = useCurrentFrame(), k = K('C3');
-  const c = [0, 1, 2].map(k);
-  const pre = 1 - ramp(f, c[2] - 10, c[2] + 4), post = ramp(f, c[2] - 4, c[2] + 12);
+  const c = [0, 1, 2, 3, 4].map(k);
+  const pre = 1 - ramp(f, c[3] - 10, c[3] + 4), post = ramp(f, c[3] - 4, c[3] + 12);
   return (
     <Bg>
       <SceneTitle label="2　fine X で揺れる縦分割" />
       <div style={{opacity: pre}}>
-        <Nes src="shake_prefix" from={0} loop={240} x={60} y={120} w={880} crop={FULL} />
+        <Nes src="pan_latest_shake" from={0} loop={240} x={60} y={120} w={880} crop={FULL} />
         <Txt x={60} y={835} size={30} color={C.red} w={880}>修正前：コースが横に流れると、右の分割側も一緒に揺れる</Txt>
-        <MmInset src="shake_prefix" x={1040} y={120} w={520} />
+        <MmInset src="pan_latest_shake" x={1040} y={120} w={520} />
+        <Txt x={1600} y={560} size={24} color={C.red} w={300} o={ramp(f, c[2], c[2] + 14)}>{'揺れる＝分割側のBG\n（ミニマップ・ラベル）'}</Txt>
+        <Txt x={1600} y={650} size={24} color={C.green} w={300} o={ramp(f, c[2] + 30, c[2] + 44)}>{'揺れない＝スプライト\n（数字・摩擦円）'}</Txt>
         <Txt x={1600} y={120} size={26} color={C.sub} w={300} mono>{'拡大\n\n線＝正しい左端\nx=195\n\n実測\n195 → 188\n→ 195 …\n（8ドット周期）'}</Txt>
       </div>
       <div style={{opacity: post}}>
-        <Nes src="shake_fixed" from={0} loop={240} x={60} y={130} w={760} crop={FULL} />
+        <Nes src="pan_latest" from={0} loop={240} x={60} y={130} w={760} crop={FULL} />
         <Txt x={60} y={760} size={30} color={C.green} w={760}>修正後：コースは流れても、分割側は止まる</Txt>
         <Txt x={900} y={130} size={32} w={960}>CHR を8種類：右へ 0〜7 ドットずらした絵</Txt>
         {[0, 1, 2, 3, 4, 5, 6, 7].map((n) => {
-          const sc = 4.5, x = 900 + (n % 4) * 240, y = 210 + Math.floor(n / 4) * 260, o = ramp(f, c[2] + 20 + n * 8, c[2] + 34 + n * 8);
+          const sc = 4.5, x = 900 + (n % 4) * 240, y = 210 + Math.floor(n / 4) * 260, o = ramp(f, c[3] + 20 + n * 8, c[3] + 34 + n * 8);
           return (
             <div key={n} style={{position: 'absolute', left: x, top: y, opacity: o}}>
               <div style={{position: 'relative', width: 40 * sc, height: 32 * sc, background: '#000', borderRadius: 6, overflow: 'hidden', border: `2px solid ${C.line}`}}>
@@ -235,8 +237,9 @@ export const C3: React.FC = () => {
             </div>
           );
         })}
-        <Txt x={900} y={720} size={30} w={960} o={ramp(f, c[2] + 110, c[2] + 124)}>そのフレームの fine X で選ぶ → 揺れが打ち消される</Txt>
-        <Txt x={900} y={775} size={22} color={C.sub} w={960} o={ramp(f, c[2] + 110, c[2] + 124)}>※ 修正後の画面の絵から作った図（枠＝8ドットのタイル）</Txt>
+        <Txt x={900} y={720} size={30} w={960} o={ramp(f, c[3] + 110, c[3] + 124)}>そのフレームの fine X で選ぶ → 揺れが打ち消される</Txt>
+        <Txt x={900} y={770} size={28} color={C.amber} w={960} o={ramp(f, c[4], c[4] + 14)}>代わりに CHR のパターンを8倍使う</Txt>
+        <Txt x={900} y={815} size={22} color={C.sub} w={960} o={ramp(f, c[3] + 110, c[3] + 124)}>※ 修正後の画面の絵から作った図（枠＝8ドットのタイル）</Txt>
       </div>
     </Bg>
   );

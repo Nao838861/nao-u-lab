@@ -10,7 +10,7 @@ out = os.path.join(root, 'public', 'gen')
 os.makedirs(out, exist_ok=True)
 with tempfile.TemporaryDirectory() as td:
     png = os.path.join(td, 'f.png')
-    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', '1', '-i', os.path.join(root, 'public/video/shake_fixed.mp4'),
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', '1', '-i', os.path.join(root, 'public/video/pan_latest.mp4'),
                     '-frames:v', '1', '-vf', 'scale=256:240:flags=neighbor', png], check=True)
     im = Image.open(png).convert('RGB')
 art = im.crop((195, 176, 222, 208))  # ミニマップ本体（左端 x=195）

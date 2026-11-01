@@ -73,7 +73,7 @@ export const E2: React.FC = () => {
   const line = (s: number[][]) => Array.from({length: n}, (_, j) => `${(j / (n - 1)) * w},${h - Math.min(1, s[j][0] / 900) * h}`).join(' ');
   return (
     <Bg>
-      <SceneTitle label="おまけ　エンジン音の合成" />
+      <SceneTitle label="4　エンジン音の合成" />
       <div style={{position: 'absolute', left: 80, top: 160, opacity: useIn(c[0])}}>
         <svg width={w} height={h}><rect width={w} height={h} fill="#0b1226" stroke="#2c3b63" />
           <polyline points={line(p1)} fill="none" stroke={C.amber} strokeWidth={3} /><polyline points={line(m1)} fill="none" stroke={C.cyan} strokeWidth={3} /></svg>
@@ -124,7 +124,7 @@ export const F1: React.FC = () => {
   const c = [0, 1, 2, 3, 4].map(k);
   return (
     <Bg>
-      <SceneTitle label="おまけ　メモリマップとゴースト" />
+      <SceneTitle label="5　メモリマップとゴースト" />
       <Big o={useIn(c[0]) * (1 - ramp(f, c[0] + 60, c[0] + 70))} size={84}>第5章　メモリと開発環境</Big>
       <div style={{opacity: ramp(f, c[0] + 66, c[0] + 80)}}>
         {[['PRG 1MB', '辞書61・地図18・準備処理25・物理/ゲーム/音/固定など', C.amber], ['CHR 1MB', '256KB × 4組（向きの下位2bitで切替）', C.violet], ['WRAM 128KB', '8KB × 16バンク（バッテリー付き）', C.cyan]].map(([t, s, col], i) => (
