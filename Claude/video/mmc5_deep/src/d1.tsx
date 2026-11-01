@@ -85,14 +85,22 @@ export const A1: React.FC = () => {
 
 // ---------------- A2 地図と辞書 ----------------
 const KCOL: Record<string, string> = {G: '#2e6b1e', D: '#6d6d6d', S: C.cyan, E: C.amber, R: C.red, O: '#111', U: '#8a5'};
+// 4×4タイルのブロックの小さな絵（道路と縁石）。辞書の説明で同じ模様が1つにまとまる動きに使う。
+const MiniBlock: React.FC<{x: number; y: number; o?: number}> = ({x, y, o = 1}) => (
+  <div style={{position: 'absolute', left: x, top: y, width: 150, height: 150, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 3, opacity: o}}>
+    {['GGRD', 'GRDD', 'RDDD', 'DDDD'].flatMap((row, yy) => row.split('').map((k, xx) => (
+      <div key={`${xx}-${yy}`} style={{background: k === 'G' ? '#2e6b1e' : k === 'R' ? C.red : '#6d6d6d', borderRadius: 3}} />
+    )))}
+  </div>
+);
 export const A2: React.FC = () => {
   const f = useCurrentFrame(), k = K('A2');
-  const c = [1, 2, 3, 4, 5].map(k); // 0行目は CHR の話からのつなぎ
+  const c = [1, 2, 3, 4, 5, 6].map(k); // 0行目は CHR の話からのつなぎ
   const intro = useIn(k(0)) * (1 - ramp(f, c[0] - 10, c[0])), mainO = ramp(f, c[0] - 6, c[0] + 10);
   const g = (blocks0 as {grid: string[]}).grid;
   const cell = 22;
-  const dimUniform = ramp(f, c[1], c[1] + 20);
-  const showDict = ramp(f, c[2], c[2] + 20);
+  const dimUniform = ramp(f, c[2], c[2] + 20);
+  const showDict = ramp(f, c[3], c[3] + 20);
   return (
     <Bg>
       <SceneTitle label="1　地図と辞書" />
@@ -100,7 +108,7 @@ export const A2: React.FC = () => {
         <Box2 x={160} y={300} w={640} h={220} color={C.sub} title="CHR ＝ 模様" sub="ここまでの話（1MB をすべて背景に）" fs={40} />
         <HArrow x={830} y={410} w={220} color={C.cyan} />
         <Box2 x={1080} y={300} w={680} h={220} color={C.cyan} title="ネームテーブル＋ExRAM" sub="どの模様をどこに置くか（毎フレーム432タイル）" fs={40} />
-        <Txt x={1080} y={560} w={680} size={30} color={C.cyan} align="center">ここから：この中身を何から作るか</Txt>
+        <Txt x={1080} y={560} w={680} size={30} color={C.cyan} align="center">ここから：模様をどこに並べるか</Txt>
       </div>
       <div style={{position: 'absolute', left: 0, top: 0, width: 1920, height: 1080, opacity: mainO}}>
       <Pic a={0} x={70} y={130} scale={0.7} style={{borderRadius: 10, opacity: 1 - ramp(f, c[0] + 60, c[0] + 90) * 0.85}} />
@@ -112,30 +120,66 @@ export const A2: React.FC = () => {
         }))}
       </div>
       <Txt x={70} y={782} size={22} color={C.sub} w={680} o={ramp(f, c[0] + 60, c[0] + 90)}>{'向き000の地図（29×29ブロック、1ブロック＝4×4タイル）\n最新ROMから読み出し'}</Txt>
-      <Card x={780} y={140} w={1060} color={C.red} o={ramp(f, c[0] + 20, c[0] + 34)}>
-        <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>そのまま持つと</div>
-        <div style={{fontSize: 44, fontWeight: 900}}>128方向 × 116 × 116 語 × 2バイト ＝ <span style={{color: C.red}}>約3.3MB</span></div>
-        <div style={{fontSize: 28, color: C.amber, fontWeight: 800, marginTop: 6, opacity: ramp(f, c[0] + 200, c[0] + 214)}}>PRG 1MB には入らない → 圧縮が必要</div>
-      </Card>
-      <Card x={780} y={330} w={1060} color="#4c8a3a" o={ramp(f, c[1], c[1] + 14)}>
-        <div style={{fontSize: 34, fontWeight: 900}}><span style={{color: '#7fd06a'}}>■芝生</span>・<span style={{color: '#aaa'}}>■道路</span>だけのブロック＝一様セル（直値）　<span style={{color: C.amber}}>約8割</span></div>
-      </Card>
-      <Card x={780} y={460} w={1060} color={C.amber} o={showDict}>
-        {[['S', 'special：1列だけ模様', '8バイト', '3,923'], ['E', 'extra：半分だけ模様', '16バイト', '4,929'], ['R', 'regular', '32バイト', '10,910']].map(([kk, n, b, cnt]) => (
-          <div key={kk} style={{display: 'flex', gap: 20, fontSize: 32, fontWeight: 800, lineHeight: 1.55}}>
-            <span style={{color: KCOL[kk]}}>■</span><span style={{minWidth: 400}}>{n}</span><span style={{color: C.cyan, minWidth: 150}}>{b}</span><span style={{color: C.sub}}>{cnt}個</span>
+      {/* 右側はセリフごとに1場面ずつ切り替える */}
+      <div style={{opacity: show(f, c[0], c[1])}}>
+        <Txt x={780} y={150} size={32} color={C.sub}>そのまま持つと（128方向 × 116 × 116 語 × 2バイト）</Txt>
+        <div style={{position: 'absolute', left: 780, top: 260, width: 990 * ramp(f, c[0] + 40, c[0] + 160, 0, 1), height: 90, background: C.red, borderRadius: 8}} />
+        <div style={{position: 'absolute', left: 780, top: 245, width: 300, height: 120, border: `4px dashed ${C.cyan}`, borderRadius: 10, boxSizing: 'border-box'}} />
+        <Txt x={780} y={380} size={30} color={C.cyan}>PRG 1MB（全部）</Txt>
+        <Txt x={780} y={440} size={110} color={C.red}>{`約${(3.3 * ramp(f, c[0] + 40, c[0] + 160)).toFixed(1)}MB`}</Txt>
+        <Txt x={780} y={610} size={48} color={C.amber} o={ramp(f, c[0] + 230, c[0] + 246)}>入らない → 圧縮が必要</Txt>
+      </div>
+      <div style={{opacity: show(f, c[1], c[2])}}>
+        <Txt x={780} y={150} size={40}>基本は辞書</Txt>
+        {[0, 1, 2].map((i) => {
+          const t = ramp(f, c[1] + 50, c[1] + 90);
+          return <MiniBlock key={i} x={800 + i * 170 + (1360 - (800 + i * 170)) * t} y={260} o={i === 0 ? 1 : 1 - t * 0.9} />;
+        })}
+        <Txt x={800} y={420} size={26} color={C.sub} o={1 - ramp(f, c[1] + 50, c[1] + 70)}>地図のあちこちにある、同じ模様のブロック</Txt>
+        <div style={{position: 'absolute', left: 1330, top: 230, width: 210, height: 210, border: `4px solid ${C.violet}`, borderRadius: 14, opacity: ramp(f, c[1] + 40, c[1] + 56)}} />
+        <Txt x={1330} y={450} w={210} size={30} color={C.violet} align="center" o={ramp(f, c[1] + 60, c[1] + 76)}>辞書 #57</Txt>
+        <Txt x={780} y={540} size={30} color={C.sub} o={ramp(f, c[1] + 100, c[1] + 116)}>地図には番号だけ</Txt>
+        <div style={{position: 'absolute', left: 780, top: 600, display: 'flex', gap: 14}}>
+          {[0, 1, 2].map((i) => <div key={i} style={{width: 150, height: 90, borderRadius: 10, background: C.panel2, border: `3px solid ${C.violet}`, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontFamily: MONO, fontSize: 40, fontWeight: 900, color: C.violet, opacity: ramp(f, c[1] + 110 + i * 10, c[1] + 124 + i * 10)}}>57</div>)}
+        </div>
+      </div>
+      <div style={{opacity: show(f, c[2], c[3])}}>
+        <Txt x={780} y={170} size={40}><span style={{color: '#7fd06a'}}>■芝生</span>・<span style={{color: '#aaa'}}>■道路</span>だけのブロック</Txt>
+        <Txt x={780} y={250} size={34} color={C.sub}>辞書を使わず、地図に直接</Txt>
+        <Txt x={780} y={330} size={200} color={C.amber}>{`${Math.round(81 * ramp(f, c[2] + 20, c[2] + 80))}%`}</Txt>
+        <Txt x={780} y={600} size={30} color={C.sub}>全セルのうち（左の地図で暗くなったところ）</Txt>
+      </div>
+      <div style={{opacity: show(f, c[3], c[4])}}>
+        <Txt x={780} y={150} size={40}>辞書のブロックも、変化する列だけ</Txt>
+        {[['S', '1列だけ模様', 8, '3,923'], ['E', '半分だけ模様', 16, '4,929'], ['R', 'それ以外', 32, '10,910']].map(([kk, n, bytes, cnt], i) => (
+          <div key={kk as string} style={{position: 'absolute', left: 780, top: 250 + i * 130, opacity: ramp(f, c[3] + 30 + i * 40, c[3] + 44 + i * 40)}}>
+            <div style={{fontSize: 30, fontWeight: 800}}><span style={{color: KCOL[kk as string]}}>■ </span>{n}<span style={{color: C.sub, fontSize: 24}}>{`　${cnt}個`}</span></div>
+            <div style={{display: 'flex', alignItems: 'center', gap: 16, marginTop: 8}}>
+              <div style={{width: (bytes as number) * 22 * ramp(f, c[3] + 36 + i * 40, c[3] + 60 + i * 40), height: 40, background: KCOL[kk as string], borderRadius: 6}} />
+              <span style={{fontSize: 32, fontWeight: 900, color: C.cyan}}>{`${bytes}バイト`}</span>
+            </div>
           </div>
         ))}
-      </Card>
-      <Card x={780} y={680} w={510} color={C.green} o={ramp(f, c[3], c[3] + 14)}>
-        <div style={{fontSize: 26, color: C.sub, fontWeight: 700}}>辞書 約2万ブロック</div>
-        <div style={{fontSize: 36, fontWeight: 900}}>約620KB → <span style={{color: C.green}}>約450KB</span></div>
-      </Card>
-      <Card x={1330} y={680} w={510} color={C.cyan} o={ramp(f, c[4], c[4] + 14)}>
-        <div style={{fontSize: 26, color: C.sub, fontWeight: 700}}>地図の行＝スパン形式</div>
-        <div style={{fontSize: 28, fontWeight: 900, fontFamily: MONO}}>[左端][右端][ptr lo][ptr hi]</div>
-        <div style={{fontSize: 24, color: C.cyan, fontWeight: 800}}>PRG 18バンク</div>
-      </Card>
+      </div>
+      <div style={{opacity: show(f, c[4], c[5])}}>
+        <Txt x={780} y={150} size={40}>辞書 約2万ブロック</Txt>
+        <Txt x={780} y={250} size={28} color={C.sub}>全部32バイトなら</Txt>
+        <div style={{position: 'absolute', left: 780, top: 300, width: 1000, height: 70, background: '#5d6b8f', borderRadius: 8}} />
+        <Txt x={800} y={312} size={34}>約620KB</Txt>
+        <Txt x={780} y={410} size={28} color={C.sub}>変化する列だけ</Txt>
+        <div style={{position: 'absolute', left: 780, top: 460, width: 1000 * ramp(f, c[4] + 20, c[4] + 70, 1, 450 / 620), height: 70, background: C.green, borderRadius: 8}} />
+        <Txt x={800} y={472} size={34} color="#0a0f1e">約450KB</Txt>
+        <Txt x={780} y={580} size={72} color={C.green} o={ramp(f, c[4] + 70, c[4] + 86)}>−約170KB</Txt>
+      </div>
+      <div style={{opacity: show(f, c[5])}}>
+        <Txt x={780} y={150} size={40}>地図の各行も小さく</Txt>
+        <Card x={780} y={240} w={1000} color={C.cyan}>
+          <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>スパン形式：左右の端と、先頭へのポインタだけ</div>
+          <div style={{fontSize: 36, fontWeight: 900, fontFamily: MONO, marginTop: 10}}>[左端][右端][ptr lo][ptr hi]</div>
+        </Card>
+        <Txt x={780} y={460} size={60} color={C.cyan} o={ramp(f, c[5] + 60, c[5] + 76)}>地図は PRG 18バンク</Txt>
+      </div>
       </div>
     </Bg>
   );
