@@ -103,7 +103,7 @@ export const A2: React.FC = () => {
             opacity: uni ? 1 - 0.7 * dimUniform : 0.35 + 0.65 * showDict}} />;
         }))}
       </div>
-      <Txt x={70} y={790} size={26} color={C.sub} o={ramp(f, c[0] + 60, c[0] + 90)}>向き000の地図（29×29ブロック、1ブロック＝4×4タイル）　最新ROMから読み出し</Txt>
+      <Txt x={70} y={790} size={26} color={C.sub} w={680} o={ramp(f, c[0] + 60, c[0] + 90)}>向き000の地図（29×29ブロック、1ブロック＝4×4タイル）　最新ROMから読み出し</Txt>
       <Card x={780} y={140} w={1060} color={C.red} o={ramp(f, c[0] + 20, c[0] + 34)}>
         <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>そのまま持つと</div>
         <div style={{fontSize: 44, fontWeight: 900}}>128方向 × 116 × 116 語 × 2バイト ＝ <span style={{color: C.red}}>約3.3MB</span></div>

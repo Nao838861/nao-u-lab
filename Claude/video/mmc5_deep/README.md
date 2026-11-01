@@ -12,7 +12,7 @@
 | C1, C3, C4, C6 | 2 縦分割とスプライト：画面の分解とExRAMの同居、fine X の揺れ（最新ROMの相殺だけを外した版の全画面＋拡大、BG＝揺れる／スプライト＝揺れない、8種類のCHRの図）、境界の黒帯（外した映像→実OAMの12枚の配置図）、OAM割り当て（摩擦円の拡大＋点のスプライト枠を毎フレームの実OAMで、時計・順位のスプライト枠） |
 | D1–D5 | 3 物理と最適化：更新の流れ、ばね、タイヤ力とMMC5乗算器、処理時間、same-PRE・唯一の近似・撤回した調整 |
 | E1–E3 | 4 サウンド：5音の割り当てと再合成音、エンジン音の合成、ジングル |
-| F1–F3, Z9 | 5 メモリと開発環境：メモリマップとゴースト、AIの検証環境、Webカメラでの実機デバッグ（テレビの写真は撮影待ちで仮枠：`src/d4.tsx` の `WEBCAM_IMG`）、おわりに |
+| F1–F3, Z9 | 5 メモリと開発環境：メモリマップとゴースト、AIの検証環境、Webカメラでの実機デバッグ（Nao_u が撮った実機のテレビ映像）、おわりに |
 | おまけ | A3 転置辞書 → A4 自己書き換え → B1–B4 経緯（WRAMバッファ8,818→直接転送→列転送176→転置→オペコード書き換え4,660→全数検査 残り141）→ C7 1フレームの流れ |
 
 ## 素材と根拠
@@ -21,6 +21,7 @@
 - **摩擦円の点の枠**：`tools/oam_track.mjs` がリプレイを再生して OAM 15/19/23/27 を毎フレーム記録（`src/data/dot_oam.json`）。Y は常に固定（119／151）、X だけが動く。
 - **修正前ROMの比較映像（旧）**：`tools/pan.mjs` がカウントダウン中に自車の位置・向きを毎フレーム書き換えて視点を流す。
   - fine X：`265f0db`（ミニマップ復活時、揺れあり）と `aadb683`（相殺後）の配布ROM。実測でミニマップ左端が 195→188→195 と8ドット周期で動く／195固定。
+- **Webカメラの映像**：Nao_u が N8 Pro の実機をWebカメラで撮った `capture(1).mp4`（640×480・約46秒）から、メニュー→起動→走行→GAME OVER（1〜18.5秒）とメニュー復帰（38.6秒〜。直前のリセット時の乱れたコマは外す）をつなぎ、テレビ画面だけを4:3で切り出した（`public/video/webcam.mp4`）。
 - **Webカメラの話**：MMC5Racing `origin/codex/webcam-debug-log-20261026` の README（2D の1〜5節のみ使用）。
 - **8種類のCHRの図**：`tools/finex_variants.py` が修正後の画面からミニマップを切り出して0〜7ドットずらしたもの（ROM内では断片に分かれていて、そのままは取り出せない）。
 - **チャンネル別の音**：Mesen を Lua 付きで実行し、タイトルから DRIFT 1位の入力列を流して音源レジスターへの書き込みを記録（`tools/apu_log.lua`）。入力列は開始状態の違いで約1,100コマ後に衝突して終わるが、走行中の5音は記録できた。`tools/apu_synth.py` でチャンネルごとに再合成（エンベロープ等は近似）。主音と排気音の周波数比は記録で常に2.0。ジングルはリプレイ録画のゴール時の実音。
@@ -42,6 +43,7 @@ node tools/pan.mjs rec/roms/latest.nes rec/pan_latest 300 300 0.37 0 0 240
 ffmpeg -f rawvideo -pix_fmt rgb24 -s 256x240 -r 60 -i rec/pan_latest_shake/frames.rgb -vf scale=768:720:flags=neighbor -c:v libx264 -crf 12 -pix_fmt yuv420p public/video/pan_latest_shake.mp4
 node tools/oam_track.mjs rec/replay_drift1.json 300 1800
 python -B tools/finex_variants.py
+ffmpeg -i "capture(1).mp4" -filter_complex "[0:v]trim=1:18.5,setpts=PTS-STARTPTS[a];[0:v]trim=38.6:45.7,setpts=PTS-STARTPTS[b];[a][b]concat=n=2:v=1[c];[c]crop=480:360:140:34,scale=960:720:flags=lanczos,eq=contrast=1.12:saturation=1.08[v]" -map "[v]" -an -r 60 -c:v libx264 -crf 16 -pix_fmt yuv420p public/video/webcam.mp4
 node tools/tts.mjs
 node tools/stills.mjs
 npm run render

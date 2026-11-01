@@ -1,5 +1,5 @@
 import React from 'react';
-import {Audio, Img, Sequence, staticFile, useCurrentFrame} from 'remotion';
+import {Audio, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {Bg, C, FPS, SceneTitle, Tag, cueEnd, cueOf, useIn} from './common';
 import {Big, Box2, Card, HArrow, MONO, Nes, Txt, ramp} from './parts';
 import apu from './data/apu.json';
@@ -167,8 +167,7 @@ export const F2: React.FC = () => {
 };
 
 // ---------------- F3 Webカメラで実機を見る ----------------
-// Webカメラで撮ったテレビの画像（public/gen/ に置いてファイル名を書く）。null の間は仮の枠を出す。
-const WEBCAM_IMG: string | null = null;
+// Webカメラで撮った実機（N8 Pro）のテレビ画面。メニュー→起動→固定入力で走行→GAME OVER→メニュー復帰（public/video/webcam.mp4、README の再生成手順）。
 export const F3: React.FC = () => {
   const f = useCurrentFrame(), k = K('F3');
   const c = [0, 1, 2].map(k);
@@ -179,16 +178,14 @@ export const F3: React.FC = () => {
       {steps.map((t, i) => (
         <Box2 key={t} x={80} y={140 + i * 96} w={740} h={80} color={C.cyan} title={`${i + 1}. ${t}`} fs={28} o={ramp(f, c[0] + i * 12, c[0] + i * 12 + 12)} />
       ))}
-      <div style={{position: 'absolute', left: 900, top: 140, width: 960, height: 540, borderRadius: 12, overflow: 'hidden', background: '#000', opacity: ramp(f, c[0] + 40, c[0] + 56),
-        border: WEBCAM_IMG ? 'none' : `4px dashed ${C.sub}`, boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        {WEBCAM_IMG
-          ? <Img src={staticFile(`gen/${WEBCAM_IMG}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-          : <div style={{fontSize: 36, fontWeight: 800, color: C.sub, textAlign: 'center', lineHeight: 1.6}}>Webカメラで撮ったテレビ画面<br />（仮・撮影待ち）</div>}
+      <div style={{position: 'absolute', left: 1000, top: 130, width: 760, height: 570, borderRadius: 12, overflow: 'hidden', background: '#000', opacity: ramp(f, c[0] + 20, c[0] + 36), boxShadow: '0 12px 44px rgba(0,0,0,.6)'}}>
+        <Sequence from={c[0] + 20}><OffthreadVideo src={staticFile('video/webcam.mp4')} muted style={{width: 760, height: 570}} /></Sequence>
       </div>
+      <Txt x={1000} y={705} size={22} color={C.sub} w={760}>Webカメラで撮った実機の画面（メニュー → 起動 → 固定入力で走行 → GAME OVER → メニューへ）</Txt>
       <Card x={80} y={730} w={740} color={C.amber} o={ramp(f, c[1], c[1] + 14)}>
         <div style={{fontSize: 26, fontWeight: 800, lineHeight: 1.6}}>AIがリアルタイムに操作したのではない<br />リセット・カメラの向き・操作感の確認は人</div>
       </Card>
-      <div style={{position: 'absolute', left: 900, top: 730, width: 960, display: 'flex', flexWrap: 'wrap', gap: 14, opacity: ramp(f, c[2], c[2] + 14)}}>
+      <div style={{position: 'absolute', left: 1000, top: 770, width: 860, display: 'flex', flexWrap: 'wrap', gap: 14, opacity: ramp(f, c[2], c[2] + 14)}}>
         {['エミュレーターで動く', '実機で絵が出る', 'メニューへ戻る'].map((t) => <Tag key={t} color={C.green}>{`✓ ${t}`}</Tag>)}
         <Tag color={C.sub}>＝それぞれ別の合格条件</Tag>
       </div>
