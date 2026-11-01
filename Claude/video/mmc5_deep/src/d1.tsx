@@ -115,6 +115,7 @@ export const A2: React.FC = () => {
       <Card x={780} y={140} w={1060} color={C.red} o={ramp(f, c[0] + 20, c[0] + 34)}>
         <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>そのまま持つと</div>
         <div style={{fontSize: 44, fontWeight: 900}}>128方向 × 116 × 116 語 × 2バイト ＝ <span style={{color: C.red}}>約3.3MB</span></div>
+        <div style={{fontSize: 28, color: C.amber, fontWeight: 800, marginTop: 6, opacity: ramp(f, c[0] + 200, c[0] + 214)}}>PRG 1MB には入らない → 圧縮が必要</div>
       </Card>
       <Card x={780} y={330} w={1060} color="#4c8a3a" o={ramp(f, c[1], c[1] + 14)}>
         <div style={{fontSize: 34, fontWeight: 900}}><span style={{color: '#7fd06a'}}>■芝生</span>・<span style={{color: '#aaa'}}>■道路</span>だけのブロック＝一様セル（直値）　<span style={{color: C.amber}}>約8割</span></div>
