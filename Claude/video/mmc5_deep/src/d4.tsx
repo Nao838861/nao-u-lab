@@ -2,120 +2,8 @@ import React from 'react';
 import {Audio, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {Bg, C, FPS, SceneTitle, Tag, cueEnd, cueOf, useIn} from './common';
 import {Big, Box2, Card, HArrow, MONO, Nes, Txt, ramp} from './parts';
-import apu from './data/apu.json';
 
 const K = (id: string) => (i: number) => cueOf(id, i);
-const A = apu as {start: number; frames: number[]; ch: Record<string, number[][]>};
-const CLIP_FRAME = 700; // 記録の700コマ目から（タイヤ音が途切れず鳴る区間）
-const CLIP_SEC = CLIP_FRAME / 60.0988;
-const CH: [string, string, string][] = [
-  ['apu_pulse1', 'APU 矩形波1', 'エンジンの主音'], ['mmc5_pulse1', 'MMC5 矩形波1', '低い排気音'], ['mmc5_pulse2', 'MMC5 矩形波2', '排気音の倍音'],
-  ['noise', 'APU ノイズ', '燃焼の音・ブローオフ'], ['apu_pulse2', 'APU 矩形波2', 'タイヤの音'],
-];
-const COL = [C.amber, C.cyan, C.violet, '#9fb0d6', C.green];
-
-const Spark: React.FC<{key2: string; x: number; y: number; w: number; h: number; col: string; cur: number; maxHz: number}> = ({key2, x, y, w, h, col, cur, maxHz}) => {
-  const series = A.ch[key2];
-  const i0 = A.frames.indexOf(CLIP_FRAME), n = 252;
-  const pts = Array.from({length: n}, (_, j) => { const v = series[i0 + j] ?? [0, 0]; return `${(j / (n - 1)) * w},${h - (v[1] > 0 ? Math.min(1, v[0] / maxHz) : 0) * h}`; }).join(' ');
-  return (
-    <svg width={w} height={h} style={{position: 'absolute', left: x, top: y}}>
-      <rect width={w} height={h} fill="#0b1226" stroke="#2c3b63" />
-      <polyline points={pts} fill="none" stroke={col} strokeWidth={3} />
-      {cur >= 0 ? <line x1={cur * w} x2={cur * w} y1={0} y2={h} stroke="#fff" strokeWidth={2} /> : null}
-    </svg>
-  );
-};
-
-// ---------------- E1 チャンネル ----------------
-export const E1: React.FC = () => {
-  const f = useCurrentFrame(), k = K('E1');
-  const c = [0, 1, 2, 3, 4, 5, 6, 7].map(k);
-  const playing = (j: number) => { const s = cueEnd('E1', j + 2); return f >= s && f < s + 4.2 * FPS ? (f - s) / (4.2 * FPS) : -1; };
-  const mixP = f >= cueEnd('E1', 7) && f < cueEnd('E1', 7) + 5.5 * FPS ? (f - cueEnd('E1', 7)) / (4.2 * FPS) : -1;
-  const files = ['apu_pulse1', 'mmc5_pulse1', 'mmc5_pulse2', 'noise', 'apu_pulse2'];
-  return (
-    <Bg>
-      <SceneTitle label="おまけ　サウンド：5つの音をすべてエンジンとタイヤに" />
-      <Big o={useIn(c[0]) * (1 - ramp(f, c[0] + 70, c[0] + 80))} size={84}>おまけ　サウンド</Big>
-      {CH.map(([key2, name, role], j) => {
-        const p = playing(j);
-        const lit = p >= 0 || mixP >= 0;
-        return (
-          <div key={key2} style={{opacity: ramp(f, c[0] + 80 + j * 8, c[0] + 92 + j * 8)}}>
-            <div style={{position: 'absolute', left: 80, top: 150 + j * 128, width: 760, height: 108, borderRadius: 12, border: `3px solid ${lit ? COL[j] : '#2c3b63'}`,
-              background: lit ? `${COL[j]}22` : C.panel, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 24px', boxSizing: 'border-box'}}>
-              <div style={{fontSize: 32, fontWeight: 900, color: COL[j]}}>{name}</div><div style={{fontSize: 26, fontWeight: 700}}>{role}</div>
-            </div>
-            <Spark key2={key2} x={880} y={150 + j * 128} w={960} h={108} col={COL[j]} cur={p >= 0 ? p : mixP >= 0 ? Math.min(1, mixP) : -1} maxHz={key2 === 'noise' ? 12000 : key2 === 'apu_pulse2' ? 2200 : 1000} />
-          </div>
-        );
-      })}
-      <Txt x={80} y={800} size={26} color={C.sub} o={ramp(f, c[1], c[1] + 14)}>三角波＝ジングル専用、DPCM・MMC5 PCM＝未使用（走行中の書き込みを実測）。グラフ＝周波数の推移（約4秒）</Txt>
-      {files.map((name, j) => (
-        <Sequence key={name} from={cueEnd('E1', j + 2)} durationInFrames={Math.round(4.2 * FPS)}>
-          <Audio src={staticFile(`audio/ch_${name}.wav`)} startFrom={Math.round(CLIP_SEC * FPS)} volume={0.9} />
-        </Sequence>
-      ))}
-      <Sequence from={cueEnd('E1', 7)} durationInFrames={Math.round(5.5 * FPS)}>
-        <Audio src={staticFile('audio/ch_mix.wav')} startFrom={Math.round(CLIP_SEC * FPS)} volume={0.9} />
-      </Sequence>
-    </Bg>
-  );
-};
-
-// ---------------- E2 エンジン音の合成 ----------------
-export const E2: React.FC = () => {
-  const f = useCurrentFrame(), k = K('E2');
-  const c = [0, 1, 2, 3, 4].map(k);
-  const p1 = A.ch.apu_pulse1, m1 = A.ch.mmc5_pulse1;
-  const n = Math.min(900, p1.length), w = 1000, h = 300;
-  const line = (s: number[][]) => Array.from({length: n}, (_, j) => `${(j / (n - 1)) * w},${h - Math.min(1, s[j][0] / 900) * h}`).join(' ');
-  return (
-    <Bg>
-      <SceneTitle label="おまけ　エンジン音の合成" />
-      <div style={{position: 'absolute', left: 80, top: 160, opacity: useIn(c[0])}}>
-        <svg width={w} height={h}><rect width={w} height={h} fill="#0b1226" stroke="#2c3b63" />
-          <polyline points={line(p1)} fill="none" stroke={C.amber} strokeWidth={3} /><polyline points={line(m1)} fill="none" stroke={C.cyan} strokeWidth={3} /></svg>
-        <Txt x={0} y={h + 10} size={26} color={C.sub}>走行中の周波数（記録から）　<span style={{color: C.amber}}>■主音 APU矩形波1</span>　<span style={{color: C.cyan}}>■排気音 MMC5矩形波1</span>　比はどの時点でも 2.0</Txt>
-      </div>
-      <Card x={1130} y={160} w={710} color={C.amber} o={ramp(f, c[1], c[1] + 14)}>
-        <div style={{fontSize: 26, color: C.sub, fontWeight: 700}}>音程のカーブ（速度0〜85）</div>
-        <div style={{fontSize: 36, fontWeight: 900, fontFamily: MONO}}>u = 1 − (1 − v/85)²</div>
-        <div style={{fontSize: 24, color: C.sub}}>約55Hzから上がる</div>
-      </Card>
-      <Card x={80} y={540} w={860} color={C.violet} o={ramp(f, c[2], c[2] + 14)}>
-        <div style={{fontSize: 26, fontWeight: 800, lineHeight: 1.6}}>アクセルOFF：回転数＝速度の半分（主音が滑り下がる）<br />高速なら短いノイズ（ブローオフ）<br />ノッキング：NMIの下位3bitで排気音の音量を約7.5Hzで揺らす</div>
-      </Card>
-      <Card x={980} y={420} w={860} color={C.green} o={ramp(f, c[3], c[3] + 14)}>
-        <div style={{fontSize: 28, fontWeight: 800}}>タイヤ：横滑り・飽和 OR ブレーキ</div>
-      </Card>
-      <Card x={980} y={560} w={860} color={C.cyan} o={ramp(f, c[4], c[4] + 14)}>
-        <div style={{fontSize: 30, fontWeight: 900}}>どの経路も 181サイクル</div>
-        <div style={{fontSize: 24, color: C.sub, marginTop: 6}}>APUへの書き込み時刻もそろえる。ブレーキ音の追加も総サイクル不変</div>
-      </Card>
-    </Bg>
-  );
-};
-
-// ---------------- E3 ジングル ----------------
-export const E3: React.FC = () => {
-  const f = useCurrentFrame(), k = K('E3');
-  const c = [0, 1].map(k);
-  return (
-    <Bg>
-      <SceneTitle label="おまけ　ジングル" />
-      <Nes src="drift1" from={2130} x={80} y={140} w={760} volume={0.9} />
-      <div style={{position: 'absolute', left: 900, top: 170, display: 'flex', flexWrap: 'wrap', gap: 14, width: 940, opacity: useIn(c[0])}}>
-        {['MMC5 矩形波1', 'MMC5 矩形波2', 'APU 三角波', 'APU ノイズ'].map((t) => <Tag key={t} color={C.violet}>{t}</Tag>)}
-      </div>
-      <Txt x={900} y={300} size={28} color={C.sub} w={940} o={useIn(c[0])}>ゴールで排気音を止めて4声に渡す（APU矩形波2本はエンジンとタイヤのまま）</Txt>
-      <Card x={900} y={420} w={940} color={C.cyan} o={ramp(f, c[1], c[1] + 14)}>
-        <div style={{fontSize: 28, fontWeight: 800, lineHeight: 1.6}}>ドライバー：メイン処理の先頭で1回だけ<br />NMI・IRQには触らない<br />テンポは NMI カウンターで実時間に追従</div>
-      </Card>
-    </Bg>
-  );
-};
 
 // ---------------- F1 メモリマップとゴースト ----------------
 const WRAM: [string, string][] = [['ゲーム', C.amber], ['型', C.cyan], ['型', C.cyan], ['型', C.cyan], ['型', C.cyan], ['型', C.cyan], ['型', C.cyan], ['—', '#2c3b63'], ['ゴースト', '#ff9de1'], ['ゴースト', '#ff9de1'], ['ゴースト', '#ff9de1'], ['ゴースト', '#ff9de1'], ['ゴースト', '#ff9de1'], ['ゴースト', '#ff9de1'], ['—', '#2c3b63'], ['ゲーム', C.amber]];
@@ -127,7 +15,7 @@ export const F1: React.FC = () => {
       <SceneTitle label="4　メモリマップとゴースト" />
       <Big o={useIn(c[0]) * (1 - ramp(f, c[0] + 60, c[0] + 70))} size={84}>第4章　メモリと開発環境</Big>
       <div style={{opacity: ramp(f, c[0] + 66, c[0] + 80)}}>
-        {[['PRG 1MB', '辞書61・地図18・準備処理25・物理/ゲーム/音/固定など', C.amber], ['CHR 1MB', '256KB × 4組（向きの下位2bitで切替）', C.violet], ['WRAM 128KB', '8KB × 16バンク（バッテリー付き）', C.cyan]].map(([t, s, col], i) => (
+        {[['PRG 1MB', '辞書61・ネームテーブル18・準備処理25・物理/ゲーム/音/固定など', C.amber], ['CHR 1MB', '256KB × 4組（向きの下位2bitで切替）', C.violet], ['WRAM 128KB', '8KB × 16バンク（バッテリー付き）', C.cyan]].map(([t, s, col], i) => (
           <Card key={t} x={80} y={150 + i * 120} w={900} color={col}><div style={{fontSize: 32, fontWeight: 900}}>{t}<span style={{fontSize: 24, color: C.sub, marginLeft: 16}}>{s}</span></div></Card>
         ))}
       </div>

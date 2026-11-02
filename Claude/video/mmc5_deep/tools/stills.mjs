@@ -6,7 +6,7 @@ import {bundle} from '@remotion/bundler';
 import {renderStill, selectComposition} from '@remotion/renderer';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const T = JSON.parse(await readFile(path.join(root, 'src/timing.json'), 'utf8'));
-const only = process.argv.slice(2).filter((a) => /^S\d\d$/.test(a));
+const only = process.argv.slice(2).filter((a) => /^[A-Z]\d+$/.test(a));
 const delay = Number(process.argv.find((a) => a.startsWith('--delay='))?.slice(8) ?? 70);
 const serveUrl = await bundle({entryPoint: path.join(root, 'src/index.ts'), publicDir: path.join(root, 'public')});
 await mkdir(path.join(root, 'out/stills'), {recursive: true});

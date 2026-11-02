@@ -10,7 +10,7 @@ const K = (id: string) => (i: number) => cueOf(id, i);
 const show = (f: number, a: number, b?: number) => ramp(f, a - 4, a + 12) * (b === undefined ? 1 : 1 - ramp(f, b - 10, b));
 
 // ---------------- P00 前置き ----------------
-const CHAPTERS: [string, string][] = [['A1', '1　背景の表示と転送'], ['C1', '2　縦分割とスプライト'], ['D1', '3　物理と最適化'], ['F1', '4　メモリと開発環境'], ['A3', 'おまけ　転送の細部と、ここに至るまで'], ['E1', 'おまけ　サウンド']];
+const CHAPTERS: [string, string][] = [['A1', '1　背景の表示と転送'], ['C1', '2　縦分割とスプライト'], ['D1', '3　物理と最適化'], ['F1', '4　メモリと開発環境'], ['A3', 'おまけ　転送の細部と、ここに至るまで']];
 const startOf = (id: string) => { let t = 0; for (const s of sceneOrder) { if (s === id) return t; t += sceneFrames(s); } return t; };
 const mmss = (fr: number) => { const s = Math.round(fr / FPS); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
 export const P00: React.FC = () => {
@@ -83,14 +83,14 @@ export const A1: React.FC = () => {
           <div style={{display: 'flex', gap: 14, marginTop: 14}}>
             {[0, 1, 2, 3].map((q) => <div key={q} style={{flex: 1, height: 58, borderRadius: 8, background: '#2a2050', border: `2px solid ${C.violet}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 800}}>{`組${q}　256KB`}</div>)}
           </div>
-          <div style={{fontSize: 26, color: C.violet, marginTop: 10, fontWeight: 800}}>CHR 1MB をすべて背景に</div>
+          <div style={{fontSize: 26, color: C.violet, marginTop: 10, fontWeight: 800}}>4組 × 256KB ＝ CHR 1MB</div>
         </Card>
       </div>
     </Bg>
   );
 };
 
-// ---------------- A2 地図と辞書 ----------------
+// ---------------- A2 ネームテーブルと辞書 ----------------
 const KCOL: Record<string, string> = {G: '#2e6b1e', D: '#6d6d6d', S: C.cyan, E: C.amber, R: C.red, O: '#111', U: '#8a5'};
 // 4×4タイルのブロックの小さな絵（道路と縁石）。辞書の説明で同じ模様が1つにまとまる動きに使う。
 const MiniBlock: React.FC<{x: number; y: number; o?: number}> = ({x, y, o = 1}) => (
@@ -110,7 +110,7 @@ export const A2: React.FC = () => {
   const showDict = ramp(f, c[3], c[3] + 20);
   return (
     <Bg>
-      <SceneTitle label="1　地図と辞書" />
+      <SceneTitle label="1　ネームテーブルと辞書" />
       <div style={{position: 'absolute', left: 0, top: 0, width: 1920, height: 1080, opacity: intro}}>
         <Box2 x={160} y={300} w={640} h={220} color={C.sub} title="CHR ＝ 模様" sub="ここまでの話（1MB をすべて背景に）" fs={40} />
         <HArrow x={830} y={410} w={220} color={C.cyan} />
@@ -126,7 +126,7 @@ export const A2: React.FC = () => {
             opacity: uni ? 1 - 0.7 * dimUniform : 0.35 + 0.65 * showDict}} />;
         }))}
       </div>
-      <Txt x={70} y={782} size={22} color={C.sub} w={680} o={ramp(f, c[0] + 60, c[0] + 90)}>{'向き000の地図（29×29ブロック、1ブロック＝4×4タイル）\n最新ROMから読み出し'}</Txt>
+      <Txt x={70} y={782} size={22} color={C.sub} w={680} o={ramp(f, c[0] + 60, c[0] + 90)}>{'向き000のネームテーブル（116×116タイル＝29×29ブロック）\n最新ROMから読み出し'}</Txt>
       {/* 右側はセリフごとに1場面ずつ切り替える */}
       <div style={{opacity: show(f, c[0], c[1])}}>
         <Txt x={780} y={150} size={32} color={C.sub}>そのまま持つと（128方向 × 116 × 116 語 × 2バイト）</Txt>
@@ -137,15 +137,15 @@ export const A2: React.FC = () => {
         <Txt x={780} y={610} size={48} color={C.amber} o={ramp(f, c[0] + 230, c[0] + 246)}>入らない → 圧縮が必要</Txt>
       </div>
       <div style={{opacity: show(f, c[1], c[2])}}>
-        <Txt x={780} y={150} size={40}>基本は辞書</Txt>
+        <Txt x={780} y={150} size={40}>同じブロックは辞書に1つだけ</Txt>
         {[0, 1, 2].map((i) => {
           const t = ramp(f, c[1] + 50, c[1] + 90);
           return <MiniBlock key={i} x={800 + i * 170 + (1360 - (800 + i * 170)) * t} y={260} o={i === 0 ? 1 : 1 - t * 0.9} />;
         })}
-        <Txt x={800} y={420} size={26} color={C.sub} o={1 - ramp(f, c[1] + 50, c[1] + 70)}>地図のあちこちにある、同じ模様のブロック</Txt>
+        <Txt x={800} y={420} size={26} color={C.sub} o={1 - ramp(f, c[1] + 50, c[1] + 70)}>コースのあちこちにある、同じ並びのブロック</Txt>
         <div style={{position: 'absolute', left: 1330, top: 230, width: 210, height: 210, border: `4px solid ${C.violet}`, borderRadius: 14, opacity: ramp(f, c[1] + 40, c[1] + 56)}} />
         <Txt x={1330} y={450} w={210} size={30} color={C.violet} align="center" o={ramp(f, c[1] + 60, c[1] + 76)}>辞書 #57</Txt>
-        <Txt x={780} y={540} size={30} color={C.sub} o={ramp(f, c[1] + 100, c[1] + 116)}>地図には番号だけ</Txt>
+        <Txt x={780} y={540} size={30} color={C.sub} o={ramp(f, c[1] + 100, c[1] + 116)}>ネームテーブルのデータには番号だけ</Txt>
         <div style={{position: 'absolute', left: 780, top: 600, display: 'flex', gap: 14}}>
           {[0, 1, 2].map((i) => <div key={i} style={{width: 150, height: 90, borderRadius: 10, background: C.panel2, border: `3px solid ${C.violet}`, display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontFamily: MONO, fontSize: 40, fontWeight: 900, color: C.violet, opacity: ramp(f, c[1] + 110 + i * 10, c[1] + 124 + i * 10)}}>57</div>)}
@@ -153,9 +153,9 @@ export const A2: React.FC = () => {
       </div>
       <div style={{opacity: show(f, c[2], c[3])}}>
         <Txt x={780} y={170} size={40}><span style={{color: '#7fd06a'}}>■芝生</span>・<span style={{color: '#aaa'}}>■道路</span>だけのブロック</Txt>
-        <Txt x={780} y={250} size={34} color={C.sub}>辞書を使わず、地図に直接</Txt>
+        <Txt x={780} y={250} size={34} color={C.sub}>辞書を使わず、直接書く</Txt>
         <Txt x={780} y={330} size={200} color={C.amber}>{`${Math.round(81 * ramp(f, c[2] + 20, c[2] + 80))}%`}</Txt>
-        <Txt x={780} y={600} size={30} color={C.sub}>全セルのうち（左の地図で暗くなったところ）</Txt>
+        <Txt x={780} y={600} size={30} color={C.sub}>全ブロックのうち（左で暗くなったところ）</Txt>
       </div>
       <div style={{opacity: show(f, c[3], c[4])}}>
         <Txt x={780} y={150} size={40}>辞書のブロックも、変化する列だけ</Txt>
@@ -180,12 +180,12 @@ export const A2: React.FC = () => {
         <Txt x={780} y={580} size={72} color={C.green} o={ramp(f, c[4] + 70, c[4] + 86)}>−約170KB</Txt>
       </div>
       <div style={{opacity: show(f, c[5])}}>
-        <Txt x={780} y={150} size={40}>地図の各行も小さく</Txt>
+        <Txt x={780} y={150} size={40}>ネームテーブルのデータも各行を小さく</Txt>
         <Card x={780} y={240} w={1000} color={C.cyan}>
           <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>スパン形式：左右の端と、先頭へのポインタだけ</div>
           <div style={{fontSize: 36, fontWeight: 900, fontFamily: MONO, marginTop: 10}}>[左端][右端][ptr lo][ptr hi]</div>
         </Card>
-        <Txt x={780} y={460} size={60} color={C.cyan} o={ramp(f, c[5] + 60, c[5] + 76)}>地図は PRG 18バンク</Txt>
+        <Txt x={780} y={460} size={60} color={C.cyan} o={ramp(f, c[5] + 60, c[5] + 76)}>PRG 18バンクに収まる</Txt>
       </div>
       </div>
     </Bg>
@@ -270,10 +270,10 @@ export const A6: React.FC = () => {
   return (
     <Bg>
       <SceneTitle label="1　転送のしくみ" />
-      <Box2 x={80} y={200} w={340} h={150} color={C.amber} title="地図＋辞書" sub="PRG" o={useIn(c[0])} />
+      <Box2 x={80} y={200} w={340} h={150} color={C.amber} title="ネームテーブル＋辞書" sub="PRG" o={useIn(c[0])} />
       <HArrow x={430} y={275} w={1000} color={C.cyan} label="毎フレーム 432タイル" o={useIn(c[0] + 10)} />
       <Box2 x={1440} y={200} w={400} h={150} color={C.cyan} title="PPU / ExRAM" o={useIn(c[0] + 16)} />
-      <Box2 x={560} y={470} w={400} h={170} color={C.violet} title="準備処理" sub="地図を読んで命令を書き換える" fs={34} o={useIn(c[1])} />
+      <Box2 x={560} y={470} w={400} h={170} color={C.violet} title="準備処理" sub="データを読んで命令を書き換える" fs={34} o={useIn(c[1])} />
       <HArrow x={970} y={555} w={150} color={C.violet} o={useIn(c[1] + 10)} />
       <Box2 x={1130} y={470} w={460} h={170} color={C.green} title="WRAMの転送の型" sub="ループのない命令列" fs={34} o={useIn(c[1] + 16)} />
       <Txt x={1130} y={380} w={460} size={26} color={C.green} align="center" o={useIn(c[1] + 60)}>画面を消している間に一気に流れる ↑</Txt>
@@ -286,7 +286,7 @@ export const A6: React.FC = () => {
 };
 
 // ---------------- A5 PRGの内訳 ----------------
-const PRG: [string, number, number, string][] = [['辞書', 0, 61, C.amber], ['地図', 61, 18, C.cyan], ['準備処理（生成コード）', 79, 13, C.violet], ['起動データ', 92, 1, '#5d6b8f'], ['準備処理', 93, 12, C.violet], ['投影・起動', 105, 3, '#5d6b8f'], ['音・結果', 108, 1, C.green], ['物理・ゲーム・UI・固定', 109, 19, C.red]];
+const PRG: [string, number, number, string][] = [['辞書', 0, 61, C.amber], ['ネームテーブル', 61, 18, C.cyan], ['準備処理（生成コード）', 79, 13, C.violet], ['起動データ', 92, 1, '#5d6b8f'], ['準備処理', 93, 12, C.violet], ['投影・起動', 105, 3, '#5d6b8f'], ['音・結果', 108, 1, C.green], ['物理・ゲーム・UI・固定', 109, 19, C.red]];
 export const A5: React.FC = () => {
   const f = useCurrentFrame(), c0 = K('A5')(0);
   return (
@@ -297,7 +297,7 @@ export const A5: React.FC = () => {
         <div style={{position: 'absolute', left: 60, top: 260, width: 1800, height: 120, display: 'flex', borderRadius: 10, overflow: 'hidden'}}>
           {PRG.map(([n, s0, len, col], i) => <div key={i} style={{width: (len / 128) * 1800 * ramp(f, c0 + i * 6, c0 + i * 6 + 20), background: col, borderRight: '2px solid #0a0f1e'}} />)}
         </div>
-        {[['辞書', 61, C.amber], ['地図', 18, C.cyan], ['準備処理（生成コード）', 25, C.violet], ['物理・ゲーム・UI・音・固定など', 24, C.red]].map(([n, len, col], i) => (
+        {[['辞書', 61, C.amber], ['ネームテーブル', 18, C.cyan], ['準備処理（生成コード）', 25, C.violet], ['物理・ゲーム・UI・音・固定など', 24, C.red]].map(([n, len, col], i) => (
           <Txt key={i} x={60 + (i % 2) * 900} y={420 + Math.floor(i / 2) * 80} size={38} color={col as string}>{`■ ${n}　${len}バンク`}</Txt>
         ))}
         <Txt x={60} y={620} size={46}>PRG の約8割が、背景のためのデータと生成コード</Txt>
