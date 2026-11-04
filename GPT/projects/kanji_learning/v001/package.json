@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test test_engine.mjs test_app.mjs"
+    "test": "node --test test_engine.mjs test_study.mjs test_handwriting.mjs test_app.mjs"
   },
   "devDependencies": {
     "linkedom": "0.18.12"
