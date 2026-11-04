@@ -1,0 +1,24 @@
+カンジ工房 v001 素材の出典
+
+漢字の筆画データ
+KanjiVG, copyright Ulrich Apel
+https://kanjivg.tagaini.net/
+https://github.com/KanjiVG/kanjivg
+Creative Commons Attribution-ShareAlike 3.0 Unported
+https://creativecommons.org/licenses/by-sa/3.0/
+
+同梱の glyphs.json は KanjiVG の材・松・梅・折・清・信・働・泣・浴・仲・灯・念の SVG から筆画の座標を取り出し、二つの部品群に分けた派生データです。表示時に部品ごとに色を変更しています。派生した字形データも CC BY-SA 3.0 で提供します。元データは prepare_glyphs.py から再取得できます。
+
+部品の説明・例文・画面デザイン・ロボットのイラストはこの試作のために作成しました。部品の分解は記憶の補助であり、字源を示すものではありません。
+
+Webフォント
+Noto Sans JP — Google Fonts
+https://fonts.google.com/noto/specimen/Noto+Sans+JP
+SIL Open Font License 1.1
+フォントを取得できない環境では端末の日本語フォントで表示します。
+
+着想の参考（公式教材ではありません）
+ミチムラ式漢字学習法の考え方
+https://kanji.cloud/studymethod/method-features/
+さかもと式 見るだけ暗記法
+https://manatera.com/kanji/
