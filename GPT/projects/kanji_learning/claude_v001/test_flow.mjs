@@ -164,6 +164,18 @@ try {
   ok(await page.locator('.zcard.k.got[data-v="働"]').count() === 1, 'ヒントなしでクリアした字（働）は「おぼえた」');
   await shot('06_zukan_kanji.png');
 
+  // 記録をけす：3段階で確かめ、「けす」と入力した時だけ消える（4年の記録）
+  await click('[data-act=resetAsk]');
+  ok(await page.locator('.resetbox.warn').count() === 1, '記録をけす：1回目の確認が出る');
+  await click('[data-act=resetNext]');
+  await click('[data-act=resetDo]');
+  ok(await page.evaluate(() => !!window.__kobo.store.kanji['働']), '「けす」と入力しないと消えない');
+  await page.fill('#resetword', 'けす');
+  await page.locator('.resetbox').screenshot({path: path.join(shots, '06b_reset.png')});
+  await click('[data-act=resetDo]');
+  ok(await page.evaluate(() => !window.__kobo.store.kanji['働'] && !window.__kobo.store.kanji['念']), '「けす」と入力すると4年の記録が消える');
+  ok(await page.locator('.zcard.k.got').count() === 0, '消したあとは おぼえた が0');
+
   // ---- 全学年：読み込めて、お題を最後まで組める ----
   await go(() => { window.__kobo.store.settings.mode = 'shape'; });
   for (const g of [1, 2, 3, 5, 6]) {

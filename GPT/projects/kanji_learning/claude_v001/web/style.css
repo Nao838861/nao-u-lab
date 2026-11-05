@@ -233,3 +233,11 @@ main.parts { max-width: 760px; margin: 0 auto; padding: .8rem; }
 .zcard .hana { background: #ff7a6b; color: #fff; transform: rotate(8deg); box-shadow: 0 1px 3px rgba(0,0,0,.15); }
 .zcard .hana::before { content: '◎ '; }
 .zcard .half { background: #f0c94e; color: #4a3b10; }
+
+/* 記録をけす：ずかんのいちばん下。目立たない文字リンク → 何度も確認 */
+.resetbox { margin: 3rem auto 1rem; max-width: 520px; text-align: center; font-size: .9rem; color: var(--sub); }
+.resetbox .resetlink { background: none; border: none; color: #a89e8c; text-decoration: underline; font-size: .78rem; padding: .3rem; }
+.resetbox.warn { background: #fff; border: 2px solid #e8b4a8; border-radius: 14px; padding: 1rem; color: #4a3b30; }
+.resetbox .resetword { font: inherit; font-size: 1.1rem; padding: .4rem .6rem; border: 2px solid var(--line); border-radius: 10px; width: 8em; text-align: center; }
+.resetbox .bad { color: #c0392b; }
+.resetbox .danger { background: #fff; color: #c0392b; border: 1px solid #e8b4a8; }

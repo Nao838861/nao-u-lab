@@ -170,8 +170,20 @@ const act = {
   changeGrade() { S = {screen: 'grade'}; },
   startKanji() { startKanji(pickWeak('kanji', ASKABLE(), 3)); },
   startParts() { startParts(pickWeak('parts', QUIZ_PARTS, 3)); },
-  zukan() { S = {screen: 'zukan', back: S.screen === 'kanji' || S.screen === 'parts' ? S : null}; },
+  zukan() { S = {screen: 'zukan', reset: 0, back: S.screen === 'kanji' || S.screen === 'parts' ? S : null}; },
   back() { S = S.back || {screen: 'home'}; },
+  // --- 記録をけす（学年ごと）：3回たしかめる。最後は「けす」と入力 ---
+  resetAsk() { S.reset = 1; },
+  resetNext() { S.reset = 2; },
+  resetCancel() { S.reset = 0; },
+  resetDo() {
+    const v = ($app.querySelector('#resetword')?.value || '').trim();
+    if (v !== 'けす') { S.resetMsg = '「けす」と入力してね。けさない時は「やめる」。'; return; }
+    for (const k of GD.kanji) delete store.kanji[k.c];
+    for (const id of Object.keys(GD.parts)) delete store.parts[id];
+    save();
+    S.reset = 0; S.resetMsg = null; S.resetDone = true;
+  },
   oneKanji(ch) { startKanji([ch]); },
   onePart(id) { startParts([id]); },
   // どこでも切り替え可能な「暗黙のモード」。選んだ形も筆跡も消さない。
@@ -547,7 +559,25 @@ function zukanView() {
     <h2>${GD.grade}年の漢字</h2>${meter(K.filter(k => doneKanji(k.c)).length, K.length)}<div class="zgrid k">${kanji}</div>
     <h2>${GD.grade}年の部品</h2>${meter(QUIZ_PARTS.filter(donePart).length, QUIZ_PARTS.length)}<div class="zgrid">${parts}</div>
     <p class="note">字形：KanjiVG (CC BY-SA 3.0)／読み・語例：KANJIDIC2・JMdict（EDRDG, CC BY-SA 4.0）・JmdictFurigana</p>
+    ${resetBox()}
   </main>`;
+}
+
+function resetBox() {
+  const g = GD.grade, n = GD.kanji.filter(k => store.kanji[k.c]).length;
+  if (S.resetDone) return `<div class="resetbox"><p>${g}年の記録をけしました。</p></div>`;
+  if (!S.reset) return `<div class="resetbox">${btn('resetAsk', `${g}年の記録をけす`, {cls: 'resetlink'})}</div>`;
+  const keep = btn('resetCancel', 'やめる（けさない）', {cls: 'primary'});
+  if (S.reset === 1) return `<div class="resetbox warn">
+    <p><b>ほんとうに ${g}年の記録を けしますか？</b></p>
+    <p>${g}年の漢字 ${n}字ぶんの「おぼえた」「あとすこし」と、${g}年の部品の記録が ぜんぶ なくなります。<br>部品の記録は ほかの学年と いっしょなので、ほかの学年の部品の記録も なくなります。</p>
+    <div class="row">${keep}${btn('resetNext', 'それでも けす', {cls: 'small'})}</div></div>`;
+  return `<div class="resetbox warn">
+    <p><b>もういちど たしかめます。けした記録は もとに もどせません。</b></p>
+    <p>おうちの人と いっしょに たしかめてね。けすときは 下に「けす」と 入力してください。</p>
+    <input id="resetword" class="resetword" autocomplete="off" placeholder="けす">
+    ${S.resetMsg ? `<p class="bad">${S.resetMsg}</p>` : ''}
+    <div class="row">${keep}${btn('resetDo', '記録をけす', {cls: 'small danger'})}</div></div>`;
 }
 
 // ---------- ペン入力 ----------
