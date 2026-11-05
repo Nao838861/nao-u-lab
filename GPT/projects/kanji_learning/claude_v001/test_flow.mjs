@@ -155,6 +155,10 @@ try {
   ok((await S()).q.phase === 'names', '基本漢字（臣）もほかの字と同じく唱えの段から');
   ok((await page.locator('.prompt .title').innerText()).replace(/\s/g, '') === '大ジンのジン', '臣のお題は「大ジン の ジン」');
 
+  // 飛：ダミーの選択肢を出さない
+  await go(() => { window.__kobo.act.oneKanji('飛'); window.__kobo.render(); });
+  ok(await page.locator('.choices.names .chip').count() === 4, '飛はダミーなし（名前は正解の4種類だけ）');
+
   // ペンモード（保存され、次回起動でも残る）
   await go(() => window.__kobo.act.mode('pen'));
   await page.reload(); await page.waitForSelector('.menu');

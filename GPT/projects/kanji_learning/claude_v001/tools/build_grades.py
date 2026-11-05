@@ -773,6 +773,7 @@ for grade in range(1, 7):
         item = {'c': ch, 'p': paths, 'u': us, 't': title, 'x': ex}
         if ch in MANUAL:  # 字形データの記録が崩れている字は、画の形を見て手で決めた唱え
             item['u'] = [dict({'n': n, 's': ss}, **({'k': 1} if len(ss) <= 2 else {})) for n, ss in MANUAL[ch]]
+            item['nd'] = 1  # ダミーの選択肢を出さない（ユーザー指示：飛）
             us = item['u']
         if ch in BASIC:
             pass  # 基本漢字も、ほかの字と同じように部品・画を唱えて組む（ユーザー指示。書き順だけ選ぶ形は意味が薄かった）

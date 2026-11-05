@@ -157,9 +157,10 @@ function newKanjiQ(ch) {
     // 基本漢字は書き順を一画ずつ選ぶ（strokeChoices：その字の画を混ぜた並び）。
     strokeChoices: basic ? shuffle(BY[ch].p.map((_, i) => i)) : null,
     char: ch, phase: basic ? 'shape' : 'names', names: basic ? ids.slice() : Array(n).fill(null), active: 0,
-    nameChoices: fillChoices(ids, Math.max(6, kinds + 3), pool),
+    // nd の字（飛）はダミーを出さず、正解の部品だけを唱えの順に並べる
+    nameChoices: BY[ch].nd ? [...new Set(ids)] : fillChoices(ids, Math.max(6, kinds + 3), pool),
     // 形は唱える順に一つずつ出す（step = 出し終えた部品の数）。
-    step: 0, wrongShapes: [], shapeChoices: fillChoices(ids, Math.max(12, kinds + 4), pool),
+    step: 0, wrongShapes: [], shapeChoices: BY[ch].nd ? [...new Set(ids)] : fillChoices(ids, Math.max(12, kinds + 4), pool),
     wrong: Array(n).fill(false), ink: [], msg: null,
     hint: null, hints: Array(n).fill(0), nameMiss: 0, shapeMiss: 0, model: false, sawModel: false, usedMode: null,
   };
