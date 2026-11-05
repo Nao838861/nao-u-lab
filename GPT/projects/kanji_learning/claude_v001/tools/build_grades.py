@@ -351,6 +351,8 @@ def part_name(node, whole):
         return 'ひとあし' if (node.get('kvg_position') == 'bottom' or PARENT.get(id(node)) is not None and PARENT[id(node)].get('kvg_position') == 'bottom') else 'ル'
     if e == '冊' and VG_CHAR[0] != '冊':
         return '横につき出さない冊'
+    if e == '月' and types_of(strokes_of(node)) in ('㇒㇇㇔㇔', '㇒㇆㇔㇔'):
+        return '一本多いタ'  # 然・祭の左上：字形データでは 月（肉）だが、形はタに一本多い（考案者ブログ：祭＝一本多いタ）
     if e in ('卩', '⺋') and types_of(strokes_of(node)) == '㇇㇔':
         return 'マ'  # 領 の 令 の下：字形データでは 卩 だが、形は マ
     if e == '一' and types_of(strokes_of(node)) == '㇔':
