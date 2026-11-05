@@ -64,3 +64,8 @@ node test_flow.mjs
 `D:\AI\Nao_u_BOT\Claude\node_modules\playwright` と Chrome を使う。30項目（6択→12択の順番、誤答で先へ進まない、モード切替で筆跡・選択が消えない、モードの永続化、ヒント→部品クイズ→復帰、ずかん往復、見本どおりの線はペン判定を通り一本線は通らない、記録の区別、コンソールエラーなし）が通過。
 
 未確認：iPad・ペンタブでの実際の書き心地、子供の実筆跡でのペン判定、読み上げ音声の品質。
+
+## スマホから開く
+
+claude.ai の非公開artifactとして公開済み（所有者のみ閲覧可）：https://claude.ai/artifact/2C41hEj21aLPJsmkYPvu8K
+slug `09a42d23-1a42-4be2-88e9-4c5c346d7bc0`。`web/` を更新したら同じ slug へ再公開する。
