@@ -311,7 +311,7 @@ const pad = (cls = '') => `<div class="padwrap ${cls}"><svg class="pad" viewBox=
 
 // 語の表示：答えの字は □（上にふりがな）。学年より上の字はデータ側でひらがなにしてある。
 function wordHtml(segs) {
-  return segs.map(([t, furi, target]) => target ? `<ruby class="blankbox">□<rt>${furi || ''}</rt></ruby>` : t).join('');
+  return `<span class="wd">${segs.map(([t, furi, target]) => target ? `<ruby class="blankbox">□<rt>${furi || ''}</rt></ruby>` : t).join('')}</span>`;
 }
 // ミチムラ式のタイトルの書式：「労ドウ の ドウ　はたら_く」。答えの字は音読み（カタカナ）で表す。
 function titleHtml(t) {
@@ -319,7 +319,7 @@ function titleHtml(t) {
   if (t.word && t.on) parts.push(`${t.word.map(([c, , target]) => target ? `<b class="on">${t.on}</b>` : c).join('')} の <b class="on">${t.on}</b>`);
   else if (t.on) parts.push(`<b class="on">${t.on}</b>`);
   if (t.kun) parts.push(t.kun.replace(/^([^_]+)/, '<b>$1</b>'));
-  return parts.join('　');
+  return parts.map(x => `<span class="nw">${x}</span>`).join('　');
 }
 
 function render() {
@@ -357,7 +357,7 @@ function homeView() {
 function kanjiView() {
   if (!S.q) return kanjiSummary();
   const q = S.q, k = K();
-  const ex = k.x.length ? `<p class="examples">${k.x.map(wordHtml).join('　')}</p>` : '';
+  const ex = k.x.length ? `<p class="examples">${k.x.map(wordHtml).join('')}</p>` : '';
   const basicNote = k.b ? '<p class="note">基本漢字：部品に分けずに、形をそのまま おぼえる字</p>' : '';
   const prompt = `<section class="prompt"><p class="title">${titleHtml(k.t)}</p>${ex}${basicNote}</section>`;
   let body;
