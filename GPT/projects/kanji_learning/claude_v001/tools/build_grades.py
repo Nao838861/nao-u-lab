@@ -315,6 +315,8 @@ def radical_name(node, whole=None):
     par = PARENT.get(id(node))
     if pos == 'left' and par is not None and id(par) in PARENT and not par.get('kvg_element'):
         pos = None  # 親が名前のない段（器の上の段）の時は へん ではない。照の日（昭の左）は にちへん のまま
+    if e == '人' and pos == 'left' and '㇑' not in types_of(strokes_of(node)):
+        pos = None  # 卒・座の上の 人人：左の人も はらい の形で、にんべん（ノ＋たて）ではない
     for key in [(e, pos), (e, None)]:
         if key in RADICAL:
             return RADICAL[key]
