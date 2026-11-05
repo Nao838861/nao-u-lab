@@ -128,10 +128,19 @@ async function loadGrade(g) {
 // ただし教科書の順で進める学年では、学校で習う字を飛ばさないよう全部出す。
 const ASKABLE = () => GD.kanji.filter(k => GD.book || !k.z).map(k => k.c);
 
-function nextInOrder(n) {
-  const rest = ASKABLE().filter(c => !doneKanji(c));
-  return (rest.length ? rest : ASKABLE()).slice(0, n);
+// 教科書の順で進める：いまの位置（store.pos[学年]）から、おぼえた字は飛ばして n 字。
+// 全部おぼえたら、飛ばさずに位置から順に出す。
+const posOf = () => (store.pos ||= {})[GD.grade] || 0;
+function nextInOrder(n, from = posOf()) {
+  const L = ASKABLE(), out = [];
+  for (let k = 0; k < L.length && out.length < n; k++) {
+    const c = L[(from + k) % L.length];
+    if (!doneKanji(c)) out.push(c);
+  }
+  return out.length ? out : L.slice(from).concat(L).slice(0, n);
 }
+// 「いまここ」：次に出る字
+const hereChar = () => GD.book ? nextInOrder(1)[0] : null;
 
 // ---------- 状態 ----------
 let S = {screen: 'home'};
@@ -191,7 +200,13 @@ const act = {
     save();
     S.reset = 0; S.resetMsg = null; S.resetDone = true;
   },
-  oneKanji(ch) { startKanji([ch]); },
+  // ずかんで字を選ぶ：教科書の順の学年では、その字から先へ進む（選んだ字は おぼえた でも出す）
+  oneKanji(ch) {
+    if (!GD.book) return startKanji([ch]);
+    const L = ASKABLE(), i = Math.max(0, L.indexOf(ch));
+    store.pos[GD.grade] = i; save();
+    startKanji([ch, ...nextInOrder(2, (i + 1) % L.length).filter(c => c !== ch)]);
+  },
   onePart(id) { startParts([id]); },
   // どこでも切り替え可能な「暗黙のモード」。選んだ形も筆跡も消さない。
   mode(v) { store.settings.mode = v; save(); if (S.q) S.q.msg = null; },
@@ -311,6 +326,7 @@ const act = {
 
 function finishKanji(how) {
   const q = S.q;
+  if (GD.book) { const L = ASKABLE(); (store.pos ||= {})[GD.grade] = (L.indexOf(q.char) + 1) % L.length; }
   q.usedMode = how;
   if (how) mark('kanji', q.char, how, true);
   const r = rec('kanji', q.char);
@@ -383,6 +399,7 @@ function homeView() {
     <h1 class="logo">カンジ工房</h1>
     <p class="lead">部品の<b>なまえ</b>を書く順に唱えてから、<b>かたち</b>を出す。</p>
     <p class="gradeline"><b>${GD.grade}年生</b>の漢字 ${btn('changeGrade', '学年をかえる', {cls: 'small'})}</p>
+    ${hereChar() ? `<p class="hereline">いまここ：<b>${BY[hereChar()].ss || ''}</b> の「<span class="herech">${hereChar()}</span>」から <small>（ずかんで字をえらぶと、そこから始められます）</small></p>` : ''}
     <div class="menu">
       <button type="button" data-act="startKanji" class="big primary"><span class="em">字</span>漢字をつくる<small>3文字・${GD.book ? `${GD.book}の順・` : ''}${kDone}/${GD.kanji.length} おぼえた</small></button>
       <button type="button" data-act="startParts" class="big"><span class="em">亻</span>部品クイズ<small>形→なまえ→形・${pDone}/${QUIZ_PARTS.length} できた</small></button>
@@ -550,11 +567,12 @@ function zukanView() {
     if (kind === 'kanji' ? doneKanji(id) : donePart(id)) return 'got';
     return r && (r.name.ok || r.shape.ok || r.pen.ok) ? 'mid' : 'new';
   };
-  const badge = st => st === 'got' ? '<b class="hana">おぼえた</b>' : st === 'mid' ? '<b class="half">あとすこし</b>' : '';
+  const here = hereChar();
+  const badge = st => st.includes('here') ? '<b class="herebadge">いまここ</b>' : st === 'got' ? '<b class="hana">おぼえた</b>' : st === 'mid' ? '<b class="half">あとすこし</b>' : '';
   const meter = (n, all) => `<div class="meter"><i style="width:${(100 * n / Math.max(all, 1)).toFixed(1)}%"></i></div><span class="mtext">おぼえた <b>${n}</b> / ${all}</span>`;
   const K = GD.kanji.filter(k => GD.book || !k.z);
   const kanji = K.map((k, i) => {
-    const st = state('kanji', k.c), rd = k.t.on || (k.t.kun || '').replace('_', '');
+    const st = state('kanji', k.c) + (k.c === here ? ' here' : ''), rd = k.t.on || (k.t.kun || '').replace('_', '');
     const sec = k.ss && (i === 0 || K[i - 1].ss !== k.ss) ? `<div class="zsec">${k.ss}</div>` : '';
     return `${sec}<button type="button" class="zcard k ${st}" data-act="oneKanji" data-v="${k.c}">${badge(st)}<span class="kc">${k.c}</span><span class="rd">${rd}</span></button>`;
   }).join('');

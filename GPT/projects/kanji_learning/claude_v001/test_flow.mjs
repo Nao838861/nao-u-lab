@@ -54,6 +54,13 @@ try {
   await click('[data-act=startKanji]');
   ok(JSON.stringify((await S()).list) === JSON.stringify(['信', '達', '飛']), '4年は光村図書の順に出る（信・達・飛）');
   await click('[data-act=home]');
+  // ずかんで字を選ぶと、そこから進む。トップに「いまここ」
+  await click('[data-act=zukan]');
+  await click('.zcard[data-v="辞"]');
+  ok((await S()).list[0] === '辞' && (await S()).list[1] === '成', 'ずかんで選んだ字（辞）から順に始まる');
+  await click('[data-act=home]');
+  ok((await page.locator('.hereline').innerText()).includes('辞'), 'トップに「いまここ」が出る（辞）');
+  await shot('01b_home_here.png');
 
   // ---- 部品クイズ：形→なまえ（6択）→形（12択）----
   await click('[data-act=startParts]');

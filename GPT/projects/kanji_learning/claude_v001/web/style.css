@@ -243,3 +243,15 @@ main.parts { max-width: 760px; margin: 0 auto; padding: .8rem; }
 .resetbox .danger { background: #fff; color: #c0392b; border: 1px solid #e8b4a8; }
 
 .zsec { grid-column: 1 / -1; font-size: .8rem; color: var(--sub); margin: .5rem 0 -2px; border-bottom: 1px dashed var(--line); }
+
+/* いまここ */
+.hereline { margin: .4rem 0 0; }
+.hereline .herech { font-size: 1.4rem; font-weight: bold; color: #c46a1c; }
+.zcard.here { outline: 3px solid #ff7a6b; outline-offset: 2px; }
+.zcard .herebadge { position: absolute; top: -9px; left: 50%; transform: translateX(-50%); font-size: .62rem; padding: 1px 6px; border-radius: 10px; background: #ff7a6b; color: #fff; font-weight: bold; white-space: nowrap; }
+
+/* トップの学年の行・いまここの行を大きく */
+.home .gradeline { font-size: 1.35rem; }
+.home .gradeline button { font-size: 1.05rem; padding: .45rem 1rem; margin-left: .5rem; }
+.home .hereline { font-size: 1.15rem; }
+.home .hereline .herech { font-size: 1.8rem; }
