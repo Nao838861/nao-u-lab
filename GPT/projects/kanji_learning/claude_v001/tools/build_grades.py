@@ -614,6 +614,22 @@ def pick_kid(ch, grade):
         title = {'word': title_furi(word_segments(tw[0], tw[2], ch, grade), tw[2], ch), 'on': tw[2][tw[0].index(ch)], 'kun': None}
         rest, n = [x for x in words if x is not tw], 3
     ex = [word_segments(w, sg, ch, grade) for w, r, sg in rest if len(w) >= 2][:n]
+    # 足りない時は辞書から補う：よく使う語（頻度上位）で、ほかの字がその学年までに習う字だけのもの
+    used = {w for w, _, _ in words}
+    if len(ex) < 2:
+        more = []
+        for text, lst in FURI.items():
+            if ch not in text or text in used or not (2 <= len(text) <= 4) or FREQ.get(text, 60) > 24:
+                continue
+            others = [c for c in text if c != ch and '一' <= c <= '鿿']
+            if any(GRADE.get(c, 9) > grade for c in others):
+                continue
+            for reading, sg in lst:
+                if text.index(ch) in sg:
+                    more.append((FREQ.get(text, 60), len(text), text, sg))
+                    break
+        for _, _, text, sg in sorted(more)[:max(0, 2 - len(ex))]:
+            ex.append(word_segments(text, sg, ch, grade))
     return title, ex
 
 
