@@ -518,17 +518,28 @@ function partsSummary() {
 }
 
 function zukanView() {
-  const st = (kind, id) => {
+  // 3段階：まだ（押したくなる白いボタン）→ とちゅう（黄色）→ おぼえた（色のついたシール＋花丸）。
+  // 並びは固定なので、おぼえるほど一覧がシールで埋まっていく。
+  const state = (kind, id) => {
     const r = store[kind][id];
-    if (!r) return '<i></i><i></i>';
-    return `<i class="${r.name.ok ? 'on' : ''}"></i><i class="${r.shape.ok || r.pen.ok ? 'on' : ''}"></i>`;
+    if (kind === 'kanji' ? doneKanji(id) : donePart(id)) return 'got';
+    return r && (r.name.ok || r.shape.ok || r.pen.ok) ? 'mid' : 'new';
   };
-  const parts = QUIZ_PARTS.map(id => `<button type="button" class="pcard" data-act="onePart" data-v="${id}">${partSvg(id, {cls: 's'})}<span>${id}</span><b class="st">${st('parts', id)}</b></button>`).join('');
-  const kanji = GD.kanji.filter(k => !k.z).map(k => `<button type="button" class="pcard k" data-act="oneKanji" data-v="${k.c}"><span class="kc">${k.t.on || ''}</span><span class="small">${(k.t.kun || '').replace('_', '')}</span><b class="st">${st('kanji', k.c)}</b></button>`).join('');
+  const badge = st => st === 'got' ? '<b class="hana">おぼえた</b>' : st === 'mid' ? '<b class="half">あとすこし</b>' : '';
+  const meter = (n, all) => `<div class="meter"><i style="width:${(100 * n / Math.max(all, 1)).toFixed(1)}%"></i></div><span class="mtext">おぼえた <b>${n}</b> / ${all}</span>`;
+  const K = GD.kanji.filter(k => !k.z);
+  const kanji = K.map(k => {
+    const st = state('kanji', k.c), rd = k.t.on || (k.t.kun || '').replace('_', '');
+    return `<button type="button" class="zcard k ${st}" data-act="oneKanji" data-v="${k.c}">${badge(st)}<span class="kc">${k.c}</span><span class="rd">${rd}</span></button>`;
+  }).join('');
+  const parts = QUIZ_PARTS.map(id => {
+    const st = state('parts', id);
+    return `<button type="button" class="zcard p ${st}" data-act="onePart" data-v="${id}">${badge(st)}${partSvg(id, {cls: 's'})}<span class="rd">${id}</span></button>`;
+  }).join('');
   return `${bar('ずかん')}<main class="zukan">
     ${S.back ? `<div class="row">${btn('back', '← とちゅうの問題にもどる', {cls: 'primary'})}</div>` : ''}
-    <h2>${GD.grade}年の部品 <small>${QUIZ_PARTS.length}こ・タップでその部品のクイズ（●なまえ ●形）</small></h2><div class="grid">${parts}</div>
-    <h2>${GD.grade}年の漢字 <small>${GD.kanji.length}字・答えの字は出さず、読みで並べています</small></h2><div class="grid k">${kanji}</div>
+    <h2>${GD.grade}年の漢字</h2>${meter(K.filter(k => doneKanji(k.c)).length, K.length)}<div class="zgrid k">${kanji}</div>
+    <h2>${GD.grade}年の部品</h2>${meter(QUIZ_PARTS.filter(donePart).length, QUIZ_PARTS.length)}<div class="zgrid">${parts}</div>
     <p class="note">字形：KanjiVG (CC BY-SA 3.0)／読み・語例：KANJIDIC2・JMdict（EDRDG, CC BY-SA 4.0）・JmdictFurigana</p>
   </main>`;
 }

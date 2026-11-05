@@ -156,6 +156,12 @@ try {
   await click('[data-act=checkPen]');
   ok((await S()).q.usedMode === 'pen', '見本どおりの線で、4年の全202字の中から念と判定される');
 
+  // ずかん：漢字が先、本体の字を出す。おぼえた字は「おぼえた」
+  await go(() => { window.__kobo.act.zukan(); window.__kobo.render(); });
+  ok(await page.locator('.zgrid.k .zcard').first().locator('.kc').innerText() !== '', 'ずかんの漢字は本体の字を出す');
+  ok(await page.locator('.zcard.k.got').count() >= 2, 'おぼえた字は「おぼえた」の見た目');
+  await shot('06_zukan_kanji.png');
+
   // ---- 全学年：読み込めて、お題を最後まで組める ----
   await go(() => { window.__kobo.store.settings.mode = 'shape'; });
   for (const g of [1, 2, 3, 5, 6]) {

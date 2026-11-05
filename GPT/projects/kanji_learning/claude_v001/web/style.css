@@ -205,3 +205,29 @@ main.parts { max-width: 760px; margin: 0 auto; padding: .8rem; }
 .glyph path.ghost { stroke: #e6dfd2; }
 
 .bar .homebtn { font-weight: bold; white-space: nowrap; }
+
+/* ずかん：まだ＝押したくなる白いボタン（オレンジのふち・影）／とちゅう＝黄色／おぼえた＝若葉色のシール＋花丸 */
+.zukan h2 { margin: 1.2rem 0 .3rem; }
+.meter { height: 12px; border-radius: 6px; background: #efe8da; overflow: hidden; }
+.meter i { display: block; height: 100%; background: linear-gradient(90deg, #4cb38a, #2f9e7a); border-radius: 6px; }
+.mtext { display: block; font-size: .85rem; color: var(--sub); margin: .2rem 0 .6rem; }
+.mtext b { color: #2f9e7a; font-size: 1.1rem; }
+.zgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+.zgrid.k { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); }
+.zcard { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  padding: 8px 2px 6px; border-radius: 14px; font: inherit; cursor: pointer; transition: transform .12s, box-shadow .12s; }
+.zcard .kc { font-size: 2.1rem; line-height: 1.1; font-weight: bold; }
+.zcard .rd { font-size: .72rem; }
+.zcard .glyph.s { width: 44px; height: 44px; }
+.zcard.new { background: #fff; border: 2px solid #f4b169; border-bottom-width: 5px; color: #3a2e22; box-shadow: 0 3px 8px rgba(232,137,58,.18); }
+.zcard.new:hover, .zcard.new:focus-visible { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(232,137,58,.28); }
+.zcard.new .rd { color: #c46a1c; }
+.zcard.mid { background: #fff6cf; border: 2px solid #f0c94e; border-bottom-width: 5px; color: #4a3b10; }
+.zcard.mid .rd { color: #8a6a00; }
+.zcard.got { background: #dff3e8; border: 2px solid #b6e0cb; color: #2b7a5d; box-shadow: none; }
+.zcard.got .rd { color: #4f9479; }
+.zcard.got .glyph path { stroke: #2b7a5d; }
+.zcard .hana, .zcard .half { position: absolute; top: -7px; right: -5px; font-size: .62rem; padding: 1px 6px; border-radius: 10px; font-weight: bold; }
+.zcard .hana { background: #ff7a6b; color: #fff; transform: rotate(8deg); box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+.zcard .hana::before { content: '◎ '; }
+.zcard .half { background: #f0c94e; color: #4a3b10; }
