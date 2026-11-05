@@ -316,7 +316,7 @@ function wordHtml(segs) {
 // ミチムラ式のタイトルの書式：「労ドウ の ドウ　はたら_く」。答えの字は音読み（カタカナ）で表す。
 function titleHtml(t) {
   const parts = [];
-  if (t.word && t.on) parts.push(`${t.word.map(([c, , target]) => target ? `<b class="on">${t.wr || t.on}</b>` : c).join('')} の <b class="on">${t.on}</b>`);
+  if (t.word && t.on) parts.push(`${t.word.map(([c, furi, target]) => target ? `<b class="on">${t.wr || t.on}</b>` : furi ? `<ruby>${c}<rt>${furi}</rt></ruby>` : c).join('')} の <b class="on">${t.on}</b>`);
   else if (t.on) parts.push(`<b class="on">${t.on}</b>`);
   if (t.kun) parts.push(t.kun.replace(/^([^_]+)/, '<b>$1</b>'));
   return parts.map(x => `<span class="nw">${x}</span>`).join('　');

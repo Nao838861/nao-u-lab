@@ -557,7 +557,11 @@ def pick_words(ch, grade):
             cands.append((above * 100 + FREQ.get(text, 60) + lone + len(text), len(text), text, reading, segs))
     cands.sort(key=lambda x: (x[0], x[1], x[2]))
     ons = readings(ch, 'ja_on')
-    on_word = next((c for c in cands if len(c[2]) >= 2 and all('一' <= x <= '鿿' for x in c[2]) and on_matches(c[4][c[2].index(ch)], ons)), None)
+    def all_on(c):
+        """語のほかの字も音読みか（試合＝シ・あい より 試験＝シ・ケン。読み違えにくい）。"""
+        return all(on_matches(c[4].get(i, ''), readings(x, 'ja_on')) for i, x in enumerate(c[2]) if x != ch)
+    on_cands = [c for c in cands if len(c[2]) >= 2 and all('一' <= x <= '鿿' for x in c[2]) and on_matches(c[4][c[2].index(ch)], ons)]
+    on_word = next((c for c in on_cands if all_on(c) and c[0] < 100), None) or next(iter(on_cands), None)
     kun_title = False
     if on_word is None:
         # 音の語がない字（熊・埼・岡…）：一番よく使う語をタイトルにし、その語の中の読みで示す（くま本 の くま）
@@ -591,9 +595,11 @@ def pick_words(ch, grade):
             title['on'] = base  # 本ばこ → の はこ（語の中のにごりはタイトルの読みでは外す）
             title['wr'] = seg
     if title['word']:
-        for seg in title['word']:
+        for i, seg in enumerate(title['word']):
             if seg[2]:
                 seg[1] = None  # 答えの字は表示側でカタカナ（音）に置き換える
+            elif seg[0] in GRADE and not on_matches(on_word[4].get(i, ''), readings(seg[0], 'ja_on')):
+                seg[1] = on_word[4].get(i)  # 訓で読むほかの字には読みを添える（シ合 → シ合（あい））
     return title, ex
 
 
