@@ -610,7 +610,9 @@ def pick_kid(ch, grade):
     if not words:
         return None
     ons = readings(ch, 'ja_on')
-    tw = next((x for x in words if len(x[0]) >= 2 and all('一' <= c <= '鿿' for c in x[0]) and on_matches(x[2][x[0].index(ch)], ons)), None)
+    is_on = lambda x: len(x[0]) >= 2 and on_matches(x[2][x[0].index(ch)], ons)
+    # 漢字だけの音の語を優先し、なければ かなを含む音の語（ご飯＝ごハン）
+    tw = next((x for x in words if is_on(x) and all('一' <= c <= '鿿' for c in x[0])), None) or next((x for x in words if is_on(x)), None)
     # 訓は語の中から取る（音＝おと、省く＝はぶ_く）。答えの字が語の先頭で訓読みの語だけを見る。
     kun = None
     for w, r, sg in words:
