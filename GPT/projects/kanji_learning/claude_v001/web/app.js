@@ -2,7 +2,8 @@
 // 中心操作は「部品の名前（ひらがな）で構成を答える → 形を出す（12個から選ぶ／ペンで書く）」。
 // 部品の練習は「形 → 名前を6択」「名前 → 形を12択かペン」の順のクイズを基本にする。
 import {PARTS, LESSONS, BY_CHAR} from './data.mjs';
-import {samplePath, compareInk} from './handwriting.mjs';
+import {samplePath} from './handwriting.mjs';
+import {judge} from './recognize.js';
 
 const KEY = 'kanji-kobo-claude-v1';
 const PART_IDS = Object.keys(PARTS);
@@ -14,6 +15,7 @@ const POOL = [new Set(LESSONS.map(l => l.parts[0])), new Set(LESSONS.map(l => l.
 const $app = document.getElementById('app');
 let GLYPH = {};          // 漢字 -> [[左(上)の筆画d...], [右(下)の筆画d...]]
 const PART_GLYPH = {};   // 部品ID -> {paths, box}
+const KANJI_CANDS = {}, PART_CANDS = {};  // 手書き判定で比べる候補：漢字12字・部品18個
 const SAMPLED = new Map();
 
 // ---------- 記録 ----------
@@ -175,8 +177,8 @@ const act = {
     else { q.shapeMiss++; mark('kanji', q.char, 'shape', false); q.msg = {ok: false, text: '×の場所の形がちがうよ。ヒントも使えるよ。'}; }
   },
   checkPen() {
-    const q = S.q, [a, b] = GLYPH[q.char];
-    const res = compareInk(q.ink, [...a, ...b].map(pts));
+    const q = S.q;
+    const res = judge(q.ink, q.char, KANJI_CANDS);
     if (res.ok) finishKanji('pen');
     else { q.shapeMiss++; mark('kanji', q.char, 'pen', false); q.msg = {ok: false, text: '形チェックでは、まだちがうところがありそう。もう一度書くか、ヒント・見本を使おう。'}; }
   },
@@ -223,7 +225,7 @@ const act = {
   },
   checkPartPen() {
     const q = S.q;
-    const res = compareInk(q.ink, PART_GLYPH[q.id].paths.map(pts));
+    const res = judge(q.ink, q.id, PART_CANDS);
     if (res.ok) finishPart('pen');
     else { q.shapeMiss++; mark('parts', q.id, 'pen', false); q.msg = {ok: false, text: '形チェックでは、まだちがうところがありそう。'}; }
   },
@@ -490,6 +492,8 @@ $app.addEventListener('click', e => {
   for (const l of LESSONS) l.parts.forEach((id, k) => {
     if (!PART_GLYPH[id]) PART_GLYPH[id] = {paths: GLYPH[l.char][k], box: boxOf(GLYPH[l.char][k])};
   });
+  for (const l of LESSONS) KANJI_CANDS[l.char] = [...GLYPH[l.char][0], ...GLYPH[l.char][1]];
+  for (const id of PART_IDS) PART_CANDS[id] = PART_GLYPH[id].paths;
   // テスト・確認用の入口
   window.__kobo = {get S() { return S; }, store, act, render, GLYPH, PART_GLYPH, LESSONS};
   render();
