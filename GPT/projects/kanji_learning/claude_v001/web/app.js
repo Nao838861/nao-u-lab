@@ -452,6 +452,10 @@ function bindPad() {
   g.innerHTML = S.q.ink.map(line).join('');
   let cur = null, el = null;
   const toLocal = e => { const r = svg.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * 109, (e.clientY - r.top) / r.height * 109]; };
+  // iOS Safari や埋め込み表示では touch-action だけではページがスクロールするため、
+  // 書く欄の中のタッチは非passiveで止める。
+  const stop = e => e.preventDefault();
+  for (const t of ['touchstart', 'touchmove', 'touchend']) svg.parentElement.addEventListener(t, stop, {passive: false});
   svg.addEventListener('pointerdown', e => {
     e.preventDefault(); svg.setPointerCapture(e.pointerId);
     cur = [toLocal(e)];
