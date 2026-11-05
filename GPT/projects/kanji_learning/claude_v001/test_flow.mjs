@@ -160,6 +160,8 @@ try {
   await go(() => { window.__kobo.act.zukan(); window.__kobo.render(); });
   ok(await page.locator('.zgrid.k .zcard').first().locator('.kc').innerText() !== '', 'ずかんの漢字は本体の字を出す');
   ok(await page.locator('.zcard.k.got').count() >= 2, 'おぼえた字は「おぼえた」の見た目');
+  ok(await page.locator('.zcard.k.got[data-v="仲"]').count() === 0 && await page.locator('.zcard.k.mid[data-v="仲"]').count() === 1, 'ヒントを見てクリアした字（仲）は「あとすこし」で、おぼえたにしない');
+  ok(await page.locator('.zcard.k.got[data-v="働"]').count() === 1, 'ヒントなしでクリアした字（働）は「おぼえた」');
   await shot('06_zukan_kanji.png');
 
   // ---- 全学年：読み込めて、お題を最後まで組める ----

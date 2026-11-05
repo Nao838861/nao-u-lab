@@ -32,7 +32,7 @@ function loadStore() {
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch {} }
 function rec(kind, id) {
-  return store[kind][id] ||= {name: {ok: 0, miss: 0}, shape: {ok: 0, miss: 0}, pen: {ok: 0, miss: 0}, hinted: 0, model: 0, last: null};
+  return store[kind][id] ||= {name: {ok: 0, miss: 0}, shape: {ok: 0, miss: 0}, pen: {ok: 0, miss: 0}, hinted: 0, model: 0, clean: 0, last: null};
 }
 // skill: name / shape / pen。ok は「その種類で正解までたどり着いた回数」、miss は誤答の回数。
 function mark(kind, id, skill, ok) {
@@ -47,7 +47,10 @@ const weakness = (kind, id) => {
   const ok = r.name.ok + r.shape.ok + r.pen.ok, miss = r.name.miss + r.shape.miss + r.pen.miss;
   return ok - miss * 1.5 + r.hinted * -.5;
 };
-const doneKanji = ch => store.kanji[ch]?.shape.ok || store.kanji[ch]?.pen.ok;
+// おぼえた＝ヒントも見本も使わずにクリアした回数が1回以上（clean）。
+// clean がない前の記録は、クリア回数からヒント・見本つきの回数を引いて推定する。
+const cleanKanji = r => r ? (r.clean ?? Math.max(0, r.shape.ok + r.pen.ok - (r.hinted || 0) - (r.model || 0))) : 0;
+const doneKanji = ch => cleanKanji(store.kanji[ch]) > 0;
 const donePart = id => store.parts[id]?.name.ok && (store.parts[id]?.shape.ok || store.parts[id]?.pen.ok);
 
 // ---------- 小道具 ----------
@@ -292,6 +295,8 @@ function finishKanji(how) {
   q.usedMode = how;
   if (how) mark('kanji', q.char, how, true);
   const r = rec('kanji', q.char);
+  if (r.clean === undefined) r.clean = cleanKanji(r) - (how ? 1 : 0);  // 今回の分を引いた前の記録から始める
+  if (how && !q.hints.some(Boolean) && !q.sawModel) r.clean++;
   if (q.hints.some(Boolean)) r.hinted++;
   if (q.sawModel) r.model++;
   save();
