@@ -583,6 +583,7 @@ for _t, _lst in FURI.items():
         FURI_ALL[_t] = _lst
 KID_MISSING = []
 KID_AUTO = []
+KID_OTHER = []
 
 
 def title_furi(word, segs, ch):
@@ -617,7 +618,7 @@ def pick_kid(ch, grade):
     kun = None
     for w, r, sg in words:
         i = w.index(ch)
-        if i == 0 and not on_matches(sg[i], ons) and all(not ('一' <= c <= '鿿') for c in w[1:]):
+        if i == 0 and not on_matches(sg[i], ons) and all(not ('一' <= c <= '鿿') and c != '々' for c in w[1:]):
             kun = sg[i] + ('_' + w[1:] if len(w) > 1 else '')
             break
     if tw:
@@ -629,7 +630,38 @@ def pick_kid(ch, grade):
         tw = next((x for x in words if len(x[0]) >= 2), words[0])
         title = {'word': title_furi(word_segments(tw[0], tw[2], ch, grade), tw[2], ch), 'on': tw[2][tw[0].index(ch)], 'kun': None}
         rest, n = [x for x in words if x is not tw], 3
-    ex = [word_segments(w, sg, ch, grade) for w, r, sg in rest if len(w) >= 2][:n]
+    # 読みがいろいろ見えるように：タイトルと違う読みの語を先に、同じ読みは後に（漁＝ギョ業 → 漁師 りょう）
+    def rd_of(x):
+        return x[2][x[0].index(ch)]
+    tr = rd_of(tw) if tw else None
+    usable = [x for x in rest if len(x[0]) >= 2]
+    picked, seen_rd = [], {tr}
+    for x in usable:
+        if rd_of(x) not in seen_rd:
+            picked.append(x); seen_rd.add(rd_of(x))
+    for x in usable:
+        if x not in picked:
+            picked.append(x)
+    picked = picked[:n]
+    # 手で選んだ語の読みが一つだけの時は、ほかの読みのよく使う語を辞書から一つ足す
+    all_rd = {rd_of(x) for x in words if len(x[0]) >= 2} | ({tr} if tr else set())
+    if False and len(all_rd) <= 1:  # 自動で足すのはやめた（子ども向けでない語が混じる）。手で kid_words.txt に足す
+        other = []
+        for text, lst in FURI.items():
+            if ch not in text or not (2 <= len(text) <= 3) or FREQ.get(text, 60) > 20:
+                continue
+            if any(GRADE.get(c, 9) > grade for c in text if c != ch and '一' <= c <= '鿿'):
+                continue
+            for reading, sg in lst:
+                i = text.index(ch)
+                if i in sg and sg[i] not in all_rd and not (sg[i][1:] == next(iter(all_rd or {''}))[1:]):
+                    other.append((FREQ.get(text, 60), len(text), text, sg))
+                    break
+        if other:
+            _, _, text, sg = sorted(other)[0]
+            picked = picked[:max(0, n - 1)] + [(text, None, sg)]
+            KID_OTHER.append(f'{ch}:{text}({sg[text.index(ch)]})')
+    ex = [word_segments(w, sg, ch, grade) for w, r, sg in picked]
     # 足りない時は辞書から補う：よく使う語（頻度上位）で、ほかの字がその学年までに習う字だけのもの
     used = {w for w, _, _ in words}
     if len(ex) < 1:
@@ -759,6 +791,7 @@ for ch, want in OFFICIAL_PARTS.items():
 for ch, want in OFFICIAL.items():
     got = '、'.join(u['n'] for u in decompose(ch)[1])
     report.append(f'{"一致" if got == want else "不一致"} {ch}: 公式「{want}」 生成「{got}」')
+report.append(f'ほかの読みとして辞書から足した語 {len(KID_OTHER)}：' + ' '.join(KID_OTHER))
 report.append(f'辞書から補った語例 {len(KID_AUTO)}：' + ' '.join(KID_AUTO))
 report.append(f'語例リストで辞書にない語 {len(KID_MISSING)}：' + ' '.join(KID_MISSING))
 open(os.path.join(OUT, 'build_report.txt'), 'w', encoding='utf-8').write('\n'.join(report) + '\n')
