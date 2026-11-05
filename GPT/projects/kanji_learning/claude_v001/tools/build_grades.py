@@ -49,7 +49,7 @@ RADICAL = {
     ('歯', 'left'): 'はへん', ('骨', 'left'): 'ほねへん', ('革', 'left'): 'かわへん', ('毛', 'left'): 'けへん',
     ('竹', 'top'): 'たけかんむり', ('⺮', None): 'たけかんむり', ('艹', None): 'くさかんむり', ('宀', None): 'うかんむり',
     ('冖', None): 'わかんむり', ('亠', None): 'なべぶた', ('雨', 'top'): 'あめかんむり', ('⻗', None): 'あめかんむり',
-    ('穴', 'top'): 'あなかんむり', ('癶', None): 'はつがしら', ('罒', None): 'あみがしら', ('爫', None): 'つめかんむり',
+    ('穴', 'top'): 'あなかんむり', ('癶', None): 'はつがしら', ('罒', None): 'あみがしら', ('爫', None): 'つめかんむり', ('⺤', None): 'つめかんむり',
     ('耂', None): 'おいかんむり', ('⺌', None): 'しょうかんむり', ('⺍', None): 'つかんむり', ('虍', None): 'とらがしら',
     ('覀', None): 'にし', ('夂', None): 'すいにょう', ('人', 'top'): 'ひとやね', ('𠆢', None): 'ひとやね',
     ('尸', None): 'しかばね', ('广', None): 'まだれ', ('厂', None): 'がんだれ', ('疒', None): 'やまいだれ',
@@ -108,11 +108,11 @@ for _g, _es in {1: '亠冂儿𠆢幺凵气囗丷亻宀艹⺍冖寸龶龰', 2: '�
     for _e in _es:
         PART_GRADE[_e] = _g
 SIG_GRADE = {'たてぼうココ': 3, 'ころもの下': 3, 'ながいの下': 3, 'ソニ人': 3, '立の下が冂': 3, 'むかしの上': 3,
-             'さむいの中': 3, 'ふくの右': 3, 'あおの上': 1, '羊の一本なし': 2}
+             'さむいの中': 3, 'ふくの右': 3, 'あおの上': 1, '羊の一本なし': 2, 'ソ': 1, 'つかんむり': 1}
 # 部品カードの独自部品のうち、字形データに要素名がないもの：画の形の並びで見分ける。
 SIGNATURE = {
     '㇑㇕㇐㇕㇐': 'たてぼうココ', '㇒㇙㇒㇏': 'ころもの下', '㇐㇙㇒㇏': 'ながいの下', '㇔㇒㇐㇐㇒㇏': 'ソニ人',
-    '㇑㇐㇔㇒㇑㇆': '立の下が冂', '㇐㇑㇐㇐': 'あおの上', '㇔㇒㇐㇐㇑': '羊の一本なし', '㇐㇑㇑㇐': 'むかしの上', '㇐㇑㇑㇐㇐㇒㇏': 'さむいの中', '㇆㇑㇇㇏': 'ふくの右',
+    '㇑㇐㇔㇒㇑㇆': '立の下が冂', '㇐㇑㇐㇐': 'あおの上', '㇔㇒': 'ソ', '㇔㇔㇒': 'つかんむり', '㇔㇒㇐㇐㇑': '羊の一本なし', '㇐㇑㇑㇐': 'むかしの上', '㇐㇑㇑㇐㇐㇒㇏': 'さむいの中', '㇆㇑㇇㇏': 'ふくの右',
 }
 # カタカナの部品（1年：エカケタトナノハヒフムメロ、2年：アオクコセホマヨラリレン、3年：ユ、4年：ヌ）
 KATA = {'厶': 'ム', '工': 'エ', '㐅': 'メ', '乂': 'メ', '彐': 'ヨ', '⺈': 'ク', '𠂊': 'ク', '卜': 'ト', '𠂇': 'ナ',
@@ -124,7 +124,7 @@ REGISTERED = {'舟': 'ふね', '且': 'かつ', '占': 'うらなう', '亜': '�
               '吏': 'り', '与': 'あたえる'}
 VG_CHAR = ['']
 CUR_GRADE = [6]
-STROKE = {'㇐': 'よこ', '㇑': 'たて', '㇒': 'ノ', '㇓': 'ノ', '㇔': 'てん', '㇏': 'はらい', '㇀': 'はね',
+STROKE = {'㇐': 'よこ', '㇑': 'たて', '㇒': 'ノ', '㇓': 'ノ', '㇔': 'てん', '㇏': 'はらい', '㇀': 'ななめ',
           '㇕': 'かぎ', '㇆': 'かぎ', '㇖': 'よこかぎ', '㇄': 'たておれ', '㇙': 'たてはね', '㇚': 'たてはね',
           '㇟': 'まげはね', '㇂': 'そりはね', '㇇': 'ク', '㇛': 'く', '㇉': 'おれまげ', '㇈': 'おれまげはね',
           '㇋': 'おれ', '㇌': 'おれ', '㇅': 'かぎかぎ', '㇗': 'たておれ', '㇜': 'くはね', '㇞': 'おれ', '㇊': 'おれ', '㇍': 'かぎ', '㇢': 'そりはね', '㇣': 'よこまげ', '㇎': 'おれ', '㇘': 'たておれはね', '㇁': 'そりはね', '㇃': 'こころのそりはね', '㇡': 'おれまげはね', '一': 'よこ'}
@@ -220,7 +220,8 @@ NAME_OVERRIDE = {'空': 'そら', '寺': 'てら', '森': 'もり', '林': 'は�
                  # 基本漢字（読みの自動選択が、語の中だけで使う形や古い読みになっていたもの）
                  '上': 'うえ', '食': 'たべる', '午': 'ご', '半': 'はん', '門': 'もん', '用': 'よう', '周': 'しゅう',
                  '面': 'めん', '尺': 'しゃく', '以': 'い', '果': 'か', '単': 'たん', '支': 'ささえる', '我': 'われ',
-                 '亡': 'ぼう', '脈': 'みゃく', '冊': 'さつ', '呉': 'ご', '斉': 'せい', '由': 'ゆう'}
+                 '亡': 'ぼう', '脈': 'みゃく', '冊': 'さつ', '呉': 'ご', '斉': 'せい', '由': 'ゆう',
+                 '本': 'ほん', '象': 'ぞう', '平': 'へい'}
 
 
 def reading_name(ch):
@@ -354,6 +355,10 @@ def part_name(node, whole):
     par = PARENT.get(id(node))
     if e is None and types_of(strokes_of(node)) == '㇒㇏' and '欠' in (VG_CHAR[0], par.get('kvg_element') if par is not None else None):
         return 'ひと'  # 欠の下（ノ・はらい）は人の形。父・校の下（交わる形）は人ではないので、欠の中だけ
+    if e == '良' and types_of(strokes_of(node)).endswith('㇔'):
+        return '食のへなし'  # 朗の左：良の最後が点（公式部品カード6年）
+    if e == '鳥' and len(strokes_of(node)) == 7:
+        return 'とりのれんがなし'  # 島：鳥の下の4つの点がない形
     if e == '月' and types_of(strokes_of(node)) in ('㇒㇇㇔㇔', '㇒㇆㇔㇔'):
         return '一本多いタ'  # 然・祭の左上：字形データでは 月（肉）だが、形はタに一本多い（考案者ブログ：祭＝一本多いタ）
     if e in ('卩', '⺋') and types_of(strokes_of(node)) == '㇇㇔':
@@ -437,6 +442,11 @@ def candidates(g, grade, whole, order):
                 if idx != list(range(idx[0], idx[0] + len(idx))):
                     continue
                 sig = types_of(sorted(acc, key=lambda p: order[id(p)]))
+                if sig in ('㇔㇒', '㇔㇔㇒'):
+                    ss = sorted(acc, key=lambda p: order[id(p)])
+                    cx = [(bbox([q])[0] + bbox([q])[2]) / 2 for q in ss]
+                    if not cx[-2] < cx[-1]:
+                        continue  # ソ は 点が左・ノが右（父の上のように逆なら ソ ではない）
                 if sig in SIGNATURE and SIG_GRADE.get(SIGNATURE[sig], 3) <= grade:
                     cands.append((frozenset(idx), SIGNATURE[sig], 1.01, False))
     # 字全体の画の並びの中の独自部品（商＝立の下が冂：字形データでは 立 と 冏 にまたがる）
@@ -451,7 +461,7 @@ def candidates(g, grade, whole, order):
             continue
         if PART_GRADE.get(e, 0) > grade:
             continue
-        nm = OFFICIAL_PART.get(e) or (reading_name(e) if e in basic_upto(grade) else None)
+        nm = OFFICIAL_PART.get(e) or {'行': 'ぎょうがまえ', '門': 'もんがまえ'}.get(e) or (reading_name(e) if e in basic_upto(grade) else None)
         if nm:
             cands.append((frozenset(s), nm, 1, False))
     return cands
@@ -572,6 +582,7 @@ for _t, _lst in FURI.items():
     if _t in _need and _t not in FURI_ALL:
         FURI_ALL[_t] = _lst
 KID_MISSING = []
+KID_AUTO = []
 
 
 def title_furi(word, segs, ch):
@@ -619,7 +630,7 @@ def pick_kid(ch, grade):
     ex = [word_segments(w, sg, ch, grade) for w, r, sg in rest if len(w) >= 2][:n]
     # 足りない時は辞書から補う：よく使う語（頻度上位）で、ほかの字がその学年までに習う字だけのもの
     used = {w for w, _, _ in words}
-    if len(ex) < 2:
+    if len(ex) < 1:
         more = []
         for text, lst in FURI.items():
             if ch not in text or text in used or not (2 <= len(text) <= 4) or FREQ.get(text, 60) > 24:
@@ -631,8 +642,9 @@ def pick_kid(ch, grade):
                 if text.index(ch) in sg:
                     more.append((FREQ.get(text, 60), len(text), text, sg))
                     break
-        for _, _, text, sg in sorted(more)[:max(0, 2 - len(ex))]:
+        for _, _, text, sg in sorted(more)[:1]:
             ex.append(word_segments(text, sg, ch, grade))
+            KID_AUTO.append(f'{ch}:{text}')
     return title, ex
 
 
@@ -745,6 +757,7 @@ for ch, want in OFFICIAL_PARTS.items():
 for ch, want in OFFICIAL.items():
     got = '、'.join(u['n'] for u in decompose(ch)[1])
     report.append(f'{"一致" if got == want else "不一致"} {ch}: 公式「{want}」 生成「{got}」')
+report.append(f'辞書から補った語例 {len(KID_AUTO)}：' + ' '.join(KID_AUTO))
 report.append(f'語例リストで辞書にない語 {len(KID_MISSING)}：' + ' '.join(KID_MISSING))
 open(os.path.join(OUT, 'build_report.txt'), 'w', encoding='utf-8').write('\n'.join(report) + '\n')
 print('\n'.join(report).encode('utf-8', 'replace').decode('utf-8'), file=open(os.devnull, 'w'))
