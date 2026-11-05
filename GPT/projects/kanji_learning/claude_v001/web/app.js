@@ -519,6 +519,9 @@ function kanjiSummary() {
     <div class="row">${btn('startKanji', 'つぎの3文字', {cls: 'primary wide'})}${btn('startParts', '部品クイズへ')}${btn('home', 'ホーム')}</div></main>`;
 }
 
+// 部品クイズだけ：字の読みで呼ぶ部品に、一般の部首名をそえる（いう（ごんべん）、き（きへん））。
+// なまえの候補には付けない（付いている候補が正解だと分かってしまう）。
+const pname = id => GD.parts[id]?.r ? `${id}<small class="hen">（${GD.parts[id].r}）</small>` : id;
 function partsView() {
   if (!S.q) return partsSummary();
   const q = S.q, total = S.list.length * 2, at = S.i * 2 + (q.stage === 'name' ? 0 : q.stage === 'shape' ? 1 : 2);
@@ -530,7 +533,7 @@ function partsView() {
       ${msgBox(q.msg)}
       <div class="choices names six">${q.nameChoices.map(id => btn('answerName', id, {v: id, cls: `chip ${q.wrongNames.includes(id) ? 'x' : ''}`, dis: q.wrongNames.includes(id)})).join('')}</div></section>`;
   } else if (q.stage === 'shape') {
-    const ask = `<p class="ask lg">「<b>${q.id}</b>」の形は？ ${btn('say', '🔊', {v: q.id, cls: 'icon'})}</p>`;
+    const ask = `<p class="ask lg">「<b>${pname(q.id)}</b>」の形は？ ${btn('say', '🔊', {v: q.id, cls: 'icon'})}</p>`;
     let core;
     if (q.model) core = `<div class="bigglyph">${partSvg(q.id, {anim: true, cls: 'xl'})}</div>
       <div class="row">${btn('modelRetry', '見本を消して、もう一度', {cls: 'primary'})}${btn('partModelNext', '見本を見たので次へ')}</div>`;
@@ -545,7 +548,7 @@ function partsView() {
     const kanjiWith = GD.kanji.filter(k => k.u.some(u => u.n === q.id)).slice(0, 12).map(k => `<span>${k.c}</span>`).join('');
     body = `<section class="pq done">
       <div class="bigglyph">${partSvg(q.id, {anim: true, cls: 'xl'})}</div>
-      <p class="composed lg">${q.id}</p>
+      <p class="composed lg">${pname(q.id)}</p>
       <p class="tags"><span>${tag}</span>${q.nameMiss + q.shapeMiss ? `<span>まちがい ${q.nameMiss + q.shapeMiss}回</span>` : '<span>ノーミス</span>'}</p>
       <p class="family">この部品が入っている${GD.grade}年の字：${kanjiWith}</p>
       <div class="row">${last && S.ret ? btn('returnToKanji', 'お題にもどる', {cls: 'primary wide'}) : btn('nextPart', last ? 'けっかを見る' : 'つぎの部品へ', {cls: 'primary wide'})}</div></section>`;
@@ -554,7 +557,7 @@ function partsView() {
 }
 
 function partsSummary() {
-  const rows = S.results.map(r => `<li><span class="ch">${partSvg(r.id, {cls: 's'})}</span><span>${r.id}</span>
+  const rows = S.results.map(r => `<li><span class="ch">${partSvg(r.id, {cls: 's'})}</span><span>${pname(r.id)}</span>
     <span>形→なまえ ${r.nameFirst ? '◎' : '○'}</span><span>なまえ→${r.how === 'pen' ? '✎' : r.how === 'shape' ? '▦' : '👀'} ${r.shapeFirst ? '◎' : r.how ? '○' : '−'}</span></li>`).join('');
   return `${bar('部品クイズ')}<main class="summary"><h2>3つの部品、おわり！</h2><ul class="results">${rows}</ul>
     <div class="row">${btn('moreParts', 'つぎの3部品', {cls: 'primary wide'})}${btn('startKanji', '漢字をつくる')}${btn('home', 'ホーム')}</div></main>`;

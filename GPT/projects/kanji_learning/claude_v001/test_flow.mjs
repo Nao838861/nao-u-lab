@@ -221,6 +221,14 @@ try {
   await go(() => window.__kobo.act.grade(4));
   await go(() => { window.__kobo.act.oneKanji('働'); window.__kobo.render(); });
   await shot('15_mobile_kanji.png');
+  // 部品クイズでは、読みで呼ぶ部品に一般の部首名をそえる（いう（ごんべん））
+  await go(() => { window.__kobo.act.onePart('いう'); window.__kobo.render(); });
+  ok(!(await page.locator('.choices.names').innerText()).includes('ごんべん'), 'なまえの候補には部首名を付けない（答えが分かるので）');
+  await click('[data-act=answerName][data-v="いう"]');
+  await shot('16_part_hen.png');
+  ok((await page.locator('.ask').innerText()).includes('いう（ごんべん）'), '形の問いにも部首名がそえられる');
+  await go(() => { window.__kobo.act.oneKanji('信'); window.__kobo.render(); });
+  ok(!(await page.locator('main').innerText()).includes('ごんべん'), '漢字をつくる では部首名を出さない');
   ok(errors.length === 0, `コンソールエラーなし ${errors.join(' | ')}`);
 } finally {
   await browser.close();

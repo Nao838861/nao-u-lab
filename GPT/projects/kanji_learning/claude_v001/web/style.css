@@ -255,3 +255,5 @@ main.parts { max-width: 760px; margin: 0 auto; padding: .8rem; }
 .home .gradeline button { font-size: 1.05rem; padding: .45rem 1rem; margin-left: .5rem; }
 .home .hereline { font-size: 1.15rem; }
 .home .hereline .herech { font-size: 1.8rem; }
+/* 部品クイズ：一般の部首名のそえがき（いう（ごんべん）） */
+.hen { font-size: .75em; font-weight: normal; color: var(--sub); }
