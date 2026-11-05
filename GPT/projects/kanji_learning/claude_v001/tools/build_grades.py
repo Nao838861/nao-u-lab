@@ -122,6 +122,9 @@ STROKE_OK = {'㇒': 'ノ', '㇓': 'ノ', '㇑': 'たて', '㇐': 'いち', '㇔'
 # 中学の基本漢字で、部品カードとは別に名前で呼ぶもの
 REGISTERED = {'舟': 'ふね', '且': 'かつ', '占': 'うらなう', '亜': 'あ', '介': 'かい', '及': 'およぶ', '呂': '口ノ口',
               '吏': 'り', '与': 'あたえる'}
+# 手で決めた唱え（字形データの部品の記録が崩れている字）。(名前, 画の番号) を書き順に。
+# 飛：9画を、同じ線のくり返しをまとめて6つ（公式の「ノノ」と同じまとめ方）。
+MANUAL = {'飛': [('おれまげはね', [0]), ('ノてん', [1, 2]), ('たて', [3]), ('ノノ', [4, 5]), ('おれまげはね', [6]), ('ノてん', [7, 8])]}
 VG_CHAR = ['']
 CUR_GRADE = [6]
 STROKE = {'㇐': 'よこ', '㇑': 'たて', '㇒': 'ノ', '㇓': 'ノ', '㇔': 'てん', '㇏': 'はらい', '㇀': 'ななめ',
@@ -374,6 +377,9 @@ def part_name(node, whole):
     if max(PART_GRADE.get(e, 0), PART_GRADE.get(node.get('kvg_original'), 0)) > CUR_GRADE[0]:
         return None
     if e in OFFICIAL_PART:
+        # 字形データの誤り対策：部品の画数より極端に少ない時はその部品と呼ばない（飛の 廾 が1画など）
+        if e in VG and len(strokes_of(node)) < len(strokes_of(VG[e])) - 1:
+            return None
         return OFFICIAL_PART[e]
     if e == '阝' or (node.get('kvg_original') == '阜') or (node.get('kvg_original') == '邑'):
         if CUR_GRADE[0] < 3:
@@ -765,6 +771,9 @@ for grade in range(1, 7):
         paths, us = decompose(ch)
         title, ex = pick_words(ch, grade)
         item = {'c': ch, 'p': paths, 'u': us, 't': title, 'x': ex}
+        if ch in MANUAL:  # 字形データの記録が崩れている字は、画の形を見て手で決めた唱え
+            item['u'] = [dict({'n': n, 's': ss}, **({'k': 1} if len(ss) <= 2 else {})) for n, ss in MANUAL[ch]]
+            us = item['u']
         if ch in BASIC:
             pass  # 基本漢字も、ほかの字と同じように部品・画を唱えて組む（ユーザー指示。書き順だけ選ぶ形は意味が薄かった）
         elif any(u.get('z') for u in us):
