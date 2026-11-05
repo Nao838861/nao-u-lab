@@ -322,6 +322,8 @@ def part_name(node, whole):
         return 'ひとあし' if (node.get('kvg_position') == 'bottom' or PARENT.get(id(node)) is not None and PARENT[id(node)].get('kvg_position') == 'bottom') else 'ル'
     if e == '冊' and VG_CHAR[0] != '冊':
         return '横につき出さない冊'
+    if e == '勹' and types_of(strokes_of(node)) == '㇆㇒':
+        return 'カ'  # 別の下：字形データでは 勹 だが、書き順も形も カ（つつみがまえは ノ が先で、中を包む）
     if e in KATA and e not in OFFICIAL_PART:
         return None  # カタカナの部品（魚の上＝ク）
     if max(PART_GRADE.get(e, 0), PART_GRADE.get(node.get('kvg_original'), 0)) > CUR_GRADE[0]:
