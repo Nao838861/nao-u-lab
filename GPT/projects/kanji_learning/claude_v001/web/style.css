@@ -155,3 +155,20 @@ main.parts { max-width: 760px; margin: 0 auto; padding: .8rem; }
 .work.shape .padwrap { width: min(78vw, 320px); }
 .chip { white-space: nowrap; }
 @media (max-width: 520px) { .choices.six .chip, .chip { font-size: 1.15rem; padding: .7em .1em; } }
+
+/* 唱えの段（ミチムラ式カードのおもて面に合わせ、書き順に部品を並べ、足した部品を赤で示す） */
+.glyph path.red { stroke: var(--ng); } .glyph path.gray { stroke: #8f8a83; }
+.chantrows { list-style: none; padding: 0; margin: .4rem auto; display: grid; gap: .35rem; max-width: 340px; text-align: left; }
+.chantrows li { display: flex; align-items: center; gap: .6rem; min-height: 3.2rem; border-radius: 12px; padding: 0 .4rem; }
+.chantrows li.now { background: var(--accent-soft); }
+.chantrows li.wrong .nm { color: var(--ng); text-decoration: line-through; }
+.chantrows li.wrong .rowbtn { border-color: var(--ng); background: var(--ng-soft); }
+.chantrows .glyph.row, .rowblank { width: 3rem; height: 3rem; flex: none; border: 1px solid var(--line); border-radius: 6px; background: #fff; display: flex; align-items: center; justify-content: center; color: var(--accent); font-weight: bold; font-size: 1.4rem; }
+.chantrows .no { color: var(--sub); margin-right: .5rem; }
+.chantrows .nm { font-size: 1.35rem; font-weight: bold; }
+.rowbtn { flex: 1; text-align: left; border-style: dashed; padding: .5rem .8rem; }
+.chantrows li.active .rowbtn { border: 3px solid var(--accent); background: var(--accent-soft); }
+.shapework { display: grid; gap: .6rem; align-items: start; }
+@media (min-width: 900px) { .shapework { grid-template-columns: 220px 1fr; } }
+.donegrid { display: flex; gap: 1.2rem; align-items: center; justify-content: center; flex-wrap: wrap; }
+.donegrid .glyph.xl { margin: 0; }

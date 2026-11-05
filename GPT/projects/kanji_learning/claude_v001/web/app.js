@@ -1,21 +1,23 @@
 // カンジ工房（Claude版）
-// 中心操作は「部品の名前（ひらがな）で構成を答える → 形を出す（12個から選ぶ／ペンで書く）」。
+// 中心操作は「部品の名前（ひらがな）を書き順に唱えて答える → 形を出す（12個から選ぶ／ペンで書く）」。
+// 唱え方はミチムラ式に合わせ、位置の言葉を付けずに書き順で部品名を並べる（例：にんべん、おもい、ちから）。
 // 部品の練習は「形 → 名前を6択」「名前 → 形を12択かペン」の順のクイズを基本にする。
-import {PARTS, LESSONS, BY_CHAR} from './data.mjs';
+import {PARTS, LESSONS, BY_CHAR, CHANT_CHECKED} from './data.mjs';
 import {samplePath} from './handwriting.mjs';
 import {judge} from './recognize.js';
 
 const KEY = 'kanji-kobo-claude-v1';
 const PART_IDS = Object.keys(PARTS);
 const NAME = id => PARTS[id][1];
-const LAY_WORDS = {lr: ['ひだり', 'みぎ'], tb: ['うえ', 'した']};
-// 構成で左（上）・右（下）に来る部品の集合。誤答候補を「それらしく」するために使う。
-const POOL = [new Set(LESSONS.map(l => l.parts[0])), new Set(LESSONS.map(l => l.parts[1]))];
+const NUM = ['①', '②', '③', '④'];
+// 最初に書く部品（へんなど）の集合。誤答候補を「それらしく」するために使う。
+const FIRSTS = new Set(LESSONS.map(l => l.parts[0]));
 
 const $app = document.getElementById('app');
-let GLYPH = {};          // 漢字 -> [[左(上)の筆画d...], [右(下)の筆画d...]]
+let GLYPH = {};          // 漢字 -> [[左(上)の筆画d...], [右(下)の筆画d...]]（KanjiVG を二分した同梱データ）
+const STROKES = {};      // 漢字 -> 部品ごとの筆画d（唱える順）。働は右側を 重・力 に分ける。
 const PART_GLYPH = {};   // 部品ID -> {paths, box}
-const KANJI_CANDS = {}, PART_CANDS = {};  // 手書き判定で比べる候補：漢字12字・部品18個
+const KANJI_CANDS = {}, PART_CANDS = {};  // 手書き判定で比べる候補：漢字12字・部品全部
 const SAMPLED = new Map();
 
 // ---------- 記録 ----------
@@ -80,10 +82,14 @@ function partSvg(id, {anim = false, cls = ''} = {}) {
   const s = Math.max(box.w, box.h) + 14, vx = box.x + box.w / 2 - s / 2, vy = box.y + box.h / 2 - s / 2;
   return glyphSvg(paths, `${vx.toFixed(1)} ${vy.toFixed(1)} ${s.toFixed(1)} ${s.toFixed(1)}`, s * .055, anim, cls);
 }
-function kanjiSvg(ch, {anim = false, cls = '', colored = false} = {}) {
-  const [a, b] = GLYPH[ch];
-  if (!colored) return glyphSvg([...a, ...b], '0 0 109 109', 5, anim, cls);
-  return glyphSvg([...a, ...b], '0 0 109 109', 5, anim, cls, i => i < a.length ? 'c0' : 'c1');
+function kanjiSvg(ch, {anim = false, cls = ''} = {}) {
+  return glyphSvg(STROKES[ch].flat(), '0 0 109 109', 5, anim, cls);
+}
+// ミチムラ式カードのおもて面のように、k 番目の部品まで書いた字を、いま足した部品だけ赤で示す。
+function buildSvg(ch, k, cls = '') {
+  const parts = STROKES[ch].slice(0, k + 1);
+  const paths = parts.flat(), firstNew = paths.length - parts[k].length;
+  return glyphSvg(paths, '0 0 109 109', 5.5, false, cls, i => i >= firstNew ? 'red' : 'gray');
 }
 function glyphSvg(paths, viewBox, sw, anim, cls, colorOf = () => '') {
   const w = sw.toFixed(2);
@@ -102,13 +108,14 @@ function startKanji(chars) {
   S = {screen: 'kanji', list: chars, i: 0, q: newKanjiQ(chars[0]), results: []};
 }
 function newKanjiQ(ch) {
-  const L = BY_CHAR[ch];
+  const L = BY_CHAR[ch], n = L.parts.length;
   return {
-    char: ch, phase: 'names', layout: null, names: [null, null], active: 0,
-    nameChoices: fillChoices(L.parts, 6, [...POOL[0], ...POOL[1]].filter(id => !L.parts.includes(id)).slice(0, 8)),
-    shapes: [null, null], shapeChoices: fillChoices(L.parts, 12, [...POOL[0]]),
-    wrong: [false, false], layoutWrong: false, ink: [], msg: null,
-    hint: null, hints: [0, 0], nameMiss: 0, shapeMiss: 0, model: false, sawModel: false, usedMode: null,
+    char: ch, phase: 'names', names: Array(n).fill(null), active: 0,
+    nameChoices: fillChoices(L.parts, Math.max(6, n + 3), [...FIRSTS].filter(id => !L.parts.includes(id)).slice(0, 3)),
+    // 形は唱える順に一つずつ出す（step = 出し終えた部品の数）。
+    step: 0, wrongShapes: [], shapeChoices: fillChoices(L.parts, 12, [...FIRSTS]),
+    wrong: Array(n).fill(false), ink: [], msg: null,
+    hint: null, hints: Array(n).fill(0), nameMiss: 0, shapeMiss: 0, model: false, sawModel: false, usedMode: null,
   };
 }
 function startParts(ids, ret = null) {
@@ -137,12 +144,10 @@ const act = {
   mode(v) { store.settings.mode = v; save(); if (S.q) S.q.msg = null; },
   say(t) { say(t); },
 
-  // --- 漢字：名前で組み立てる ---
-  layout(v) { const q = S.q; q.layout = v; q.layoutWrong = false; q.msg = null; },
+  // --- 漢字：部品の名前を書き順に唱える ---
   slot(k) {
     const q = S.q; k = +k; q.active = k; q.msg = null;
-    const arr = q.phase === 'names' ? q.names : q.shapes;
-    if (arr[k]) { arr[k] = null; q.wrong[k] = false; }
+    if (q.names[k]) { q.names[k] = null; q.wrong[k] = false; }
   },
   pickName(id) {
     const q = S.q; if (q.names.includes(id)) return;
@@ -151,30 +156,27 @@ const act = {
   },
   checkNames() {
     const q = S.q, l = L();
-    q.layoutWrong = q.layout !== l.layout;
     q.wrong = q.names.map((id, k) => id !== l.parts[k]);
-    if (!q.layoutWrong && !q.wrong.includes(true)) {
+    if (!q.wrong.includes(true)) {
       mark('kanji', q.char, 'name', true);
-      q.phase = 'shape'; q.active = 0; q.wrong = [false, false];
-      q.msg = {ok: true, text: `「${compose(l.layout, q.names)}」。こんどは形を出そう。`};
-      say(compose(l.layout, q.names));
+      q.phase = 'shape'; q.wrong = q.wrong.map(() => false);
+      q.msg = {ok: true, text: `「${chant(q.names)}」。こんどは形を出そう。`};
+      say(chant(q.names));
     } else {
       q.nameMiss++; mark('kanji', q.char, 'name', false);
-      q.msg = {ok: false, text: q.layoutWrong ? 'ならび方（左右か上下か）を見なおそう。' : 'ちがうところに×がついているよ。'};
+      q.msg = {ok: false, text: 'ちがうところに×がついているよ。書く順番どおりに並んでいるかも見てね。'};
     }
   },
-  // --- 漢字：形を出す ---
+  // --- 漢字：形を唱える順に一つずつ出す ---
   pickShape(id) {
-    const q = S.q;
-    const other = q.shapes.indexOf(id); if (other !== -1) q.shapes[other] = null;
-    q.shapes[q.active] = id; q.wrong[q.active] = false; q.msg = null;
-    const empty = q.shapes.indexOf(null); if (empty !== -1) q.active = empty;
-  },
-  checkShapes() {
     const q = S.q, l = L();
-    q.wrong = q.shapes.map((id, k) => id !== l.parts[k]);
-    if (!q.wrong.includes(true)) finishKanji('shape');
-    else { q.shapeMiss++; mark('kanji', q.char, 'shape', false); q.msg = {ok: false, text: '×の場所の形がちがうよ。ヒントも使えるよ。'}; }
+    if (id === l.parts[q.step]) {
+      q.step++; q.wrongShapes = []; q.msg = null;
+      if (q.step === l.parts.length) finishKanji('shape');
+    } else if (!q.wrongShapes.includes(id)) {
+      q.wrongShapes.push(id); q.shapeMiss++; mark('kanji', q.char, 'shape', false);
+      q.msg = {ok: false, text: `それは「${NAME(l.parts[q.step])}」の形ではないよ。`};
+    }
   },
   checkPen() {
     const q = S.q;
@@ -195,7 +197,7 @@ const act = {
   closeHint() { S.q.hint = null; },
   practicePart(k) { const saved = S; saved.q.hint = null; startParts([L().parts[+k]], saved); },
   model() { S.q.model = true; },
-  modelRetry() { const q = S.q; q.model = false; q.sawModel = true; q.ink = []; q.shapes = [null, null]; q.active = 0; q.msg = null; },
+  modelRetry() { const q = S.q; q.model = false; q.sawModel = true; q.ink = []; q.step = 0; q.wrongShapes = []; q.msg = null; },
   modelNext() { const q = S.q; q.model = false; q.sawModel = true; finishKanji(null); },
   nextKanji() {
     S.i++;
@@ -260,7 +262,7 @@ function finishPart(how) {
 }
 
 // ---------- 画面 ----------
-const compose = (lay, ids) => `${LAY_WORDS[lay][0]}に ${ids[0] ? NAME(ids[0]) : '？'}、${LAY_WORDS[lay][1]}に ${ids[1] ? NAME(ids[1]) : '？'}`;
+const chant = ids => ids.map(id => id ? NAME(id) : '？').join('、');
 const btn = (a, label, {v = '', cls = '', dis = false, aria = ''} = {}) =>
   `<button type="button" class="${cls}" data-act="${a}" data-v="${v}" ${dis ? 'disabled' : ''} ${aria}>${label}</button>`;
 const msgBox = m => m ? `<p class="msg ${m.ok ? 'ok' : 'ng'}" role="status">${m.text}</p>` : '<p class="msg"></p>';
@@ -286,7 +288,7 @@ function homeView() {
   const pDone = PART_IDS.filter(id => store.parts[id]?.name.ok && (store.parts[id]?.shape.ok || store.parts[id]?.pen.ok)).length;
   return `<main class="home">
     <h1 class="logo">カンジ工房</h1>
-    <p class="lead">部品の<b>なまえ</b>で組み立ててから、<b>かたち</b>を出す。</p>
+    <p class="lead">部品の<b>なまえ</b>を書く順に唱えてから、<b>かたち</b>を出す。</p>
     <div class="menu">
       <button type="button" data-act="startKanji" class="big primary"><span class="em">仲</span>漢字をつくる<small>3文字・${kDone}/${LESSONS.length} できた</small></button>
       <button type="button" data-act="startParts" class="big"><span class="em">亻</span>部品クイズ<small>形→なまえ→形・${pDone}/${PART_IDS.length} できた</small></button>
@@ -306,26 +308,31 @@ function kanjiView() {
   let body;
   if (q.phase === 'done') body = kanjiDone(q, l);
   else if (q.model) body = `<section class="model">
-      <p class="lead">見本（書き順）</p>${kanjiSvg(q.char, {anim: true, cls: 'xl', colored: true})}
+      <p class="lead">見本（書き順）</p>${kanjiSvg(q.char, {anim: true, cls: 'xl'})}
       <div class="row">${btn('modelRetry', '見本を消して、もう一度自分で', {cls: 'primary'})}${btn('modelNext', '見本を見たので次へ')}</div></section>`;
   else if (q.phase === 'names') body = namesStep(q, l);
   else body = shapeStep(q, l);
   return `${bar('漢字をつくる', dots(S.list.length, S.i))}<main class="kanji">${prompt}${body}</main>`;
 }
 
-function frame(q, lay, contentOf) {
-  const words = LAY_WORDS[lay];
-  return `<div class="frame ${lay}">${[0, 1].map(k => `<button type="button" class="slot s${k} ${q.active === k ? 'active' : ''} ${q.wrong[k] ? 'wrong' : ''}" data-act="slot" data-v="${k}" aria-label="${words[k]}">
-      ${contentOf(k)}<span class="pos">${words[k]}</span></button>`).join('')}</div>`;
+// 唱えの段（ミチムラ式カードのおもて面）：①部品名 ②部品名 … を書き順に並べる。
+function chantRows(q, l, {names, upto, onTap = false}) {
+  return `<ol class="chantrows">${l.parts.map((id, k) => {
+    const shown = names[k];
+    const glyph = k < upto ? buildSvg(q.char, k, 'row') : `<span class="rowblank">${k === upto && q.phase === 'shape' ? '？' : ''}</span>`;
+    const cls = `${onTap && q.active === k ? 'active' : ''} ${q.wrong[k] ? 'wrong' : ''} ${q.phase === 'shape' && k === upto ? 'now' : ''}`;
+    const label = `<span class="no">${NUM[k]}</span><span class="nm">${shown ? NAME(shown) : '？'}</span>`;
+    return `<li class="${cls}">${q.phase === 'names' ? '' : glyph}${onTap ? `<button type="button" class="rowbtn" data-act="slot" data-v="${k}">${label}</button>` : label}</li>`;
+  }).join('')}</ol>`;
 }
-function hintButtons(q, lay) {
-  return `<div class="row hints">${[0, 1].map(k => btn('hint', `💡 ${LAY_WORDS[lay][k]}のヒント`, {v: k, cls: 'small'})).join('')}</div>`;
+function hintButtons(l) {
+  return l.parts.map((_, k) => btn('hint', `💡 ${NUM[k]}のヒント`, {v: k, cls: 'small'})).join('');
 }
 function hintPanel(q, l) {
   if (!q.hint) return '';
-  const {slot, level} = q.hint, id = l.parts[slot], w = LAY_WORDS[l.layout][slot];
+  const {slot, level} = q.hint, id = l.parts[slot];
   const lines = [];
-  if (level >= 1) lines.push(`<p>${w}の部品は「<b>${NAME(id)}</b>」 ${btn('say', '🔊', {v: NAME(id), cls: 'icon'})}</p>`);
+  if (level >= 1) lines.push(`<p>${NUM[slot]}の部品は「<b>${NAME(id)}</b>」 ${btn('say', '🔊', {v: NAME(id), cls: 'icon'})}</p>`);
   if (level === 2) lines.push(`<div class="hintglyph">${partSvg(id, {cls: 'm'})}</div>`);
   if (level >= 3) lines.push(`<div class="hintglyph">${partSvg(id, {anim: true, cls: 'm'})}<span>書き順</span></div>`);
   return `<aside class="hintpanel">${lines.join('')}
@@ -333,48 +340,45 @@ function hintPanel(q, l) {
 }
 
 function namesStep(q, l) {
-  const lay = q.layout;
-  const frameHtml = lay
-    ? frame(q, lay, k => `<span class="nm">${q.names[k] ? NAME(q.names[k]) : '？'}</span>`)
-    : `<div class="frame pick"><p>どんなならび方？</p><div class="row">
-        ${btn('layout', '<span class="lay lr"><i></i><i></i></span>左と右', {v: 'lr', cls: 'laybtn'})}
-        ${btn('layout', '<span class="lay tb"><i></i><i></i></span>上と下', {v: 'tb', cls: 'laybtn'})}</div></div>`;
-  const ready = lay && q.names.every(Boolean);
+  const ready = q.names.every(Boolean);
   return `<section class="work">
-    <p class="ask">この字は、どんな部品でできている？ <small>部品の<b>なまえ</b>をえらんでね</small></p>
-    <div class="target">${frameHtml}
-      ${lay ? `<p class="composed">${compose(lay, q.names)}</p><div class="row">${btn('layout', lay === 'lr' ? 'ならび方を上下にする' : 'ならび方を左右にする', {v: lay === 'lr' ? 'tb' : 'lr', cls: `small ${q.layoutWrong ? 'wrongbtn' : ''}`})}</div>` : ''}
-    </div>
+    <p class="ask">この字の部品を、<b>書く順</b>に唱えよう <small>部品の<b>なまえ</b>をえらんでね（${l.parts.length}つ）</small></p>
+    ${chantRows(q, l, {names: q.names, upto: 0, onTap: true})}
+    <p class="composed">${chant(q.names)}</p>
     ${msgBox(q.msg)}
-    <div class="choices names">${q.nameChoices.map(id => btn('pickName', NAME(id), {v: id, cls: 'chip', dis: !lay || q.names.includes(id)})).join('')}</div>
+    <div class="choices names">${q.nameChoices.map(id => btn('pickName', NAME(id), {v: id, cls: 'chip', dis: q.names.includes(id)})).join('')}</div>
     <div class="row">${btn('checkNames', 'これでOK', {cls: 'primary wide', dis: !ready})}</div>
-    ${lay ? hintButtons(q, lay) : ''}${hintPanel(q, l)}
+    <div class="row hints">${hintButtons(l)}</div>${hintPanel(q, l)}
   </section>`;
 }
 
 function shapeStep(q, l) {
-  const sentence = `<p class="composed lg">${compose(l.layout, l.parts)}</p>`;
   let core;
   if (mode() === 'pen') {
-    core = `<p class="ask">この字を書いてみよう <small>見本はなし。上のことばを手がかりに</small></p>${pad()}
+    core = `<p class="composed lg">${chant(l.parts)}</p>${modeToggle()}
+      <p class="ask">この字を書いてみよう <small>見本はなし。唱えを手がかりに</small></p>${pad()}
       ${msgBox(q.msg)}<div class="row">${btn('checkPen', '書けた！', {cls: 'primary wide', dis: !q.ink.length})}</div>`;
   } else {
-    core = `<p class="ask">それぞれの場所に合う形を、12個からえらんでね</p>
-      <div class="target">${frame(q, l.layout, k => q.shapes[k] ? partSvg(q.shapes[k]) : `<span class="nm faint">${NAME(l.parts[k])}</span>`)}</div>
+    core = `${modeToggle()}
+      <div class="shapework">${chantRows(q, l, {names: l.parts, upto: q.step})}
+      <div><p class="ask">${NUM[q.step]}「<b>${NAME(l.parts[q.step])}</b>」の形はどれ？</p>
       ${msgBox(q.msg)}
-      <div class="choices shapes">${q.shapeChoices.map(id => `<button type="button" class="tile ${q.shapes.includes(id) ? 'used' : ''}" data-act="pickShape" data-v="${id}" aria-label="形の候補">${partSvg(id)}</button>`).join('')}</div>
-      <div class="row">${btn('checkShapes', 'これでOK', {cls: 'primary wide', dis: !q.shapes.every(Boolean)})}</div>`;
+      <div class="choices shapes">${q.shapeChoices.map(id => {
+        const used = l.parts.slice(0, q.step).includes(id), x = q.wrongShapes.includes(id);
+        return `<button type="button" class="tile ${used ? 'used' : ''} ${x ? 'x' : ''}" data-act="pickShape" data-v="${id}" ${used || x ? 'disabled' : ''} aria-label="形の候補">${partSvg(id)}</button>`;
+      }).join('')}</div></div></div>`;
   }
-  return `<section class="work shape">${sentence}${modeToggle()}${core}
-    <div class="row hints">${[0, 1].map(k => btn('hint', `💡 ${LAY_WORDS[l.layout][k]}のヒント`, {v: k, cls: 'small'})).join('')}${btn('model', '👀 見本を見る', {cls: 'small'})}</div>
+  return `<section class="work shape">${core}
+    <div class="row hints">${hintButtons(l)}${btn('model', '👀 見本を見る', {cls: 'small'})}</div>
     ${hintPanel(q, l)}</section>`;
 }
 
 function kanjiDone(q, l) {
   const tag = q.usedMode === 'pen' ? '✎ ペンで書けた' : q.usedMode === 'shape' ? '▦ 形をえらべた' : '👀 見本で確認';
+  const checked = CHANT_CHECKED[q.char] ? '<p class="note">この唱え方は公式カードと同じです。</p>' : '';
   return `<section class="done">
-    ${kanjiSvg(q.char, {anim: true, cls: 'xl', colored: true})}
-    <p class="composed lg"><span class="c0">${LAY_WORDS[l.layout][0]}に ${NAME(l.parts[0])}</span>、<span class="c1">${LAY_WORDS[l.layout][1]}に ${NAME(l.parts[1])}</span></p>
+    <div class="donegrid">${kanjiSvg(q.char, {anim: true, cls: 'xl'})}${chantRows({...q, phase: 'done', active: -1, wrong: []}, l, {names: l.parts, upto: l.parts.length})}</div>
+    <p class="composed lg">${chant(l.parts)}</p>${checked}
     <p class="word">${l.word}（${l.wordReading}）</p>
     <p class="tags"><span>${tag}</span>${q.hints.some(Boolean) ? '<span>💡ヒントあり</span>' : ''}${q.nameMiss + q.shapeMiss ? `<span>まちがい ${q.nameMiss + q.shapeMiss}回</span>` : '<span>ノーミス</span>'}</p>
     <div class="row">${btn('nextKanji', S.i + 1 < S.list.length ? 'つぎの字へ' : 'けっかを見る', {cls: 'primary wide'})}</div></section>`;
@@ -441,7 +445,7 @@ function zukanView() {
     ${S.back ? `<div class="row">${btn('back', '← とちゅうの問題にもどる', {cls: 'primary'})}</div>` : ''}
     <h2>部品 <small>タップでその部品のクイズ（●なまえ ●形）</small></h2><div class="grid">${parts}</div>
     <h2>漢字のお題 <small>答えの字と部品は、問題の中で思い出す</small></h2><div class="grid k">${kanji}</div>
-    <p class="note">部品の名前・分け方は、この試作での覚え方です。字源を示すものではありません。字形：KanjiVG (CC BY-SA 3.0)</p>
+    <p class="note">部品の名前・分け方はミチムラ式の公開資料の規則に合わせています（公式カードで確認できたのは「働」のみ）。字源の説明ではありません。字形：KanjiVG (CC BY-SA 3.0)</p>
   </main>`;
 }
 
@@ -489,12 +493,14 @@ $app.addEventListener('click', e => {
 
 (async () => {
   GLYPH = await (await fetch('./glyphs.json')).json();
-  for (const l of LESSONS) l.parts.forEach((id, k) => {
-    if (!PART_GLYPH[id]) PART_GLYPH[id] = {paths: GLYPH[l.char][k], box: boxOf(GLYPH[l.char][k])};
-  });
-  for (const l of LESSONS) KANJI_CANDS[l.char] = [...GLYPH[l.char][0], ...GLYPH[l.char][1]];
+  for (const l of LESSONS) {
+    const all = [...GLYPH[l.char][0], ...GLYPH[l.char][1]], split = l.split || GLYPH[l.char].map(h => h.length);
+    let at = 0; STROKES[l.char] = split.map(n => all.slice(at, at += n));
+    l.parts.forEach((id, k) => { if (!PART_GLYPH[id]) PART_GLYPH[id] = {paths: STROKES[l.char][k], box: boxOf(STROKES[l.char][k])}; });
+    KANJI_CANDS[l.char] = all;
+  }
   for (const id of PART_IDS) PART_CANDS[id] = PART_GLYPH[id].paths;
   // テスト・確認用の入口
-  window.__kobo = {get S() { return S; }, store, act, render, GLYPH, PART_GLYPH, LESSONS};
+  window.__kobo = {get S() { return S; }, store, act, render, GLYPH, STROKES, PART_GLYPH, LESSONS};
   render();
 })();

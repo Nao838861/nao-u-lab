@@ -99,17 +99,16 @@ try {
   ok(await page.locator('.results li').count() === 3, '3部品で一区切りのまとめ');
   await page.screenshot({path: path.join(shots, '06_part_summary.png')});
 
-  // ---- 漢字：なまえで組む → 形を出す ----
+  // ---- 漢字：部品名を書き順に唱える → 形を一つずつ出す ----
   await page.evaluate(() => { window.__kobo.store.settings.mode = 'shape'; window.__kobo.act.oneKanji('仲'); window.__kobo.render(); });
   ok(!(await page.locator('main.kanji').innerText()).includes('仲'), '漢字のお題では答えの字を見せない');
-  await page.screenshot({path: path.join(shots, '07_kanji_layout.png')});
-  await click('[data-act=layout][data-v=lr]');
-  await click('[data-act=pickName][data-v=middle]');   // わざと逆に置く
+  ok(await page.locator('[data-act=layout]').count() === 0, '位置（左右・上下）は聞かず、書き順の唱えだけを答える');
+  await page.screenshot({path: path.join(shots, '07_kanji_names_empty.png')});
+  await click('[data-act=pickName][data-v=middle]');   // わざと逆の順に置く
   await click('[data-act=pickName][data-v=person]');
   await click('[data-act=checkNames]');
   s = await S();
-  ok(s.q.phase === 'names' && s.q.wrong.every(Boolean), '位置ちがいは×がつき、先へ進まない');
-  // ヒント → 部品クイズ → お題に戻る
+  ok(s.q.phase === 'names' && s.q.wrong.every(Boolean), '順番ちがいは×がつき、先へ進まない');
   await click('[data-act=hint][data-v="0"]');
   await page.screenshot({path: path.join(shots, '08_kanji_hint.png')});
   await click('[data-act=practicePart]');
@@ -128,30 +127,41 @@ try {
   await page.screenshot({path: path.join(shots, '09_kanji_names.png')});
   await click('[data-act=checkNames]');
   s = await S();
-  ok(s.q.phase === 'shape', 'なまえの構成が正しいと形の段階へ');
-  ok((await page.locator('.composed').first().innerText()).includes('ひだりに にんべん、みぎに なか'), '構成文が出る');
+  ok(s.q.phase === 'shape', '唱えが正しいと形の段階へ');
+  ok((await page.locator('.chantrows').innerText()).includes('にんべん'), '唱えの段が出る');
   ok(await page.locator('.choices.shapes .tile').count() === 12, '漢字の形の候補は部品12個');
+  await click('[data-act=pickShape][data-v=middle]');  // ①に ちがう形
+  s = await S();
+  ok(s.q.step === 0 && s.q.wrongShapes.includes('middle'), '①の形をまちがえると、その候補だけ消えて①のまま');
   await click('[data-act=pickShape][data-v=person]');
-  await click('[data-act=pickShape][data-v=middle]');
+  ok((await S()).q.step === 1, '①が正しいと②へ（書き順どおり）');
   await page.screenshot({path: path.join(shots, '10_kanji_shapes.png')});
-  // ペンへ切り替えて戻っても、選んだ形は残る
   await click('[data-act=mode][data-v=pen]');
   await click('[data-act=mode][data-v=shape]');
-  ok((await S()).q.shapes.join() === 'person,middle', 'モードを切り替えても選んだ形が残る');
-  await click('[data-act=checkShapes]');
+  ok((await S()).q.step === 1, 'モードを切り替えても出した形が残る');
+  await click('[data-act=pickShape][data-v=middle]');
   s = await S();
-  ok(s.q.phase === 'done', '形を正しく置くと完成');
+  ok(s.q.phase === 'done', '全部の形を書き順に出すと完成');
   await page.waitForTimeout(3000);
   await page.screenshot({path: path.join(shots, '11_kanji_done.png')});
   rec = await page.evaluate(() => window.__kobo.store.kanji['仲']);
-  ok(rec.name.ok === 1 && rec.name.miss === 1 && rec.shape.ok === 1 && rec.hinted === 1, '漢字の記録：なまえ・形・ヒントを区別');
+  ok(rec.name.ok === 1 && rec.name.miss === 1 && rec.shape.ok === 1 && rec.shape.miss === 1 && rec.hinted === 1, '漢字の記録：なまえ・形・ヒントを区別');
+
+  // 働は公式カードどおり 3部品（にんべん、おもい、ちから）
+  await page.evaluate(() => { window.__kobo.act.oneKanji('働'); window.__kobo.render(); });
+  ok(await page.locator('.chantrows li').count() === 3, '働は3つの部品で唱える');
+  for (const id of ['person', 'heavy', 'power']) await click(`[data-act=pickName][data-v=${id}]`);
+  await click('[data-act=checkNames]');
+  for (const id of ['person', 'heavy', 'power']) await click(`[data-act=pickShape][data-v=${id}]`);
+  ok((await S()).q.phase === 'done', '働：にんべん・おもい・ちから の順に形を出して完成');
+  await page.waitForTimeout(3000);
+  await page.screenshot({path: path.join(shots, '11b_hataraku_done.png')});
 
   // ペンモードで漢字を書く（モードは保存され、次回起動でも残る）
   await page.evaluate(() => { window.__kobo.act.mode('pen'); });
   await page.reload(); await page.waitForSelector('.home');
   ok(await page.evaluate(() => window.__kobo.store.settings.mode) === 'pen', '最後のモードが次回起動に引き継がれる');
   await page.evaluate(() => { window.__kobo.act.oneKanji('念'); window.__kobo.render(); });
-  await click('[data-act=layout][data-v=tb]');
   await click('[data-act=pickName][data-v=now]');
   await click('[data-act=pickName][data-v=heart]');
   await click('[data-act=checkNames]');

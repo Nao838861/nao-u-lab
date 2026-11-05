@@ -7,10 +7,14 @@ import {LESSONS} from './web/data.mjs';
 import {synth, rng} from './tools_synth.mjs';
 const G = JSON.parse(fs.readFileSync(new URL('./web/glyphs.json', import.meta.url), 'utf8'));
 const K = Object.fromEntries(Object.keys(G).map(ch => [ch, [...G[ch][0], ...G[ch][1]]]));
-const P = {}; for (const l of LESSONS) l.parts.forEach((id, k) => { P[id] ||= G[l.char][k]; });
+const P = {};
+for (const l of LESSONS) {
+  const all = K[l.char], split = l.split || G[l.char].map(h => h.length); let at = 0;
+  split.map(n => all.slice(at, at += n)).forEach((st, k) => { P[l.parts[k]] ||= st; });
+}
 const R = rng(11), N = 8;
 const pct = (a, b) => `${(a / b * 100).toFixed(0)}%`;
-for (const [label, C] of [['漢字12字', K], ['部品18個', P]]) {
+for (const [label, C] of [['漢字12字', K], ['部品19個', P]]) {
   console.log(`--- ${label}`);
   for (const level of [.5, 1, 1.5, 2, 2.5]) {
     let okNew = 0, okOld = 0, n = 0, fa = 0, fn = 0;
