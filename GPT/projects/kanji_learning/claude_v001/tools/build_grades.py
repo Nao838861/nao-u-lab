@@ -38,7 +38,7 @@ RADICAL = {
     ('口', 'left'): 'くちへん', ('土', 'left'): 'つちへん', ('女', 'left'): 'おんなへん', ('子', 'left'): 'こへん',
     ('弓', 'left'): 'ゆみへん', ('方', 'left'): 'ほうへん', ('車', 'left'): 'くるまへん', ('馬', 'left'): 'うまへん',
     ('魚', 'left'): 'うおへん', ('貝', 'left'): 'かいへん', ('足', 'left'): 'あしへん', ('⻊', None): 'あしへん',
-    ('舟', 'left'): 'ふねへん', ('歹', 'left'): 'かばねへん', ('牛', 'left'): 'うしへん', ('牜', None): 'うしへん',
+    ('舟', 'left'): 'ふねへん', ('歹', 'left'): 'いちたへん', ('牛', 'left'): 'うしへん', ('牜', None): 'うしへん',
     ('耳', 'left'): 'みみへん', ('酉', 'left'): 'とりへん', ('角', 'left'): 'つのへん', ('矢', 'left'): 'やへん',
     ('山', 'left'): 'やまへん', ('巾', 'left'): 'はばへん', ('石', 'left'): 'いしへん', ('目', 'left'): 'めへん',
     ('禾', None): 'のぎへん', ('米', 'left'): 'こめへん', ('糸', 'left'): 'いとへん', ('言', 'left'): 'ごんべん',
@@ -49,16 +49,16 @@ RADICAL = {
     ('竹', 'top'): 'たけかんむり', ('⺮', None): 'たけかんむり', ('艹', None): 'くさかんむり', ('宀', None): 'うかんむり',
     ('冖', None): 'わかんむり', ('亠', None): 'なべぶた', ('雨', 'top'): 'あめかんむり', ('⻗', None): 'あめかんむり',
     ('穴', 'top'): 'あなかんむり', ('癶', None): 'はつがしら', ('罒', None): 'あみがしら', ('爫', None): 'つめかんむり',
-    ('耂', None): 'おいかんむり', ('⺌', None): 'しょうかんむり', ('⺍', None): 'つかんむり', ('虍', None): 'とらかんむり',
-    ('覀', None): 'にし', ('夂', None): 'ふゆがしら', ('人', 'top'): 'ひとやね', ('𠆢', None): 'ひとやね',
+    ('耂', None): 'おいかんむり', ('⺌', None): 'しょうかんむり', ('⺍', None): 'つかんむり', ('虍', None): 'とらがしら',
+    ('覀', None): 'にし', ('夂', None): 'すいにょう', ('人', 'top'): 'ひとやね', ('𠆢', None): 'ひとやね',
     ('尸', None): 'しかばね', ('广', None): 'まだれ', ('厂', None): 'がんだれ', ('疒', None): 'やまいだれ',
     ('辶', None): 'しんにょう', ('⻌', None): 'しんにょう', ('廴', None): 'えんにょう', ('走', 'nyo'): 'そうにょう',
     ('門', 'kamae'): 'もんがまえ', ('門', None): 'もんがまえ', ('囗', None): 'くにがまえ', ('勹', None): 'つつみがまえ',
-    ('匚', None): 'はこがまえ', ('冂', None): 'けいがまえ', ('气', None): 'きがまえ', ('行', 'kamae'): 'ぎょうがまえ',
+    ('匚', None): 'はこがまえ', ('冂', None): 'どうがまえ', ('气', None): 'きがまえ', ('行', 'kamae'): 'ぎょうがまえ',
     ('戈', 'right'): 'ほこがまえ', ('刂', None): 'りっとう', ('攵', None): 'のぶん', ('攴', None): 'のぶん',
     ('欠', 'right'): 'あくび', ('殳', None): 'るまた', ('頁', None): 'おおがい', ('隹', None): 'ふるとり',
     ('灬', None): 'れんが', ('儿', None): 'ひとあし', ('彡', None): 'さんづくり', ('卩', None): 'ふしづくり',
-    ('⺋', None): 'ふしづくり', ('廾', None): 'にじゅうあし', ('豕', None): 'いのこ',
+    ('⺋', None): 'ふしづくり', ('廾', None): 'にじゅうあし', ('豕', None): 'ぶた',
     ('犬', 'left'): 'けものへん', ('阜', 'left'): 'こざとへん', ('邑', 'right'): 'おおざと', ('水', 'left'): 'さんずい',
     ('手', 'left'): 'てへん', ('人', 'left'): 'にんべん', ('心', 'left'): 'りっしんべん', ('刀', 'right'): 'りっとう',
     ('辵', None): 'しんにょう', ('艸', None): 'くさかんむり', ('网', 'top'): 'あみがしら', ('老', 'top'): 'おいかんむり',
@@ -66,10 +66,63 @@ RADICAL = {
 }
 # 訓よりも音で呼ぶほうが一般的な字（公開例：にち（日）・いち（一）・ほう（方）・さん（三））。
 ON_NAME = set('一二三四五六七八九十百千万日方才公丁工王寸士毎文氏予可未由己円天正生会気休校先年')
-# 学年の一覧にない字で、部品として名前を付けて扱うもの（考案者の部品一覧の「中学」欄）。
-REGISTERED = {'又': 'また', '巾': 'はば', '斤': 'おの', '斗': 'と', '舟': 'ふね', '且': 'かつ', '占': 'うらなう',
-              '亜': 'あ', '介': 'かい', '及': 'およぶ', '呂': 'ろ', '吏': 'り', '与': 'あたえる', '是': 'ぜ'}
-BASIC_EXTRA = set('言止心父母米食刀戸午牛馬鳥羽角毛弓矢北西方長半行門用里' '央曲祭皿重申身世皮平面羊')
+# ---- ミチムラ式の公式資料（ご案内パンフレット2025「学年別 基本漢字と部品の一覧表」「部品カード」）
+# 基本漢字：書けるように練習する字。部品に分けずに読みで呼ぶ（●内の配当学年の字も、この学年で基本漢字として扱う）。
+BASIC_BY_GRADE = {
+    1: '一二三五七八九十月火水木土日山川田上下大中小目耳手女子人入年文正王立竹虫雨赤丁寸',
+    2: '言止心父母米食刀戸午牛馬鳥羽角毛弓矢北西方長半行門用里豆由予欠氏周未良士可己至又巾斤斗舟且占',
+    3: '央曲祭皿重申身世皮平面羊求束失非永示比干尺亜介及呂吏与',
+    4: '以衣果司臣井単飛必不支我亡牙丘臼',
+    5: '久再史脈片矛',
+    6: '骨冊垂革呉斉',
+}
+# 部品カードの名前（要素→名前）。位置で名前が変わる部首は RADICAL 側。
+OFFICIAL_PART = {
+    '亠': 'なべぶた', '冂': 'どうがまえ', '𠆢': 'ひとやね', '亻': 'にんべん', '宀': 'うかんむり', '艹': 'くさかんむり',
+    '冖': 'わかんむり', '⺍': 'つかんむり', '寸': 'すん', '幺': 'いとがしら', '凵': 'うけばこ', '气': 'きがまえ',
+    '丷': 'ソ', '龶': 'あおの上', '龰': 'あしの下',
+    '灬': 'れんが', '辶': 'しんにょう', '⻌': 'しんにょう', '氵': 'さんずい', '囗': 'くにがまえ', '夂': 'すいにょう',
+    '巾': 'はば', '毋': 'ははのかん', '士': 'さむらい', '禾': 'のぎへん', '攵': 'のぶん', '彳': 'ぎょうにんべん',
+    '頁': 'おおがい', '耂': 'おいかんむり', '斤': 'おのづくり', '⺌': 'しょうかんむり', '彡': 'さんづくり',
+    '广': 'まだれ', '厂': 'がんだれ', '又': 'また', '刂': 'りっとう', '隹': 'ふるとり', '⺕': 'けいがしら',
+    '己': 'おのれ', '欠': 'あくび', '罒': 'あみがしら', '礻': 'しめすへん', '豕': 'ぶた', '廾': 'にじゅうあし',
+    '斗': 'とます', '开': 'とりいの形', '⺶': '羊の一本なし',
+    '扌': 'てへん', '⺷': 'ひつじ', '尸': 'しかばね', '氺': 'したみず', '殳': 'るまた', '酉': 'ひよみのとり',
+    '歹': 'いちたへん', '牜': 'うしへん', '艮': 'こんづくり', '弋': 'しきがまえ', '戈': 'ほこがまえ', '飠': 'しょくへん',
+    '乚': 'おつにょう', '冫': 'にすい', '卩': 'ふしづくり', '⺋': 'ふしづくり', '聿': 'ふでづくり', '癶': 'はつがしら',
+    '干': 'いちじゅう', '疒': 'やまいだれ', '匚': 'はこがまえ', '匸': 'はこがまえ', '廴': 'えんにょう', '非': 'あらず',
+    '廿': 'にじゅう', '戊': 'たれたほこ', '其': 'その',
+    '勹': 'つつみがまえ', '覀': 'にし', '衤': 'ころもへん', '戋': '三本のほこ', '㑒': 'けんの右',
+    '忄': 'りっしんべん', '几': 'つくえ', '冓': '組み立てるコウ', '丬': 'しょうへん', '㔾': 'まげたふしづくり',
+    '犭': 'けものへん', '韋': 'なめしがわ', '耒': 'すきへん', '巛': 'かわ', '咼': '過ぎるの右',
+    '虍': 'とらがしら', '⺪': 'ひき', '疋': 'ひき', '尢': 'だいのまげあし', '业': 'なみの下',
+    # 常用外の字の部品（考案者ブログの例：地＝なり、場＝なかれ、色＝ともえ、級＝およぶ、宮＝口ノ口）
+    '也': 'なり', '巴': 'ともえ', '勿': 'なかれ', '乍': 'さく', '袁': 'えん', '亥': 'がい', '甫': 'ほ',
+}
+# 部品が部品カードに登場する学年（それより前の学年の字では使わない）
+PART_GRADE = {}
+for _g, _es in {1: '亠冂儿𠆢幺凵气囗丷亻宀艹⺍冖寸龶龰', 2: '灬辶⻌氵夂巾毋士禾攵彳頁耂斤⺌彡广厂又刂隹⺕己欠罒礻豕廾斗开⺶也巴勿乍袁',
+                3: '扌⺷尸氺阝殳酉歹牜艮弋戈飠乚冫卩⺋聿癶干疒匚匸廴非廿戊其', 4: '勹覀衤戋㑒冊', 5: '忄几冓丬㔾犭韋耒巛咼',
+                6: '虍⺪疋尢业亥甫'}.items():
+    for _e in _es:
+        PART_GRADE[_e] = _g
+SIG_GRADE = {'たてぼうココ': 3, 'ころもの下': 3, 'ながいの下': 3, 'ソニ人': 3, '立の下が冂': 3, 'むかしの上': 3,
+             'さむいの中': 3, 'ふくの右': 3, 'あおの上': 1}
+# 部品カードの独自部品のうち、字形データに要素名がないもの：画の形の並びで見分ける。
+SIGNATURE = {
+    '㇑㇕㇐㇕㇐': 'たてぼうココ', '㇒㇙㇒㇏': 'ころもの下', '㇐㇙㇒㇏': 'ながいの下', '㇔㇒㇐㇐㇒㇏': 'ソニ人',
+    '㇑㇐㇔㇒㇑㇆': '立の下が冂', '㇐㇑㇐㇐': 'あおの上', '㇐㇑㇑㇐': 'むかしの上', '㇐㇑㇑㇐㇐㇒㇏': 'さむいの中', '㇆㇑㇇㇏': 'ふくの右',
+}
+# カタカナの部品（1年：エカケタトナノハヒフムメロ、2年：アオクコセホマヨラリレン、3年：ユ、4年：ヌ）
+KATA = {'厶': 'ム', '工': 'エ', '㐅': 'メ', '乂': 'メ', '彐': 'ヨ', '⺈': 'ク', '𠂊': 'ク', '卜': 'ト', '𠂇': 'ナ',
+        'ナ': 'ナ', '匕': 'ヒ', '八': 'ハ', '夕': 'タ', '了': '「子」の一なし'}
+# 公式の唱えに出てくる画の名前（ノ・たて・よこ・てん）と、カタカナの形の画。これ以外の画の名前は公式資料にない。
+STROKE_OK = {'㇒': 'ノ', '㇓': 'ノ', '㇑': 'たて', '㇐': 'いち', '㇔': 'てん', '㇇': 'フ', '㇙': 'レ', '㇄': 'たてまげ', '㇗': 'たてまげ'}
+# 中学の基本漢字で、部品カードとは別に名前で呼ぶもの
+REGISTERED = {'舟': 'ふね', '且': 'かつ', '占': 'うらなう', '亜': 'あ', '介': 'かい', '及': 'およぶ', '呂': '口ノ口',
+              '吏': 'り', '与': 'あたえる'}
+VG_CHAR = ['']
+CUR_GRADE = [6]
 STROKE = {'㇐': 'よこ', '㇑': 'たて', '㇒': 'ノ', '㇓': 'ノ', '㇔': 'てん', '㇏': 'はらい', '㇀': 'はね',
           '㇕': 'かぎ', '㇆': 'かぎ', '㇖': 'よこかぎ', '㇄': 'たておれ', '㇙': 'たてはね', '㇚': 'たてはね',
           '㇟': 'まげはね', '㇂': 'そりはね', '㇇': 'ク', '㇛': 'く', '㇉': 'おれまげ', '㇈': 'おれまげはね',
@@ -173,8 +226,6 @@ for k in root.findall('kanji'):
 
 
 # ---- 部品へ分ける
-# まだ習っていない形は、カタカナに見えればカタカナで呼ぶ（公開例：強＝…ム…、左＝一・ノ・エ、空＝ウ・ル・エ）。
-KATA = {'厶': 'ム', '丷': 'ソ', '工': 'エ', '㐅': 'メ', '乂': 'メ', '儿': 'ル', '彐': 'ヨ', '⺕': 'ヨ', '⺈': 'ク', '了': '「子」の一なし'}
 
 
 def path_points(d):
@@ -247,88 +298,180 @@ def radical_name(node, whole=None):
     return None
 
 
-BASIC = {c for c, g in GRADE.items() if g == 1} | BASIC_EXTRA
+BASIC = {c for cs in BASIC_BY_GRADE.values() for c in cs}
+
+
+def basic_upto(grade):
+    return {c for g, cs in BASIC_BY_GRADE.items() if g <= grade for c in cs}
 
 
 def learned(e, grade):
-    """この学年までに部品として名前を持っている字か。"""
-    if e in GRADE:
-        return GRADE[e] <= grade
-    return e in REGISTERED and grade >= 3  # 中学の字の部品は2年のカードで初めて出る（点＝たて・よこ・くち）
+    return e in GRADE and GRADE[e] <= grade
 
 
-def nameable(node, grade):
-    if node.tag == 'path':
-        return False
+def types_of(strokes):
+    return ''.join((p.get('kvg_type') or '?')[0] for p in strokes)
+
+
+def part_name(node, whole):
+    """公式の部品カードの名前（位置で変わるものを含む）。"""
     e = node.get('kvg_element')
-    if not e or node.get('kvg_part'):
-        return False
-    return bool(radical_name(node) or learned(e, grade) or e in KATA or splittable(node, grade))
+    if e == '艮' and types_of(strokes_of(node)).endswith('㇔'):
+        return '食のへなし'
+    if e in ('儿',) and node.get('kvg_original') != '八':
+        return 'ひとあし' if (node.get('kvg_position') == 'bottom' or PARENT.get(id(node)) is not None and PARENT[id(node)].get('kvg_position') == 'bottom') else 'ル'
+    if e == '冊' and VG_CHAR[0] != '冊':
+        return '横につき出さない冊'
+    if e in KATA and e not in OFFICIAL_PART:
+        return None  # カタカナの部品（魚の上＝ク）
+    if max(PART_GRADE.get(e, 0), PART_GRADE.get(node.get('kvg_original'), 0)) > CUR_GRADE[0]:
+        return None
+    if e in OFFICIAL_PART:
+        return OFFICIAL_PART[e]
+    if e == '阝' or (node.get('kvg_original') == '阜') or (node.get('kvg_original') == '邑'):
+        if CUR_GRADE[0] < 3:
+            return None
+    return radical_name(node, whole)
 
 
-def splittable(node, grade):
-    kids = list(node)
-    if len(kids) < 2 or any(k.tag == 'path' for k in kids):
-        return False
-    # 部品が別の部品をはさむ（kvg:part）形は分けない（例：重＝千が里をはさむ）。
-    if any(k.get('kvg_part') for k in kids):
-        return False
-    return all(nameable(k, grade) for k in kids)
+ATOMIC = {}
 
 
-def units(node, grade, whole, top=False):
-    """[{'n': 名前, 'ps': [pathノード…], 'part': kvg:part の部品名 or None, 'stroke': 画か}] を返す。"""
-    if node.tag == 'path':
-        t = (node.get('kvg_type') or '')[:1]
-        return [{'n': STROKE.get(t, 'せん'), 'ps': [node], 'part': None, 'stroke': True}]
-    e = node.get('kvg_element')
-    if not top:
-        part = e if node.get('kvg_part') else None
-        r = radical_name(node, whole)
-        if r:
-            return [{'n': r, 'ps': strokes_of(node), 'part': part, 'stroke': False}]
-        if e and learned(e, grade) and (part or e in BASIC or not splittable(node, grade)):
-            return [{'n': reading_name(e), 'ps': strokes_of(node), 'part': part, 'stroke': False}]
-        if e in KATA and not (e in GRADE and learned(e, grade)):
-            return [{'n': KATA[e], 'ps': strokes_of(node), 'part': part, 'stroke': False}]
-    out = []
-    for k in node:
-        out += units(k, grade, whole)
-    return out
+def atomic(e, grade):
+    """基本漢字でない既習字のうち、基本漢字と部品では唱えられないもの（力＝ちから、口＝くち）。"""
+    if e not in VG:
+        return True
+    if (e, grade) not in ATOMIC:
+        saved = VG_CHAR[0], CUR_GRADE[0]
+        _, us = decompose(e, grade)
+        VG_CHAR[0], CUR_GRADE[0] = saved
+        ATOMIC[(e, grade)] = any(u.get('z') for u in us)
+    return ATOMIC[(e, grade)]
 
 
-def arrange(us, order):
-    """kvg:part で分かれた同じ部品（例：囗・門・千）を一つにまとめ、最初の画の順（書き順）に並べる。"""
-    merged = []
-    for u in us:
-        same = next((m for m in merged if u['part'] and m['part'] == u['part']), None)
-        if same:
-            same['ps'] += u['ps']
-        else:
-            merged.append(dict(u, ps=list(u['ps'])))
-    for m in merged:
-        m['ps'].sort(key=lambda p: order[id(p)])
-    merged.sort(key=lambda m: order[id(m['ps'][0])])
-    # 同じ画が続く時は一つにまとめる（公開例：ノノ、たてたて）
-    out = []
-    for m in merged:
-        prev = out[-1] if out else None
-        if prev and m['stroke'] and prev['stroke'] and prev['n'] == prev['base'] * len(prev['ps']) and m['n'] == prev['base'] and len(prev['ps']) < 3:
-            prev['n'] += m['n']; prev['ps'] += m['ps']
-        else:
-            out.append(dict(m, base=m['n']))
-    return out
+def single_stroke(p):
+    t = (p.get('kvg_type') or '?')[0]
+    if t in STROKE_OK:
+        return STROKE_OK[t], 1.5, False
+    return STROKE.get(t, 'せん'), 10, True
+
+
+def candidates(g, grade, whole, order):
+    """[(画の集合, 名前, コスト, 公式にない画か)]"""
+    cands = []
+    groups = {}
+    for n in g.iter('g'):
+        if n is g:
+            continue
+        e = n.get('kvg_element')
+        s = frozenset(order[id(p)] for p in strokes_of(n))
+        if not s:
+            continue
+        if n.get('kvg_part'):  # 囗・門 のように分かれて書かれる部品はまとめる
+            groups.setdefault(e, set()).update(s)
+            continue
+        name, cost = None, None
+        pn = part_name(n, whole)
+        if pn:
+            name, cost = pn, 1
+        elif e in KATA:
+            name, cost = KATA[e], 1
+        elif e in basic_upto(grade):
+            name, cost = reading_name(e), 1
+        elif e in REGISTERED:
+            name, cost = REGISTERED[e], 1
+        elif e and learned(e, grade):
+            name, cost = reading_name(e), (1 if atomic(e, grade) else 4.5)  # 基本漢字でない既習字は、基本漢字と部品で唱えられない時だけ
+        if name:
+            cands.append((s, name, cost, False))
+        # ミチムラ式独自の部品：兄弟の部品の並びが画の形と一致するもの
+        kids = list(n)
+        for i in range(len(kids)):
+            acc = []
+            for j in range(i, len(kids)):
+                acc += [kids[j]] if kids[j].tag == 'path' else strokes_of(kids[j])
+                idx = sorted(order[id(p)] for p in acc)
+                if idx != list(range(idx[0], idx[0] + len(idx))):
+                    continue
+                sig = types_of(sorted(acc, key=lambda p: order[id(p)]))
+                if sig in SIGNATURE and SIG_GRADE.get(SIGNATURE[sig], 3) <= grade:
+                    cands.append((frozenset(idx), SIGNATURE[sig], 1.01, False))
+    # 字全体の画の並びの中の独自部品（商＝立の下が冂：字形データでは 立 と 冏 にまたがる）
+    allp = sorted(strokes_of(g), key=lambda p: order[id(p)])
+    for i in range(len(allp)):
+        for j in range(i + 4, min(len(allp), i + 7) + 1):
+            sig = types_of(allp[i:j])
+            if sig in SIGNATURE and SIG_GRADE.get(SIGNATURE[sig], 3) <= grade:
+                cands.append((frozenset(range(i, j)), SIGNATURE[sig], 1.01, False))
+    for e, s in groups.items():
+        if e not in OFFICIAL_PART and e not in '門行':
+            continue
+        if PART_GRADE.get(e, 0) > grade:
+            continue
+        nm = OFFICIAL_PART.get(e) or (reading_name(e) if e in basic_upto(grade) else None)
+        if nm:
+            cands.append((frozenset(s), nm, 1, False))
+    return cands
 
 
 def decompose(ch, grade=None):
     g = VG[ch]
+    VG_CHAR[0] = ch
     for par in g.iter():
         for k in par:
             PARENT[id(k)] = par
     paths = strokes_of(g)
     order = {id(p): i for i, p in enumerate(paths)}
-    us = arrange(units(g, grade or GRADE.get(ch, 6), bbox(paths), top=True), order)
-    return [p.get('d') for p in paths], [dict({'n': u['n'], 's': [order[id(p)] for p in u['ps']]}, **({'k': 1} if u['stroke'] else {})) for u in us]
+    grade = grade or GRADE.get(ch, 6)
+    CUR_GRADE[0] = grade
+    whole = bbox(paths)
+    cands = candidates(g, grade, whole, order)
+    for i, p in enumerate(paths):
+        nm, cost, bad = single_stroke(p)
+        cands.append((frozenset([i]), nm, cost, bad))
+    by_first = {}
+    for c in cands:
+        by_first.setdefault(min(c[0]), []).append(c)
+    n = len(paths)
+    full = frozenset(range(n))
+    memo = {}
+
+    def best(covered):
+        if covered == full:
+            return (0, 0, ())
+        if covered in memo:
+            return memo[covered]
+        i = min(full - covered)
+        res = None
+        for c in by_first.get(i, []):
+            if c[0] & covered:
+                continue
+            sub = best(covered | c[0])
+            cand = (sub[0] + c[2], sub[1] + 1, (c,) + sub[2])
+            if res is None or cand[:2] < res[:2]:
+                res = cand
+        memo[covered] = res or (999, 99, ())
+        return memo[covered]
+
+    _, _, chosen = best(frozenset())
+    units = sorted(chosen, key=lambda c: min(c[0]))
+    # 同じ画の名前が続く時はまとめる（公開例：ノノ）
+    out = []
+    for s, nm, cost, bad in units:
+        prev = out[-1] if out else None
+        if prev and prev['k'] and cost == 1.5 and nm == 'ノ' and prev['base'] == nm and len(prev['s']) < 3 and prev['n'] == nm * len(prev['s']):
+            prev['n'] += nm; prev['s'] += sorted(s)
+        else:
+            out.append({'n': nm, 's': sorted(s), 'k': cost >= 1.5 and len(s) == 1, 'base': nm, 'bad': bad})
+    res = []
+    for u in out:
+        d = {'n': u['n'], 's': u['s']}
+        if u['k']:
+            d['k'] = 1
+        if u['bad']:
+            d['z'] = 1
+        res.append(d)
+    return [p.get('d') for p in paths], res
 
 
 def word_segments(text, segs, target, grade):
@@ -344,6 +487,10 @@ def word_segments(text, segs, target, grade):
         else:
             out.append([c, None, False])
     return out
+
+
+def hira_to_kata(s):
+    return ''.join(chr(ord(c) + 0x60) if 'ぁ' <= c <= 'ゖ' else c for c in s)
 
 
 def on_matches(seg, ons):
@@ -382,7 +529,7 @@ def pick_words(ch, grade):
     kun = [k] if k and USE.get((ch, k.split('.')[0]), 0) >= 2 else []
     title = {
         'word': word_segments(on_word[2], on_word[4], ch, grade) if on_word else None,
-        'on': ons[0] if ons else None,
+        'on': (hira_to_kata(on_word[4][on_word[2].index(ch)]) if on_word else (ons[0] if ons else None)),
         'kun': kun[0].replace('.', '_') if kun else None,
     }
     if title['word']:
@@ -404,7 +551,14 @@ for grade in range(1, 7):
             continue
         paths, us = decompose(ch)
         title, ex = pick_words(ch, grade)
-        kanji.append({'c': ch, 'p': paths, 'u': us, 't': title, 'x': ex})
+        item = {'c': ch, 'p': paths, 'u': us, 't': title, 'x': ex}
+        if ch in BASIC:  # 基本漢字は部品に分けず、形を書いておぼえる
+            item['u'] = [{'n': reading_name(ch), 's': list(range(len(paths)))}]
+            item['b'] = 1
+        elif any(u.get('z') for u in us):
+            item['z'] = 1  # 公式資料にない画の名前が入る（出題しない）
+        kanji.append(item)
+        us = item['u']
         for u in us:
             if u['n'] not in parts:
                 parts[u['n']] = dict({'d': [paths[i] for i in u['s']]}, **({'k': 1} if u.get('k') else {}))
@@ -415,6 +569,15 @@ for grade in range(1, 7):
 OFFICIAL = {'働': 'にんべん、おもい、ちから', '温': 'さんずい、にち、さら', '強': 'ゆみへん、ム、むし',
             '教': 'おいかんむり、こ、のぶん', '点': 'たて、よこ、くち、れんが', '泳': 'さんずい、てん、水の上を左にまげる',
             '照': 'にちへん、かたな、くち、れんが', '遊': 'ほうへん、ノ、いち、こ、しんにょう'}
+# 考案者ブログで部品が分かる字（その部品が唱えに入っているか）
+OFFICIAL_PARTS = {'館': 'たてぼうココ', '宮': '口ノ口', '表': 'ころもの下', '農': 'ながいの下', '商': '立の下が冂',
+                  '勝': 'ソニ人', '地': 'なり', '場': 'なかれ', '色': 'ともえ', '度': 'にじゅう', '期': 'その',
+                  '級': 'およぶ', '近': 'おのづくり', '家': 'ぶた', '毎': 'ははのかん', '夏': 'すいにょう', '書': 'けいがしら',
+                  '式': 'しきがまえ', '感': 'ほこがまえ', '球': 'したみず', '医': 'はこがまえ', '庭': 'えんにょう',
+                  '物': 'うしへん', '飲': 'しょくへん', '階': 'こざとへん', '都': 'おおざと', '曜': 'ふるとり'}
+for ch, want in OFFICIAL_PARTS.items():
+    got = [u['n'] for u in decompose(ch)[1]]
+    report.append(f'{"部品一致" if want in got else "部品不一致"} {ch}: 公式の部品「{want}」 生成「{"、".join(got)}」')
 for ch, want in OFFICIAL.items():
     got = '、'.join(u['n'] for u in decompose(ch)[1])
     report.append(f'{"一致" if got == want else "不一致"} {ch}: 公式「{want}」 生成「{got}」')

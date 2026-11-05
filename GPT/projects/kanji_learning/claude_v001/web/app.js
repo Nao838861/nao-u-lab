@@ -11,7 +11,8 @@ const NUM = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩
 const no = i => NUM[i] || `${i + 1}`;
 // 公開資料（公式カード画像・公式記事）で唱え方を確かめた字。生成した唱えと一致する時だけ画面で知らせる。
 const OFFICIAL = {'働': 'にんべん、おもい、ちから', '温': 'さんずい、にち、さら', '強': 'ゆみへん、ム、むし',
-  '教': 'おいかんむり、こ、のぶん', '点': 'たて、よこ、くち、れんが', '照': 'にちへん、かたな、くち、れんが'};
+  '教': 'おいかんむり、こ、のぶん', '点': 'たて、よこ、くち、れんが', '照': 'にちへん、かたな、くち、れんが',
+  '遊': 'ほうへん、ノ、いち、こ、しんにょう'};
 
 const $app = document.getElementById('app');
 const SAMPLED = new Map();
@@ -120,6 +121,9 @@ async function loadGrade(g) {
   PART_CANDS = Object.fromEntries(QUIZ_PARTS.map(id => [id, GD.parts[id].d]));
 }
 
+// 唱えに公式資料にない画の名前（かぎ・はね など）が入る字は出題しない。
+const ASKABLE = () => GD.kanji.filter(k => !k.z).map(k => k.c);
+
 // ---------- 状態 ----------
 let S = {screen: 'home'};
 
@@ -128,9 +132,11 @@ function startKanji(chars) {
 }
 function newKanjiQ(ch) {
   const ids = BY[ch].u.map(u => u.n), n = ids.length, kinds = new Set(ids).size;
-  const pool = Object.keys(GD.parts);
+  // 基本漢字は部品に分けずに形をおぼえる字：唱えの段はなく、ほかの基本漢字の中から形を選ぶ（またはペンで書く）。
+  const basic = !!BY[ch].b;
+  const pool = basic ? GD.kanji.filter(k => k.b).map(k => k.u[0].n) : Object.keys(GD.parts);
   return {
-    char: ch, phase: 'names', names: Array(n).fill(null), active: 0,
+    char: ch, phase: basic ? 'shape' : 'names', names: basic ? ids.slice() : Array(n).fill(null), active: 0,
     nameChoices: fillChoices(ids, Math.max(6, kinds + 3), pool),
     // 形は唱える順に一つずつ出す（step = 出し終えた部品の数）。
     step: 0, wrongShapes: [], shapeChoices: fillChoices(ids, Math.max(12, kinds + 4), pool),
@@ -157,7 +163,7 @@ const act = {
   home() { S = {screen: 'home'}; },
   async grade(g) { store.grade = +g; save(); await loadGrade(+g); S = {screen: 'home'}; },
   changeGrade() { S = {screen: 'grade'}; },
-  startKanji() { startKanji(pickWeak('kanji', GD.kanji.map(k => k.c), 3)); },
+  startKanji() { startKanji(pickWeak('kanji', ASKABLE(), 3)); },
   startParts() { startParts(pickWeak('parts', QUIZ_PARTS, 3)); },
   zukan() { S = {screen: 'zukan', back: S.screen === 'kanji' || S.screen === 'parts' ? S : null}; },
   back() { S = S.back || {screen: 'home'}; },
@@ -352,7 +358,8 @@ function kanjiView() {
   if (!S.q) return kanjiSummary();
   const q = S.q, k = K();
   const ex = k.x.length ? `<p class="examples">${k.x.map(wordHtml).join('　')}</p>` : '';
-  const prompt = `<section class="prompt"><p class="title">${titleHtml(k.t)}</p>${ex}</section>`;
+  const basicNote = k.b ? '<p class="note">基本漢字：部品に分けずに、形をそのまま おぼえる字</p>' : '';
+  const prompt = `<section class="prompt"><p class="title">${titleHtml(k.t)}</p>${ex}${basicNote}</section>`;
   let body;
   if (q.phase === 'done') body = kanjiDone(q, k);
   else if (q.model) body = `<section class="model">
@@ -405,13 +412,13 @@ function shapeStep(q, k) {
   const ids = IDS();
   let core;
   if (mode() === 'pen') {
-    core = `<p class="composed lg">${chant(ids)}</p>${modeToggle()}
+    core = `${k.b ? '' : `<p class="composed lg">${chant(ids)}</p>`}${modeToggle()}
       <p class="ask">この字を書いてみよう <small>見本はなし。唱えを手がかりに</small></p>${pad()}
       ${msgBox(q.msg)}<div class="row">${btn('checkPen', '書けた！', {cls: 'primary wide', dis: !q.ink.length})}</div>`;
   } else {
     core = `${modeToggle()}
-      <div class="shapework">${chantRows(q, k, {names: ids, upto: q.step})}
-      <div><p class="ask">${no(q.step)}「<b>${ids[q.step]}</b>」の形はどれ？</p>
+      <div class="shapework">${k.b ? '' : chantRows(q, k, {names: ids, upto: q.step})}
+      <div><p class="ask">${k.b ? 'お題の字はどれ？' : `${no(q.step)}「<b>${ids[q.step]}</b>」の形はどれ？`}</p>
       ${msgBox(q.msg)}
       <div class="choices shapes">${q.shapeChoices.map(id => {
         const x = q.wrongShapes.includes(id);
@@ -426,7 +433,9 @@ function shapeStep(q, k) {
 function kanjiDone(q, k) {
   const tag = q.usedMode === 'pen' ? '✎ ペンで書けた' : q.usedMode === 'shape' ? '▦ 形をえらべた' : '👀 見本で確認';
   const ids = IDS();
-  const official = OFFICIAL[q.char] === chant(ids) ? '<p class="note">この唱え方は公式カードと同じです。</p>' : '<p class="note">唱え方はミチムラ式の規則からの推定です。</p>';
+  const official = k.b ? '<p class="note">ミチムラ式の基本漢字（書けるように練習する字）です。</p>'
+    : OFFICIAL[q.char] === chant(ids) ? '<p class="note">この唱え方は公式カードと同じです。</p>'
+    : '<p class="note">唱え方は推定です（公式の部品一覧の名前で、字形データから組み立てたもの。公式カードとはちがうことがあります）。</p>';
   return `<section class="done">
     <div class="donegrid">${kanjiSvg(q.char, {anim: true, cls: 'xl'})}${chantRows({...q, phase: 'done', active: -1, wrong: []}, k, {names: ids, upto: ids.length})}</div>
     <p class="composed lg">${chant(ids)}</p>${official}
@@ -492,12 +501,12 @@ function zukanView() {
     return `<i class="${r.name.ok ? 'on' : ''}"></i><i class="${r.shape.ok || r.pen.ok ? 'on' : ''}"></i>`;
   };
   const parts = QUIZ_PARTS.map(id => `<button type="button" class="pcard" data-act="onePart" data-v="${id}">${partSvg(id, {cls: 's'})}<span>${id}</span><b class="st">${st('parts', id)}</b></button>`).join('');
-  const kanji = GD.kanji.map(k => `<button type="button" class="pcard k" data-act="oneKanji" data-v="${k.c}"><span class="kc">${k.t.on || ''}</span><span class="small">${(k.t.kun || '').replace('_', '')}</span><b class="st">${st('kanji', k.c)}</b></button>`).join('');
+  const kanji = GD.kanji.filter(k => !k.z).map(k => `<button type="button" class="pcard k" data-act="oneKanji" data-v="${k.c}"><span class="kc">${k.t.on || ''}</span><span class="small">${(k.t.kun || '').replace('_', '')}</span><b class="st">${st('kanji', k.c)}</b></button>`).join('');
   return `${bar('ずかん')}<main class="zukan">
     ${S.back ? `<div class="row">${btn('back', '← とちゅうの問題にもどる', {cls: 'primary'})}</div>` : ''}
     <h2>${GD.grade}年の部品 <small>${QUIZ_PARTS.length}こ・タップでその部品のクイズ（●なまえ ●形）</small></h2><div class="grid">${parts}</div>
     <h2>${GD.grade}年の漢字 <small>${GD.kanji.length}字・答えの字は出さず、読みで並べています</small></h2><div class="grid k">${kanji}</div>
-    <p class="note">部品の分け方・名前はミチムラ式の公開資料の規則から作った推定です（公式カードで確認できたのは一部のみ）。字源の説明ではありません。<br>字形：KanjiVG (CC BY-SA 3.0)／読み・語例：KANJIDIC2・JMdict（EDRDG, CC BY-SA 4.0）・JmdictFurigana</p>
+    <p class="note">部品の名前はミチムラ式の公式パンフレットの「部品カード一覧」「基本漢字一覧」にそろえていますが、分け方は字形データからの推定です（公式カードで確認できたのは一部のみ）。唱えに公式資料にない画の名前が入る字（${GD.kanji.filter(k => k.z).length}字）は出していません。字源の説明ではありません。<br>字形：KanjiVG (CC BY-SA 3.0)／読み・語例：KANJIDIC2・JMdict（EDRDG, CC BY-SA 4.0）・JmdictFurigana</p>
   </main>`;
 }
 

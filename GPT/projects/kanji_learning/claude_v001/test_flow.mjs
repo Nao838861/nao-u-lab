@@ -135,6 +135,18 @@ try {
   await page.waitForTimeout(3000);
   await shot('11_hataraku_done.png');
 
+  // 官：公式の部品カードの「たてぼうココ」で唱える
+  await go(() => { window.__kobo.act.oneKanji('官'); window.__kobo.render(); });
+  ok((await page.evaluate(() => window.__kobo.BY['官'].u.map(u => u.n).join('、'))) === 'うかんむり、たてぼうココ', '官＝うかんむり、たてぼうココ（公式の部品）');
+  // 臣：基本漢字は唱えの段なしで形から。お題は語の読み（大ジン）
+  await go(() => { window.__kobo.act.oneKanji('臣'); window.__kobo.render(); });
+  s = await S();
+  ok(s.q.phase === 'shape' && (await page.locator('.prompt').innerText()).includes('基本漢字'), '基本漢字（臣）は部品に分けず形の段から');
+  ok((await page.locator('.prompt .title').innerText()).replace(/\s/g, '') === '大ジンのジン', '臣のお題は「大ジン の ジン」');
+  await shot('11b_basic_shin.png');
+  await click('[data-act=pickShape][data-v="' + (await page.evaluate(() => window.__kobo.BY['臣'].u[0].n)) + '"]');
+  ok((await S()).q.phase === 'done', '基本漢字は形を選ぶと完成');
+
   // ペンモード（保存され、次回起動でも残る）
   await go(() => window.__kobo.act.mode('pen'));
   await page.reload(); await page.waitForSelector('.menu');
@@ -156,11 +168,13 @@ try {
     await page.waitForSelector('.menu');
     await click('[data-act=startKanji]');
     s = await S();
-    ok(s.screen === 'kanji' && s.list.length === 3 && await page.locator('.chantrows li').count() >= 1, `${g}年：3文字のお題が始まる（${s.list.join('')}）`);
+    ok(s.screen === 'kanji' && s.list.length === 3 && (await page.locator('.chantrows li').count() >= 1 || await page.evaluate(() => !!window.__kobo.BY[window.__kobo.S.q.char].b)), `${g}年：3文字のお題が始まる（${s.list.join('')}）`);
     if (g === 1) await shot('13_grade1_kanji.png');
     const ids = await page.evaluate(() => window.__kobo.BY[window.__kobo.S.q.char].u.map(u => u.n));
-    for (const id of ids) await click(`[data-act=pickName][data-v="${id}"]`);
-    await click('[data-act=checkNames]');
+    if ((await S()).q.phase === 'names') {
+      for (const id of ids) await click(`[data-act=pickName][data-v="${id}"]`);
+      await click('[data-act=checkNames]');
+    }
     for (const id of ids) await click(`[data-act=pickShape][data-v="${id}"]`);
     ok((await S()).q.phase === 'done', `${g}年：${s.q.char}（${ids.join('、')}）を最後まで組める`);
   }
