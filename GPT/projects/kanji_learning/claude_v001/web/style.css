@@ -1,0 +1,157 @@
+:root {
+  --bg: #f6f2e8; --paper: #fffdf8; --ink: #2a2724; --sub: #6f685f; --line: #ddd5c6;
+  --accent: #1f7a6d; --accent-soft: #dcefe9; --ng: #c4513b; --ng-soft: #f8e1da;
+  --c0: #d0702a; --c1: #2f6fb3;
+  font-family: "Hiragino Maru Gothic ProN", "BIZ UDPGothic", "Yu Gothic UI", "Meiryo", sans-serif;
+  color: var(--ink); background: var(--bg);
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: var(--bg); -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; cursor: pointer; border: 2px solid var(--line); background: var(--paper); border-radius: 14px; padding: .55em 1em; font-size: 1.05rem; touch-action: manipulation; }
+button:disabled { cursor: default; opacity: .4; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+button.small { font-size: .9rem; padding: .4em .8em; border-radius: 10px; }
+button.icon { border: none; background: none; padding: .2em .4em; font-size: 1.2rem; }
+button.wide { min-width: 12em; font-size: 1.2rem; padding: .7em 1.4em; }
+.loading { padding: 3rem; text-align: center; }
+.row { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; margin: .6rem 0; }
+.note { color: var(--sub); font-size: .85rem; text-align: center; }
+h2 small, .ask small { color: var(--sub); font-weight: normal; font-size: .8em; margin-left: .4em; }
+
+/* 字形 */
+.glyph { display: block; width: 100%; height: 100%; }
+.glyph path { fill: none; stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; }
+.glyph path.c0 { stroke: var(--c0); } .glyph path.c1 { stroke: var(--c1); }
+.glyph.anim path.ghost { stroke: #e4ddcf; }
+.glyph.anim path.draw { stroke-dasharray: 100; stroke-dashoffset: 100; animation: draw .55s ease-out forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.glyph.xl { width: min(42vw, 260px); height: min(42vw, 260px); margin: 0 auto; }
+.glyph.m { width: 110px; height: 110px; }
+.glyph.s { width: 46px; height: 46px; }
+.c0 { color: var(--c0); } .c1 { color: var(--c1); }
+
+/* ヘッダー */
+.bar { display: flex; align-items: center; gap: .6rem; padding: .5rem .8rem; background: var(--paper); border-bottom: 2px solid var(--line); position: sticky; top: 0; z-index: 2; }
+.bar h1 { font-size: 1.1rem; margin: 0; }
+.bar .steps { flex: 1; display: flex; gap: 6px; justify-content: center; }
+.steps i { width: 14px; height: 14px; border-radius: 50%; background: var(--line); }
+.steps i.fin { background: var(--accent); } .steps i.now { background: #fff; border: 3px solid var(--accent); }
+
+/* ホーム */
+.home { max-width: 640px; margin: 0 auto; padding: 2.5rem 1rem; text-align: center; }
+.logo { font-size: 2.6rem; margin: 0 0 .3rem; letter-spacing: .1em; }
+.lead { font-size: 1.15rem; color: var(--sub); }
+.lead b { color: var(--accent); }
+.menu { display: grid; gap: 1rem; margin: 2rem 0 1.2rem; }
+.big { display: grid; grid-template-columns: 4rem 1fr; grid-template-rows: auto auto; text-align: left; padding: 1rem 1.2rem; font-size: 1.4rem; font-weight: bold; border-radius: 18px; }
+.big .em { grid-row: span 2; font-size: 2.6rem; line-height: 1; align-self: center; }
+.big small { font-size: .85rem; font-weight: normal; opacity: .85; }
+.big.sub { font-size: 1.15rem; }
+
+/* 漢字モード */
+main.kanji { max-width: 1100px; margin: 0 auto; padding: .8rem; display: grid; gap: .8rem; }
+@media (min-width: 900px) { main.kanji { grid-template-columns: 300px 1fr; align-items: start; } .prompt { position: sticky; top: 4.2rem; } }
+.prompt { background: var(--paper); border: 2px solid var(--line); border-radius: 18px; padding: 1rem 1.2rem; }
+.prompt .word { font-size: 2rem; font-weight: bold; margin: 0; letter-spacing: .1em; }
+.prompt .sentence { font-size: 1.3rem; margin: .5rem 0; line-height: 1.8; }
+.prompt .meaning { color: var(--sub); margin: 0; font-size: .95rem; }
+.blank { display: inline-block; border-bottom: 4px solid var(--accent); color: var(--accent); font-weight: bold; padding: 0 .2em; }
+.work, .done, .model, .pq { background: var(--paper); border: 2px solid var(--line); border-radius: 18px; padding: 1rem; text-align: center; }
+.ask { font-size: 1.2rem; margin: .2rem 0 .6rem; }
+.ask.lg { font-size: 1.5rem; }
+.target { margin: 0 auto; }
+
+/* 組み立ての枠：作るものを操作のすぐ上に大きく */
+.frame { width: min(70vw, 300px); aspect-ratio: 1; margin: 0 auto; display: flex; gap: 6px; padding: 6px; border: 3px solid var(--ink); border-radius: 10px; background: #fff; }
+.frame.lr { flex-direction: row; } .frame.tb { flex-direction: column; }
+.frame.lr .s0 { flex: 4; } .frame.lr .s1 { flex: 6; }
+.frame.tb .s0 { flex: 45; } .frame.tb .s1 { flex: 55; }
+.slot { position: relative; border: 2px dashed var(--line); border-radius: 8px; background: #fbfaf6; padding: 6px; display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 0; }
+.slot.active { border: 3px solid var(--accent); background: var(--accent-soft); }
+.slot.wrong { border: 3px solid var(--ng); background: var(--ng-soft); }
+.slot.wrong::after { content: "×"; position: absolute; top: 2px; right: 6px; color: var(--ng); font-weight: bold; font-size: 1.4rem; }
+.slot .pos { position: absolute; left: 6px; top: 3px; font-size: .75rem; color: var(--sub); }
+.slot .nm { font-size: 1.35rem; font-weight: bold; word-break: keep-all; }
+.slot .nm.faint { color: #b9b0a0; font-size: 1rem; font-weight: normal; }
+.slot .glyph { max-height: 100%; }
+.frame.pick { flex-direction: column; justify-content: center; align-items: center; border-style: dashed; }
+.frame.pick p { margin: 0 0 .6rem; font-size: 1.1rem; }
+.laybtn { display: flex; flex-direction: column; align-items: center; gap: .3rem; padding: .7rem 1rem; }
+.lay { display: flex; gap: 3px; width: 54px; height: 54px; padding: 3px; border: 2px solid var(--ink); border-radius: 4px; }
+.lay.tb { flex-direction: column; }
+.lay i { flex: 1; background: var(--accent-soft); border: 1px solid var(--accent); }
+.composed { font-size: 1.25rem; margin: .5rem 0; font-weight: bold; }
+.composed.lg { font-size: 1.5rem; }
+.wrongbtn { border-color: var(--ng); color: var(--ng); }
+
+.msg { min-height: 1.6em; margin: .4rem 0; font-size: 1.05rem; }
+.msg.ok { color: var(--accent); font-weight: bold; }
+.msg.ng { color: var(--ng); font-weight: bold; }
+
+/* 候補 */
+.choices { display: grid; gap: .5rem; margin: .4rem auto; max-width: 720px; }
+.choices.names { grid-template-columns: repeat(3, 1fr); }
+.chip { font-size: 1.3rem; padding: .7em .3em; font-weight: bold; border-radius: 14px; }
+.chip.x { text-decoration: line-through; color: var(--ng); }
+.choices.shapes { grid-template-columns: repeat(6, 1fr); }
+@media (max-width: 640px) { .choices.shapes { grid-template-columns: repeat(4, 1fr); } }
+.tile { aspect-ratio: 1; padding: 6px; border-radius: 12px; }
+.tile.used { border-color: var(--accent); background: var(--accent-soft); }
+.tile.x { opacity: .25; }
+.tile .glyph { width: 100%; height: 100%; }
+
+/* ヒント */
+.hints { margin-top: .9rem; }
+.hintpanel { margin: .4rem auto 0; max-width: 520px; background: #fff8e0; border: 2px solid #e8d48a; border-radius: 14px; padding: .6rem 1rem; }
+.hintpanel p { margin: .2rem 0; font-size: 1.1rem; }
+.hintglyph { display: flex; align-items: center; justify-content: center; gap: .6rem; color: var(--sub); }
+
+/* ペン */
+.padwrap { width: min(80vw, 340px); aspect-ratio: 1; margin: 0 auto; background: #fff; border: 3px solid var(--ink); border-radius: 10px; }
+.pad { width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair; }
+.pad line { stroke: #ece6da; stroke-width: .6; stroke-dasharray: 2 2; }
+.pad polyline { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+
+/* 部品クイズ */
+main.parts { max-width: 760px; margin: 0 auto; padding: .8rem; }
+.bigglyph { padding: .4rem; }
+.pq .bigglyph .glyph.xl { width: min(46vw, 220px); height: min(46vw, 220px); border: 2px solid var(--line); border-radius: 16px; background: #fff; }
+.choices.six .chip { font-size: 1.5rem; padding: .8em .3em; }
+.family span { font-size: 1.6rem; margin: 0 .2em; }
+.tags span { display: inline-block; background: var(--accent-soft); color: var(--accent); border-radius: 99px; padding: .15em .8em; margin: .15em; font-size: .9rem; }
+.done .word { font-size: 1.3rem; }
+
+/* モード切替（暗黙のモード、いつでも変更可） */
+.mode { display: inline-flex; border: 2px solid var(--line); border-radius: 12px; overflow: hidden; margin: .3rem auto .6rem; }
+.mode button { border: none; border-radius: 0; padding: .45em 1em; font-size: .95rem; background: var(--paper); }
+.mode button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+/* まとめ */
+.summary { max-width: 640px; margin: 0 auto; padding: 1.5rem 1rem; text-align: center; }
+.results { list-style: none; padding: 0; display: grid; gap: .5rem; }
+.results li { display: flex; align-items: center; gap: 1rem; justify-content: center; background: var(--paper); border: 2px solid var(--line); border-radius: 14px; padding: .5rem 1rem; font-size: 1.05rem; }
+.results .ch { font-size: 2rem; font-weight: bold; }
+
+/* ずかん：一覧性優先で余白を詰める */
+.zukan { max-width: 1100px; margin: 0 auto; padding: .8rem; }
+.zukan h2 { font-size: 1.1rem; margin: .8rem 0 .4rem; }
+.grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; }
+.grid.k { grid-template-columns: repeat(6, 1fr); }
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(6, 1fr); } .grid.k { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 520px) { .grid { grid-template-columns: repeat(4, 1fr); } .grid.k { grid-template-columns: repeat(3, 1fr); } }
+.pcard { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px; border-radius: 10px; font-size: .9rem; }
+.pcard .st { display: flex; gap: 3px; }
+.pcard .st i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.pcard .st i.on { background: var(--accent); }
+.pcard.k .kc { font-size: 1.1rem; font-weight: bold; }
+.pcard .small { font-size: .72rem; color: var(--sub); }
+
+/* 形の段階は構成文・枠・候補が一画面に入るよう詰める */
+.work.shape .composed { margin: 0; }
+.work.shape .mode { margin: .3rem auto .2rem; }
+.work.shape .ask { margin: .2rem 0 .4rem; font-size: 1.05rem; }
+.work.shape .frame { width: min(56vw, 220px); }
+.work.shape .choices.shapes { max-width: 560px; gap: .4rem; }
+.work.shape .padwrap { width: min(78vw, 320px); }
+.chip { white-space: nowrap; }
+@media (max-width: 520px) { .choices.six .chip, .chip { font-size: 1.15rem; padding: .7em .1em; } }
