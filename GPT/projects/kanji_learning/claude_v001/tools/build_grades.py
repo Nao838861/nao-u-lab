@@ -541,7 +541,87 @@ def on_matches(seg, ons):
     return False
 
 
+# 小学生がよく聞く語（tools/kid_words.txt。手で選んだもの）。読みは JmdictFurigana の全語から取る。
+KID = {}
+for _line in open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'kid_words.txt'), encoding='utf-8'):
+    _p = _line.split()
+    if _p and not _p[0].startswith('#'):
+        KID[_p[0]] = _p[1:]
+_need = {w for ws in KID.values() for w in ws}
+FURI_ALL = {}
+for line in open(os.path.join(DATA, 'JmdictFurigana.txt'), encoding='utf-8-sig'):
+    parts = line.rstrip(chr(10)).split('|')
+    if len(parts) == 3 and parts[0] in _need:
+        segs, ok = {}, True
+        for sg in parts[2].split(';'):
+            if not sg:
+                continue
+            idx, rd = sg.split(':', 1)
+            if '-' in idx:
+                ok = False
+                break
+            segs[int(idx)] = rd
+        if ok:
+            lst = FURI_ALL.setdefault(parts[0], [])
+            # 常用語の読みを先に（一日＝いちにち など）
+            (lst.insert(0, (parts[1], segs)) if (parts[0], parts[1]) in COMMON else lst.append((parts[1], segs)))
+for _t, _lst in FURI.items():
+    if _t in _need and _t not in FURI_ALL:
+        FURI_ALL[_t] = _lst
+KID_MISSING = []
+
+
+def title_furi(word, segs, ch):
+    """タイトルの語：答えの字は読みを消し、訓で読むほかの字には読みを添える（シ合 → 合（あい））。"""
+    for i, seg in enumerate(word):
+        if seg[2]:
+            seg[1] = None
+        elif seg[0] in GRADE and not on_matches(segs.get(i, ''), readings(seg[0], 'ja_on')):
+            seg[1] = segs.get(i)
+    return word
+
+
+def pick_kid(ch, grade):
+    words = []
+    for w in KID.get(ch, []):
+        ents = [(r, sg) for r, sg in FURI_ALL.get(w, []) if w.index(ch) in sg] if ch in w else []
+        if len(w) == 1 and ents:  # 一字の語（音＝おと／ね）は、語の中でよく使う読みを選ぶ
+            nm, ons_ = reading_name(ch), readings(ch, 'ja_on')
+            ents.sort(key=lambda e: (e[1][0] != nm, on_matches(e[1][0], ons_), -USE.get((ch, e[1][0]), 0)))
+        ent = ents[0] if ents else None
+        if ent is None:
+            KID_MISSING.append(f'{ch}:{w}')
+            continue
+        words.append((w, ent[0], ent[1]))
+    if not words:
+        return None
+    ons = readings(ch, 'ja_on')
+    tw = next((x for x in words if len(x[0]) >= 2 and all('一' <= c <= '鿿' for c in x[0]) and on_matches(x[2][x[0].index(ch)], ons)), None)
+    # 訓は語の中から取る（音＝おと、省く＝はぶ_く）。答えの字が語の先頭で訓読みの語だけを見る。
+    kun = None
+    for w, r, sg in words:
+        i = w.index(ch)
+        if i == 0 and not on_matches(sg[i], ons) and all(not ('一' <= c <= '鿿') for c in w[1:]):
+            kun = sg[i] + ('_' + w[1:] if len(w) > 1 else '')
+            break
+    if tw:
+        title = {'word': title_furi(word_segments(tw[0], tw[2], ch, grade), tw[2], ch), 'on': hira_to_kata(tw[2][tw[0].index(ch)]), 'kun': kun}
+        rest, n = [x for x in words if x is not tw], 2
+    elif kun:
+        title, rest, n = {'word': None, 'on': None, 'kun': kun}, words, 3
+    else:
+        tw = next((x for x in words if len(x[0]) >= 2), words[0])
+        title = {'word': title_furi(word_segments(tw[0], tw[2], ch, grade), tw[2], ch), 'on': tw[2][tw[0].index(ch)], 'kun': None}
+        rest, n = [x for x in words if x is not tw], 3
+    ex = [word_segments(w, sg, ch, grade) for w, r, sg in rest if len(w) >= 2][:n]
+    return title, ex
+
+
 def pick_words(ch, grade):
+    if ch in KID:
+        got = pick_kid(ch, grade)
+        if got:
+            return got
     cands = []
     for text, lst in FURI.items():
         if ch not in text or len(text) > 4:
@@ -618,9 +698,8 @@ for grade in range(1, 7):
         paths, us = decompose(ch)
         title, ex = pick_words(ch, grade)
         item = {'c': ch, 'p': paths, 'u': us, 't': title, 'x': ex}
-        if ch in BASIC:  # 基本漢字は部品に分けず、形を書いておぼえる
-            item['u'] = [{'n': reading_name(ch), 's': list(range(len(paths)))}]
-            item['b'] = 1
+        if ch in BASIC:
+            pass  # 基本漢字も、ほかの字と同じように部品・画を唱えて組む（ユーザー指示。書き順だけ選ぶ形は意味が薄かった）
         elif any(u.get('z') for u in us):
             item['z'] = 1  # 公式資料にない画の名前が入る（出題しない）
         kanji.append(item)
@@ -647,5 +726,6 @@ for ch, want in OFFICIAL_PARTS.items():
 for ch, want in OFFICIAL.items():
     got = '、'.join(u['n'] for u in decompose(ch)[1])
     report.append(f'{"一致" if got == want else "不一致"} {ch}: 公式「{want}」 生成「{got}」')
+report.append(f'語例リストで辞書にない語 {len(KID_MISSING)}：' + ' '.join(KID_MISSING))
 open(os.path.join(OUT, 'build_report.txt'), 'w', encoding='utf-8').write('\n'.join(report) + '\n')
 print('\n'.join(report).encode('utf-8', 'replace').decode('utf-8'), file=open(os.devnull, 'w'))

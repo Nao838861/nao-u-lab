@@ -92,7 +92,7 @@ try {
   await go(() => { window.__kobo.store.settings.mode = 'shape'; window.__kobo.act.oneKanji('仲'); window.__kobo.render(); });
   const promptText = await page.locator('.prompt').innerText();
   ok(!(await page.locator('main.kanji').innerText()).includes('仲'), 'お題では答えの字を見せない');
-  ok(/チュウ/.test(promptText) && promptText.includes('なか'), `お題はミチムラ式の書式（${promptText.split('\n')[0]}）`);
+  ok(promptText.includes('なか'), `お題はミチムラ式の書式（${promptText.split('\n')[0]}）`);
   await shot('07_kanji_prompt.png');
   await click('[data-act=pickName][data-v="なか"]');
   await click('[data-act=pickName][data-v="にんべん"]');
@@ -138,18 +138,10 @@ try {
   // 官：公式の部品カードの「たてぼうココ」で唱える
   await go(() => { window.__kobo.act.oneKanji('官'); window.__kobo.render(); });
   ok((await page.evaluate(() => window.__kobo.BY['官'].u.map(u => u.n).join('、'))) === 'うかんむり、たてぼうココ', '官＝うかんむり、たてぼうココ（公式の部品）');
-  // 臣：基本漢字は唱えの段なしで形から。お題は語の読み（大ジン）
+  // 臣：基本漢字も、ほかの字と同じく部品・画の名前を唱える。お題は語の読み（大ジン）
   await go(() => { window.__kobo.act.oneKanji('臣'); window.__kobo.render(); });
-  s = await S();
-  ok(s.q.phase === 'shape' && await page.locator('.choices.strokes .tile').count() === 7, '基本漢字（臣）は書き順を一画ずつ選ぶ（7画）');
+  ok((await S()).q.phase === 'names', '基本漢字（臣）もほかの字と同じく唱えの段から');
   ok((await page.locator('.prompt .title').innerText()).replace(/\s/g, '') === '大ジンのジン', '臣のお題は「大ジン の ジン」');
-  await shot('11b_basic_shin.png');
-  await click('[data-act=pickStroke][data-v="1"]');
-  ok((await S()).q.step === 0, '書き順ちがいの画では進まない');
-  await click('[data-act=pickStroke][data-v="0"]');
-  await shot('11c_basic_stroke2.png');
-  for (let i = 1; i < 7; i++) await click(`[data-act=pickStroke][data-v="${i}"]`);
-  ok((await S()).q.phase === 'done', '全部の画を書き順に選ぶと完成');
 
   // ペンモード（保存され、次回起動でも残る）
   await go(() => window.__kobo.act.mode('pen'));
