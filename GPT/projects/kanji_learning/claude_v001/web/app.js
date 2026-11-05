@@ -316,7 +316,8 @@ const modeToggle = () => `<div class="mode" role="group" aria-label="形の出�
   ${btn('mode', '▦ えらぶ', {v: 'shape', aria: `aria-pressed="${mode() === 'shape'}"`})}
   ${btn('mode', '✎ ペンで書く', {v: 'pen', aria: `aria-pressed="${mode() === 'pen'}"`})}</div>`;
 function bar(title, steps = '') {
-  return `<header class="bar">${btn('home', '⌂ トップ', {cls: 'small homebtn', aria: 'aria-label="トップにもどる"'})}<h1>${title}</h1><div class="steps">${steps}</div>${GD ? `<span class="gtag">${GD.grade}年</span>` : ''}${btn('zukan', 'ずかん', {cls: 'small'})}</header>`;
+  // ボタンは画面の端ではなく、中身と同じ幅の中に置く（広い画面でも手前にある）
+  return `<header class="bar"><div class="barin ${S.screen === 'zukan' ? 'wide' : ''}">${btn('home', '⌂ トップ', {cls: 'homebtn', aria: 'aria-label="トップにもどる"'})}<h1>${title}</h1><div class="steps">${steps}</div>${GD ? `<span class="gtag">${GD.grade}年</span>` : ''}${S.screen === 'zukan' ? '' : btn('zukan', 'ずかん', {cls: 'small'})}</div></header>`;
 }
 const dots = (n, i) => Array.from({length: n}, (_, k) => `<i class="${k < i ? 'fin' : k === i ? 'now' : ''}"></i>`).join('');
 const pad = (cls = '') => `<div class="padwrap ${cls}"><svg class="pad" viewBox="0 0 109 109"><line x1="54.5" y1="2" x2="54.5" y2="107"/><line x1="2" y1="54.5" x2="107" y2="54.5"/><g class="ink"></g></svg></div>

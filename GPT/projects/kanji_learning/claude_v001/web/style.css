@@ -31,7 +31,9 @@ h2 small, .ask small { color: var(--sub); font-weight: normal; font-size: .8em; 
 .c0 { color: var(--c0); } .c1 { color: var(--c1); }
 
 /* ヘッダー */
-.bar { display: flex; align-items: center; gap: .6rem; padding: .5rem .8rem; background: var(--paper); border-bottom: 2px solid var(--line); position: sticky; top: 0; z-index: 2; }
+.bar { padding: .5rem .8rem; background: var(--paper); border-bottom: 2px solid var(--line); position: sticky; top: 0; z-index: 3; }
+.bar .barin { display: flex; align-items: center; gap: .6rem; max-width: 760px; margin: 0 auto; }
+.bar .barin.wide { max-width: 1100px; }
 .bar h1 { font-size: 1.1rem; margin: 0; }
 .bar .steps { flex: 1; display: flex; gap: 6px; justify-content: center; }
 .steps i { width: 14px; height: 14px; border-radius: 50%; background: var(--line); }
@@ -204,7 +206,7 @@ main.parts { max-width: 760px; margin: 0 auto; padding: .8rem; }
 .choices.strokes .tile { background: #fff; }
 .glyph path.ghost { stroke: #e6dfd2; }
 
-.bar .homebtn { font-weight: bold; white-space: nowrap; }
+.bar .homebtn { font-weight: bold; white-space: nowrap; padding: .45rem .9rem; font-size: 1rem; border: 2px solid #f4b169; border-bottom-width: 4px; background: #fff; border-radius: 12px; }
 
 /* ずかん：まだ＝押したくなる白いボタン（オレンジのふち・影）／とちゅう＝黄色／おぼえた＝若葉色のシール＋花丸 */
 .zukan h2 { margin: 1.2rem 0 .3rem; }
