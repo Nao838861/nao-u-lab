@@ -17,6 +17,7 @@
 - 小学校で習わない字・名前のない形は、さらに分けるか、画（たて・よこ・ノ…）で呼ぶ。
 """
 import glob
+import unicodedata
 import json
 import os
 import re
@@ -185,6 +186,16 @@ for line in open(os.path.join(DATA, 'JmdictFurigana.txt'), encoding='utf-8-sig')
 
 
 
+# 都道府県名（固有名詞のため常用語の辞書に入っていない。4年の配当漢字の語例に使う）
+PREF = '熊本:くま,もと 埼玉:さい,たま 茨城:いばら,き 栃木:とち,ぎ 愛媛:え,ひめ 新潟:にい,がた 岐阜:ぎ,ふ 奈良:な,ら '        '滋賀:し,が 沖縄:おき,なわ 鹿児島:か,ご,しま 岡山:おか,やま 長崎:なが,さき 宮崎:みや,ざき 山梨:やま,なし '        '富山:と,やま 香川:か,がわ 佐賀:さ,が 大阪:おお,さか 福岡:ふく,おか 静岡:しず,おか 群馬:ぐん,ま 徳島:とく,しま '        '宮城:みや,ぎ 神奈川:か,な,がわ 福井:ふく,い 石川:いし,かわ 岩手:いわ,て 秋田:あき,た 山形:やま,がた '        '福島:ふく,しま 千葉:ち,ば 長野:なが,の 三重:み,え 京都:きょう,と 兵庫:ひょう,ご 鳥取:とっ,とり 島根:しま,ね '        '広島:ひろ,しま 山口:やま,ぐち 高知:こう,ち 大分:おお,いた 青森:あお,もり 北海道:ほっ,かい,どう 東京:とう,きょう'
+for _w in PREF.split():
+    _t, _r = _w.split(':')
+    _rs = _r.split(',')
+    if len(_rs) != len(_t) or not all(_rs):
+        continue
+    FURI.setdefault(_t, []).append((''.join(_rs), dict(enumerate(_rs))))
+    FREQ[_t] = 5
+
 USE = {}
 for text, lst in FURI.items():
     for reading, segs in lst:
@@ -298,6 +309,11 @@ def strokes_of(node):
 def radical_name(node, whole=None):
     e = node.get('kvg_element')
     pos = position(node, whole) if whole else node.get('kvg_position')
+    # 字の名前から作る へん（くちへん・きへん…）は、字全体の左半分の時だけ。
+    # 器 の左上の口は「上の段の左」であって へん ではないので くち のまま。
+    par = PARENT.get(id(node))
+    if pos == 'left' and par is not None and id(par) in PARENT and not par.get('kvg_element'):
+        pos = None  # 親が名前のない段（器の上の段）の時は へん ではない。照の日（昭の左）は にちへん のまま
     for key in [(e, pos), (e, None)]:
         if key in RADICAL:
             return RADICAL[key]
@@ -535,11 +551,18 @@ def pick_words(ch, grade):
             others = [c for c in text if c != ch and '一' <= c <= '鿿']
             above = sum(1 for c in others if GRADE.get(c, 9) > grade)
             # 一字だけの語（送りがなもない）は手がかりにならないので後回し
-            lone = 15 if len(text) == 1 else 0
+            if len(text) == 1:
+                continue  # 一字だけの語（「□」だけ）は手がかりにならない
+            lone = 0
             cands.append((above * 100 + FREQ.get(text, 60) + lone + len(text), len(text), text, reading, segs))
     cands.sort(key=lambda x: (x[0], x[1], x[2]))
     ons = readings(ch, 'ja_on')
     on_word = next((c for c in cands if len(c[2]) >= 2 and all('一' <= x <= '鿿' for x in c[2]) and on_matches(c[4][c[2].index(ch)], ons)), None)
+    kun_title = False
+    if on_word is None:
+        # 音の語がない字（熊・埼・岡…）：一番よく使う語をタイトルにし、その語の中の読みで示す（くま本 の くま）
+        on_word = next((c for c in cands if len(c[2]) >= 2 and c[0] < 100), None)
+        kun_title = on_word is not None and not on_matches(on_word[4][on_word[2].index(ch)], ons)
     ex, seen = [], {on_word[2]} if on_word else set()
     for c in cands:
         if c[2] in seen or c[0] >= 100:
@@ -551,9 +574,22 @@ def pick_words(ch, grade):
     kun = [k] if k and USE.get((ch, k.split('.')[0]), 0) >= 2 else []
     title = {
         'word': word_segments(on_word[2], on_word[4], ch, grade) if on_word else None,
-        'on': (hira_to_kata(on_word[4][on_word[2].index(ch)]) if on_word else (ons[0] if ons else None)),
+        'on': ((on_word[4][on_word[2].index(ch)] if kun_title else hira_to_kata(on_word[4][on_word[2].index(ch)]))
+               if on_word else (ons[0] if ons else None)),
         'kun': kun[0].replace('.', '_') if kun else None,
     }
+    if kun_title:
+        seg = title['on']
+        bases = [k.split('.')[0] for k in kun_list(ch)]
+        base = next((b for b in bases if b == seg or (b[1:] == seg[1:] and unicodedata.normalize('NFD', seg[0])[0] == b[0])), seg)
+        if title['kun']:
+            # 訓の語しかない字（崎・届・皿）は、タイトルを訓だけにする（語例で使い方を見せる）
+            if on_word[2] not in [''.join(x[0] for x in e) for e in ex]:
+                ex = [word_segments(on_word[2], on_word[4], ch, grade)] + ex[:1]
+            title['word'], title['on'] = None, None
+        else:
+            title['on'] = base  # 本ばこ → の はこ（語の中のにごりはタイトルの読みでは外す）
+            title['wr'] = seg
     if title['word']:
         for seg in title['word']:
             if seg[2]:
