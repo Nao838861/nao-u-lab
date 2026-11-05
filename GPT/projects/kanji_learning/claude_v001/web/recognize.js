@@ -54,9 +54,13 @@ export function judge(ink, target, candidates) {
   const tpl = prepTemplate(target, candidates[target]);
   if (ink.length < Math.max(1, Math.ceil(tpl.n * .4)) || ink.length > tpl.n * 2 + 2) return fail('stroke-count');
   const me = prep(ink);
-  const ranked = Object.keys(candidates).map(id => ({id, d: distance(me, prepTemplate(id, candidates[id]))})).sort((x, y) => x.d - y.d);
-  const mine = ranked.find(r => r.id === target);
-  const ok = ranked[0].id === target && mine.d < LIMIT;
+  // 学年の全字（〜200字）と比べるので、画数が大きく違う候補は先に外す（答えの字は必ず残す）。
+  const ids = Object.keys(candidates).filter(id => id === target || Math.abs(candidates[id].length - ink.length) <= Math.max(3, candidates[id].length * .5));
+  const ranked = ids.map(id => ({id, d: distance(me, prepTemplate(id, candidates[id]))})).sort((x, y) => x.d - y.d);
+  const mine = ranked.find(r => r.id === target), at = ranked.indexOf(mine);
+  // 候補が多いと、似た字（未・末など）とほぼ同点になる。上位3つ以内で一番との差がわずかなら通す。
+  const ok = mine.d < LIMIT && (at === 0 || (at < 3 && mine.d <= ranked[0].d * NEAR));
   return {ok, reason: ok ? 'ok' : ranked[0].id !== target ? 'closer-other' : 'too-far', d: mine.d, best: ranked[0].id, ranked: ranked.slice(0, 3)};
 }
 export const LIMIT = 20;
+export const NEAR = 1.06;

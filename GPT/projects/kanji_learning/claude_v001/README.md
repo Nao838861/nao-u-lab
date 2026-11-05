@@ -11,6 +11,24 @@ python serve.py        # http://127.0.0.1:8765/
 
 `run_kanji_kobo_claude.cmd` をダブルクリックしても起動する。Windows の `python -m http.server` は `.js` を text/plain で返し、ES Modules が読み込めないため、MIME を固定した `serve.py` を使う。
 
+## 学年別データ（小1〜小6・1026字）
+
+起動すると最初に学年（1〜6年）を選ぶ。選んだ学年は保存され、ホームの「学年をかえる」で変えられる。
+
+`web/grades/g1.json`〜`g6.json` は `tools/build_grades.py` が公開データから作る。
+
+```powershell
+python tools/build_grades.py <データフォルダ>
+```
+
+データフォルダに置くもの：
+- `kanjivg.xml`（https://github.com/KanjiVG/kanjivg/releases の `kanjivg-*.xml.gz` を展開）
+- `kanjidic2-en-*.json` と `jmdict-eng-common-*.json`（https://github.com/scriptin/jmdict-simplified/releases）
+- `JMdict_e`（http://ftp.edrdg.org/pub/Nihongo/JMdict_e.gz を展開。語の頻度順位 nf に使う）
+- `JmdictFurigana.txt`（https://github.com/Doublevil/JmdictFurigana/releases）
+
+学年の割り当ては2020年度の学年別漢字配当表（80/160/200/202/193/191字）と一致することを確認済み。部品の分け方・名前・お題の作り方は `design_log.md` の「学年別」節。`web/grades/build_report.txt` に公開資料の唱え方との照合結果が出る。
+
 ## 遊び方（中心の流れ）
 
 ### 部品クイズ（handoff 第4節の要望）
@@ -22,7 +40,7 @@ python serve.py        # http://127.0.0.1:8765/
 
 ### 漢字をつくる（handoff 第3節）
 
-1. 語の読み・例文・意味だけを出す（答えの字は見せない）。
+1. ミチムラ式のタイトルの書式でお題を出す（例：「労ドウ の ドウ　はたら_く」と、□に読みを添えた語例「労□者」）。答えの字は見せない。
 2. **ひらがなの部品名**を書き順に唱える（ミチムラ式）。例：「にんべん、おもい、ちから」。
 3. 形を出す：**12個の部品の形**から①②③の順に一つずつ選ぶ（公式カードのように、足した部品が赤で字に加わる）、または**見本なしでペンで書く**。
 4. 一回3文字。ずかんから一文字だけでも遊べる。
@@ -47,8 +65,8 @@ python serve.py        # http://127.0.0.1:8765/
 | `web/index.html` | 入口 |
 | `web/app.js` | 画面・状態・記録・ペン入力（Claude 作成） |
 | `web/style.css` | 画面（Claude 作成） |
-| `web/data.mjs` | 12字・18部品・例文（GPT 版 v001 からコピー） |
-| `web/glyphs.json` | KanjiVG 由来の二部品分割字形（v001 からコピー、CC BY-SA 3.0） |
+| `web/grades/g1〜g6.json` | 学年ごとの漢字（筆画・部品・お題・語例）と部品（派生データ、CC BY-SA） |
+| `tools/build_grades.py` | 学年データを作る |
 | `web/handwriting.mjs` | 筆画パスのサンプリング等（v001 からコピー） |
 | `web/recognize.js` | 手書きの形チェック（候補の中で一番近いか） |
 | `eval_handwriting.mjs` / `tools_synth.mjs` | 合成筆跡による手書き判定の評価 |
