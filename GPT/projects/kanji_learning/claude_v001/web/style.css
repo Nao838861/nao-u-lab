@@ -195,3 +195,11 @@ main.parts { max-width: 760px; margin: 0 auto; padding: .8rem; }
 .blankbox { color: var(--accent); font-weight: bold; ruby-overhang: auto; }
 .wd { white-space: nowrap; margin: 0 .8em; }
 .blankbox rt { font-size: .6em; color: var(--accent); }
+
+/* 基本漢字の書き順 */
+.strokework { display: grid; gap: .6rem; justify-items: center; }
+@media (min-width: 700px) { .strokework { grid-template-columns: 180px 1fr; align-items: start; } }
+.strokeprog { width: 160px; height: 160px; border: 2px solid var(--line); border-radius: 14px; background: #fff; }
+.choices.strokes { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: .4rem; width: 100%; max-width: 520px; }
+.choices.strokes .tile { background: #fff; }
+.glyph path.ghost { stroke: #e6dfd2; }

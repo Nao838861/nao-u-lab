@@ -131,7 +131,7 @@ try {
   for (const id of ['にんべん', 'おもい', 'ちから']) await click(`[data-act=pickName][data-v="${id}"]`);
   await click('[data-act=checkNames]');
   for (const id of ['にんべん', 'おもい', 'ちから']) await click(`[data-act=pickShape][data-v="${id}"]`);
-  ok((await page.locator('.done').innerText()).includes('公式カードと同じ'), '働の完成画面で公式と同じ唱えだと示す');
+  ok(!/ミチムラ|推定|公式/.test(await page.locator('main').innerText()), '完成画面に説明の注記を出さない');
   await page.waitForTimeout(3000);
   await shot('11_hataraku_done.png');
 
@@ -141,11 +141,15 @@ try {
   // 臣：基本漢字は唱えの段なしで形から。お題は語の読み（大ジン）
   await go(() => { window.__kobo.act.oneKanji('臣'); window.__kobo.render(); });
   s = await S();
-  ok(s.q.phase === 'shape' && (await page.locator('.prompt').innerText()).includes('基本漢字'), '基本漢字（臣）は部品に分けず形の段から');
+  ok(s.q.phase === 'shape' && await page.locator('.choices.strokes .tile').count() === 7, '基本漢字（臣）は書き順を一画ずつ選ぶ（7画）');
   ok((await page.locator('.prompt .title').innerText()).replace(/\s/g, '') === '大ジンのジン', '臣のお題は「大ジン の ジン」');
   await shot('11b_basic_shin.png');
-  await click('[data-act=pickShape][data-v="' + (await page.evaluate(() => window.__kobo.BY['臣'].u[0].n)) + '"]');
-  ok((await S()).q.phase === 'done', '基本漢字は形を選ぶと完成');
+  await click('[data-act=pickStroke][data-v="1"]');
+  ok((await S()).q.step === 0, '書き順ちがいの画では進まない');
+  await click('[data-act=pickStroke][data-v="0"]');
+  await shot('11c_basic_stroke2.png');
+  for (let i = 1; i < 7; i++) await click(`[data-act=pickStroke][data-v="${i}"]`);
+  ok((await S()).q.phase === 'done', '全部の画を書き順に選ぶと完成');
 
   // ペンモード（保存され、次回起動でも残る）
   await go(() => window.__kobo.act.mode('pen'));
@@ -175,7 +179,10 @@ try {
       for (const id of ids) await click(`[data-act=pickName][data-v="${id}"]`);
       await click('[data-act=checkNames]');
     }
-    for (const id of ids) await click(`[data-act=pickShape][data-v="${id}"]`);
+    if (await page.evaluate(() => !!window.__kobo.BY[window.__kobo.S.q.char].b)) {
+      const n = await page.evaluate(() => window.__kobo.BY[window.__kobo.S.q.char].p.length);
+      for (let i = 0; i < n; i++) await click(`[data-act=pickStroke][data-v="${i}"]`);
+    } else for (const id of ids) await click(`[data-act=pickShape][data-v="${id}"]`);
     ok((await S()).q.phase === 'done', `${g}年：${s.q.char}（${ids.join('、')}）を最後まで組める`);
   }
   await go(() => window.__kobo.act.zukan()); await go(() => window.__kobo.render());

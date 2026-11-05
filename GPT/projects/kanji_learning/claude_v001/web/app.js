@@ -1,6 +1,6 @@
 // カンジ工房（Claude版）
 // 小1〜小6の学年を選び、その学年の漢字・部品で学ぶ。データは tools/build_grades.py が作る grades/g1〜g6.json。
-// 中心操作は「部品の名前（ひらがな）を書き順に唱えて答える → 形を出す（12個から選ぶ／ペンで書く）」。
+// 中心操作は「部品の名前（ひらがな）を書き順に唱えて答える → 形を出す（えらぶ／ペンで書く）」。
 // 唱え方・お題（「労ドウ の ドウ　はたら_く」）はミチムラ式の書式に合わせる。
 // 部品の練習は「形 → 名前を6択」「名前 → 形を12択かペン」の順のクイズを基本にする。
 import {judge} from './recognize.js';
@@ -136,6 +136,8 @@ function newKanjiQ(ch) {
   const basic = !!BY[ch].b;
   const pool = basic ? GD.kanji.filter(k => k.b).map(k => k.u[0].n) : Object.keys(GD.parts);
   return {
+    // 基本漢字は書き順を一画ずつ選ぶ（strokeChoices：その字の画を混ぜた並び）。
+    strokeChoices: basic ? shuffle(BY[ch].p.map((_, i) => i)) : null,
     char: ch, phase: basic ? 'shape' : 'names', names: basic ? ids.slice() : Array(n).fill(null), active: 0,
     nameChoices: fillChoices(ids, Math.max(6, kinds + 3), pool),
     // 形は唱える順に一つずつ出す（step = 出し終えた部品の数）。
@@ -197,6 +199,17 @@ const act = {
     } else {
       q.nameMiss++; mark('kanji', q.char, 'name', false);
       q.msg = {ok: false, text: 'ちがうところに×がついているよ。書く順番どおりに並んでいるかも見てね。'};
+    }
+  },
+  // --- 基本漢字：書き順どおりに画を一つずつ選ぶ ---
+  pickStroke(v) {
+    const q = S.q, i = +v, n = BY[q.char].p.length;
+    if (i === q.step) {
+      q.step++; q.wrongShapes = []; q.msg = null;
+      if (q.step === n) finishKanji('shape');
+    } else if (!q.wrongShapes.includes(i)) {
+      q.wrongShapes.push(i); q.shapeMiss++; mark('kanji', q.char, 'shape', false);
+      q.msg = {ok: false, text: `${q.step + 1}画目ではないよ。`};
     }
   },
   // --- 漢字：形を唱える順に一つずつ出す ---
@@ -300,7 +313,7 @@ const btn = (a, label, {v = '', cls = '', dis = false, aria = ''} = {}) =>
   `<button type="button" class="${cls}" data-act="${a}" data-v="${v}" ${dis ? 'disabled' : ''} ${aria}>${label}</button>`;
 const msgBox = m => m ? `<p class="msg ${m.ok ? 'ok' : 'ng'}" role="status">${m.text}</p>` : '<p class="msg"></p>';
 const modeToggle = () => `<div class="mode" role="group" aria-label="形の出し方">
-  ${btn('mode', '▦ 12個から選ぶ', {v: 'shape', aria: `aria-pressed="${mode() === 'shape'}"`})}
+  ${btn('mode', '▦ えらぶ', {v: 'shape', aria: `aria-pressed="${mode() === 'shape'}"`})}
   ${btn('mode', '✎ ペンで書く', {v: 'pen', aria: `aria-pressed="${mode() === 'pen'}"`})}</div>`;
 function bar(title, steps = '') {
   return `<header class="bar">${btn('home', '⌂', {cls: 'icon', aria: 'aria-label="ホーム"'})}<h1>${title}</h1><div class="steps">${steps}</div>${GD ? `<span class="gtag">${GD.grade}年</span>` : ''}${btn('zukan', 'ずかん', {cls: 'small'})}</header>`;
@@ -350,7 +363,7 @@ function homeView() {
       <button type="button" data-act="startParts" class="big"><span class="em">亻</span>部品クイズ<small>形→なまえ→形・${pDone}/${QUIZ_PARTS.length} できた</small></button>
       <button type="button" data-act="zukan" class="big sub"><span class="em">▦</span>ずかん<small>この学年の部品と漢字</small></button>
     </div>
-    <p class="note">形の出し方：<b>${mode() === 'pen' ? 'ペンで書く' : '12個から選ぶ'}</b>（問題の中でいつでも切りかえられます）</p>
+    <p class="note">形の出し方：<b>${mode() === 'pen' ? 'ペンで書く' : 'えらぶ'}</b>（問題の中でいつでも切りかえられます）</p>
   </main>`;
 }
 
@@ -358,7 +371,7 @@ function kanjiView() {
   if (!S.q) return kanjiSummary();
   const q = S.q, k = K();
   const ex = k.x.length ? `<p class="examples">${k.x.map(wordHtml).join('')}</p>` : '';
-  const basicNote = k.b ? '<p class="note">基本漢字：部品に分けずに、形をそのまま おぼえる字</p>' : '';
+  const basicNote = '';
   const prompt = `<section class="prompt"><p class="title">${titleHtml(k.t)}</p>${ex}${basicNote}</section>`;
   let body;
   if (q.phase === 'done') body = kanjiDone(q, k);
@@ -415,9 +428,21 @@ function shapeStep(q, k) {
     core = `${k.b ? '' : `<p class="composed lg">${chant(ids)}</p>`}${modeToggle()}
       <p class="ask">この字を書いてみよう <small>見本はなし。唱えを手がかりに</small></p>${pad()}
       ${msgBox(q.msg)}<div class="row">${btn('checkPen', '書けた！', {cls: 'primary wide', dis: !q.ink.length})}</div>`;
+  } else if (k.b) {
+    // 書き順：うすい字の上に、書いた画は黒・いま足した画は赤。候補は「その画だけ濃い」字。
+    const P = BY[q.char].p, ghost = P.map(d => `<path class="ghost" d="${d}"/>`).join('');
+    const prog = `<svg class="glyph strokeprog" viewBox="0 0 109 109" aria-hidden="true"><g stroke-width="5.5">${ghost}${P.slice(0, q.step).map((d, i) => `<path class="${i === q.step - 1 ? 'red' : ''}" d="${d}"/>`).join('')}</g></svg>`;
+    const tile = i => `<svg class="glyph" viewBox="0 0 109 109" aria-hidden="true"><g stroke-width="7">${ghost}<path d="${P[i]}"/></g></svg>`;
+    core = `${modeToggle()}
+      <div class="strokework">${prog}
+      <div><p class="ask">${q.step + 1}画目はどれ？ <small>${P.length}画</small></p>${msgBox(q.msg)}
+      <div class="choices strokes">${q.strokeChoices.map(i => {
+        const done = i < q.step, x = q.wrongShapes.includes(i);
+        return `<button type="button" class="tile ${done ? 'used' : ''} ${x ? 'x' : ''}" data-act="pickStroke" data-v="${i}" ${done || x ? 'disabled' : ''} aria-label="画の候補">${tile(i)}</button>`;
+      }).join('')}</div></div></div>`;
   } else {
     core = `${modeToggle()}
-      <div class="shapework">${k.b ? '' : chantRows(q, k, {names: ids, upto: q.step})}
+      <div class="shapework">${chantRows(q, k, {names: ids, upto: q.step})}
       <div><p class="ask">${k.b ? 'お題の字はどれ？' : `${no(q.step)}「<b>${ids[q.step]}</b>」の形はどれ？`}</p>
       ${msgBox(q.msg)}
       <div class="choices shapes">${q.shapeChoices.map(id => {
@@ -426,16 +451,14 @@ function shapeStep(q, k) {
       }).join('')}</div></div></div>`;
   }
   return `<section class="work shape">${core}
-    <div class="row hints">${hintButtons(k)}${btn('model', '👀 見本を見る', {cls: 'small'})}</div>
+    <div class="row hints">${k.b ? '' : hintButtons(k)}${btn('model', '👀 見本を見る', {cls: 'small'})}</div>
     ${hintPanel(q, k)}</section>`;
 }
 
 function kanjiDone(q, k) {
   const tag = q.usedMode === 'pen' ? '✎ ペンで書けた' : q.usedMode === 'shape' ? '▦ 形をえらべた' : '👀 見本で確認';
   const ids = IDS();
-  const official = k.b ? '<p class="note">ミチムラ式の基本漢字（書けるように練習する字）です。</p>'
-    : OFFICIAL[q.char] === chant(ids) ? '<p class="note">この唱え方は公式カードと同じです。</p>'
-    : '<p class="note">唱え方は推定です（公式の部品一覧の名前で、字形データから組み立てたもの。公式カードとはちがうことがあります）。</p>';
+  const official = '';
   return `<section class="done">
     <div class="donegrid">${kanjiSvg(q.char, {anim: true, cls: 'xl'})}${chantRows({...q, phase: 'done', active: -1, wrong: []}, k, {names: ids, upto: ids.length})}</div>
     <p class="composed lg">${chant(ids)}</p>${official}
@@ -506,7 +529,7 @@ function zukanView() {
     ${S.back ? `<div class="row">${btn('back', '← とちゅうの問題にもどる', {cls: 'primary'})}</div>` : ''}
     <h2>${GD.grade}年の部品 <small>${QUIZ_PARTS.length}こ・タップでその部品のクイズ（●なまえ ●形）</small></h2><div class="grid">${parts}</div>
     <h2>${GD.grade}年の漢字 <small>${GD.kanji.length}字・答えの字は出さず、読みで並べています</small></h2><div class="grid k">${kanji}</div>
-    <p class="note">部品の名前はミチムラ式の公式パンフレットの「部品カード一覧」「基本漢字一覧」にそろえていますが、分け方は字形データからの推定です（公式カードで確認できたのは一部のみ）。唱えに公式資料にない画の名前が入る字（${GD.kanji.filter(k => k.z).length}字）は出していません。字源の説明ではありません。<br>字形：KanjiVG (CC BY-SA 3.0)／読み・語例：KANJIDIC2・JMdict（EDRDG, CC BY-SA 4.0）・JmdictFurigana</p>
+    <p class="note">字形：KanjiVG (CC BY-SA 3.0)／読み・語例：KANJIDIC2・JMdict（EDRDG, CC BY-SA 4.0）・JmdictFurigana</p>
   </main>`;
 }
 
