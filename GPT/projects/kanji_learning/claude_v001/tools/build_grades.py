@@ -201,7 +201,16 @@ def best_kun(ch):
     return max(kun, key=lambda k: (USE.get((ch, k.split('.')[0]), 0), -kun.index(k)))
 
 
+# 読みの自動選択が不自然な字の呼び名（子どもがふつう呼ぶ読み）
+NAME_OVERRIDE = {'空': 'そら', '寺': 'てら', '森': 'もり', '林': 'はやし', '音': 'おと', '来': 'くる', '明': 'あかるい',
+                 '画': 'が', '姉': 'あね', '妹': 'いもうと', '弟': 'おとうと', '家': 'いえ', '市': 'し', '形': 'かたち',
+                 '細': 'ほそい', '点': 'てん', '交': 'まじわる', '休': 'やすむ', '池': 'いけ', '絵': 'え', '船': 'ふね',
+                 '夜': 'よる', '羽': 'はね', '角': 'つの'}
+
+
 def reading_name(ch):
+    if ch in NAME_OVERRIDE:
+        return NAME_OVERRIDE[ch]
     if ch in REGISTERED:
         return REGISTERED[ch]
     kun, on = best_kun(ch), readings(ch, 'ja_on')
@@ -383,7 +392,10 @@ def candidates(g, grade, whole, order):
         elif e in REGISTERED:
             name, cost = REGISTERED[e], 1
         elif e and learned(e, grade):
-            name, cost = reading_name(e), (1 if atomic(e, grade) else 4.5)  # 基本漢字でない既習字は、基本漢字と部品で唱えられない時だけ
+            # 基本漢字でない既習字：1・2年の字はまとめて読みで呼ぶ（観＝…みる、固＝くにがまえ、ふるい）。
+            # 3年以上の字は分ける（働＝にんべん、おもい、ちから で 動 を使わない、照 で 昭 を使わない）。
+            # 公式の3例（働・照・観）から推した規則。分けられない字（力・口）はどの学年でも読みで呼ぶ。
+            name, cost = reading_name(e), (1 if GRADE[e] <= 2 or atomic(e, grade) else 4.5)
         if name:
             cands.append((s, name, cost, False))
         # ミチムラ式独自の部品：兄弟の部品の並びが画の形と一致するもの
