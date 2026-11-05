@@ -241,3 +241,5 @@ main.parts { max-width: 760px; margin: 0 auto; padding: .8rem; }
 .resetbox .resetword { font: inherit; font-size: 1.1rem; padding: .4rem .6rem; border: 2px solid var(--line); border-radius: 10px; width: 8em; text-align: center; }
 .resetbox .bad { color: #c0392b; }
 .resetbox .danger { background: #fff; color: #c0392b; border: 1px solid #e8b4a8; }
+
+.zsec { grid-column: 1 / -1; font-size: .8rem; color: var(--sub); margin: .5rem 0 -2px; border-bottom: 1px dashed var(--line); }

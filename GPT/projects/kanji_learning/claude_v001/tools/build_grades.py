@@ -774,8 +774,22 @@ for grade in range(1, 7):
         for u in us:
             if u['n'] not in parts:
                 parts[u['n']] = dict({'d': [paths[i] for i in u['s']]}, **({'k': 1} if u.get('k') else {}))
+    # 教科書の順（あれば）：その順に並べ、回の名前を付ける（光村図書 4年）
+    tb = {}
+    for line in open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'textbook_order.txt'), encoding='utf-8'):
+        p = line.split()
+        if len(p) == 3 and p[0] == str(grade):
+            for ch in p[2]:
+                tb[ch] = (len(tb), p[1])
+    extra = {}
+    if tb:
+        kanji.sort(key=lambda k: tb.get(k['c'], (9999, ''))[0])
+        for k in kanji:
+            if k['c'] in tb:
+                k['ss'] = tb[k['c']][1]
+        extra = {'book': '光村図書'}
     with open(os.path.join(OUT, f'g{grade}.json'), 'w', encoding='utf-8') as f:
-        json.dump({'grade': grade, 'kanji': kanji, 'parts': parts}, f, ensure_ascii=False, separators=(',', ':'))
+        json.dump(dict({'grade': grade, 'kanji': kanji, 'parts': parts}, **extra), f, ensure_ascii=False, separators=(',', ':'))
     report.append(f'{grade}年 {len(kanji)}字 部品{len(parts)}種')
 # 公開資料の唱え方との照合
 OFFICIAL = {'働': 'にんべん、おもい、ちから', '温': 'さんずい、にち、さら', '強': 'ゆみへん、ム、むし',

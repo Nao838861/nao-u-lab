@@ -50,6 +50,11 @@ try {
   await page.reload(); await page.waitForSelector('.menu');
   ok((await page.locator('.gradeline').innerText()).includes('4年生'), '選んだ学年は次回起動にも残る');
 
+  // 4年は光村図書の順：まだの字を教科書の順に3つ
+  await click('[data-act=startKanji]');
+  ok(JSON.stringify((await S()).list) === JSON.stringify(['信', '達', '飛']), '4年は光村図書の順に出る（信・達・飛）');
+  await click('[data-act=home]');
+
   // ---- 部品クイズ：形→なまえ（6択）→形（12択）----
   await click('[data-act=startParts]');
   let s = await S();

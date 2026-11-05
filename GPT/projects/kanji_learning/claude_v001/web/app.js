@@ -125,7 +125,13 @@ async function loadGrade(g) {
 }
 
 // 唱えに公式資料にない画の名前（かぎ・はね など）が入る字は出題しない。
-const ASKABLE = () => GD.kanji.filter(k => !k.z).map(k => k.c);
+// ただし教科書の順で進める学年では、学校で習う字を飛ばさないよう全部出す。
+const ASKABLE = () => GD.kanji.filter(k => GD.book || !k.z).map(k => k.c);
+
+function nextInOrder(n) {
+  const rest = ASKABLE().filter(c => !doneKanji(c));
+  return (rest.length ? rest : ASKABLE()).slice(0, n);
+}
 
 // ---------- 状態 ----------
 let S = {screen: 'home'};
@@ -168,7 +174,8 @@ const act = {
   home() { S = {screen: 'home'}; },
   async grade(g) { store.grade = +g; save(); await loadGrade(+g); S = {screen: 'home'}; },
   changeGrade() { S = {screen: 'grade'}; },
-  startKanji() { startKanji(pickWeak('kanji', ASKABLE(), 3)); },
+  // 教科書の順がある学年（4年＝光村図書）は、まだ おぼえた になっていない字を教科書の順に3つ
+  startKanji() { startKanji(GD.book ? nextInOrder(3) : pickWeak('kanji', ASKABLE(), 3)); },
   startParts() { startParts(pickWeak('parts', QUIZ_PARTS, 3)); },
   zukan() { S = {screen: 'zukan', reset: 0, back: S.screen === 'kanji' || S.screen === 'parts' ? S : null}; },
   back() { S = S.back || {screen: 'home'}; },
@@ -377,7 +384,7 @@ function homeView() {
     <p class="lead">部品の<b>なまえ</b>を書く順に唱えてから、<b>かたち</b>を出す。</p>
     <p class="gradeline"><b>${GD.grade}年生</b>の漢字 ${btn('changeGrade', '学年をかえる', {cls: 'small'})}</p>
     <div class="menu">
-      <button type="button" data-act="startKanji" class="big primary"><span class="em">字</span>漢字をつくる<small>3文字・${kDone}/${GD.kanji.length} できた</small></button>
+      <button type="button" data-act="startKanji" class="big primary"><span class="em">字</span>漢字をつくる<small>3文字・${GD.book ? `${GD.book}の順・` : ''}${kDone}/${GD.kanji.length} おぼえた</small></button>
       <button type="button" data-act="startParts" class="big"><span class="em">亻</span>部品クイズ<small>形→なまえ→形・${pDone}/${QUIZ_PARTS.length} できた</small></button>
       <button type="button" data-act="zukan" class="big sub"><span class="em">▦</span>ずかん<small>この学年の部品と漢字</small></button>
     </div>
@@ -545,10 +552,11 @@ function zukanView() {
   };
   const badge = st => st === 'got' ? '<b class="hana">おぼえた</b>' : st === 'mid' ? '<b class="half">あとすこし</b>' : '';
   const meter = (n, all) => `<div class="meter"><i style="width:${(100 * n / Math.max(all, 1)).toFixed(1)}%"></i></div><span class="mtext">おぼえた <b>${n}</b> / ${all}</span>`;
-  const K = GD.kanji.filter(k => !k.z);
-  const kanji = K.map(k => {
+  const K = GD.kanji.filter(k => GD.book || !k.z);
+  const kanji = K.map((k, i) => {
     const st = state('kanji', k.c), rd = k.t.on || (k.t.kun || '').replace('_', '');
-    return `<button type="button" class="zcard k ${st}" data-act="oneKanji" data-v="${k.c}">${badge(st)}<span class="kc">${k.c}</span><span class="rd">${rd}</span></button>`;
+    const sec = k.ss && (i === 0 || K[i - 1].ss !== k.ss) ? `<div class="zsec">${k.ss}</div>` : '';
+    return `${sec}<button type="button" class="zcard k ${st}" data-act="oneKanji" data-v="${k.c}">${badge(st)}<span class="kc">${k.c}</span><span class="rd">${rd}</span></button>`;
   }).join('');
   const parts = QUIZ_PARTS.map(id => {
     const st = state('parts', id);
@@ -556,7 +564,7 @@ function zukanView() {
   }).join('');
   return `${bar('ずかん')}<main class="zukan">
     ${S.back ? `<div class="row">${btn('back', '← とちゅうの問題にもどる', {cls: 'primary'})}</div>` : ''}
-    <h2>${GD.grade}年の漢字</h2>${meter(K.filter(k => doneKanji(k.c)).length, K.length)}<div class="zgrid k">${kanji}</div>
+    <h2>${GD.grade}年の漢字${GD.book ? ` <small>${GD.book}の教科書の順</small>` : ''}</h2>${meter(K.filter(k => doneKanji(k.c)).length, K.length)}<div class="zgrid k">${kanji}</div>
     <h2>${GD.grade}年の部品</h2>${meter(QUIZ_PARTS.filter(donePart).length, QUIZ_PARTS.length)}<div class="zgrid">${parts}</div>
     <p class="note">字形：KanjiVG (CC BY-SA 3.0)／読み・語例：KANJIDIC2・JMdict（EDRDG, CC BY-SA 4.0）・JmdictFurigana</p>
     ${resetBox()}
