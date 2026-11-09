@@ -15,7 +15,7 @@ const Full: React.FC<{only?: string}> = ({only}) => {
   const total = order.reduce((a, id) => a + sceneFrames(id), 0);
   return (
     <AbsoluteFill style={{background: '#000', fontFamily: FONT, color: '#eef3ff'}}>
-      {!only && <Audio src={staticFile('audio/bgm.mp3')} loop volume={(f) => Math.min(1, f / 60) * Math.min(1, (total - f) / 120) * 0.1} />}
+      {!only && <Audio src={staticFile('audio/bgm_game.mp3')} loop volume={(f) => Math.min(1, f / 60) * Math.min(1, (total - f) / 120) * 0.12} />}
       {order.map((id) => {
         const Comp = SCENES[id];
         const from = at;

@@ -93,7 +93,6 @@ export const S12: React.FC = () => {
         ))}
       </div>
       <Txt x={80} y={540} size={64} o={a1}>{'見た目は3Dになっても\n中身は2D版と同じゲーム'}</Txt>
-      <Txt x={80} y={800} size={28} color={C.sub} o={ramp(f, k(1) + 120, k(1) + 140)}>実機映像の走行：Look（Web版 GRIP 8位）　／　制作：Nao_u</Txt>
     </AbsoluteFill>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Img, staticFile, useCurrentFrame} from 'remotion';
-import {Arrow, Bg, C, SceneTitle, Tag, cueOf, useIn} from './common';
+import {Arrow, Bg, C, SceneTitle, Tag, cueOf, sceneFrames, useIn} from './common';
 import {Card, Grid, Label, NES, Nes, Px, PxCrop, Swatch, Txt, ramp} from './parts';
 import rows3200 from './data/mode7_3200.json';
 
@@ -99,36 +99,37 @@ const PalRow: React.FC<{x: number; y: number; title: string; colors: string[]; o
 
 export const S06: React.FC = () => {
   const f = useCurrentFrame(), k = K('S06');
-  const a1 = useIn(k(1)), a2 = useIn(k(2)), a3 = useIn(k(3)), a4 = ramp(f, k(4), k(4) + 18), a5 = ramp(f, k(5), k(5) + 18);
-  const intro = 1 - ramp(f, k(4) - 10, k(4) + 6);
+  const a0 = useIn(k(0)), a1 = useIn(k(1)), a2 = useIn(k(2)), a3 = ramp(f, k(3), k(3) + 18);
+  const half = k(3) + Math.round((sceneFrames('S06') - k(3)) * 0.5);
+  const b3 = ramp(f, half, half + 18);
   const zs = 9; // 64×40 を 576×360
   return (
     <Bg>
       <SceneTitle label="できないこと3　色が足りない" color={C.amber} />
-      <div style={{opacity: intro}}>
-        <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={ZOOM} x={90} y={170} w={64 * zs} o={a1}>
+      <div style={{opacity: 1 - a3}}>
+        <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={ZOOM} x={90} y={170} w={64 * zs} o={a0}>
           <Grid cw={8 * zs} ch={zs} o={0.45} lw={1} color="rgba(0,0,0,.6)" />
           <Grid cw={8 * zs} ch={8 * zs} o={0.9} lw={3} color="rgba(255,255,255,.75)" />
         </PxCrop>
-        <Txt x={90} y={545} size={30} color={C.sub} o={a1} w={576}>8ドットのかたまりごとに、4色の組を1つ選ぶ</Txt>
-        <div style={{position: 'absolute', left: 760, top: 175, opacity: a2}}>
+        <Txt x={90} y={545} size={30} color={C.sub} o={a0} w={576}>8ドットごとに、4色のパレットを1つ選ぶ</Txt>
+        <div style={{position: 'absolute', left: 760, top: 175, opacity: a1}}>
           <div style={{fontSize: 36, fontWeight: 900, marginBottom: 18}}>この画面に出ている色</div>
           <div style={{display: 'flex', gap: 22}}>
             {[[NES.sky, '空の青'], [NES.green, '草の緑'], [NES.gray, '道の灰色'], [NES.red, '赤'], [NES.white, '白']].map(([c, n], i) => (
-              <div key={n} style={{textAlign: 'center', opacity: ramp(f, k(2) + i * 8, k(2) + i * 8 + 12)}}>
+              <div key={n} style={{textAlign: 'center', opacity: ramp(f, k(1) + i * 8, k(1) + i * 8 + 12)}}>
                 <Swatch a={c} size={150} />
                 <div style={{fontSize: 28, fontWeight: 800, marginTop: 8}}>{n}</div>
               </div>
             ))}
           </div>
-          <div style={{fontSize: 44, fontWeight: 900, color: C.amber, marginTop: 20}}>5色。でも1つの組は4色まで</div>
+          <div style={{fontSize: 44, fontWeight: 900, color: C.amber, marginTop: 20}}>5色。でも1つのパレットは4色まで</div>
         </div>
-        <PalRow x={760} y={600} title="地面の組" colors={[NES.gray, NES.green, NES.white, NES.red]} o={a3} color={C.green} mark={2} />
-        <PalRow x={760} y={730} title="空の行の組" colors={[NES.gray, NES.green, NES.sky, NES.red]} o={ramp(f, k(3) + 50, k(3) + 66)} color={C.cyan} mark={2} />
-        <Txt x={1520} y={660} size={30} color={C.amber} o={ramp(f, k(3) + 80, k(3) + 96)} w={360}>{'白のかわりに\n青を入れる'}</Txt>
+        <PalRow x={760} y={600} title="地面" colors={[NES.gray, NES.green, NES.white, NES.red]} o={a2} color={C.green} mark={2} />
+        <PalRow x={760} y={730} title="空の行" colors={[NES.gray, NES.green, NES.sky, NES.red]} o={ramp(f, k(2) + 30, k(2) + 46)} color={C.cyan} mark={2} />
+        <Txt x={1520} y={660} size={30} color={C.amber} o={ramp(f, k(2) + 60, k(2) + 76)} w={360}>{'白のかわりに\n青を入れる'}</Txt>
       </div>
-      {/* 8ドットごとの色の組の地図 */}
-      <div style={{opacity: a4 * (1 - a5)}}>
+      {/* 実際に選んだパレットの地図 */}
+      <div style={{opacity: a3 * (1 - b3)}}>
         <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={[0, 0, 256, 192]} x={90} y={170} w={768} />
         <PxCrop src={`img/layer_${F}_blocks.png`} iw={256} ih={240} crop={[0, 0, 256, 192]} x={960} y={170} w={768} />
         <div style={{position: 'absolute', left: 960, top: 760, display: 'flex', gap: 16, flexWrap: 'wrap', width: 900}}>
@@ -136,10 +137,10 @@ export const S06: React.FC = () => {
             <div key={n} style={{display: 'flex', alignItems: 'center', gap: 8, fontSize: 26, fontWeight: 800}}><Swatch a={c} size={34} />{n}</div>
           ))}
         </div>
-        <Txt x={90} y={760} size={30} color={C.sub} w={800}>カートリッジが8ドットごとに色の組を選ぶ（実際に選んだ組）</Txt>
+        <Txt x={90} y={760} size={30} color={C.sub} w={800}>8ドットごとに実際に選んだパレット</Txt>
       </div>
       {/* 16×16 と 8×1 */}
-      <div style={{opacity: a5}}>
+      <div style={{opacity: b3}}>
         {[['本来のファミコン：16×16ドットごと', 16, 16, C.red], ['今回：8×1ドットごと', 8, 1, C.green]].map(([t, w, h, col], i) => (
           <React.Fragment key={String(t)}>
             <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={ZOOM} x={110 + i * 880} y={200} w={64 * 12}>

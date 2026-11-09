@@ -1,6 +1,6 @@
 import React from 'react';
 import {Img, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
-import {Bg, C, SceneTitle, Tag, cueOf, useIn} from './common';
+import {Arrow, Bg, C, SceneTitle, Tag, cueOf, useIn} from './common';
 import {Card, Label, MONO, NES, Px, PxCrop, Swatch, Txt, fmt, ramp} from './parts';
 import rows3200 from './data/mode7_3200.json';
 import clips from './data/car_clips.json';
@@ -32,25 +32,27 @@ export const S03b: React.FC = () => {
   return (
     <Bg>
       <SceneTitle label="どこで何をしているか" color={C.violet} />
-      <Txt x={0} y={150} size={52} w={1920} align="center" o={useIn(k(0)) * (1 - a1)}>ファミコンは、映像を映しているだけ？</Txt>
+      <Txt x={0} y={150} size={52} w={1920} align="center" o={useIn(k(0)) * (1 - a1)}>ファミコン本体は、何をしている？</Txt>
       <div style={{opacity: main}}>
-        <Card x={90} y={150} w={820} h={640} color={C.violet} o={a1}>
+        <Card x={90} y={150} w={780} h={640} color={C.violet} o={a1}>
           <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>ファミコン本体</div>
           <div style={{fontSize: 44, fontWeight: 900}}>6502（CPU）＋ PPU</div>
           <div style={{display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 24}}>
             {roles.map((r, i) => <Tag key={r} color={C.violet} style={{fontSize: 32, opacity: ramp(f, k(1) + 30 + i * 18, k(1) + 44 + i * 18)}}>{r}</Tag>)}
           </div>
-          <div style={{fontSize: 34, fontWeight: 900, color: C.amber, marginTop: 34, opacity: ramp(f, k(1) + 170, k(1) + 190)}}>ゲームそのもの＝2D版と同じプログラム</div>
+          <div style={{fontSize: 34, fontWeight: 900, color: C.amber, marginTop: 34, opacity: ramp(f, k(1) + 170, k(1) + 190)}}>2D版と同じプログラム</div>
         </Card>
-        <Card x={1000} y={150} w={830} h={640} color={C.cyan} o={a2}>
+        <Card x={1050} y={150} w={780} h={640} color={C.cyan} o={a2}>
           <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>カートリッジ（FPGA）</div>
-          <div style={{fontSize: 44, fontWeight: 900}}>3Dの絵を描くだけ</div>
+          <div style={{fontSize: 44, fontWeight: 900}}>3Dの絵を描く役目</div>
           <div style={{display: 'flex', flexDirection: 'column', gap: 18, marginTop: 24}}>
             <Tag color={C.cyan} style={{fontSize: 34}}>SuperFX：車・木・家を描く</Tag>
             <Tag color={C.green} style={{fontSize: 34}}>Mode7：地面を描く</Tag>
           </div>
-          <div style={{fontSize: 28, color: C.sub, fontWeight: 700, marginTop: 30}}>FPGA＝中の回路を作り替えられるチップ。<br />どちらも、その中に回路として作った</div>
+          <div style={{fontSize: 30, color: C.amber, fontWeight: 800, marginTop: 30}}>スターフォックスのSuperFXと同じく、<br />3Dの描画を受け持つ</div>
         </Card>
+        <Arrow x1={880} y1={500} x2={1040} y2={500} color={C.amber} width={6} p={ramp(f, k(2) + 10, k(2) + 40)} />
+        <div style={{position: 'absolute', left: 868, top: 380, width: 190, textAlign: 'center', fontSize: 24, fontWeight: 800, color: C.amber, opacity: ramp(f, k(2) + 30, k(2) + 50)}}>1コマごとに<br />描いてほしい<br />場面を渡す</div>
       </div>
       <div style={{opacity: a3 * (1 - a4)}}>
         <div style={{position: 'absolute', left: 400, top: 160}}><FpgaGrid p={ramp(f, k(3), k(3) + 200)} /></div>
@@ -221,18 +223,18 @@ const Code: React.FC<{lines: {n: number; t: string}[]; hl?: (t: string, n: numbe
 const R = clips.raster;
 export const S07b: React.FC = () => {
   const f = useCurrentFrame(), k = K('S07b');
-  const a1 = ramp(f, k(1), k(1) + 16), a2 = ramp(f, k(2), k(2) + 16), a3 = ramp(f, k(3), k(3) + 16), a4 = ramp(f, k(4), k(4) + 16), a5 = ramp(f, k(5), k(5) + 16);
+  const a1 = ramp(f, k(1), k(1) + 16), a2 = ramp(f, k(2), k(2) + 16), a3 = ramp(f, k(3), k(3) + 16), a4 = ramp(f, k(4), k(4) + 16);
   // 市松：2色を1ドットおきに
   const dit = Math.max(0, f - k(0) - 40) * 2;
   // パイプライン
   const RATE = Math.min(1.6, 600 / Math.max(1, k(3) - k(2) - 20));
   const stage = Math.min(3, Math.floor(Math.max(0, f - k(2)) * RATE / clips.pipeline.stageFrames));
   // 1行ずつ塗る：PLOTを打った数
-  const plotted = Math.min(R.pixels, Math.max(0, Math.floor((f - k(4) - 30) * 1.6)));
+  const plotted = Math.min(R.pixels, Math.max(0, Math.floor((f - k(3) - 30) * 1.6)));
   let left = plotted;
   const cell = Math.floor(Math.min(1700 / R.w, 520 / R.h));
   // ダブルバッファ
-  const swapT = Math.max(0, f - k(5)), period = 150, ph = swapT % period, swapped = Math.floor(swapT / period) % 2;
+  const swapT = Math.max(0, f - k(4)), period = 150, ph = swapT % period, swapped = Math.floor(swapT / period) % 2;
   return (
     <Bg>
       <SceneTitle label="SuperFXの中身" color={C.cyan} />
@@ -257,8 +259,8 @@ export const S07b: React.FC = () => {
       <div style={{opacity: a1 * (1 - a2)}}>
         <Card x={90} y={160} w={700} color={C.cyan}>
           <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>SuperFX</div>
-          <div style={{fontSize: 46, fontWeight: 900}}>カートリッジの中の<br />もう1つのCPU</div>
-          <div style={{fontSize: 28, color: C.sub, fontWeight: 700, marginTop: 10}}>ファミコンの6502とは別に、自分のプログラムを動かす</div>
+          <div style={{fontSize: 46, fontWeight: 900}}>ファミコンのCPUを<br />補佐するコプロセッサ</div>
+          <div style={{fontSize: 28, color: C.amber, fontWeight: 800, marginTop: 10}}>スターフォックスと同じく、3Dの描画を受け持つ</div>
         </Card>
         <Code lines={[...gsu.fill, ...gsu.divide]} x={860} y={150} w={980} h={740} scroll={Math.max(0, f - k(1)) * 1.4} size={22} />
         <Txt x={860} y={900} size={22} color={C.sub}>{'実際のSuperFXのプログラム（一部）'}</Txt>
@@ -275,19 +277,8 @@ export const S07b: React.FC = () => {
           ))}
         </div>
       </div>
-      {/* 割り算の命令がない */}
-      <div style={{opacity: a3 * (1 - a4)}}>
-        <Card x={90} y={160} w={760} color={C.red}>
-          <div style={{fontSize: 40, fontWeight: 900}}>遠くを小さく ＝ 割り算</div>
-          <div style={{fontFamily: MONO, fontSize: 44, fontWeight: 900, color: C.cyan, margin: '14px 0'}}>画面のx = x ÷ 奥行き</div>
-          <div style={{fontSize: 34, fontWeight: 900, color: C.red}}>SuperFXには、割り算の命令がない</div>
-          <div style={{fontSize: 28, color: C.sub, fontWeight: 700, marginTop: 8}}>→ 割り算も、命令を並べて作る</div>
-        </Card>
-        <Code lines={gsu.divide} hl={(_, n) => n === 1291 + (Math.floor(Math.max(0, f - k(3)) / 8) % (gsu.divide.length))} x={920} y={150} w={920} h={740} size={22}
-          scroll={Math.max(0, (Math.floor(Math.max(0, f - k(3)) / 8) % gsu.divide.length) - 12) * 30} />
-      </div>
       {/* LOOP と PLOT */}
-      <div style={{opacity: a4 * (1 - a5)}}>
+      <div style={{opacity: a3 * (1 - a4)}}>
         <div style={{position: 'absolute', left: 90, top: 170, width: R.w * cell, height: R.h * cell, background: '#111a30', borderRadius: 6}}>
           <svg width={R.w * cell} height={R.h * cell}>
             {R.rows.map(([y, x0, x1]) => {
@@ -308,7 +299,7 @@ export const S07b: React.FC = () => {
         </Card>
       </div>
       {/* 描き終わったら入れ替える */}
-      <div style={{opacity: a5}}>
+      <div style={{opacity: a4}}>
         {[0, 1].map((i) => {
           const showing = i === swapped;
           const src = i === 0 ? `img/layer_${F}_full.png` : 'img/layer_2100_full.png';
