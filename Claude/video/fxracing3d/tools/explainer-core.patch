@@ -1,0 +1,59 @@
+diff --git D:/HomeBrew/FxRacingWeb/vendor/mesen/Core/FxRacing/NesFxRacingPc.h rec/coresrc/vendor/mesen/Core/FxRacing/NesFxRacingPc.h
+index d8f1fb12d0..07b124b8ea 100644
+--- D:/HomeBrew/FxRacingWeb/vendor/mesen/Core/FxRacing/NesFxRacingPc.h
++++ rec/coresrc/vendor/mesen/Core/FxRacing/NesFxRacingPc.h
+@@ -11,6 +11,11 @@
+ // PC functional adapter for the published 2026-11-01 ROM/RTL pair.
+ // CPU/GSU instructions execute normally. PSRAM copy/arbitration and the
+ // watchdog are functional approximations; this is not FPGA timing evidence.
++namespace explainer {
++inline uint8_t hideFx=0;            // 1: 車・木・家（FX）を消して地面だけ
++inline uint8_t info[240][34][4]{};  // [y][タイル列] = {FXの不透明マスク, 空の行か, 選んだパレット, 0}
++inline int32_t rows[192][6]{};      // [y] = {u, v, du, dv, 空の行か, 有効か}（Mode7の行テーブル。表示に使った値）
++}
+ class NesFxRacingPc : public BaseMapper {
+     nesfx::FxRacingBoard _fx;
+     nesfx::Mode7Ground _ground;
+@@ -50,12 +55,15 @@ class NesFxRacingPc : public BaseMapper {
+         if(_ground.hideFx[_ground.front])lo=hi=0;
+         uint8_t alpha=0;
+         if(y<192&&!_ground.hideFx[_ground.front])alpha=_displayAlpha[_fx.front*8192+nesfx::BitmapBoard::PixelByte(_tileX,unsigned(y),0)/2];
++        if(explainer::hideFx){lo=hi=alpha=0;}
+         uint8_t mask=lo|hi|alpha;
+         uint8_t bl=row.bg?bg.low:uint8_t(~bg.high);
+         uint8_t bh=row.bg?bg.high:uint8_t(~bg.low);
+         _block.low=(bl&~mask)|(~hi&mask);
+         _block.high=(bh&~mask)|(~lo&mask);
+         _block.palette=row.bg+(mask?2:0);
++        if(y<240&&_tileX/8<34){auto &e=explainer::info[y][_tileX/8];e[0]=mask;e[1]=row.bg;e[2]=_block.palette;}
++        if(y<192){auto &r=explainer::rows[y];r[0]=row.u;r[1]=row.v;r[2]=row.du;r[3]=row.dv;r[4]=row.bg;r[5]=row.valid;}
+     }
+ protected:
+     uint16_t GetPRGPageSize() override {return 8192;}
+diff --git D:/HomeBrew/FxRacingWeb/emulator/host.cpp rec/coresrc/emulator/host.cpp
+index 8f024b54c6..f028e2866a 100644
+--- D:/HomeBrew/FxRacingWeb/emulator/host.cpp
++++ rec/coresrc/emulator/host.cpp
+@@ -177,6 +177,9 @@ EMSCRIPTEN_KEEPALIVE unsigned web_peek(unsigned addr) {
+     if(loaded&&addr>=0x6000&&addr<=0x7fff)if(auto fx=dynamic_cast<NesFxRacingPc*>(_console->GetMapper()))return fx->RecordRam()[addr-0x6000];
+     return loaded ? _console->GetMemoryManager()->DebugRead(addr & 65535, true) : 0;
+ }
++EMSCRIPTEN_KEEPALIVE void web_explainer_hide(unsigned v){explainer::hideFx=v?1:0;}
++EMSCRIPTEN_KEEPALIVE void *web_explainer_info(){return explainer::info;}
++EMSCRIPTEN_KEEPALIVE void *web_explainer_rows(){return explainer::rows;}
+ EMSCRIPTEN_KEEPALIVE void web_poke(unsigned addr, unsigned value) {
+     if(loaded&&addr>=0x6000&&addr<=0x7fff)if(auto fx=dynamic_cast<NesFxRacingPc*>(_console->GetMapper())){fx->RecordRam()[addr-0x6000]=value&255;return;}
+     if (loaded) _console->GetMemoryManager()->DebugWrite(addr & 65535, value & 255, true);
+diff --git D:/HomeBrew/FxRacingWeb/emulator/build.py rec/coresrc/emulator/build.py
+index 115899cea3..0ae45d1fcb 100644
+--- D:/HomeBrew/FxRacingWeb/emulator/build.py
++++ rec/coresrc/emulator/build.py
+@@ -159,7 +159,7 @@ def main():
+ 
+     with concurrent.futures.ThreadPoolExecutor(max_workers=args.jobs) as pool:
+         objects = list(pool.map(compile_one, sources))
+-    exports = ["web_load_rom", "web_run", "web_pixels", "web_audio", "web_audio_frames", "web_sample_rate", "web_fps", "web_peek", "web_poke", "web_save_ptr", "web_save_size", "web_reset", "web_state_size", "web_state_save", "web_state_load", "malloc", "free"]
++    exports = ["web_load_rom", "web_run", "web_pixels", "web_audio", "web_audio_frames", "web_sample_rate", "web_fps", "web_peek", "web_poke", "web_save_ptr", "web_save_size", "web_reset", "web_state_size", "web_state_save", "web_state_load", "web_explainer_hide", "web_explainer_info", "web_explainer_rows", "malloc", "free"]
+     if args.presentation:exports += ["web_present_frame","web_present_injections"]
+     response = build / "link.rsp"
+     response.write_text("\n".join('"' + str(obj).replace("\\", "/") + '"' for obj in objects))

@@ -4,6 +4,8 @@
 
 このPCでは `D:\HomeBrew\MMC5Racing` を開発場所として使う。リポジトリは <https://github.com/Nao838861/MMC5Racing>、作業ブランチは `main`。ソースとビルド成果物は同リポジトリ、Codex側の作業記憶はこのディレクトリへ保存する。外部プロジェクト内に別の記憶システムやAGENTS.mdを増やさない。
 
+3D版（SuperFX＋Mode7）の解説動画は[2026年11月9日の記録](20261109_3d_explainer_video.md)。制作場所は `D:\AI\Nao_u_BOT\Claude\video\fxracing3d`。
+
 ## ユーザーの指定
 
 現行GRIP調整は[惰性とブレーキの記録](20261014_grip_tuning.md)。CPU車・高速化・前後2×2 HUD・千鳥配置・モード別タイム・車色・最新フォントを保持する。通常の `D:\HomeBrew\MMC5Racing\play.cmd` は毎回再ビルドする。[最新CPU車・HUDとの初回統合](20261014_latest_integration.md)と[初回モード設計](20261014_modes_design.md)は経緯の記録。旧 `735ce36` は古いmainへのモード追加だけだったため、最新とは扱わない。
