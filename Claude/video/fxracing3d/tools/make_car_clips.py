@@ -236,3 +236,70 @@ render(win, R(0), R(20), bg=ROAD)[0].save(root / 'public/img/car_window_mesh.png
 (root / 'src/data').mkdir(parents=True, exist_ok=True)
 (root / 'src/data/car_clips.json').write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding='utf-8')
 print(json.dumps({k: data[k] for k in ('faces', 'vertices')}, ensure_ascii=False))
+
+
+# 6) SuperFXの流れ：頂点 → 画面に写す → 裏の面を捨てる → 順に塗る
+PIPE = 150
+
+
+def pipeline_frames():
+    edges = set()
+    for f in PLAYER['f']:
+        for i in range(4):
+            a, b = f[i], f[(i + 1) % 4]
+            if a != b:
+                edges.add((min(a, b), max(a, b)))
+    for t in range(PIPE * 4):
+        stage, u = divmod(t, PIPE)
+        yaw, pitch = R(-30 + 40 * t / (PIPE * 4)), R(22)
+        P = project(PLAYER['v'], yaw, pitch)
+        sx, sy = OW / NW, OH / NH
+        up = lambda p: (p[0] * sx, p[1] * sy)
+        if stage < 3:
+            img = Image.new('RGB', (OW, OH), BG)
+            d = ImageDraw.Draw(img)
+            used = sorted({i for f in PLAYER['f'] for i in f})
+            if stage >= 1:
+                for a, b in edges:
+                    d.line([up(P[a]), up(P[b])], fill=(90, 130, 200), width=3)
+            if stage == 2:
+                a = min(1, u / 40)
+                for f in PLAYER['f']:
+                    pts = [P[i] for i in f]
+                    if not visible(pts):
+                        q = [up(p) for p in pts]
+                        col = tuple(int(c * (1 - a) + 10 * a) for c in (255, 80, 90))
+                        d.line(q + [q[0]], fill=col, width=5)
+            for i in used:
+                x, y = up(P[i])
+                r = 9 if stage == 0 else 6
+                d.ellipse([x - r, y - r, x + r, y + r], fill=(255, 200, 60))
+            yield img
+        else:
+            upto = min(len(PLAYER['f']), 1 + u * len(PLAYER['f']) // (PIPE - 30))
+            yield render(PLAYER, yaw, pitch, upto=upto, hl=[upto - 1] if upto < len(PLAYER['f']) else [], wire=False)[0]
+
+
+data['pipeline'] = {'frames': encode('car_pipeline', pipeline_frames()), 'stageFrames': PIPE,
+                    'labels': ['頂点を回す', '画面に写す', '裏を向いた面を捨てる', '順に塗る']}
+
+# 7) 1行ずつ塗る：車の後面1枚を、ゲームと同じ実画素で走査線に分ける
+yaw, pitch = R(12), R(18)
+P = project(PLAYER['v'], yaw, pitch, dist=900, focal=150)
+face = PLAYER['f'][2 + 3]            # 車体の後面
+mat = PLAYER['m'][2 + 3]
+pts = [P[i] for i in face]
+mask = Image.new('1', (NW, NH), 0)
+ImageDraw.Draw(mask).polygon(pts, fill=1)
+box = mask.getbbox()
+rows = []
+for y in range(box[1], box[3]):
+    xs = [x for x in range(box[0], box[2]) if mask.getpixel((x, y))]
+    if xs:
+        rows.append([y - box[1], xs[0] - box[0], xs[-1] - box[0]])
+lo, hi = mat & 15, (mat >> 4) & 15
+data['raster'] = {'w': box[2] - box[0], 'h': box[3] - box[1], 'rows': rows, 'ox': box[0], 'oy': box[1],
+                  'colors': [list(COL[lo]), list(COL[hi])], 'face': '車体の後面', 'material': mat,
+                  'pixels': sum(r[2] - r[1] + 1 for r in rows)}
+(root / 'src/data/car_clips.json').write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding='utf-8')
+print('raster', data['raster']['w'], data['raster']['h'], data['raster']['pixels'])

@@ -158,38 +158,27 @@ const COLS: [string, string][] = [[NES.red, '赤'], [NES.green, '緑'], [NES.gra
 const PAIRS = [[0, 2], [1, 2], [2, 3], [0, 1], [0, 3], [1, 3]];
 export const S07: React.FC = () => {
   const f = useCurrentFrame(), k = K('S07');
-  const a1 = useIn(k(1)), a2 = useIn(k(2)), a3 = ramp(f, k(3), k(3) + 40), a4 = ramp(f, k(4), k(4) + 18);
+  const a0 = useIn(k(0)), a1 = useIn(k(1));
   return (
     <Bg>
       <SceneTitle label="タイリングで色を増やす" color={C.amber} />
-      <div style={{opacity: 1 - a4}}>
-        <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={[96, 122, 64, 44]} x={90} y={170} w={64 * 9} o={a1} />
-        <Txt x={90} y={620} size={30} color={C.sub} o={a1} w={576}>1つの面を、2色の市松模様で塗る</Txt>
-        <div style={{position: 'absolute', left: 760, top: 170, opacity: a2}}>
-          <div style={{fontSize: 34, fontWeight: 900, marginBottom: 12}}>単色 4</div>
-          <div style={{display: 'flex', gap: 18}}>
-            {COLS.map(([c, n]) => <div key={n} style={{textAlign: 'center'}}><Swatch a={c} size={120} blur={a3 * 3} /><div style={{fontSize: 26, fontWeight: 800}}>{n}</div></div>)}
-          </div>
-          <div style={{fontSize: 34, fontWeight: 900, margin: '26px 0 12px'}}>2色の市松模様 6</div>
-          <div style={{display: 'flex', gap: 18}}>
-            {PAIRS.map(([a, b], i) => (
-              <div key={i} style={{textAlign: 'center', opacity: ramp(f, k(2) + i * 10, k(2) + i * 10 + 12)}}>
-                <Swatch a={COLS[a][0]} b={COLS[b][0]} size={120} dot={8} blur={a3 * 3} />
-                <div style={{fontSize: 26, fontWeight: 800}}>{COLS[a][1]}＋{COLS[b][1]}</div>
-              </div>
-            ))}
-          </div>
-          <div style={{fontSize: 46, fontWeight: 900, color: C.amber, marginTop: 24}}>4 ＋ 6 ＝ 10通りの色に見える</div>
-          <div style={{fontSize: 30, fontWeight: 800, color: C.cyan, marginTop: 10, opacity: a3}}>ブラウン管では混ざって中間の色に</div>
+      <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={[96, 122, 64, 44]} x={90} y={170} w={64 * 9} o={a0} />
+      <Txt x={90} y={590} size={30} color={C.sub} o={a0} w={576}>1つの面を、2色の市松模様で塗る</Txt>
+      <div style={{position: 'absolute', left: 760, top: 170, opacity: a1}}>
+        <div style={{fontSize: 34, fontWeight: 900, marginBottom: 12}}>単色 4</div>
+        <div style={{display: 'flex', gap: 18}}>
+          {COLS.map(([c, n]) => <div key={n} style={{textAlign: 'center'}}><Swatch a={c} size={120} /><div style={{fontSize: 26, fontWeight: 800}}>{n}</div></div>)}
         </div>
-      </div>
-      <div style={{opacity: a4}}>
-        {[['img/car_window_gray.png', '窓を灰色一色にすると…道路に溶ける', C.red], ['img/car_window_mesh.png', '灰と白の市松模様', C.green]].map(([src, t, col], i) => (
-          <React.Fragment key={src}>
-            <Px src={src} x={90 + i * 900} y={190} w={840} h={472} />
-            <Txt x={90 + i * 900} y={690} size={36} color={col} w={840} align="center">{t}</Txt>
-          </React.Fragment>
-        ))}
+        <div style={{fontSize: 34, fontWeight: 900, margin: '26px 0 12px'}}>2色の市松模様 6</div>
+        <div style={{display: 'flex', gap: 18}}>
+          {PAIRS.map(([a, b], i) => (
+            <div key={i} style={{textAlign: 'center', opacity: ramp(f, k(1) + i * 10, k(1) + i * 10 + 12)}}>
+              <Swatch a={COLS[a][0]} b={COLS[b][0]} size={120} dot={8} />
+              <div style={{fontSize: 26, fontWeight: 800}}>{COLS[a][1]}＋{COLS[b][1]}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{fontSize: 46, fontWeight: 900, color: C.amber, marginTop: 24, opacity: ramp(f, k(1) + 80, k(1) + 100)}}>4 ＋ 6 ＝ 10通りの色に見える</div>
       </div>
     </Bg>
   );

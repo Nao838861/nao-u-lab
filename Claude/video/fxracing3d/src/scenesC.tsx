@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Loop, Sequence, useCurrentFrame} from 'remotion';
 import {Bg, C, SceneTitle, Tag, cueOf, useIn} from './common';
-import {Card, Hw, Label, MONO, Nes, Txt, ramp} from './parts';
+import {Card, Hw, Label, Nes, Txt, ramp} from './parts';
 
 const K = (id: string) => (i: number) => cueOf(id, i);
 
@@ -53,47 +53,26 @@ export const S10: React.FC = () => {
           </div>
         );
       })}
-      <Txt x={1540} y={560} size={30} color={C.sub} w={340} o={useIn(k(1))}>{'同じ走りを\n描き方だけ変える'}</Txt>
     </Bg>
   );
 };
 
-// ---------------- S11 Web版とのリプレイ互換 ----------------
-const LAPS = [749, 719, 704, 794, 716];
-const sec = (t: number) => (Math.floor((t * 100) / 60) / 100).toFixed(2);
-const clock = (t: number) => {
-  const cs = Math.floor((t * 100) / 60);
-  return `${String(Math.floor(cs / 6000)).padStart(2, '0')}:${String(Math.floor(cs / 100) % 60).padStart(2, '0')}.${String(cs % 100).padStart(2, '0')}`;
-};
+// ---------------- S11 2D版のリプレイを3Dで ----------------
 export const S11: React.FC = () => {
   const f = useCurrentFrame(), k = K('S11');
-  const a1 = useIn(k(1)), a2 = ramp(f, k(2), k(2) + 16), a3 = ramp(f, k(3), k(3) + 16);
+  const W = 780, start = k(1) - 30;
   return (
     <Bg>
-      <SceneTitle label="Web版とリプレイ互換" color={C.green} />
-      <Card x={80} y={150} w={760} color={C.green} o={useIn(k(0))}>
-        <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>ブラウザーで遊べる FxRacing Web</div>
-        <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>同じROMを、ブラウザーの中のエミュレーターで動かす</div>
-      </Card>
-      <Card x={80} y={330} w={760} color={C.amber} o={a1}>
-        <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>Web版 GRIPランキング 8位</div>
-        <div style={{fontSize: 56, fontWeight: 900}}>Look　<span style={{fontFamily: MONO, color: C.amber}}>{clock(3682)}</span></div>
-        <div style={{fontFamily: MONO, fontSize: 30, marginTop: 10, lineHeight: 1.5}}>
-          {LAPS.map((t, i) => (
-            <div key={i} style={{display: 'flex', gap: 30, opacity: a3 > 0 ? 1 : 0.85}}>
-              <span style={{color: C.sub}}>LAP {i + 1}</span><span>{sec(t)}</span><span style={{color: C.sub}}>（{t} tick）</span>
-              <span style={{color: C.green, opacity: ramp(f, k(3) + 40 + i * 30, k(3) + 52 + i * 30)}}>一致</span>
-            </div>
-          ))}
-        </div>
-      </Card>
-      <div style={{opacity: a2 * (1 - a3)}}>
-        <Sequence from={k(2)} layout="none"><Hw sec={30} x={900} y={150} w={960} crop={[240, 0, 1680, 1080]} /></Sequence>
-        <Label x={920} y={170} color={C.amber}>同じ入力を、ファミコン実機に流す</Label>
-      </div>
-      <div style={{opacity: a3}}>
-        <Sequence from={k(3)} layout="none"><Hw sec={64.3} x={900} y={150} w={960} crop={[240, 0, 1300, 1000]} /></Sequence>
-        <Label x={920} y={170} color={C.green}>実機の結果画面</Label>
+      <SceneTitle label="2D版のリプレイを、そのまま3Dで" color={C.green} />
+      <Txt x={0} y={420} size={56} w={1920} align="center" o={useIn(k(0)) * (1 - ramp(f, start, start + 14))}>2D版のリプレイ → そのまま3D版で再生</Txt>
+      <div style={{opacity: ramp(f, start, start + 16)}}>
+        <Sequence from={start} layout="none">
+          <Nes src="n2d" from={420} x={110} y={140} w={W} volume={0.5} />
+          <Nes src="n3d" from={420} x={1030} y={140} w={W} />
+        </Sequence>
+        <Label x={130} y={160} color={C.amber}>2D版で記録した走り（DRIFT）</Label>
+        <Label x={1050} y={160} color={C.green}>同じ走りを3D版で</Label>
+        <Txt x={110} y={884} size={24} color={C.sub} w={1700} o={ramp(f, k(2), k(2) + 16)}>2D版のプログラムで車を走らせ、毎コマの車の位置と向きを3D版のROMに渡して描画（全コマで位置・向きが一致）</Txt>
       </div>
     </Bg>
   );
@@ -113,8 +92,8 @@ export const S12: React.FC = () => {
           <Tag key={t} color={[C.cyan, C.green, C.amber][i]} style={{fontSize: 38, background: 'rgba(5,8,18,.8)'}}>{`できないこと${i + 1}　→　${t}`}</Tag>
         ))}
       </div>
-      <Txt x={80} y={540} size={64} o={a1}>{'見た目は3D\n中身は2D版と同じゲーム'}</Txt>
-      <Txt x={80} y={800} size={28} color={C.sub} o={ramp(f, k(1) + 120, k(1) + 140)}>走行：Look（Web版 GRIP 8位）　／　制作：Nao_u</Txt>
+      <Txt x={80} y={540} size={64} o={a1}>{'見た目は3Dになっても\n中身は2D版と同じゲーム'}</Txt>
+      <Txt x={80} y={800} size={28} color={C.sub} o={ramp(f, k(1) + 120, k(1) + 140)}>実機映像の走行：Look（Web版 GRIP 8位）　／　制作：Nao_u</Txt>
     </AbsoluteFill>
   );
 };

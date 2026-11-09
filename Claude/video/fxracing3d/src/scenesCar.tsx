@@ -21,12 +21,13 @@ export const S08: React.FC = () => {
   const BUILD_RATE = 0.6;
   const built = clips.build.faceAt.filter((a) => (f - k(0)) * BUILD_RATE >= a).length;
   const name = built ? clips.faceNames[built - 1] : '';
-  const morphT = f - k(2);
+  const MORPH_RATE = Math.max(1, clips.morph.frames / Math.max(1, k(3) - k(2) - 10));
+  const morphT = (f - k(2)) * MORPH_RATE;
   const stage = clips.morph.stageAt.filter((a) => morphT >= a).length - 1;
   const seg = (a: number, b: number) => ramp(f, a, a + 14) * (1 - ramp(f, b - 10, b + 4));
   return (
     <Bg>
-      <SceneTitle label="車を作る：面は1枚ずつ取り合い" color={C.red} />
+      <SceneTitle label="車を作る：少ない面で車らしく" color={C.red} />
       {/* 1) 面を描く順に足していく */}
       <Sequence from={k(0)} durationInFrames={k(2) - k(0)} layout="none">
         <div style={{opacity: seg(k(0), k(2))}}>
@@ -39,23 +40,23 @@ export const S08: React.FC = () => {
           <Card x={1250} y={430} w={610} color={C.cyan} o={useIn(k(1))}>
             <div style={{fontSize: 34, fontWeight: 900}}>自分の車　<span style={{color: C.cyan}}>{clips.faces.player}面・{clips.vertices.player}頂点</span></div>
             <div style={{fontSize: 34, fontWeight: 900, marginTop: 8}}>ライバル　<span style={{color: C.green}}>{clips.faces.rival}面</span></div>
-            <div style={{fontSize: 26, color: C.sub, fontWeight: 700, marginTop: 14}}>1枚増やすだけで、画面の更新が目に見えて遅くなる</div>
+            <div style={{fontSize: 26, color: C.sub, fontWeight: 700, marginTop: 14}}>1枚増やすだけで、画面の更新が目に見えて遅くなる → どこに面を使うかを選ぶ</div>
           </Card>
           <Txt x={1250} y={700} size={24} color={C.sub} w={610}>ROMの車データを、ゲームと同じ規則で描画（描く順・裏面を描かない・市松模様）</Txt>
         </div>
       </Sequence>
       {/* 2) デザインの変遷 */}
-      <Sequence from={k(2)} durationInFrames={k(4) - k(2)} layout="none">
-        <div style={{opacity: seg(k(2), k(4))}}>
-          <div style={{opacity: 1 - ramp(f, k(3) - 10, k(3) + 6)}}>
+      <Sequence from={k(2)} durationInFrames={k(3) - k(2)} layout="none">
+        <div style={{opacity: seg(k(2), k(3))}}>
+          <div style={{opacity: 1 - ramp(f, k(2) + 300, k(2) + 320)}}>
             <Px src="img/variants_picks.png" x={60} y={150} w={760} h={622} />
             <Txt x={60} y={790} size={28} color={C.sub} w={760} align="center">14案から候補に残った4案（実際の画面）</Txt>
           </div>
-          <div style={{opacity: ramp(f, k(3) - 6, k(3) + 10)}}>
+          <div style={{opacity: ramp(f, k(2) + 306, k(2) + 326)}}>
             <Px src="img/allcars_height.png" x={60} y={170} w={760} h={451} />
             <Txt x={60} y={640} size={28} color={C.sub} w={760} align="center">背の高さの比較（今／1.15倍／1.3倍、実際の画面）</Txt>
           </div>
-          <Clip name="car_morph" x={880} y={150} w={980} />
+          <Clip name="car_morph" x={880} y={150} w={980} rate={MORPH_RATE} />
           <div style={{position: 'absolute', left: 880, top: 720, width: 980, display: 'flex', gap: 10, flexWrap: 'wrap'}}>
             {clips.morph.labels.map((l, i) => (
               <Tag key={l} color={i === stage ? C.amber : C.line} style={{fontSize: 26, opacity: i <= stage ? 1 : 0.45}}>{l}</Tag>
@@ -65,13 +66,13 @@ export const S08: React.FC = () => {
         </div>
       </Sequence>
       {/* 3) 後輪の斜めの板 */}
-      <Sequence from={k(4)} durationInFrames={k(6) - k(4)} layout="none">
-        <div style={{opacity: seg(k(4), k(6))}}>
-          <div style={{opacity: 1 - ramp(f, k(5) - 10, k(5) + 6)}}>
+      <Sequence from={k(3)} durationInFrames={k(5) - k(3)} layout="none">
+        <div style={{opacity: seg(k(3), k(5))}}>
+          <div style={{opacity: 1 - ramp(f, k(4) - 10, k(4) + 6)}}>
             <Clip name="car_tyre" x={260} y={140} w={1400} />
             <Label x={300} y={170} color={C.amber}>黄色の線：後輪の斜めの板（1本に1枚）</Label>
           </div>
-          <div style={{opacity: ramp(f, k(5) - 6, k(5) + 10)}}>
+          <div style={{opacity: ramp(f, k(4) - 6, k(4) + 10)}}>
             <Px src="img/car_tyre_rear.png" x={60} y={170} w={880} h={495} style={{borderRadius: 12}} />
             <Px src="img/car_tyre_side.png" x={980} y={170} w={880} h={495} style={{borderRadius: 12}} />
             <Txt x={60} y={690} size={34} color={C.amber} w={880} align="center">後ろから：背面と上面に見える</Txt>
@@ -80,8 +81,8 @@ export const S08: React.FC = () => {
         </div>
       </Sequence>
       {/* 4) 自車とライバル */}
-      <Sequence from={k(6)} layout="none">
-        <div style={{opacity: ramp(f, k(6), k(6) + 14)}}>
+      <Sequence from={k(5)} layout="none">
+        <div style={{opacity: ramp(f, k(5), k(5) + 14)}}>
           <Clip name="car_lod" x={160} y={130} w={1600} />
           <Txt x={160} y={760} size={36} color={C.cyan} w={800} align="center">{`自分の車　${clips.faces.player}面`}</Txt>
           <Txt x={960} y={760} size={36} color={C.green} w={800} align="center">{`ライバル　${clips.faces.rival}面（斜めの板なし）`}</Txt>

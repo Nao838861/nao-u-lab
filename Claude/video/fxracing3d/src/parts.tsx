@@ -8,7 +8,7 @@ export const ramp = (f: number, a: number, b: number, from = 0, to = 1) => inter
 export const fmt = (n: number) => Math.round(n).toLocaleString('en-US');
 
 /** Web版と同じコアの録画（256×240を3倍、60fps。コマ番号＝コアのコマ番号）。crop は実画素 [x,y,w,h] */
-export type NesSrc = 'main' | 'ground' | 'views' | 'prev2d';
+export type NesSrc = 'main' | 'ground' | 'views' | 'prev2d' | 'n2d' | 'n3d';
 export const Nes: React.FC<{src: NesSrc; from: number; x: number; y: number; w: number; crop?: [number, number, number, number];
   volume?: number; style?: React.CSSProperties; children?: React.ReactNode; native?: [number, number]}> =
   ({src, from, x, y, w, crop = [0, 0, 256, 240], volume = 0, style, children, native = [256, 240]}) => {
