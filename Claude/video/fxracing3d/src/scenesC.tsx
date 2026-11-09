@@ -89,7 +89,7 @@ export const S12: React.FC = () => {
     <AbsoluteFill style={{background: '#000'}}>
       <Hw sec={40} x={0} y={0} w={1920} style={{borderRadius: 0}} volume={0.3} />
       <AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.1) 60%)'}} />
-      <Txt x={80} y={170} size={40} color={C.cyan} o={useIn(k(0))}>本体はそのまま　カートリッジに SuperFX ＋ Mode7</Txt>
+      <Txt x={80} y={170} size={40} color={C.cyan} o={useIn(k(0))}>ゲームは6502　描画は SuperFX ＋ Mode7</Txt>
       <div style={{position: 'absolute', left: 80, top: 250, display: 'flex', flexDirection: 'column', gap: 16, opacity: useIn(k(0) + 20)}}>
         {['絵を描く', '地面を回す', '色を増やす'].map((t, i) => (
           <Tag key={t} color={[C.cyan, C.green, C.amber][i]} style={{fontSize: 38, background: 'rgba(5,8,18,.8)'}}>{`できないこと${i + 1}　→　${t}`}</Tag>

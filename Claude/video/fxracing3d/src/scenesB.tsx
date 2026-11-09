@@ -85,9 +85,11 @@ export const S05: React.FC = () => {
 
 // ---------------- S06 できないこと3：色が足りない ----------------
 const ZOOM: [number, number, number, number] = [176, 56, 64, 40]; // 木が地平線をまたぐあたり（実画素）
+const rowRange = (pick: (r: Seg) => boolean) => { const y = ROWS.filter(pick).map((r) => r.y); return [Math.min(...y), Math.max(...y)]; };
+const SKY = rowRange((r) => !!r.sky), GROUND = rowRange((r) => !!r.valid && !r.sky); // 0〜82、87〜191
 const PalRow: React.FC<{x: number; y: number; title: string; colors: string[]; o: number; mark?: number; color: string}> = ({x, y, title, colors, o, mark, color}) => (
   <div style={{position: 'absolute', left: x, top: y, opacity: o, display: 'flex', alignItems: 'center', gap: 18}}>
-    <div style={{width: 250, fontSize: 32, fontWeight: 900, color}}>{title}</div>
+    <div style={{width: 250, fontSize: 32, fontWeight: 900, color, whiteSpace: 'pre-line'}}>{title}</div>
     {colors.map((c, i) => (
       <div key={i} style={{position: 'relative'}}>
         <Swatch a={c} size={92} />
@@ -99,20 +101,52 @@ const PalRow: React.FC<{x: number; y: number; title: string; colors: string[]; o
 
 export const S06: React.FC = () => {
   const f = useCurrentFrame(), k = K('S06');
-  const a0 = useIn(k(0)), a1 = useIn(k(1)), a2 = useIn(k(2)), a3 = ramp(f, k(3), k(3) + 18);
-  const half = k(3) + Math.round((sceneFrames('S06') - k(3)) * 0.5);
+  const a0 = useIn(k(0)), a1 = useIn(k(1)), a2 = useIn(k(2)), a3 = ramp(f, k(4), k(4) + 18);
+  const half = k(4) + Math.round((sceneFrames('S06') - k(4)) * 0.5);
   const b3 = ramp(f, half, half + 18);
   const zs = 9; // 64×40 を 576×360
+  const fs = 576 / 256; // 画面全体（256×192）を 576×432
+  const full = ramp(f, k(1) - 9, k(1) + 9); // 「この画面には」で画面全体に切り替える
+  const noWhite = useIn(k(3)); // 空の行には白が出せない
+  // 空の行と地面の行（実画素のライン。間の4ラインはどちらでもない）
+  const bands: [string, number, number, string, string[]][] = [
+    ['空の行', SKY[0], SKY[1], C.cyan, [NES.gray, NES.green, NES.sky, NES.red]],
+    ['地面の行', GROUND[0], GROUND[1], C.green, [NES.gray, NES.green, NES.white, NES.red]],
+  ];
   return (
     <Bg>
       <SceneTitle label="できないこと3　色が足りない" color={C.amber} />
       <div style={{opacity: 1 - a3}}>
-        <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={ZOOM} x={90} y={170} w={64 * zs} o={a0}>
-          <Grid cw={8 * zs} ch={zs} o={0.45} lw={1} color="rgba(0,0,0,.6)" />
-          <Grid cw={8 * zs} ch={8 * zs} o={0.9} lw={3} color="rgba(255,255,255,.75)" />
-        </PxCrop>
-        <Txt x={90} y={545} size={30} color={C.sub} o={a0} w={576}>8ドット単位で、4色のパレットを1つ選ぶ</Txt>
-        <div style={{position: 'absolute', left: 760, top: 175, opacity: a1}}>
+        <div style={{opacity: 1 - full}}>
+          <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={ZOOM} x={90} y={170} w={64 * zs} o={a0}>
+            <Grid cw={8 * zs} ch={zs} o={0.45} lw={1} color="rgba(0,0,0,.6)" />
+            <Grid cw={8 * zs} ch={8 * zs} o={0.9} lw={3} color="rgba(255,255,255,.75)" />
+          </PxCrop>
+          <Txt x={90} y={545} size={30} color={C.sub} o={a0} w={576}>8ドット単位で、4色のパレットを1つ選ぶ</Txt>
+        </div>
+        <div style={{opacity: full}}>
+          <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={[0, 0, 256, 192]} x={90} y={170} w={256 * fs}>
+            {/* 空の行と地面の行の境目 */}
+            <div style={{position: 'absolute', left: 0, right: 0, top: (SKY[1] + 1) * fs, height: (GROUND[0] - SKY[1] - 1) * fs, opacity: a2,
+              background: 'rgba(0,0,0,.35)', borderTop: '2px dashed rgba(255,255,255,.9)', borderBottom: '2px dashed rgba(255,255,255,.9)'}} />
+          </PxCrop>
+        </div>
+        {/* 行の範囲を示す帯と、その行で使うパレット */}
+        {bands.map(([name, y0, y1, col, colors], i) => {
+          const top = 170 + y0 * fs, h = (y1 + 1 - y0) * fs;
+          return (
+            <div key={name} style={{opacity: ramp(f, k(2) + i * 30, k(2) + i * 30 + 16)}}>
+              <div style={{position: 'absolute', left: 680, top, width: 10, height: h, background: col, borderRadius: 5}} />
+              <PalRow x={710} y={top + h / 2 - 46} title={`${name}\n${y0}〜${y1}ライン`} colors={colors} o={1} color={col} mark={2} />
+            </div>
+          );
+        })}
+        <Txt x={1440} y={400} size={30} color={C.amber} o={ramp(f, k(2) + 60, k(2) + 76) * (1 - noWhite)} w={420}>{'空の行だけ、\n白のかわりに青'}</Txt>
+        <div style={{position: 'absolute', left: 1440, top: 280, width: 420, opacity: noWhite}}>
+          <div style={{fontSize: 34, fontWeight: 900, color: C.red}}>空の行には白が出せない</div>
+          <div style={{fontSize: 28, fontWeight: 800, color: C.sub, marginTop: 14, lineHeight: 1.5, whiteSpace: 'pre-line'}}>{'白いものが空にかからないように\nデザインで工夫'}</div>
+        </div>
+        <div style={{position: 'absolute', left: 760, top: 175, opacity: a1 * (1 - a2)}}>
           <div style={{fontSize: 36, fontWeight: 900, marginBottom: 18}}>この画面に出ている色</div>
           <div style={{display: 'flex', gap: 22}}>
             {[[NES.sky, '空の青'], [NES.green, '草の緑'], [NES.gray, '道の灰色'], [NES.red, '赤'], [NES.white, '白']].map(([c, n], i) => (
@@ -124,9 +158,6 @@ export const S06: React.FC = () => {
           </div>
           <div style={{fontSize: 44, fontWeight: 900, color: C.amber, marginTop: 20}}>5色。でも1つのパレットは4色まで</div>
         </div>
-        <PalRow x={760} y={600} title="地面" colors={[NES.gray, NES.green, NES.white, NES.red]} o={a2} color={C.green} mark={2} />
-        <PalRow x={760} y={730} title="空の行" colors={[NES.gray, NES.green, NES.sky, NES.red]} o={ramp(f, k(2) + 30, k(2) + 46)} color={C.cyan} mark={2} />
-        <Txt x={1520} y={660} size={30} color={C.amber} o={ramp(f, k(2) + 60, k(2) + 76)} w={360}>{'白のかわりに\n青を入れる'}</Txt>
       </div>
       {/* 実際に選んだパレットの地図 */}
       <div style={{opacity: a3 * (1 - b3)}}>

@@ -73,7 +73,7 @@ export const S03: React.FC = () => {
             <Tag color={C.cyan} style={{fontSize: 34}}>SuperFX：車・木・家</Tag>
             <Tag color={C.green} style={{fontSize: 34}}>Mode7：地面</Tag>
           </div>
-          <div style={{fontSize: 28, color: C.text, fontWeight: 700, marginTop: 14}}>ファミコン本体は改造していない</div>
+          <div style={{fontSize: 28, color: C.text, fontWeight: 700, marginTop: 14}}>スーパーファミコンの時代に生まれた2つを載せる</div>
         </Card>
       </div>
     </Bg>

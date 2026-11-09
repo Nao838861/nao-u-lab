@@ -29,6 +29,8 @@ export const S03b: React.FC = () => {
   const a1 = useIn(k(1)), a2 = useIn(k(2)), a3 = ramp(f, k(3), k(3) + 14), a4 = ramp(f, k(4), k(4) + 14), a5 = ramp(f, k(5), k(5) + 14);
   const roles = ['物理演算', 'ライバル車のAI', 'タイム計測', 'サウンド', '入力処理', 'HUD'];
   const main = 1 - Math.max(a3, a4, a5);
+  // 文の途中の区切り（public/audio/S03b.wav の無音から）：処理の列挙、「ゲームは本体のCPU」、「構造としては」
+  const list = k(1) + Math.round(2.87 * 60), split = k(2) + Math.round(7.23 * 60), same = k(2) + Math.round(12.52 * 60);
   return (
     <Bg>
       <SceneTitle label="どこで何をしているか" color={C.violet} />
@@ -38,9 +40,9 @@ export const S03b: React.FC = () => {
           <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>ファミコン本体</div>
           <div style={{fontSize: 44, fontWeight: 900}}>6502（CPU）＋ PPU</div>
           <div style={{display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 24}}>
-            {roles.map((r, i) => <Tag key={r} color={C.violet} style={{fontSize: 32, opacity: ramp(f, k(1) + 30 + i * 18, k(1) + 44 + i * 18)}}>{r}</Tag>)}
+            {roles.map((r, i) => <Tag key={r} color={C.violet} style={{fontSize: 32, opacity: ramp(f, list + 30 + i * 18, list + 44 + i * 18)}}>{r}</Tag>)}
           </div>
-          <div style={{fontSize: 34, fontWeight: 900, color: C.amber, marginTop: 34, opacity: ramp(f, k(1) + 170, k(1) + 190)}}>2D版と同じプログラム</div>
+          <div style={{fontSize: 34, fontWeight: 900, color: C.amber, marginTop: 34, opacity: ramp(f, list + 170, list + 190)}}>2D版と同じプログラム</div>
         </Card>
         <Card x={1050} y={150} w={780} h={640} color={C.cyan} o={a2}>
           <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>カートリッジ（FPGA）</div>
@@ -49,10 +51,15 @@ export const S03b: React.FC = () => {
             <Tag color={C.cyan} style={{fontSize: 34}}>SuperFX：車・木・家を描く</Tag>
             <Tag color={C.green} style={{fontSize: 34}}>Mode7：地面を描く</Tag>
           </div>
-          <div style={{fontSize: 30, color: C.amber, fontWeight: 800, marginTop: 30}}>スターフォックスのSuperFXと同じく、<br />3Dの描画を受け持つ</div>
         </Card>
         <Arrow x1={880} y1={500} x2={1040} y2={500} color={C.amber} width={6} p={ramp(f, k(2) + 10, k(2) + 40)} />
         <div style={{position: 'absolute', left: 868, top: 380, width: 190, textAlign: 'center', fontSize: 24, fontWeight: 800, color: C.amber, opacity: ramp(f, k(2) + 30, k(2) + 50)}}>毎フレーム<br />描画の<br />リクエスト</div>
+        {/* 2つの枠をまたぐ帯：役割分担はスターフォックスと同じ構造 */}
+        <div style={{position: 'absolute', left: 90, top: 640, width: 1740, padding: '22px 0', textAlign: 'center', background: 'rgba(8,12,26,.94)',
+          border: `3px solid ${C.amber}`, borderRadius: 14, boxShadow: '0 12px 40px rgba(0,0,0,.6)', opacity: useIn(split)}}>
+          <div style={{fontSize: 38, fontWeight: 900}}>ゲームは本体のCPU、3Dの描画はカートリッジ</div>
+          <div style={{fontSize: 32, fontWeight: 800, color: C.amber, marginTop: 8, opacity: useIn(same)}}>スーパーファミコンのスターフォックスと同じ構造</div>
+        </div>
       </div>
       <div style={{opacity: a3 * (1 - a4)}}>
         <div style={{position: 'absolute', left: 400, top: 160}}><FpgaGrid p={ramp(f, k(3), k(3) + 200)} /></div>
@@ -123,9 +130,22 @@ const MapLines: React.FC<{x: number; y: number; size: number; row: number; walk?
   );
 };
 const num = (v: number) => v.toFixed(2).padStart(8, ' ');
+// 合成の例：木の左の縁にかかる8ドット（実画素 x, y）。マスクは layer_3200_fx.png の不透明なドット
+const BLK: [number, number] = [176, 102];
+const BLK_MASK = '00011111';
+const Cells: React.FC<{y: number; label: string; color: string; o: number; children: React.ReactNode}> = ({y, label, color, o, children}) => (
+  <div style={{opacity: o}}>
+    <div style={{position: 'absolute', left: 720, top: y + 20, width: 260, fontSize: 30, fontWeight: 900, color}}>{label}</div>
+    <div style={{position: 'absolute', left: 1000, top: y, width: 640, height: 80, overflow: 'hidden', borderRadius: 6, border: `2px solid ${C.line}`}}>
+      {children}
+      <div style={{position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to right, rgba(0,0,0,.55) 2px, transparent 2px)', backgroundSize: '80px 80px'}} />
+    </div>
+  </div>
+);
 export const S05b: React.FC = () => {
   const f = useCurrentFrame(), k = K('S05b');
   const a1 = ramp(f, k(1), k(1) + 16), a2 = ramp(f, k(2), k(2) + 16), a3 = ramp(f, k(3), k(3) + 16), a4 = ramp(f, k(4), k(4) + 16), a5 = ramp(f, k(5), k(5) + 16);
+  const a6 = ramp(f, k(6), k(6) + 16);
   const side = Math.floor(Math.max(0, f - k(1)) / 20) % 12;
   const first = VALID[0].y;
   const tableRow = Math.min(191, first + Math.floor(Math.max(0, f - k(2)) / 5) % (192 - first));
@@ -196,7 +216,38 @@ export const S05b: React.FC = () => {
           <div style={{fontSize: 26, color: C.sub, fontWeight: 700, marginTop: 12}}>FPGA内に2ライン分。1ラインを表示している間に次のラインを作る</div>
         </Card>
       </div>
-      <div style={{opacity: a5}}>
+      {/* 合成：8ドットずつ、地面とSuperFXの絵を重ねてラインバッファへ */}
+      <div style={{opacity: a5 * (1 - a6)}}>
+        <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={[0, 0, 256, 192]} x={80} y={170} w={576}>
+          <div style={{position: 'absolute', left: (BLK[0] - 4) * 2.25, top: (BLK[1] - 4) * 2.25, width: 16 * 2.25, height: 9 * 2.25, border: `3px solid ${C.amber}`, borderRadius: 4}} />
+        </PxCrop>
+        <Txt x={80} y={615} size={26} color={C.sub} w={576}>{`${BLK[1]}ライン目の${BLK[0]}〜${BLK[0] + 7}ドット`}</Txt>
+        <Cells y={150} label="Mode7の地面" color={C.green} o={ramp(f, k(5) + 205, k(5) + 221)}>
+          <PxCrop src={`img/layer_${F}_ground.png`} iw={256} ih={240} crop={[BLK[0], BLK[1], 8, 1]} x={0} y={0} w={640} style={{borderRadius: 0}} />
+        </Cells>
+        <Cells y={240} label="SuperFXの絵" color={C.cyan} o={ramp(f, k(5) + 368, k(5) + 384)}>
+          <div style={{position: 'absolute', inset: 0, background: 'repeating-conic-gradient(#2a3350 0% 25%, #151b2e 0% 50%) 0 0 / 40px 40px'}} />
+          <PxCrop src={`img/layer_${F}_fx.png`} iw={256} ih={240} crop={[BLK[0], BLK[1], 8, 1]} x={0} y={0} w={640} style={{borderRadius: 0}} />
+        </Cells>
+        <Cells y={330} label="マスク" color={C.amber} o={ramp(f, k(5) + 450, k(5) + 466)}>
+          {[...BLK_MASK].map((m, i) => (
+            <div key={i} style={{position: 'absolute', left: i * 80, top: 0, width: 80, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontFamily: MONO, fontSize: 40, fontWeight: 900, color: m === '1' ? C.amber : C.sub, background: m === '1' ? `${C.amber}33` : 'transparent'}}>{m}</div>
+          ))}
+        </Cells>
+        <Txt x={1000} y={418} size={24} color={C.sub} w={640} align="center" o={ramp(f, k(5) + 450, k(5) + 466)}>1＝SuperFXの絵が透明でない　0＝地面を見せる</Txt>
+        <Cells y={460} label="合成" color={C.text} o={ramp(f, k(5) + 530, k(5) + 546)}>
+          <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={[BLK[0], BLK[1], 8, 1]} x={0} y={0} w={640} style={{borderRadius: 0}} />
+        </Cells>
+        <div style={{position: 'absolute', left: 1000, top: 555, opacity: ramp(f, k(5) + 590, k(5) + 606)}}>
+          <Tag color={C.amber} style={{fontSize: 30}}>パレット：地面＋車や木</Tag>
+        </div>
+        <Card x={720} y={625} w={1120} color={C.green} o={ramp(f, k(5) + 775, k(5) + 791)}>
+          <div style={{fontSize: 32, fontWeight: 900}}>ラインバッファに書く（8ドット分の色＋パレット）</div>
+          <div style={{fontSize: 26, color: C.sub, fontWeight: 700, marginTop: 8, opacity: ramp(f, k(5) + 900, k(5) + 916)}}>PPUがパターンを読みに来たら色を、属性を読みに来たらパレットを返す</div>
+        </Card>
+      </div>
+      <div style={{opacity: a6}}>
         <Card x={360} y={300} w={1200} color={C.amber}>
           <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>スーパーファミコン</div>
           <div style={{fontSize: 46, fontWeight: 900}}>F-ZEROも、HDMAでラインごとにパラメータを書き換えていた</div>
