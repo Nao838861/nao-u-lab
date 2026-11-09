@@ -1,7 +1,7 @@
 import React from 'react';
-import {AbsoluteFill, Loop, Sequence, useCurrentFrame} from 'remotion';
-import {Bg, C, SceneTitle, Tag, cueOf, useIn} from './common';
-import {Card, Hw, Label, Nes, Txt, ramp} from './parts';
+import {AbsoluteFill, Img, Loop, Sequence, staticFile, useCurrentFrame} from 'remotion';
+import {Bg, C, FONT, SceneTitle, Tag, cueOf, useIn} from './common';
+import {Card, Hw, Label, MONO, Nes, Txt, ramp} from './parts';
 
 const K = (id: string) => (i: number) => cueOf(id, i);
 
@@ -18,7 +18,7 @@ export const S09: React.FC = () => {
           opacity: a2, boxShadow: `0 0 24px ${C.amber}`}} />
       </Nes>
       <Card x={1060} y={150} w={800} color={C.violet} o={a1}>
-        <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>車の動きを計算するプログラム</div>
+        <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>物理演算のプログラム</div>
         <div style={{fontSize: 44, fontWeight: 900}}>2D版の6502のコードを<br />そのまま動かす</div>
         <div style={{fontSize: 30, color: C.violet, fontWeight: 800, marginTop: 8}}>変えたのは描き方だけ</div>
       </Card>
@@ -57,23 +57,26 @@ export const S10: React.FC = () => {
   );
 };
 
-// ---------------- S11 2D版のリプレイを3Dで ----------------
+// ---------------- S11 2D版のリプレイを3D版で ----------------
 export const S11: React.FC = () => {
   const f = useCurrentFrame(), k = K('S11');
-  const W = 780, start = k(1) - 30;
+  const W = 780;
+  const a2 = ramp(f, k(2), k(2) + 18);
   return (
     <Bg>
-      <SceneTitle label="2D版のリプレイを、そのまま3Dで" color={C.green} />
-      <Txt x={0} y={420} size={56} w={1920} align="center" o={useIn(k(0)) * (1 - ramp(f, start, start + 14))}>2D版のリプレイ → そのまま3D版で再生</Txt>
-      <div style={{opacity: ramp(f, start, start + 16)}}>
-        <Sequence from={start} layout="none">
-          <Nes src="n2d" from={420} x={110} y={140} w={W} volume={0.5} />
-          <Nes src="n3d" from={420} x={1030} y={140} w={W} />
-        </Sequence>
-        <Label x={130} y={160} color={C.amber}>2D版で記録した走り（DRIFT）</Label>
-        <Label x={1050} y={160} color={C.green}>同じ走りを3D版で</Label>
-        <Txt x={110} y={884} size={24} color={C.sub} w={1700} o={ramp(f, k(2), k(2) + 16)}>2D版のプログラムで車を走らせ、毎コマの車の位置と向きを3D版のROMに渡して描画（全コマで位置・向きが一致）</Txt>
+      <SceneTitle label="2D版のリプレイを3D版で" color={C.green} />
+      <div style={{opacity: useIn(k(0)) * (1 - 0.7 * a2)}}>
+        <Nes src="n2d" from={420} x={110} y={140} w={W} volume={0.5} />
+        <Nes src="n3d" from={420} x={1030} y={140} w={W} />
+        <Label x={130} y={160} color={C.amber}>2D版で記録したリプレイ（DRIFT）</Label>
+        <Label x={1050} y={160} color={C.green}>同じリプレイを3D版で再生</Label>
       </div>
+      {[['drift', 450], ['grip', 1010]].map(([m, x], i) => (
+        <div key={m as string} style={{position: 'absolute', left: x as number, top: 140, width: 460, height: 760, overflow: 'hidden', borderRadius: 12,
+          boxShadow: '0 16px 50px rgba(0,0,0,.7)', opacity: ramp(f, k(2) + i * 12, k(2) + i * 12 + 18)}}>
+          <Img src={staticFile(`img/web_ranking_${m}.png`)} style={{width: 460, display: 'block', transform: `translateY(${m === 'drift' ? -480 * ramp(f, k(2) + 60, k(2) + 300) : 0}px)`}} />
+        </div>
+      ))}
     </Bg>
   );
 };

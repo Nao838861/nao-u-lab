@@ -1,0 +1,21 @@
+Mesen NES-only libretro
+Copyright (C) 2014-2019 M. Bibaud and contributors
+GPL-3.0-or-later
+
+この WebAssembly コアは Mesen の libretro 版を使用しています。
+元リポジトリ: https://github.com/libretro/Mesen
+固定 revision: 0102910c39ad1a62bc3f784466f3f67ca9eae335
+
+変更: 専用の単一スレッド JavaScript ホストを追加。
+FxRacing専用マッパー、GSU命令実行、地面DSPとPPU読み出しを追加。
+GSUは下記固定Mesen2 revisionの実装。マッパー出典と移植内容は
+mesen-source.zip内のvendor/mesen/Core/FxRacing/source.jsonを参照。
+Core/MMC5.h に Mesen2 の NES2.0 64/128KB PRG-RAM bank mapping を backport。
+同じ固定 source から vertical split の scanline/column/attribute 処理も backport。
+出典: https://github.com/SourMesen/Mesen2/blob/b9fa69ddc6d0a331fb103fdb5eef6904305703c2/Core/NES/Mappers/Nintendo/MMC5.h
+
+GPL 本文: COPYING-Mesen.txt
+対応ソース・変更差分・再ビルド手順: mesen-source.zip
+同梱ライブラリの著作権表示とライセンスは ZIP 内の各ソースに保持しています。
+Mesen およびこのホストには GPL の条件に従う無保証条項が適用されます。
+ROM は独立したゲームデータです。

@@ -53,9 +53,9 @@ export const S05: React.FC = () => {
           <Px src={`img/layer_${F}_ground.png`} x={0} y={0} w={256 * 3} h={240 * 3} />
           <div style={{position: 'absolute', left: 0, right: 0, top: row * 3, height: 3, background: C.red, boxShadow: `0 0 12px ${C.red}`}} />
         </div>
-        <Txt x={90} y={790} size={30} color={C.sub}>{`画面の${row}行目`}</Txt>
+        <Txt x={90} y={790} size={30} color={C.sub}>{`${row}ライン目`}</Txt>
         <MapScan x={1000} y={150} size={660} row={row} o={1} />
-        <Txt x={1000} y={820} size={30} color={C.sub}>ROMに入っているコースの地図（640×640）</Txt>
+        <Txt x={1000} y={820} size={30} color={C.sub}>ROMに入っているコースのテクスチャ（640×640）</Txt>
         <Arrow x1={870} y1={190 + row * 3} x2={990} y2={480} color={C.red} width={4} />
       </div>
       {/* 地面＋物体＝画面 */}
@@ -77,7 +77,7 @@ export const S05: React.FC = () => {
         ))}
         <Txt x={572} y={400} size={70} color={C.text} o={ramp(f, k(4) + 18, k(4) + 30)}>＋</Txt>
         <Txt x={1172} y={400} size={70} color={C.text} o={ramp(f, k(4) + 36, k(4) + 48)}>＝</Txt>
-        <Txt x={80} y={760} size={34} w={1760} align="center" o={ramp(f, k(4) + 50, k(4) + 70)}>8ドットずつ重ねて、1枚の画面に</Txt>
+        <Txt x={80} y={760} size={34} w={1760} align="center" o={ramp(f, k(4) + 50, k(4) + 70)}>8ドット単位で合成して、1枚の画面に</Txt>
       </div>
     </Bg>
   );
@@ -111,7 +111,7 @@ export const S06: React.FC = () => {
           <Grid cw={8 * zs} ch={zs} o={0.45} lw={1} color="rgba(0,0,0,.6)" />
           <Grid cw={8 * zs} ch={8 * zs} o={0.9} lw={3} color="rgba(255,255,255,.75)" />
         </PxCrop>
-        <Txt x={90} y={545} size={30} color={C.sub} o={a0} w={576}>8ドットごとに、4色のパレットを1つ選ぶ</Txt>
+        <Txt x={90} y={545} size={30} color={C.sub} o={a0} w={576}>8ドット単位で、4色のパレットを1つ選ぶ</Txt>
         <div style={{position: 'absolute', left: 760, top: 175, opacity: a1}}>
           <div style={{fontSize: 36, fontWeight: 900, marginBottom: 18}}>この画面に出ている色</div>
           <div style={{display: 'flex', gap: 22}}>
@@ -137,11 +137,11 @@ export const S06: React.FC = () => {
             <div key={n} style={{display: 'flex', alignItems: 'center', gap: 8, fontSize: 26, fontWeight: 800}}><Swatch a={c} size={34} />{n}</div>
           ))}
         </div>
-        <Txt x={90} y={760} size={30} color={C.sub} w={800}>8ドットごとに実際に選んだパレット</Txt>
+        <Txt x={90} y={760} size={30} color={C.sub} w={800}>8ドット単位で実際に選んだパレット</Txt>
       </div>
       {/* 16×16 と 8×1 */}
       <div style={{opacity: b3}}>
-        {[['本来のファミコン：16×16ドットごと', 16, 16, C.red], ['今回：8×1ドットごと', 8, 1, C.green]].map(([t, w, h, col], i) => (
+        {[['本来のファミコン：16×16ドット単位', 16, 16, C.red], ['今回：8×1ドット単位', 8, 1, C.green]].map(([t, w, h, col], i) => (
           <React.Fragment key={String(t)}>
             <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={ZOOM} x={110 + i * 880} y={200} w={64 * 12}>
               <Grid cw={(w as number) * 12} ch={(h as number) * 12} o={0.9} lw={2} color={i ? 'rgba(0,0,0,.45)' : 'rgba(255,255,255,.9)'} />
@@ -164,7 +164,7 @@ export const S07: React.FC = () => {
     <Bg>
       <SceneTitle label="タイリングで色を増やす" color={C.amber} />
       <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={[96, 122, 64, 44]} x={90} y={170} w={64 * 9} o={a0} />
-      <Txt x={90} y={590} size={30} color={C.sub} o={a0} w={576}>1つの面を、2色の市松模様で塗る</Txt>
+      <Txt x={90} y={590} size={30} color={C.sub} o={a0} w={576}>1枚のポリゴンを、2色の市松模様で塗る</Txt>
       <div style={{position: 'absolute', left: 760, top: 170, opacity: a1}}>
         <div style={{fontSize: 34, fontWeight: 900, marginBottom: 12}}>単色 4</div>
         <div style={{display: 'flex', gap: 18}}>

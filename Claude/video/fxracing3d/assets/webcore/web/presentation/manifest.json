@@ -1,0 +1,9 @@
+{
+  "contract": 1,
+  "packetBytes": 433,
+  "rom": "aafcc92412f4f1bef1658fcd4f1b7340cb296ebbae1decf330cc02ca6b52b2ce",
+  "core": "cb6375ad95584e053224176e54aef171722c009657278606ec68fc2615b14ce1",
+  "renderer": "FxRacing ROM CPU/GSU/DSP/PPU",
+  "sourceSimulationModified": false,
+  "physicsSkippedInPresentationOnly": true
+}

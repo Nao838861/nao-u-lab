@@ -1,1 +1,24 @@
-{"type":"module","name":"fxracing3d-explainer","private":true,"version":"0.1.0","scripts":{"studio":"remotion studio src/index.ts","render":"remotion render src/index.ts FxExplainer out/fxracing3d_explainer.mp4 --codec=h264 --crf=18"}}
+{
+  "type": "module",
+  "name": "fxracing3d-explainer",
+  "private": true,
+  "version": "0.2.0",
+  "scripts": {
+    "rebuild": "node tools/rebuild_all.mjs",
+    "studio": "remotion studio src/index.ts",
+    "stills": "node tools/stills.mjs",
+    "render": "remotion render src/index.ts FxExplainer out/fxracing3d_explainer.mp4 --codec=h264 --crf=18"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.512",
+    "@remotion/cli": "4.0.512",
+    "@remotion/renderer": "4.0.512",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "remotion": "4.0.512"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "5.9.3"
+  }
+}

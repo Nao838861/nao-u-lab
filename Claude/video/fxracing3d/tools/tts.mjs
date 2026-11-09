@@ -83,6 +83,8 @@ for (const scene of script.scenes) {
     }
   }
   await writeFile(path.join(outDir, `${scene.id}.wav`), makeWav(fmt, Buffer.concat(parts)));
+  await mkdir(path.join(root, 'assets/narration'), {recursive: true});
+  await writeFile(path.join(root, 'assets/narration', `${scene.id}.wav`), makeWav(fmt, Buffer.concat(parts)));
   timing.scenes[scene.id] = {title: scene.title, audioSeconds: Number(t.toFixed(3)), lines};
 }
 timing.order = script.scenes.map((s) => s.id);

@@ -27,7 +27,7 @@
 | S08 | 車を作る：19面・42頂点、14案、背1.3倍、後輪は斜めの板1枚 | ROMの車データから描いたクリップ |
 | S09 | 走りは2D版と同じ | 録画（HUDの摩擦円） |
 | S10 | 4つの視点 | 視点切り替えの録画 |
-| S11 | 2D版のリプレイを3Dで（2D版DRIFTの記録を左右に並べる） | `tools/record_2d3d.mjs` の録画 |
+| S11 | 2D版のリプレイを3D版で：挙動が同じなので2D版ランキングのリプレイが3D版で見られる。ランキングは2D版・3D版で共通 | `tools/record_2d3d.mjs` の録画、Web版ランキングのスクリーンショット |
 | S12 | まとめ | 実機映像 |
 
 YouTubeのコメントの疑問（Mode7を「追加」とは？、電気的に載るのか、転送量は、ファミコンは映像を映すだけか、容量）に、S03b・S04・S05b で答える。
@@ -74,8 +74,48 @@ npm run render
 - 色の組（録画した全コマの集計）：地面＝灰・緑・白・赤、空＋物体＝青・緑・灰・赤。黒は画面左端。
 - Mode7の地図の値と色の対応は、地面だけの画面と突き合わせて決めた。
 - 8位の走りは、Web版（FxRacing Web、3D）で記録されたもの（`replayVariant: 3d`）。2D版の記録を3D版で流したものではない。
-- 走行のクレジット「Look」（実機映像）の名前表示は、ユーザーの確認待ち。
 - S11 の2D版の記録は作者（Nao_u）のDRIFT（2378 tick、2D版 epoch 15）。2D版のエンジンで走らせ、Web版と同じ方法（presentation コア）で毎コマの車の状態を3D版のROMに渡して描く。2378コマすべてで位置・向きが一致。
 - 「SuperFXのプログラム」として映しているのは `development/fx-racing-3d/rog-integration/actors-gsu15/gsu.s`。面を塗る内側は `loop` / `plot`、市松は `cmode` のディザ。
 - 地面は表示回路（`racing_display.vhd`）のチップ内の走査線バッファ2本で1行ずつ作る。描き上がったSuperFXの絵はカートリッジのRAMに2枚分。
 - BGMは前作と同じ `bgm.mp3`。
+
+## 別のPCで続きをする
+
+GitHubにあるもの：ソース（`src/`）、台本（`narration/script.json`）、時刻表（`src/timing.json`）、作業用スクリプト（`tools/`）、そして作り直せない入力をまとめた `assets/`。
+
+| `assets/` | 中身 | 元の場所 |
+|---|---|---|
+| `hw/FxRacing3.mp4` | 実機映像（ブラウン管をカメラで撮影、90MB） | `C:\vol0\FxRacing3.mp4` |
+| `webcore/` | Web版のコア（元と解説用）、Web版のROM、撮影用ROM、2D版のエンジン（epoch 15）、presentation コア、必要なWebのモジュール、Mesenの対応ソース | `D:\HomeBrew\FxRacingWeb`（GitHub外のリポジトリ）、MMC5Racing のブランチ |
+| `prev/` | 前作の2D映像と向き別の絵 | `../mmc5_v2/public`（git対象外） |
+| `img/` | Web版ランキングのスクリーンショット、車のデザイン比較画像 | `tools/shot_ranking.cjs`、MMC5Racing のブランチ |
+| `replays/` | 2D版DRIFTのリプレイ（作者の記録）、ランキングのデータ（2026-11-09取得） | ランキングの公開API |
+| `shapes/` | 車の形の変遷（デザインB／D／幅7/8） | MMC5Racing の開発記録 |
+| `audio/bgm_game.mp3` | BGM（ゲームのオリジナル曲 タイトル→GRIP→DRIFT を2秒のクロスフェードでつないだもの） | MMC5Racing `media/bgm` |
+| `narration/` | ナレーション音声（`src/timing.json` と対応） | `tools/tts.mjs` |
+
+手順:
+
+```sh
+cd Claude/video/fxracing3d
+npm install
+node tools/rebuild_all.mjs     # 録画・層画像・地図・車のクリップ・2D/3D比較を作り直す（約4分）
+npm run stills                 # 各ナレーション行の静止画（out/stills）
+npm run render                 # 書き出し（out/fxracing3d_explainer.mp4）
+```
+
+必要なもの：Node 20以上、Python 3（numpy, Pillow）、ffmpeg。台本を変えたときは `pip install edge-tts` のうえで `node tools/tts.mjs`（`assets/narration` も更新される）。
+2026-11-09、GitHubに上げるファイルだけを空のフォルダーにコピーして `rebuild_all.mjs` を実行し、層画像・コース地図・行テーブル・車のクリップのデータが元とハッシュまで一致することを確認した。
+
+解説用コアを作り直すときだけ、FxRacingWeb のソースと Emscripten が要る（`tools/explainer-core.patch` を当てて `emulator/build.py --compile-only`）。ランキングを撮り直すときだけ、FxRacingWeb の `tools/serve.py --port 8091` と playwright-core が要る（`tools/shot_ranking.cjs`）。
+
+## 決まっている方針（ユーザーの指示、2026-11-09）
+
+- 50MHzには触れない。AIとの開発の話は入れない。クレジットは出さない（実機映像の走行も作者の記録）。
+- Mode7は「Mode7のアルゴリズムを再現した回路」。「スーファミと互換」とは言わない。
+- SuperFXは「ファミコンのCPUを補佐するコプロセッサ。スターフォックスと同じように3D描画を受け持つ」。「もう1つのCPU」「主役は6502」のような言い方はしない。ゲーム本体はファミコンの6502が動かしていることが、説明の流れから自然に伝わるようにする。
+- 用語は言い替えない（VBLANK、VRAM、パターンテーブル、ダブルバッファ、ライン、テクスチャ、ポリゴン、ディザリング、パレット など）。幼稚な言い替えはしない。
+- 色の話は「パレット」。説明は簡潔に。タイリングで色を増やしたことは見せる。
+- 2D/3Dの場面は「車体の挙動が同じなので、2D版のランキングのリプレイが3D版でそのまま見られる。ランキングは共通で、視点の違う2つのゲームで同じタイムアタックができる」。
+- YouTubeのコメントの疑問（Mode7を追加とは？、電気的に載る？、転送量は？、ファミコンは映像を映すだけ？、容量は？）に答える内容にする。
+- 読み上げの誤読は `narration/script.json` の `readings` で直す（字幕の表記は変えない）。

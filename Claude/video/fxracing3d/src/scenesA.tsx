@@ -98,11 +98,11 @@ export const S04: React.FC = () => {
           <Px src="img/layer_2100_full.png" x={0} y={0} w={256 * S} h={240 * S} />
           <Grid cw={8 * S} o={a1} color="rgba(255,255,255,.6)" />
         </div>
-        <Txt x={80} y={760} size={32} color={C.sub} o={a1}>8×8ドットのタイルを並べた画面　点を1つずつは描けない</Txt>
+        <Txt x={80} y={760} size={32} color={C.sub} o={a1}>8×8ドットのタイルを並べた画面（フレームバッファはない）</Txt>
       </div>
       {/* 送ると間に合わない */}
       <div style={{opacity: a2 * (1 - a3)}}>
-        <Txt x={160} y={200} size={44}>送り込むと？</Txt>
+        <Txt x={160} y={200} size={44}>毎フレームVRAMに転送すると？</Txt>
         <div style={{position: 'absolute', left: 160, top: 300}}>
           <div style={{fontSize: 32, fontWeight: 800, color: C.sub, marginBottom: 10}}>3Dの部分の絵 1枚（256×192ドット・1ドット2ビット）</div>
           <div style={{display: 'flex', alignItems: 'center', gap: 24}}>
@@ -111,7 +111,7 @@ export const S04: React.FC = () => {
           </div>
         </div>
         <div style={{position: 'absolute', left: 160, top: 500, opacity: ramp(f, k(2) + 200, k(2) + 220)}}>
-          <div style={{fontSize: 32, fontWeight: 800, color: C.sub, marginBottom: 10}}>ファミコンが画面の休み時間に書き換えられる量（1コマ）</div>
+          <div style={{fontSize: 32, fontWeight: 800, color: C.sub, marginBottom: 10}}>VBLANK中にCPUで転送できる量（1フレーム）</div>
           <div style={{display: 'flex', alignItems: 'center', gap: 24}}>
             <div style={{width: (barW * small) / big, height: 70, background: C.red, borderRadius: 8}} />
             <div style={{fontSize: 52, fontWeight: 900, color: C.red}}>約300バイト</div>
@@ -126,15 +126,15 @@ export const S04: React.FC = () => {
           <Grid cw={8 * S} o={0.25} />
           <div style={{position: 'absolute', left: tx * 8 * S, top: ty * 8 * S, width: 8 * S, height: 8 * S, border: `4px solid ${C.amber}`, boxShadow: `0 0 18px ${C.amber}`}} />
         </div>
-        <Label x={100} y={190} color={C.amber}>PPUがタイルの模様を読みに来る</Label>
+        <Label x={100} y={190} color={C.amber}>PPUがパターンテーブルを読みに来る</Label>
         <Card x={1000} y={170} w={420} color={C.amber}>
           <div style={{fontSize: 36, fontWeight: 900}}>ファミコン</div>
           <div style={{fontSize: 30, fontWeight: 800, color: C.amber}}>PPU</div>
-          <div style={{fontSize: 24, color: C.sub, fontWeight: 700}}>「この場所の模様は？」</div>
+          <div style={{fontSize: 24, color: C.sub, fontWeight: 700}}>「このタイルのパターンは？」</div>
         </Card>
         <Card x={1000} y={470} w={840} color={C.cyan}>
           <div style={{fontSize: 36, fontWeight: 900}}>カートリッジ</div>
-          <div style={{fontSize: 28, color: C.cyan, fontWeight: 800}}>SuperFXが描き上げた絵の中身を返す</div>
+          <div style={{fontSize: 28, color: C.cyan, fontWeight: 800}}>SuperFXが描き上げた絵のデータを返す</div>
           <div style={{display: 'flex', gap: 6, marginTop: 14}}>
             {Array.from({length: 16}, (_, i) => (
               <div key={i} style={{width: 40, height: 40, borderRadius: 4, background: i === tile % 16 ? C.amber : C.panel2}} />
@@ -143,7 +143,7 @@ export const S04: React.FC = () => {
         </Card>
         <Arrow x1={1210} y1={330} x2={1210} y2={460} color={C.amber} width={6} p={ramp(f, k(3) + 10, k(3) + 30)} label="読む" />
         <Arrow x1={1500} y1={460} x2={1500} y2={330} color={C.cyan} width={6} p={ramp(f, k(3) + 40, k(3) + 60)} label="返す" />
-        <Txt x={1000} y={720} size={40} color={C.green} o={a4}>CPUで絵を運ぶ必要はない</Txt>
+        <Txt x={1000} y={720} size={40} color={C.green} o={a4}>CPUでの転送は不要</Txt>
       </div>
     </Bg>
   );

@@ -33,16 +33,16 @@ export const S08: React.FC = () => {
         <div style={{opacity: seg(k(0), k(2))}}>
           <Clip name="car_build" x={60} y={140} w={1150} rate={BUILD_RATE} />
           <Card x={1250} y={150} w={610} color={C.amber}>
-            <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>描いた面</div>
+            <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>描いたポリゴン</div>
             <div style={{fontSize: 92, fontWeight: 900, color: C.amber, lineHeight: 1.1}}>{built}<span style={{fontSize: 44, color: C.sub}}> / {clips.faces.player}</span></div>
             <div style={{fontSize: 30, fontWeight: 800, minHeight: 42}}>{name}</div>
           </Card>
           <Card x={1250} y={430} w={610} color={C.cyan} o={useIn(k(1))}>
-            <div style={{fontSize: 34, fontWeight: 900}}>自分の車　<span style={{color: C.cyan}}>{clips.faces.player}面・{clips.vertices.player}頂点</span></div>
-            <div style={{fontSize: 34, fontWeight: 900, marginTop: 8}}>ライバル　<span style={{color: C.green}}>{clips.faces.rival}面</span></div>
-            <div style={{fontSize: 26, color: C.sub, fontWeight: 700, marginTop: 14}}>1枚増やすだけで、画面の更新が目に見えて遅くなる → どこに面を使うかを選ぶ</div>
+            <div style={{fontSize: 34, fontWeight: 900}}>自分の車　<span style={{color: C.cyan}}>{clips.faces.player}ポリゴン・{clips.vertices.player}頂点</span></div>
+            <div style={{fontSize: 34, fontWeight: 900, marginTop: 8}}>ライバル　<span style={{color: C.green}}>{clips.faces.rival}ポリゴン</span></div>
+            <div style={{fontSize: 26, color: C.sub, fontWeight: 700, marginTop: 14}}>1枚増やすだけでフレームレートが落ちる → どこにポリゴンを使うかを選ぶ</div>
           </Card>
-          <Txt x={1250} y={700} size={24} color={C.sub} w={610}>ROMの車データを、ゲームと同じ規則で描画（描く順・裏面を描かない・市松模様）</Txt>
+          <Txt x={1250} y={700} size={24} color={C.sub} w={610}>ROMの車データを、ゲームと同じ規則で描画（描画順・裏面除去・ディザリング）</Txt>
         </div>
       </Sequence>
       {/* 2) デザインの変遷 */}
@@ -62,7 +62,7 @@ export const S08: React.FC = () => {
               <Tag key={l} color={i === stage ? C.amber : C.line} style={{fontSize: 26, opacity: i <= stage ? 1 : 0.45}}>{l}</Tag>
             ))}
           </div>
-          <Txt x={880} y={830} size={22} color={C.sub} w={980}>形の変化（車体と窓の16頂点）。色は現在のもので統一</Txt>
+          <Txt x={880} y={830} size={22} color={C.sub} w={980}>形の変化（車体とキャビンの16頂点）。色は現在のもので統一</Txt>
         </div>
       </Sequence>
       {/* 3) 後輪の斜めの板 */}
@@ -70,13 +70,13 @@ export const S08: React.FC = () => {
         <div style={{opacity: seg(k(3), k(5))}}>
           <div style={{opacity: 1 - ramp(f, k(4) - 10, k(4) + 6)}}>
             <Clip name="car_tyre" x={260} y={140} w={1400} />
-            <Label x={300} y={170} color={C.amber}>黄色の線：後輪の斜めの板（1本に1枚）</Label>
+            <Label x={300} y={170} color={C.amber}>黄色の線：後輪の斜めのポリゴン（1本に1枚）</Label>
           </div>
           <div style={{opacity: ramp(f, k(4) - 6, k(4) + 10)}}>
             <Px src="img/car_tyre_rear.png" x={60} y={170} w={880} h={495} style={{borderRadius: 12}} />
             <Px src="img/car_tyre_side.png" x={980} y={170} w={880} h={495} style={{borderRadius: 12}} />
             <Txt x={60} y={690} size={34} color={C.amber} w={880} align="center">後ろから：背面と上面に見える</Txt>
-            <Txt x={980} y={690} size={34} color={C.cyan} w={880} align="center">斜めから：板1枚だけ</Txt>
+            <Txt x={980} y={690} size={34} color={C.cyan} w={880} align="center">斜めから：ポリゴン1枚だけ</Txt>
           </div>
         </div>
       </Sequence>
@@ -84,8 +84,8 @@ export const S08: React.FC = () => {
       <Sequence from={k(5)} layout="none">
         <div style={{opacity: ramp(f, k(5), k(5) + 14)}}>
           <Clip name="car_lod" x={160} y={130} w={1600} />
-          <Txt x={160} y={760} size={36} color={C.cyan} w={800} align="center">{`自分の車　${clips.faces.player}面`}</Txt>
-          <Txt x={960} y={760} size={36} color={C.green} w={800} align="center">{`ライバル　${clips.faces.rival}面（斜めの板なし）`}</Txt>
+          <Txt x={160} y={760} size={36} color={C.cyan} w={800} align="center">{`自分の車　${clips.faces.player}ポリゴン`}</Txt>
+          <Txt x={960} y={760} size={36} color={C.green} w={800} align="center">{`ライバル　${clips.faces.rival}ポリゴン（斜めのポリゴンなし）`}</Txt>
         </div>
       </Sequence>
     </Bg>

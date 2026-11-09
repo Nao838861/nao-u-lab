@@ -8,7 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const T = JSON.parse(await readFile(path.join(root, 'src/timing.json'), 'utf8'));
 // src/common.tsx の EXTRA_LEAD / EXTRA_TAIL と同じ値
 const LEAD = {S01: 0.8, S11: 0.5};
-const TAIL = {S01: 0.5, S08: 1.5, S10: 2, S11: 4, S12: 4};
+const TAIL = {S01: 0.5, S08: 1.5, S10: 2, S11: 3, S12: 4};
 const lead = (id) => T.leadSeconds + (LEAD[id] ?? 0);
 const only = process.argv.slice(2).filter((a) => /^S\d\d[a-z]?$/.test(a));
 const delay = Number(process.argv.find((a) => a.startsWith('--delay='))?.slice(8) ?? 70);

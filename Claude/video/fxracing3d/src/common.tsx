@@ -27,7 +27,7 @@ const T = timing as unknown as {order: string[]; leadSeconds: number; tailSecond
 
 /** 場面ごとに足す前置き・後ろの余白（秒）。ナレーションの前に映像だけを見せる、締めで余韻を残す、など */
 export const EXTRA_LEAD: Record<string, number> = {S01: 0.8, S11: 0.5};
-export const EXTRA_TAIL: Record<string, number> = {S01: 0.5, S08: 1.5, S10: 2, S11: 4, S12: 4};
+export const EXTRA_TAIL: Record<string, number> = {S01: 0.5, S08: 1.5, S10: 2, S11: 3, S12: 4};
 export const leadOf = (id: string) => T.leadSeconds + (EXTRA_LEAD[id] ?? 0);
 export const sceneFrames = (id: string) => Math.ceil((leadOf(id) + T.scenes[id].audioSeconds + T.tailSeconds + (EXTRA_TAIL[id] ?? 0)) * FPS);
 export const sceneOrder = T.order;

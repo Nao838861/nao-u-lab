@@ -47,7 +47,7 @@ for actor, block in enumerate(words(0x85a8, 4)):
     else:
         CARS.append(dict(v=v, f=SHARED + LAST, m=mats[:14] + [wing, 1, panel]))
 PLAYER, RIVAL = CARS[0], CARS[3]
-FACE_NAMES = (['後輪の斜めの板（左）', '後輪の斜めの板（右）'] +
+FACE_NAMES = (['後輪の斜めのポリゴン（左）', '後輪の斜めのポリゴン（右）'] +
               ['車体の側面（左）', '車体の側面（右）', 'ボンネットとトランク', '車体の後面', '車体の前面',
                'タイヤ（左後）', 'タイヤ（左前）', 'タイヤ（右後）', 'タイヤ（右前）',
                '窓（左）', '窓（右）', '屋根', '後ろの窓', 'フロントガラス'] +
@@ -281,7 +281,7 @@ def pipeline_frames():
 
 
 data['pipeline'] = {'frames': encode('car_pipeline', pipeline_frames()), 'stageFrames': PIPE,
-                    'labels': ['頂点を回す', '画面に写す', '裏を向いた面を捨てる', '順に塗る']}
+                    'labels': ['座標変換', '透視投影', '裏面除去', '奥から順に描画']}
 
 # 7) 1行ずつ塗る：車の後面1枚を、ゲームと同じ実画素で走査線に分ける
 yaw, pitch = R(12), R(18)

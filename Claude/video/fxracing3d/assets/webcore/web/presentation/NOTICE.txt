@@ -1,0 +1,1 @@
+GPL-3.0-or-later. Pinned Mesen and FxRacing ROM presentation host. Corresponding source: mesen-source.zip. Rebuild: python emulator/build.py --presentation --output web/presentation
