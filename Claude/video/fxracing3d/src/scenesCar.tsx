@@ -110,8 +110,8 @@ export const S08b: React.FC = () => {
     <Bg>
       <SceneTitle label="フレームレート優先でポリゴンを抑える" color={C.red} />
       <div style={{opacity: 1 - a1}}>
-        <Txt x={0} y={250} size={150} w={1920} align="center" color={C.amber} o={useIn(k(0))}>30fps</Txt>
-        <Txt x={0} y={470} size={44} w={1920} align="center" o={useIn(k(0) + 30)}>を最優先 → 使えるポリゴンは、とことん少なく</Txt>
+        <Txt x={0} y={250} size={150} w={1920} align="center" color={C.amber} o={useIn(k(0))}>30fps<span style={{fontSize: 64, color: C.text}}> を最優先</span></Txt>
+        <Txt x={0} y={480} size={48} w={1920} align="center" o={useIn(k(0) + 30)}>→ 使えるポリゴンは、とことん少なく</Txt>
         <Txt x={0} y={580} size={28} w={1920} align="center" color={C.sub} o={useIn(k(0) + 60)}>{'1秒に約30回、画面を描き直す'}</Txt>
       </div>
       <div style={{opacity: a1 * (1 - a2)}}>
