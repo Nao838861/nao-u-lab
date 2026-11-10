@@ -4,10 +4,10 @@ import {FONT, FPS, H, W, Subtitle, leadOf, sceneFrames, sceneOrder, sceneInfo} f
 import {S01, S02, S03, S04} from './scenesA';
 import {S03b, S05b, S07b} from './scenesDeep';
 import {S05, S06, S07} from './scenesB';
-import {S08} from './scenesCar';
+import {S08, S08b} from './scenesCar';
 import {S09, S10, S11, S12} from './scenesC';
 
-const SCENES: Record<string, React.FC> = {S01, S02, S03, S03b, S04, S05, S05b, S06, S07, S07b, S08, S09, S10, S11, S12};
+const SCENES: Record<string, React.FC> = {S01, S02, S03, S03b, S04, S05, S05b, S06, S07, S07b, S08, S08b, S09, S10, S11, S12};
 
 const Full: React.FC<{only?: string}> = ({only}) => {
   const order = only ? [only] : sceneOrder;

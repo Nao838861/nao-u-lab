@@ -102,9 +102,7 @@ const PalRow: React.FC<{x: number; y: number; title: string; colors: string[]; o
 
 export const S06: React.FC = () => {
   const f = useCurrentFrame(), k = K('S06');
-  const a0 = useIn(k(0)), a1 = useIn(k(1)), a2 = useIn(k(2)), a3 = ramp(f, k(4), k(4) + 18);
-  const half = k(4) + Math.round((sceneFrames('S06') - k(4)) * 0.5);
-  const b3 = ramp(f, half, half + 18);
+  const a0 = useIn(k(0)), a1 = useIn(k(1)), a2 = useIn(k(2)), a3 = 0; // 「本来は16×16ドット単位」の部分は削除（2026-11-11）
   const zs = 9; // 64×40 を 576×360
   const fs = 576 / 256; // 画面全体（256×192）を 576×432
   const full = ramp(f, k(1) - 9, k(1) + 9); // 「この画面には」で画面全体に切り替える
@@ -161,27 +159,6 @@ export const S06: React.FC = () => {
         </div>
       </div>
       {/* 実際に選んだパレットの地図 */}
-      <div style={{opacity: a3 * (1 - b3)}}>
-        <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={[0, 0, 256, 192]} x={90} y={170} w={768} />
-        <PxCrop src={`img/layer_${F}_blocks.png`} iw={256} ih={240} crop={[0, 0, 256, 192]} x={960} y={170} w={768} />
-        <div style={{position: 'absolute', left: 960, top: 760, display: 'flex', gap: 16, flexWrap: 'wrap', width: 900}}>
-          {[['rgb(70,78,96)', '地面'], ['rgb(150,200,255)', '空'], ['rgb(255,181,71)', '地面＋車や木'], ['rgb(255,91,200)', '空＋車や木']].map(([c, n]) => (
-            <div key={n} style={{display: 'flex', alignItems: 'center', gap: 8, fontSize: 26, fontWeight: 800}}><Swatch a={c} size={34} />{n}</div>
-          ))}
-        </div>
-        <Txt x={90} y={760} size={30} color={C.sub} w={800}>8ドット単位で実際に選んだパレット</Txt>
-      </div>
-      {/* 16×16 と 8×1 */}
-      <div style={{opacity: b3}}>
-        {[['本来のファミコン：16×16ドット単位', 16, 16, C.red], ['今回：8×1ドット単位', 8, 1, C.green]].map(([t, w, h, col], i) => (
-          <React.Fragment key={String(t)}>
-            <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={ZOOM} x={110 + i * 880} y={200} w={64 * 12}>
-              <Grid cw={(w as number) * 12} ch={(h as number) * 12} o={0.9} lw={2} color={i ? 'rgba(0,0,0,.45)' : 'rgba(255,255,255,.9)'} />
-            </PxCrop>
-            <Txt x={110 + i * 880} y={700} size={36} color={col as string} w={768} align="center">{t as string}</Txt>
-          </React.Fragment>
-        ))}
-      </div>
     </Bg>
   );
 };
