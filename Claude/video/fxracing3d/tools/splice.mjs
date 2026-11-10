@@ -1,6 +1,6 @@
-// 書き出し済みの全編（out/fxracing3d_explainer.mp4）のうち、指定した場面の映像だけを作り直して差し替える。
-// 引数: 場面ID（複数可）。例: node tools/splice.mjs S06 S07
-// - 前の書き出しの時刻表（out/fxracing3d_explainer.timing.json。npm run render のあとに保存される）と今の src/timing.json を比べる。
+// 書き出し済みの全編（out/fxracing3d_<overview|deep>.mp4）のうち、指定した場面の映像だけを作り直して差し替える。
+// 引数: 場面ID（複数可）と --video=overview|deep。例: node tools/splice.mjs S06 S07 --video=overview
+// - 前の書き出しの時刻表（out/fxracing3d_<video>.timing.json。npm run render:<video> のあとに保存される）と今の src/timing.json を比べる。
 //   指定した場面は長さが変わってもよい（台本を直したとき）。指定していない場面の長さが変わっていたら止める。
 // - 作り直す範囲は、場面の前後のキーフレームまで広げる。それ以外の映像は再圧縮せずにつなぐ。
 // - 長さが変わったときは、音（ナレーション・BGM・動画の音）を tools/mix_audio.mjs で合成し直す。変わらないときは前の音をそのまま使う。
@@ -13,18 +13,22 @@ import {renderMedia, selectComposition} from '@remotion/renderer';
 import {mixAudio} from './mix_audio.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = (f) => path.join(root, 'out', f);
-const base = out('fxracing3d_explainer.mp4');
+const V = process.argv.find((a) => a.startsWith('--video='))?.slice(8) ?? 'overview';  // overview＝概要編 / deep＝詳細編
+const COMP = {overview: 'FxOverview', deep: 'FxDeep'}[V];
+const base = out(`fxracing3d_${V}.mp4`);
 const json = async (p) => JSON.parse(await readFile(p, 'utf8'));
 const T = await json(path.join(root, 'src/timing.json'));
-const O = await json(out('fxracing3d_explainer.timing.json')).catch(() => {
-  throw new Error('out/fxracing3d_explainer.timing.json がありません。全編を npm run render で書き出してください');
+const O = await json(out(`fxracing3d_${V}.timing.json`)).catch(() => {
+  throw new Error(`out/fxracing3d_${V}.timing.json がありません。全編を npm run render:${V} で書き出してください`);
 });
 // src/common.tsx の EXTRA_LEAD / EXTRA_TAIL と同じ値
 const LEAD = {S01: 0.8, S11: 0.5};
 const TAIL = {S01: 0.5, S08: 1.5, S10: 2, S11: 3, S12: 4};
 const frames = (t, id) => Math.ceil((t.leadSeconds + (LEAD[id] ?? 0) + t.scenes[id].audioSeconds + t.tailSeconds + (TAIL[id] ?? 0)) * 60);
-const only = process.argv.slice(2).filter((a) => /^S\d\d[a-z]?$/.test(a));
+const only = process.argv.slice(2).filter((a) => /^[SD]\d\d[a-z]?$/.test(a));
 if (!only.length) throw new Error('場面IDを指定してください（例: S06）');
+T.order = T.videos[V];
+O.order = O.videos?.[V] ?? O.order;
 if (T.order.join() !== O.order.join()) throw new Error('場面の並びが変わっています。全編を書き出し直してください');
 
 // ffmpeg を実行し、ログ（標準エラー）を返す
@@ -64,7 +68,7 @@ ffmpeg(['-v', 'error', '-y', '-i', base, '-map', '0:v', '-c', 'copy', '-f', 'seg
   ...(cuts.length ? ['-segment_frames', cuts.join(',')] : []), 'splice_seg_%d.mp4']);
 
 const serveUrl = await bundle({entryPoint: path.join(root, 'src/index.ts'), publicDir: path.join(root, 'public')});
-const composition = await selectComposition({serveUrl, id: 'FxExplainer'});
+const composition = await selectComposition({serveUrl, id: COMP});
 if (composition.durationInFrames !== newTotal) throw new Error(`全編のコマ数が計算と合いません（${composition.durationInFrames} ≠ ${newTotal}）`);
 
 const list = [], temps = [];
@@ -89,7 +93,7 @@ if (changed.some((c) => c.delta)) {
   temps.push('splice_audio.m4a');
 }
 
-const tmp = 'fxracing3d_explainer.splice.mp4';
+const tmp = `fxracing3d_${V}.splice.mp4`;
 ffmpeg(['-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', 'splice.txt', '-i', audio,
   '-map', '0:v', '-map', '1:a', '-c', 'copy', '-movflags', '+faststart', tmp]);
 
@@ -100,8 +104,8 @@ const count = Number(ffmpeg(['-i', tmp, '-map', '0:v', '-c', 'copy', '-f', 'null
 console.log(`コマ数 ${count}（今の全編 ${newTotal}）`);
 if (count !== newTotal) throw new Error('コマ数が合いません。元の全編はそのままです');
 
-await rename(base, out('fxracing3d_explainer.prev.mp4'));
+await rename(base, out(`fxracing3d_${V}.prev.mp4`));
 await rename(out(tmp), base);
-await copyFile(path.join(root, 'src/timing.json'), out('fxracing3d_explainer.timing.json'));
+await copyFile(path.join(root, 'src/timing.json'), out(`fxracing3d_${V}.timing.json`));
 await Promise.all([...temps, 'splice.txt', ...bounds.map((_, i) => `splice_seg_${i}.mp4`)].map((f) => rm(out(f), {force: true})));
-console.log('差し替えました。前の版は out/fxracing3d_explainer.prev.mp4');
+console.log(`差し替えました。前の版は out/fxracing3d_${V}.prev.mp4`);

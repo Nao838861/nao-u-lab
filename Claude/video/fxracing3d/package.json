@@ -7,9 +7,9 @@
     "rebuild": "node tools/rebuild_all.mjs",
     "studio": "remotion studio src/index.ts",
     "stills": "node tools/stills.mjs",
-    "render": "remotion render src/index.ts FxExplainer out/fxracing3d_explainer.mp4 --codec=h264 --crf=18 --concurrency=2",
-    "postrender": "node -e \"require('fs').copyFileSync('src/timing.json', 'out/fxracing3d_explainer.timing.json')\"",
-    "splice": "node tools/splice.mjs"
+    "splice": "node tools/splice.mjs",
+    "render:overview": "remotion render src/index.ts FxOverview out/fxracing3d_overview.mp4 --codec=h264 --crf=18 --concurrency=2 && node -e \"require('fs').copyFileSync('src/timing.json', 'out/fxracing3d_overview.timing.json')\"",
+    "render:deep": "remotion render src/index.ts FxDeep out/fxracing3d_deep.mp4 --codec=h264 --crf=18 --concurrency=2 && node -e \"require('fs').copyFileSync('src/timing.json', 'out/fxracing3d_deep.timing.json')\""
   },
   "dependencies": {
     "@remotion/bundler": "4.0.512",

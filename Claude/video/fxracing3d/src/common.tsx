@@ -31,6 +31,8 @@ export const EXTRA_TAIL: Record<string, number> = {S01: 0.5, S08: 1.5, S10: 2, S
 export const leadOf = (id: string) => T.leadSeconds + (EXTRA_LEAD[id] ?? 0);
 export const sceneFrames = (id: string) => Math.ceil((leadOf(id) + T.scenes[id].audioSeconds + T.tailSeconds + (EXTRA_TAIL[id] ?? 0)) * FPS);
 export const sceneOrder = T.order;
+/** 動画ごとの場面の並び（overview＝概要編、deep＝詳細編） */
+export const videoOrder = (v: string): string[] => ((timing as unknown as {videos: Record<string, string[]>}).videos[v]);
 export const sceneInfo = (id: string) => T.scenes[id];
 /** frame (within scene) where line i starts / ends */
 export const cueOf = (id: string, i: number) => Math.round((leadOf(id) + T.scenes[id].lines[i].start) * FPS);

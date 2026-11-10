@@ -14,7 +14,7 @@ const F = 3200;
 
 // ---------------- S03b どこで何をしているか ----------------
 const FPGA_TOTAL = 6272, FPGA_USED = 6248; // 2026-11-01 採用版のFit結果（LE）
-const FpgaGrid: React.FC<{p: number}> = ({p}) => {
+export const FpgaGrid: React.FC<{p: number; regions?: [number, string][]}> = ({p}) => {
   const cols = 112, rows = Math.ceil(FPGA_TOTAL / cols), cs = 10;
   const n = Math.round(FPGA_USED * p);
   const cells = [];
@@ -26,9 +26,9 @@ const FpgaGrid: React.FC<{p: number}> = ({p}) => {
 };
 export const S03b: React.FC = () => {
   const f = useCurrentFrame(), k = K('S03b');
-  const a1 = useIn(k(1)), a2 = useIn(k(2)), a3 = ramp(f, k(3), k(3) + 14), a4 = ramp(f, k(4), k(4) + 14), a5 = ramp(f, k(5), k(5) + 14);
+  const a1 = useIn(k(1)), a2 = useIn(k(2)), a5 = ramp(f, k(3), k(3) + 14); // FPGAとROMの2行は詳細編（D90）へ
   const roles = ['物理演算', 'ライバル車のAI', 'タイム計測', 'サウンド', '入力処理', 'HUD'];
-  const main = 1 - Math.max(a3, a4, a5);
+  const main = 1 - a5;
   // 文の途中の区切り（public/audio/S03b.wav の無音から）：処理の列挙、「ゲームは本体のCPU」、「構造としては」
   const list = k(1) + Math.round(2.87 * 60), split = k(2) + Math.round(7.23 * 60), same = k(2) + Math.round(12.52 * 60);
   return (
@@ -61,26 +61,10 @@ export const S03b: React.FC = () => {
           <div style={{fontSize: 32, fontWeight: 800, color: C.amber, marginTop: 8, opacity: useIn(same)}}>スーパーファミコンのスターフォックスと同じ構造</div>
         </div>
       </div>
-      <div style={{opacity: a3 * (1 - a4)}}>
-        <div style={{position: 'absolute', left: 400, top: 160}}><FpgaGrid p={ramp(f, k(3), k(3) + 200)} /></div>
-        <Txt x={290} y={745} size={48} w={1340} align="center">{`ロジックエレメント（LE） ${fmt(Math.round(FPGA_USED * ramp(f, k(3), k(3) + 200)))} / ${fmt(FPGA_TOTAL)}　（${(100 * FPGA_USED / FPGA_TOTAL).toFixed(1)}%）`}</Txt>
-      </div>
-      <div style={{opacity: a4 * (1 - a5)}}>
-        {[['前回の2D版', 2097152, '2MB（128方向の絵を全部入れる）', C.red], ['今回の3D版', 1179648, '約1.1MB（毎回計算して描く）', C.green]].map(([t, b, s, c], i) => (
-          <div key={String(t)} style={{position: 'absolute', left: 160, top: 260 + i * 220}}>
-            <div style={{fontSize: 36, fontWeight: 900, marginBottom: 10}}>{t as string}</div>
-            <div style={{display: 'flex', alignItems: 'center', gap: 24}}>
-              <div style={{width: (1100 * (b as number) / 2097152) * ramp(f, k(4) + i * 20, k(4) + i * 20 + 40), height: 70, background: c as string, borderRadius: 8}} />
-              <div style={{fontSize: 38, fontWeight: 900, color: c as string}}>{s as string}</div>
-            </div>
-          </div>
-        ))}
-        <Txt x={160} y={720} size={28} color={C.sub}>ROM容量（3D版：PRG 1MB＋CHR 128KB）</Txt>
-      </div>
       <div style={{position: 'absolute', left: 0, right: 0, top: 230, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 26, opacity: a5}}>
         <div style={{fontSize: 52, fontWeight: 900, textShadow: '0 4px 20px #000'}}>ファミコンの「できないこと」</div>
         {['1　絵を自由に描けない', '2　地面を回せない', '3　色が足りない'].map((s, i) => (
-          <div key={s} style={{fontSize: 56, fontWeight: 900, color: [C.cyan, C.green, C.amber][i], opacity: ramp(f, k(5) + 20 + i * 24, k(5) + 40 + i * 24),
+          <div key={s} style={{fontSize: 56, fontWeight: 900, color: [C.cyan, C.green, C.amber][i], opacity: ramp(f, k(3) + 20 + i * 24, k(3) + 40 + i * 24),
             background: 'rgba(5,8,18,.85)', padding: '10px 50px', borderRadius: 16, border: `3px solid ${[C.cyan, C.green, C.amber][i]}`}}>{s}</div>
         ))}
       </div>

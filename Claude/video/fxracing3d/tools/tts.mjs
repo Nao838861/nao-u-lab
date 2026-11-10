@@ -88,6 +88,7 @@ for (const scene of script.scenes) {
   timing.scenes[scene.id] = {title: scene.title, audioSeconds: Number(t.toFixed(3)), lines};
 }
 timing.order = script.scenes.map((s) => s.id);
+timing.videos = script.videos;  // 概要編・詳細編それぞれの場面の並び
 timing.leadSeconds = 0.5;
 timing.tailSeconds = script.sceneTailSeconds;
 await writeFile(timingPath, JSON.stringify(timing, null, 1));
