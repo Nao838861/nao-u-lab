@@ -4965,6 +4965,8 @@ var _web_peek = Module['_web_peek'] = makeInvalidEarlyAccess('_web_peek');
 var _web_explainer_hide = Module['_web_explainer_hide'] = makeInvalidEarlyAccess('_web_explainer_hide');
 var _web_explainer_info = Module['_web_explainer_info'] = makeInvalidEarlyAccess('_web_explainer_info');
 var _web_explainer_rows = Module['_web_explainer_rows'] = makeInvalidEarlyAccess('_web_explainer_rows');
+var _web_explainer_draws = Module['_web_explainer_draws'] = makeInvalidEarlyAccess('_web_explainer_draws');
+var _web_explainer_polys = Module['_web_explainer_polys'] = makeInvalidEarlyAccess('_web_explainer_polys');
 var _web_poke = Module['_web_poke'] = makeInvalidEarlyAccess('_web_poke');
 var _web_save_ptr = Module['_web_save_ptr'] = makeInvalidEarlyAccess('_web_save_ptr');
 var _web_save_size = Module['_web_save_size'] = makeInvalidEarlyAccess('_web_save_size');
@@ -5007,6 +5009,8 @@ function assignWasmExports(wasmExports) {
   assert(typeof wasmExports['web_explainer_hide'] != 'undefined', 'missing Wasm export: web_explainer_hide');
   assert(typeof wasmExports['web_explainer_info'] != 'undefined', 'missing Wasm export: web_explainer_info');
   assert(typeof wasmExports['web_explainer_rows'] != 'undefined', 'missing Wasm export: web_explainer_rows');
+  assert(typeof wasmExports['web_explainer_draws'] != 'undefined', 'missing Wasm export: web_explainer_draws');
+  assert(typeof wasmExports['web_explainer_polys'] != 'undefined', 'missing Wasm export: web_explainer_polys');
   assert(typeof wasmExports['web_poke'] != 'undefined', 'missing Wasm export: web_poke');
   assert(typeof wasmExports['web_save_ptr'] != 'undefined', 'missing Wasm export: web_save_ptr');
   assert(typeof wasmExports['web_save_size'] != 'undefined', 'missing Wasm export: web_save_size');
@@ -5045,6 +5049,8 @@ function assignWasmExports(wasmExports) {
   _web_explainer_hide = Module['_web_explainer_hide'] = createExportWrapper('web_explainer_hide', wasmExports['web_explainer_hide'], 1);
   _web_explainer_info = Module['_web_explainer_info'] = createExportWrapper('web_explainer_info', wasmExports['web_explainer_info'], 0);
   _web_explainer_rows = Module['_web_explainer_rows'] = createExportWrapper('web_explainer_rows', wasmExports['web_explainer_rows'], 0);
+  _web_explainer_draws = Module['_web_explainer_draws'] = createExportWrapper('web_explainer_draws', wasmExports['web_explainer_draws'], 0);
+  _web_explainer_polys = Module['_web_explainer_polys'] = createExportWrapper('web_explainer_polys', wasmExports['web_explainer_polys'], 0);
   _web_poke = Module['_web_poke'] = createExportWrapper('web_poke', wasmExports['web_poke'], 2);
   _web_save_ptr = Module['_web_save_ptr'] = createExportWrapper('web_save_ptr', wasmExports['web_save_ptr'], 0);
   _web_save_size = Module['_web_save_size'] = createExportWrapper('web_save_size', wasmExports['web_save_size'], 0);
