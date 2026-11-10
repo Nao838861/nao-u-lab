@@ -303,3 +303,90 @@ data['raster'] = {'w': box[2] - box[0], 'h': box[3] - box[1], 'rows': rows, 'ox'
                   'pixels': sum(r[2] - r[1] + 1 for r in rows)}
 (root / 'src/data/car_clips.json').write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding='utf-8')
 print('raster', data['raster']['w'], data['raster']['h'], data['raster']['pixels'])
+
+
+# 8) 車・家・木をY軸回転：ライティングがないので、隣り合う面をタイリングで塗り分けている
+def model(va, vn, fa, fn):
+    vs = verts(va, vn)
+    fl, ml = [], []
+    for i in range(fn):
+        d = words(fa + i * 12, 6)
+        ml.append(d[0])
+        fl.append([(p - 0x8600) // 6 for p in d[2:]])
+    return dict(v=vs, f=fl, m=ml)
+
+
+TREE = model(0x8300, 11, 0x8c00, 7)    # 幹3枚＋葉4枚（ROMのモデル記述 $8400）
+HOUSE = model(0x8348, 24, 0x8c60, 10)  # 壁・屋根・妻・ドア・窓（$8410）
+# 家と木は頂点の並びが車と逆向き（ゲームでは面の平面式で裏面を判定している）ので、表裏の判定を反転する
+OBJS = [('自車', PLAYER, 1, False), ('家', HOUSE, 3, True), ('木', TREE, 2, True)]  # 単色にするときの色
+PW, PH, PS = 96, 96, 4                 # 1つのモデルの実画素の枠と拡大率
+
+
+def render_obj(car, yaw, pitch, flat=None, inward=False):
+    vs = car['v']
+    ys = [p[1] for p in vs]
+    cyw = (max(ys) + min(ys)) / 2
+    R = max(math.sqrt(x * x + (y - cyw) ** 2 + z * z) for x, y, z in vs)
+    dist, focal = R * 4.2, 60 * 4.2 / 2 * 1.15
+    cy_, sy_, cp, sp = math.cos(yaw), math.sin(yaw), math.cos(pitch), math.sin(pitch)
+    P = []
+    for x, y, z in vs:
+        y -= cyw
+        x1 = x * cy_ - z * sy_
+        z1 = x * sy_ + z * cy_
+        y2 = y * cp + z1 * sp
+        z2 = z1 * cp - y * sp + dist
+        f = focal / z2
+        P.append((PW / 2 + x1 * f, PH / 2 - y2 * f))
+    img = Image.new('RGB', (PW, PH), BG)
+    chk = Image.new('1', (PW, PH))
+    chk.putdata([(x + y) & 1 for y in range(PH) for x in range(PW)])
+    for f, m in zip(car['f'], car['m']):
+        pts = [P[i] for i in f]
+        if visible(pts) == inward:
+            continue
+        mm = flat if flat is not None else m
+        lo, hi = mm & 15, (mm >> 4) & 15
+        mask = Image.new('1', (PW, PH), 0)
+        ImageDraw.Draw(mask).polygon(pts, fill=1)
+        layer = Image.new('RGB', (PW, PH), COL.get(lo, (0, 0, 0)))
+        if hi:
+            layer = Image.composite(Image.new('RGB', (PW, PH), COL.get(hi, (0, 0, 0))), layer, chk)
+        img.paste(layer, (0, 0), mask)
+    return img
+
+
+def lighting_frames(flat):
+    total = 720
+    for t in range(total):
+        yaw = R(360 * t / total)
+        row = Image.new('RGB', (PW * 3, PH), BG)
+        for i, (_, car, col, inward) in enumerate(OBJS):
+            row.paste(render_obj(car, yaw, R(10), flat=col if flat else None, inward=inward), (i * PW, 0))
+        yield row.resize((round(PW * 3 * PS * 8 / 7) // 2 * 2, PH * PS), Image.NEAREST)
+
+
+def encode_any(name, frames):
+    frames = iter(frames)
+    first = next(frames)
+    w, h = first.size
+    out = root / 'public/video' / f'{name}.mp4'
+    p = subprocess.Popen(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{w}x{h}', '-r', '60', '-i', '-',
+                          '-c:v', 'libx264', '-crf', '12', '-pix_fmt', 'yuv420p', str(out)], stdin=subprocess.PIPE)
+    n = 0
+    for im in [first, *frames]:
+        p.stdin.write(im.tobytes())
+        n += 1
+    p.stdin.close()
+    p.wait()
+    print(name, n, 'frames', w, h)
+    return n, w, h
+
+
+n, w, h = encode_any('obj_flat', lighting_frames(True))
+encode_any('obj_tiled', lighting_frames(False))
+data['lighting'] = {'frames': n, 'size': [w, h], 'labels': [o[0] for o in OBJS],
+                    'faces': {'tree': len(TREE['f']), 'house': len(HOUSE['f'])},
+                    'note': '同じモデル・同じ角度。上は全ポリゴンを単色、下はROMの材質（2色の市松を含む）'}
+(root / 'src/data/car_clips.json').write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding='utf-8')

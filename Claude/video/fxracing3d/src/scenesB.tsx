@@ -1,8 +1,9 @@
 import React from 'react';
-import {Img, staticFile, useCurrentFrame} from 'remotion';
+import {Img, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {Arrow, Bg, C, SceneTitle, Tag, cueOf, sceneFrames, useIn} from './common';
 import {Card, Grid, Label, NES, Nes, Px, PxCrop, Swatch, Txt, ramp} from './parts';
 import rows3200 from './data/mode7_3200.json';
+import clips from './data/car_clips.json';
 
 const K = (id: string) => (i: number) => cueOf(id, i);
 type Seg = {y: number; valid: number; sky: number; a?: number[]; b?: number[]};
@@ -190,10 +191,12 @@ const COLS: [string, string][] = [[NES.red, '赤'], [NES.green, '緑'], [NES.gra
 const PAIRS = [[0, 2], [1, 2], [2, 3], [0, 1], [0, 3], [1, 3]];
 export const S07: React.FC = () => {
   const f = useCurrentFrame(), k = K('S07');
-  const a0 = useIn(k(0)), a1 = useIn(k(1));
+  const a0 = useIn(k(0)), a1 = useIn(k(1)), a2 = ramp(f, k(2), k(2) + 18), a3 = ramp(f, k(3), k(3) + 18);
+  const lw = clips.lighting.size[0], lh = clips.lighting.size[1];
   return (
     <Bg>
       <SceneTitle label="タイリングで色を増やす" color={C.amber} />
+      <div style={{opacity: 1 - a2}}>
       <PxCrop src={`img/layer_${F}_full.png`} iw={256} ih={240} crop={[96, 122, 64, 44]} x={90} y={170} w={64 * 9} o={a0} />
       <Txt x={90} y={590} size={30} color={C.sub} o={a0} w={576}>1枚のポリゴンを、2色の市松模様で塗る</Txt>
       <div style={{position: 'absolute', left: 760, top: 170, opacity: a1}}>
@@ -212,6 +215,19 @@ export const S07: React.FC = () => {
         </div>
         <div style={{fontSize: 46, fontWeight: 900, color: C.amber, marginTop: 24, opacity: ramp(f, k(1) + 80, k(1) + 100)}}>4 ＋ 6 ＝ 10通りの色に見える</div>
       </div>
+      </div>
+      {/* ライティングがない → 隣り合う面をタイリングで塗り分ける（ROMのモデルをY軸回転） */}
+      <Sequence from={k(2)} layout="none">
+        <div style={{position: 'absolute', left: 300, top: 120, width: lw, height: lh, opacity: a2}}>
+          <OffthreadVideo src={staticFile('video/obj_flat.mp4')} muted style={{width: lw, height: lh}} />
+        </div>
+        <div style={{position: 'absolute', left: 300, top: 120 + lh + 10, width: lw, height: lh, opacity: a3}}>
+          <OffthreadVideo src={staticFile('video/obj_tiled.mp4')} muted style={{width: lw, height: lh}} />
+        </div>
+      </Sequence>
+      <Txt x={60} y={290} size={34} color={C.red} w={240} o={a2}>{'全部\n同じ色'}</Txt>
+      <Txt x={60} y={684} size={34} color={C.green} w={240} o={a3}>{'実際の\n塗り分け'}</Txt>
+      <Txt x={1250} y={130} size={24} color={C.sub} w={600} o={a2} align="right">ライティングなし（ROMの車・家・木のモデル）</Txt>
     </Bg>
   );
 };
