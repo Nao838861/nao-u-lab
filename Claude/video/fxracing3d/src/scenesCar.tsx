@@ -1,7 +1,7 @@
 import React from 'react';
-import {OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
+import {Loop, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {Bg, C, SceneTitle, Tag, cueOf, useIn} from './common';
-import {Card, Label, Px, PxCrop, Txt, ramp} from './parts';
+import {Card, Label, MONO, Nes, Px, PxCrop, Txt, ramp} from './parts';
 import clips from './data/car_clips.json';
 import polys from './data/polys.json';
 
@@ -101,9 +101,10 @@ export const S08b: React.FC = () => {
   const f = useCurrentFrame(), k = K('S08b');
   const a1 = ramp(f, k(1), k(1) + 16), a2 = ramp(f, k(2), k(2) + 16), a3 = ramp(f, k(3), k(3) + 16);
   const S = polys.series as number[][];
-  const W = 1100, H = 360, x0 = S[0][0], x1 = S[S.length - 1][0], maxY = 80;
-  const shown = Math.floor(S.length * ramp(f, k(2) + 120, k(2) + 420));
-  const path = S.slice(0, shown).map(([x, y], i) => `${i ? 'L' : 'M'}${((x - x0) / (x1 - x0)) * W},${H - (y / maxY) * H}`).join(' ');
+  const FROM = 560, LOOP = 300; // 録画（main.mp4）のコマ番号＝コアのコマ番号
+  const cur = FROM + ((f % LOOP) + LOOP) % LOOP;
+  let now = 0;
+  for (const [x, y] of S) { if (x <= cur) now = y; else break; }
   const total = TOTAL.reduce((a, t) => a + t[1], 0);
   return (
     <Bg>
@@ -111,7 +112,7 @@ export const S08b: React.FC = () => {
       <div style={{opacity: 1 - a1}}>
         <Txt x={0} y={250} size={150} w={1920} align="center" color={C.amber} o={useIn(k(0))}>30fps</Txt>
         <Txt x={0} y={470} size={44} w={1920} align="center" o={useIn(k(0) + 30)}>を最優先 → 使えるポリゴンは、とことん少なく</Txt>
-        <Txt x={0} y={580} size={28} w={1920} align="center" color={C.sub} o={useIn(k(0) + 60)}>{`実測：1秒あたり${polys.all.drawsPerSecond}回の描画（エミュレーター、レース全体）`}</Txt>
+        <Txt x={0} y={580} size={28} w={1920} align="center" color={C.sub} o={useIn(k(0) + 60)}>{'1秒に約30回、画面を描き直す'}</Txt>
       </div>
       <div style={{opacity: a1 * (1 - a2)}}>
         <PxCrop src="img/layer_3200_full.png" iw={256} ih={240} crop={[0, 0, 256, 192]} x={90} y={160} w={820} />
@@ -133,18 +134,17 @@ export const S08b: React.FC = () => {
             </div>
           ))}
         </Card>
-        <div style={{position: 'absolute', left: 720, top: 150, width: W + 40, height: H + 140, background: 'rgba(5,8,18,.85)', borderRadius: 16, border: `2px solid ${C.line}`, padding: 20, boxSizing: 'border-box'}}>
-          <div style={{fontSize: 28, fontWeight: 900}}>実際に1フレームで塗ったポリゴン（レース全体）</div>
-          <svg width={W} height={H} style={{marginTop: 14, overflow: 'visible'}}>
-            {[0, 20, 40, 60, 80].map((y) => <g key={y}><line x1={0} x2={W} y1={H - (y / maxY) * H} y2={H - (y / maxY) * H} stroke="#2c3b63" /><text x={-8} y={H - (y / maxY) * H + 8} fill={C.sub} fontSize={22} textAnchor="end">{y}</text></g>)}
-            <path d={path} fill="none" stroke={C.cyan} strokeWidth={2} />
-            <line x1={0} x2={W} y1={H - (polys.all.median / maxY) * H} y2={H - (polys.all.median / maxY) * H} stroke={C.amber} strokeDasharray="10 8" strokeWidth={3} opacity={ramp(f, k(2) + 420, k(2) + 440)} />
-          </svg>
-          <div style={{display: 'flex', gap: 30, fontSize: 28, fontWeight: 900, marginTop: 14, opacity: ramp(f, k(2) + 420, k(2) + 440)}}>
-            <span style={{color: C.amber}}>{`中央値 ${polys.all.median}枚`}</span><span>{`95%が ${polys.all.p95}枚以下`}</span><span style={{color: C.red}}>{`最大 ${polys.all.max}枚`}</span>
-          </div>
-        </div>
-        <Txt x={720} y={680} size={36} w={1140} align="center" color={C.amber} o={a3}>見た目より、フレームレートを優先</Txt>
+        {/* 実際の画面と、そのフレームで塗ったポリゴン数（デフォルトの視点。最大はスタート直後の4台が固まる場面） */}
+        <Loop durationInFrames={LOOP} layout="none">
+          <Nes src="main" from={FROM} x={720} y={150} w={700} crop={[0, 0, 256, 192]} />
+        </Loop>
+        <Card x={1450} y={150} w={400} color={now === polys.all.max ? C.red : C.cyan}>
+          <div style={{fontSize: 26, color: C.sub, fontWeight: 700}}>このフレームで塗った<br />ポリゴン</div>
+          <div style={{fontSize: 110, fontWeight: 900, fontFamily: MONO, color: now === polys.all.max ? C.red : C.cyan, lineHeight: 1.1}}>{now}</div>
+          <div style={{fontSize: 34, fontWeight: 900, color: C.red, marginTop: 10}}>{`最大 ${polys.all.max}枚`}</div>
+          <div style={{fontSize: 22, color: C.sub, fontWeight: 700, marginTop: 8}}>デフォルトの視点・レース全体で計測</div>
+        </Card>
+        <Txt x={720} y={720} size={36} w={1140} align="center" color={C.amber} o={a3}>見た目より、フレームレートを優先</Txt>
       </div>
     </Bg>
   );
