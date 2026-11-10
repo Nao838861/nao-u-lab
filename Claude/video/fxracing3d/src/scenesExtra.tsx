@@ -73,6 +73,7 @@ export const D90: React.FC = () => {
   const f = useCurrentFrame(), k = K('D90');
   const a4 = ramp(f, k(4), k(4) + 18), a5 = ramp(f, k(5), k(5) + 18);
   const OFF = '#1b2643';
+  const chipIn = useIn(k(0)), introText = useIn(k(0) + 60); // フックは条件の外で呼ぶ
   // 0) 設計図を読み込む：左から光が走って、回路になる
   const load = ramp(f, k(0) + 120, k(0) + 300);
   // 1) MMC3 → MMC5 と回路を書き換える
@@ -93,14 +94,14 @@ export const D90: React.FC = () => {
     <Bg>
       <SceneTitle label="FPGAの中身" color={C.green} />
       <div style={{opacity: 1 - a4}}>
-        <div style={{position: 'absolute', left: 70, top: 150, padding: 14, borderRadius: 18, background: '#0b1226', border: `4px solid ${C.line}`, opacity: useIn(k(0))}}>
+        <div style={{position: 'absolute', left: 70, top: 150, padding: 14, borderRadius: 18, background: '#0b1226', border: `4px solid ${C.line}`, opacity: chipIn}}>
           <Chip fill={cell} />
           <div style={{position: 'absolute', left: 14, top: -46, fontSize: 30, fontWeight: 900, fontFamily: FONT, color: C.text}}>FPGA（EverDrive N8 Pro）</div>
         </div>
         {/* 説明の欄 */}
         <div style={{position: 'absolute', left: 1240, top: 150, width: 620, fontFamily: FONT}}>
           {stage === 0 && (
-            <div style={{opacity: useIn(k(0) + 60)}}>
+            <div style={{opacity: introText}}>
               <div style={{fontSize: 40, fontWeight: 900}}>中の回路を、<br />後から作り替えられるチップ</div>
               <div style={{marginTop: 24, fontSize: 30, fontWeight: 800, color: C.green}}>回路の設計図を読み込む → その回路として動く</div>
             </div>

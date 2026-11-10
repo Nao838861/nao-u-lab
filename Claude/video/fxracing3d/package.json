@@ -8,8 +8,8 @@
     "studio": "remotion studio src/index.ts",
     "stills": "node tools/stills.mjs",
     "splice": "node tools/splice.mjs",
-    "render:overview": "remotion render src/index.ts FxOverview out/fxracing3d_overview.mp4 --codec=h264 --crf=18 --concurrency=2 && node -e \"require('fs').copyFileSync('src/timing.json', 'out/fxracing3d_overview.timing.json')\"",
-    "render:deep": "remotion render src/index.ts FxDeep out/fxracing3d_deep.mp4 --codec=h264 --crf=18 --concurrency=2 && node -e \"require('fs').copyFileSync('src/timing.json', 'out/fxracing3d_deep.timing.json')\""
+    "render:overview": "node tools/render.mjs overview",
+    "render:deep": "node tools/render.mjs deep"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.512",
