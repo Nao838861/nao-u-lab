@@ -319,7 +319,8 @@ def model(va, vn, fa, fn):
 TREE = model(0x8300, 11, 0x8c00, 7)    # 幹3枚＋葉4枚（ROMのモデル記述 $8400）
 HOUSE = model(0x8348, 24, 0x8c60, 10)  # 壁・屋根・妻・ドア・窓（$8410）
 # 家と木は頂点の並びが車と逆向き（ゲームでは面の平面式で裏面を判定している）ので、表裏の判定を反転する
-OBJS = [('自車', PLAYER, 1, False), ('家', HOUSE, 3, True), ('木', TREE, 2, True)]  # 単色にするときの色
+# 最後の値は回転の始めの角度。木は、赤×緑の面（材質0x12）が見え始める181°の少し手前から回す
+OBJS = [('自車', PLAYER, 1, False, 0), ('家', HOUSE, 3, True, 0), ('木', TREE, 2, True, 178)]  # 単色にするときの色
 PW, PH, PS = 96, 96, 4                 # 1つのモデルの実画素の枠と拡大率
 
 
@@ -360,9 +361,9 @@ def render_obj(car, yaw, pitch, flat=None, inward=False):
 def lighting_frames(flat):
     total = 720
     for t in range(total):
-        yaw = R(360 * t / total)
         row = Image.new('RGB', (PW * 3, PH), BG)
-        for i, (_, car, col, inward) in enumerate(OBJS):
+        for i, (_, car, col, inward, start) in enumerate(OBJS):
+            yaw = R(start + 360 * t / total)  # 1周でちょうど元に戻る（くり返し再生でつながる）
             row.paste(render_obj(car, yaw, R(10), flat=col if flat else None, inward=inward), (i * PW, 0))
         yield row.resize((round(PW * 3 * PS * 8 / 7) // 2 * 2, PH * PS), Image.NEAREST)
 

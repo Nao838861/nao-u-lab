@@ -39,17 +39,12 @@ const Wire: React.FC<{pts: number[][]; color: string; w?: number; dash?: boolean
   </svg>
 );
 
-const CHIPS = [
-  ['CHR ROM', '前作2D版：128方向の絵を切り替える', C.violet],
-  ['MMC5', '拡張RAMでパレットの単位を細かく', C.amber],
-  ['SuperFX ＋ Mode7', '今回：ラインバッファに作った絵を読ませる', C.green],
-] as const;
 
 export const S05c: React.FC = () => {
   const f = useCurrentFrame(), k = K('S05c');
   const sfcFocus = ramp(f, k(1), k(1) + 16) * (1 - ramp(f, k(3), k(3) + 16));
   const fcFocus = ramp(f, k(3), k(3) + 16);
-  const end = ramp(f, k(6), k(6) + 20);
+  const end = ramp(f, k(5), k(5) + 20);
   const panelO = (focus: number, other: number) => (1 - end) * (1 - 0.6 * other * (1 - focus));
   // スーパーファミコン：VBLANKの間だけDMAが流れる（60フレーム周期の模式）
   const cyc = f % 60, vblank = cyc < 12;
@@ -57,8 +52,7 @@ export const S05c: React.FC = () => {
   const sfcPath = [[200, 470], [200, 330], [200, 215], [380, 215], [560, 255]]; // カートリッジ→CPU→（DMA）→VRAM
   // ファミコン：PPU⇔カートリッジを絶えず往復
   const fcPath = [[640, 470], [640, 330], [640, 195]];
-  const chip = Math.min(2, Math.floor(Math.max(0, f - k(5)) / Math.max(1, (k(6) - k(5)) / 3)));
-  const chipO = f >= k(5) ? 1 : 0;
+  // 「前作の2D版は…MMC5は…」の行は削除（2026-11-11）。カートリッジの中身の切り替え演出もなし
   return (
     <Bg>
       <SceneTitle label="ファミコンと16bit機の違い" color={C.violet} />
@@ -101,7 +95,7 @@ export const S05c: React.FC = () => {
         <div style={{position: 'absolute', left: 20, top: 60, width: 800, height: 290, borderRadius: 18, border: `3px dashed ${C.line}`}} />
         <Txt x={36} y={66} size={24} color={C.sub}>本体</Txt>
         <Box x={60} y={170} w={200} h={90} color={C.violet} title="CPU" sub="6502" />
-        <Box x={560} y={110} w={200} h={90} color={C.amber} title="PPU" sub={f >= k(5) ? 'PPUは同じ' : '→ 画面'} glow={chipO * 0.6} />
+        <Box x={560} y={110} w={200} h={90} color={C.amber} title="PPU" sub="→ 画面" />
         <Wire pts={[[200, 470], [200, 260]]} color={C.violet} />
         <Wire pts={[[640, 470], [640, 200]]} color={C.green} w={10 + 4 * fcFocus} />
         <Txt x={660} y={370} size={24} color={C.green} w={180} o={ramp(f, k(3), k(3) + 16)}>{'PPUの配線が\nカートリッジへ'}</Txt>
@@ -110,15 +104,14 @@ export const S05c: React.FC = () => {
           const [x, y] = along(up ? [...fcPath].reverse() : fcPath, t);
           return <Dot key={i} x={x} y={y} color={up ? C.green : C.amber} s={14} />;
         })}
-        <Box x={120} y={470} w={560} h={130} color={f >= k(5) ? CHIPS[chip][2] : C.cyan} title={f >= k(5) ? CHIPS[chip][0] : 'カートリッジ'}
-          sub={f >= k(5) ? CHIPS[chip][1] : 'パターンを、読みに来た瞬間に返す'} glow={chipO * 0.8} />
+        <Box x={120} y={470} w={560} h={130} color={C.cyan} title="カートリッジ" sub="パターンを、読みに来た瞬間に返す" />
         <div style={{position: 'absolute', left: 60, top: 615, opacity: ramp(f, k(4), k(4) + 16)}}>
           <div style={{fontSize: 30, fontWeight: 900, color: C.green, fontFamily: FONT}}>VRAMへの転送そのものがない</div>
         </div>
       </div>
       {/* 締め：実際の映像を並べる */}
       <div style={{opacity: end}}>
-        <Sequence from={k(6)} layout="none">
+        <Sequence from={k(5)} layout="none">
           <div style={{position: 'absolute', left: 120, top: 170, width: 760, height: 534, borderRadius: 8, overflow: 'hidden', boxShadow: '0 12px 44px rgba(0,0,0,.6)'}}>
             <OffthreadVideo src={staticFile('video/sfc.mp4')} muted style={{width: 760, height: 534, imageRendering: 'pixelated'}} />
           </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Img, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
+import {Img, Loop, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {Arrow, Bg, C, SceneTitle, Tag, cueOf, sceneFrames, useIn} from './common';
 import {Card, Grid, Label, NES, Nes, Px, PxCrop, Swatch, Txt, ramp} from './parts';
 import rows3200 from './data/mode7_3200.json';
@@ -196,10 +196,10 @@ export const S07: React.FC = () => {
       {/* ライティングがない → 隣り合う面をタイリングで塗り分ける（ROMのモデルをY軸回転） */}
       <Sequence from={k(2)} layout="none">
         <div style={{position: 'absolute', left: 300, top: 120, width: lw, height: lh, opacity: a2}}>
-          <OffthreadVideo src={staticFile('video/obj_flat.mp4')} muted style={{width: lw, height: lh}} />
+          <Loop durationInFrames={clips.lighting.frames} layout="none"><OffthreadVideo src={staticFile('video/obj_flat.mp4')} muted style={{width: lw, height: lh}} /></Loop>
         </div>
         <div style={{position: 'absolute', left: 300, top: 120 + lh + 10, width: lw, height: lh, opacity: a3}}>
-          <OffthreadVideo src={staticFile('video/obj_tiled.mp4')} muted style={{width: lw, height: lh}} />
+          <Loop durationInFrames={clips.lighting.frames} layout="none"><OffthreadVideo src={staticFile('video/obj_tiled.mp4')} muted style={{width: lw, height: lh}} /></Loop>
         </div>
       </Sequence>
       <Txt x={60} y={290} size={34} color={C.red} w={240} o={a2}>{'全部\n同じ色'}</Txt>
