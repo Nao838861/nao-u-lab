@@ -145,7 +145,7 @@ const Cells: React.FC<{y: number; label: string; color: string; o: number; child
 export const S05b: React.FC = () => {
   const f = useCurrentFrame(), k = K('S05b');
   const a1 = ramp(f, k(1), k(1) + 16), a2 = ramp(f, k(2), k(2) + 16), a3 = ramp(f, k(3), k(3) + 16), a4 = ramp(f, k(4), k(4) + 16), a5 = ramp(f, k(5), k(5) + 16);
-  const a6 = ramp(f, k(6), k(6) + 16), a7 = ramp(f, k(7), k(7) + 16), a8 = ramp(f, k(8), k(8) + 16);
+  const a6 = ramp(f, k(6), k(6) + 16);
   const side = Math.floor(Math.max(0, f - k(1)) / 20) % 12;
   const first = VALID[0].y;
   const tableRow = Math.min(191, first + Math.floor(Math.max(0, f - k(2)) / 5) % (192 - first));
@@ -247,32 +247,7 @@ export const S05b: React.FC = () => {
           <div style={{fontSize: 26, color: C.sub, fontWeight: 700, marginTop: 8, opacity: ramp(f, k(5) + 900, k(5) + 916)}}>PPUがパターンを読みに来たら色を、属性を読みに来たらパレットを返す</div>
         </Card>
       </div>
-      {/* VRAMへの転送：前回のスーパーファミコン版と、今回のファミコン版 */}
-      <div style={{opacity: a6 * (1 - a8)}}>
-        <Card x={90} y={160} w={840} h={660} color={C.red}>
-          <div style={{fontSize: 28, color: C.sub, fontWeight: 700}}>前回：スーパーファミコン版</div>
-          <div style={{display: 'flex', flexDirection: 'column', gap: 14, marginTop: 20, fontSize: 34, fontWeight: 900}}>
-            <Tag color={C.cyan} style={{fontSize: 32}}>SuperFXが描いた絵（カートリッジのRAM）</Tag>
-            <div style={{color: C.red}}>↓ DMAでVRAMへ転送：1フレーム約6KB</div>
-            <Tag color={C.violet} style={{fontSize: 32}}>VRAM（本体）</Tag>
-            <div style={{color: C.sub}}>↓</div>
-            <Tag color={C.amber} style={{fontSize: 32}}>PPU → 画面</Tag>
-          </div>
-          <div style={{fontSize: 30, color: C.red, fontWeight: 900, marginTop: 24}}>転送がボトルネック → フレームレートを上げにくい</div>
-        </Card>
-        <Card x={990} y={160} w={840} h={660} color={C.green} o={a7}>
-          <div style={{fontSize: 28, color: C.sub, fontWeight: 700}}>今回：ファミコン版</div>
-          <div style={{display: 'flex', flexDirection: 'column', gap: 14, marginTop: 20, fontSize: 34, fontWeight: 900}}>
-            <Tag color={C.green} style={{fontSize: 32}}>Mode7の地面 ＋ SuperFXの絵</Tag>
-            <div style={{color: C.sub}}>↓ スキャンライン中に合成</div>
-            <Tag color={C.green} style={{fontSize: 32}}>ラインバッファ（カートリッジ）</Tag>
-            <div style={{color: C.green}}>↓ PPUが直接読む</div>
-            <Tag color={C.amber} style={{fontSize: 32}}>PPU → 画面</Tag>
-          </div>
-          <div style={{fontSize: 30, color: C.green, fontWeight: 900, marginTop: 24}}>VRAMへの転送そのものがない</div>
-        </Card>
-      </div>
-      <div style={{opacity: a8}}>
+      <div style={{opacity: a6}}>
         <Card x={360} y={300} w={1200} color={C.amber}>
           <div style={{fontSize: 30, color: C.sub, fontWeight: 700}}>スーパーファミコン</div>
           <div style={{fontSize: 46, fontWeight: 900}}>F-ZEROも、HDMAでラインごとにパラメータを書き換えていた</div>

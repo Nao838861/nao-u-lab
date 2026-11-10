@@ -23,6 +23,7 @@ copy(A('replays'), P('rec', 'replays'));
 copy(A('shapes'), P('rec', 'shapes'));
 copy(A('hw', 'FxRacing3.mp4'), P('public', 'video', 'hw.mp4'));
 copy(A('prev', 'prev2d.mp4'), P('public', 'video', 'prev2d.mp4'));
+copy(A('prev', 'sfc.mp4'), P('public', 'video', 'sfc.mp4'));  // 前回のスーパーファミコン版（sfc_fx2_explainer の main.mp4 の14〜28秒）
 copy(A('prev', 'pictures'), P('public', 'pictures'));
 copy(A('img'), P('public', 'img'));
 copy(A('audio', 'bgm_game.mp3'), P('public', 'audio', 'bgm_game.mp3'));
