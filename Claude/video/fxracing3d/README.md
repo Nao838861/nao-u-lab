@@ -100,8 +100,9 @@ GitHubにあるもの：ソース（`src/`）、台本（`narration/script.json`
 cd Claude/video/fxracing3d
 npm install
 node tools/rebuild_all.mjs     # 録画・層画像・地図・車のクリップ・2D/3D比較を作り直す（約4分）
-npm run stills                 # 各ナレーション行の静止画（out/stills）
-npm run render                 # 書き出し（out/fxracing3d_explainer.mp4、同時2本で約50分）
+npm run stills -- --video=overview   # 各ナレーション行の静止画（out/stills）。詳細編は --video=deep
+npm run render:overview        # 概要編（out/fxracing3d_overview.mp4、約6分半、同時2本で約35分）
+npm run render:deep            # 詳細編（out/fxracing3d_deep.mp4、約5分40秒）
 ```
 
 必要なもの：Node 20以上、Python 3（numpy, Pillow）、ffmpeg。台本を変えたときは `pip install edge-tts` のうえで `node tools/tts.mjs --scene=S06`（`assets/narration` も更新される）。`--scene` を付けないと全場面を読み直し、他の場面の長さが少し変わることがある。
@@ -132,3 +133,9 @@ node tools/splice.mjs S06 S07    # 指定した場面だけ作り直して、全
 - 読み上げの誤読は `narration/script.json` の `readings` で直す（字幕の表記は変えない）。
 - 「ファミコンを乗っ取って絵だけ出している」ものと同類に見られないようにする。ただし、そうした作品を否定する言い方はしない。軸は「本体に手を入れたか」ではなく「カートリッジに何を載せたか」と「誰がゲームを動かしているか」。S03 で「スーパーファミコンの時代に生まれたこの2つを載せたらどうなるか」という試みとして示し、S03b で「画面を映しているだけでは？」→「答えはゲームそのもの」→「スターフォックスと同じ構造」と流す。
 - スターフォックスの名前は、今ある箇所（S03・S03b・S07b）から増やさない。
+
+## 2本立て（2026-11-11）
+
+概要編（`FxOverview`）と詳細編（`FxDeep`）に分けた。並びは `narration/script.json` の `videos`。
+場面だけ直すときは `node tools/splice.mjs S07 --video=overview` のように動画を指定する。
+書き出しは `tools/render.mjs`（同時2本、終わると `out/fxracing3d_<video>.timing.json` を保存）。
