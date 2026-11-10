@@ -101,10 +101,10 @@ export const S08b: React.FC = () => {
   const f = useCurrentFrame(), k = K('S08b');
   const a1 = ramp(f, k(1), k(1) + 16), a2 = ramp(f, k(2), k(2) + 16), a3 = ramp(f, k(3), k(3) + 16);
   const S = polys.series as number[][];
-  const FROM = 560, LOOP = 300; // 録画（main.mp4）のコマ番号＝コアのコマ番号
+  const FROM = 860, LOOP = 300; // 録画（main.mp4）のコマ番号＝コアのコマ番号
   const cur = FROM + ((f % LOOP) + LOOP) % LOOP;
   let now = 0;
-  for (const [x, y] of S) { if (x <= cur) now = y; else break; }
+  for (const [x, , y] of S) { if (x <= cur) now = y; else break; }
   const total = TOTAL.reduce((a, t) => a + t[1], 0);
   return (
     <Bg>
@@ -138,11 +138,11 @@ export const S08b: React.FC = () => {
         <Loop durationInFrames={LOOP} layout="none">
           <Nes src="main" from={FROM} x={720} y={150} w={700} crop={[0, 0, 256, 192]} />
         </Loop>
-        <Card x={1450} y={150} w={400} color={now === polys.all.max ? C.red : C.cyan}>
-          <div style={{fontSize: 26, color: C.sub, fontWeight: 700}}>このフレームで塗った<br />ポリゴン</div>
-          <div style={{fontSize: 110, fontWeight: 900, fontFamily: MONO, color: now === polys.all.max ? C.red : C.cyan, lineHeight: 1.1}}>{now}</div>
-          <div style={{fontSize: 34, fontWeight: 900, color: C.red, marginTop: 10}}>{`最大 ${polys.all.max}枚`}</div>
-          <div style={{fontSize: 22, color: C.sub, fontWeight: 700, marginTop: 8}}>デフォルトの視点・レース全体で計測</div>
+        <Card x={1450} y={150} w={400} color={now === polys.faces.max ? C.red : C.cyan}>
+          <div style={{fontSize: 26, color: C.sub, fontWeight: 700}}>このフレームで描いた<br />ポリゴン</div>
+          <div style={{fontSize: 110, fontWeight: 900, fontFamily: MONO, color: now === polys.faces.max ? C.red : C.cyan, lineHeight: 1.1}}>{now}</div>
+          <div style={{fontSize: 34, fontWeight: 900, color: C.red, marginTop: 10}}>{`最大 ${polys.faces.max}枚`}</div>
+          <div style={{fontSize: 22, color: C.sub, fontWeight: 700, marginTop: 8}}>裏面カリングで捨てた面も含む<br />デフォルトの視点・レース全体で計測</div>
         </Card>
         <Txt x={720} y={720} size={36} w={1140} align="center" color={C.amber} o={a3}>見た目より、フレームレートを優先</Txt>
       </div>
