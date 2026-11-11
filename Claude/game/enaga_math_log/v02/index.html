@@ -73,7 +73,8 @@ kbd{background:#fff;border:2px solid #c6d4e3;border-bottom-width:4px;border-radi
 .toggle.on .sw{background:var(--pink);}
 .toggle.on .sw::after{left:18px;}
 body.kid #frame{background:linear-gradient(#ffd9e4,#fff1f5 55%,#ffffff);}
-body.kid .col{display:none;}
+body.kid .col,body.kid .mulc{display:none;}
+.course.mini.narrow{min-width:0;width:110px;text-align:center;}
 .col{display:flex;flex-direction:column;gap:12px;}
 .course.mini{min-width:170px;padding:8px 14px;}
 .course.mini h2{margin:0;font-size:20px;}
@@ -141,13 +142,18 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
       <div class="courses">
         <div class="course">
           <h2 id="cName">たし算・ひき算</h2>
-          <button class="star" data-star="1"><span>★1<small id="cd1"></small></span><span class="bt" id="bt1">-</span></button>
-          <button class="star" data-star="2"><span>★2<small id="cd2"></small></span><span class="bt" id="bt2">-</span></button>
-          <button class="star" data-star="3"><span>★3<small id="cd3"></small></span><span class="bt" id="bt3">-</span></button>
+          <button class="star" data-course="addsub" data-star="1"><span>★1<small id="cd1"></small></span><span class="bt" id="bt1">-</span></button>
+          <button class="star" data-course="addsub" data-star="2"><span>★2<small id="cd2"></small></span><span class="bt" id="bt2">-</span></button>
+          <button class="star" data-course="addsub" data-star="3"><span>★3<small id="cd3"></small></span><span class="bt" id="bt3">-</span></button>
+        </div>
+        <div class="course mulc">
+          <h2>かけ算</h2>
+          <button class="star" data-course="mul" data-star="1"><span>★1<small>九九</small></span><span class="bt" id="mbt1">-</span></button>
+          <button class="star" data-course="mul" data-star="2"><span>★2<small>□をさがす・40×6</small></span><span class="bt" id="mbt2">-</span></button>
+          <button class="star" data-course="mul" data-star="3"><span>★3<small>2けた × 1けた</small></span><span class="bt" id="mbt3">-</span></button>
         </div>
         <div class="col">
-          <div class="course off mini"><h2>かけ算</h2><p>じゅんびちゅう</p></div>
-          <div class="course off mini"><h2>わり算</h2><p>じゅんびちゅう</p></div>
+          <div class="course off mini narrow"><h2>わり算</h2><p>じゅんび<br>ちゅう</p></div>
         </div>
         <div class="course rec">
           <h2>きろく</h2>
@@ -156,7 +162,7 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
           <button class="recbtn" id="goTitles"><span>しょうごう<br><i id="tNew"></i></span><b id="tCount">0</b></button>
         </div>
       </div>
-      <div class="keys"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> でえらんで <kbd>Enter</kbd> でスタート（マウスで★をおしてもOK）<br>
+      <div class="keys"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> たし算・ひき算　<span class="mulc"><kbd>4</kbd><kbd>5</kbd><kbd>6</kbd> かけ算　</span>でえらんで <kbd>Enter</kbd> でスタート（マウスで★をおしてもOK）<br>
         こたえは 数字キー か テンキー で入れて <kbd>Enter</kbd>　（まちがえたら <kbd>BackSpace</kbd>）</div>
     </div>
     <!-- forest / titles -->
@@ -170,7 +176,7 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
     <!-- play -->
     <div class="screen" id="sPlay">
       <div id="tag"></div>
-      <div id="q"><span id="qa">0</span><span id="qop">+</span><span id="qb">0</span><span>=</span><span id="ans" class="caret"></span></div>
+      <div id="q"><span id="ans" class="caret"></span></div>
       <div id="hint"></div>
     </div>
     <!-- result -->
@@ -197,7 +203,7 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
 'use strict';
 const $=s=>document.querySelector(s);
 const STEPS=20;
-const COURSE='addsub';
+let course='addsub';
 
 // ---------- 乱数・問題づくり ----------
 let rnd=Math.random;
@@ -243,28 +249,48 @@ const RECIPES_K={
     [14,()=>sub(ri(11,20),ri(1,10)),p=>p.ans>=1&&p.ans<=10],
   ],
 };
+// かけ算。form: boxA は「□ × b = c」、boxB は「a × □ = c」
+const mul=(a,b)=>({a,b,op:'×',ans:a*b});
+const boxA=(x,b)=>({a:x,b,op:'×',c:x*b,ans:x,form:'boxA'});
+const boxB=(a,x)=>({a,b:x,op:'×',c:a*x,ans:x,form:'boxB'});
+const RECIPES_M={
+  1:[[20,()=>mul(ri(2,9),ri(2,9)),p=>true]],
+  2:[
+    [5,()=>boxA(ri(2,9),ri(2,9)),p=>true],
+    [5,()=>boxB(ri(2,9),ri(2,9)),p=>true],
+    [5,()=>mul(ri(2,9)*10,ri(2,9)),p=>true],
+    [5,()=>mul(ri(2,9),ri(2,9)*10),p=>true],
+  ],
+  3:[
+    [14,()=>mul(ri(12,98),ri(2,9)),p=>p.a%10!==0&&(p.a%10)*p.b>=10],   // くり上がり
+    [6,()=>mul(ri(11,49),ri(2,4)),p=>p.a%10!==0&&(p.a%10)*p.b<10],
+  ],
+};
 const COURSES={
   n:{name:'たし算・ひき算',desc:['1けたどうし','2けた と 1けた','2けたどうし・百のくらい'],th:{1:[24,28,33,39,46,53,60,80],2:[48,60,75,95,120,150,185,250],3:[65,78,92,110,130,150,170,250]}},
+  m:{name:'かけ算',desc:['九九','□をさがす・40×6','2けた × 1けた'],th:{1:[22,26,31,37,44,52,62,90],2:[30,36,44,54,66,80,100,140],3:[60,75,95,120,150,185,230,320]}},
   k:{name:'たしざん・ひきざん',desc:['こたえ 5まで','こたえ 10まで','20までの かず'],th:{1:[27,32,38,45,54,64,76,95],2:[32,38,45,54,65,78,95,120],3:[38,45,54,65,78,94,112,140]}},
 };
 let kid=false;
-const modeKey=()=>kid?'k':'n';
+const modeKey=()=>kid?'k':course==='mul'?'m':'n';
 function makeSet(star){
   const used=new Set(),out=[];
-  for(const [n,gen,ok] of (kid?RECIPES_K:RECIPES)[star]){
+  for(const [n,gen,ok] of (kid?RECIPES_K:course==='mul'?RECIPES_M:RECIPES)[star]){
     let got=0,guard=0;
     while(got<n&&guard++<5000){
       const p=gen();
       if(!ok(p))continue;
-      const k=p.a+p.op+p.b;
+      const k=p.a+p.op+p.b+(p.form||'');
       if(used.has(k)&&guard<4000)continue;
       used.add(k);out.push(p);got++;
     }
   }
   return shuffle(out);
 }
-const opText=op=>op==='-'?'−':'+';
-const qText=p=>`${p.a} ${opText(p.op)} ${p.b}`;
+const opText=op=>op==='-'?'−':op;
+// 画面に出す ならび（'@' が こたえの はこ）
+const qTokens=p=>p.form==='boxA'?['@','×',p.b,'=',p.c]:p.form==='boxB'?[p.a,'×','@','=',p.c]:[p.a,opText(p.op),p.b,'=','@'];
+const fullText=p=>qTokens(p).map(t=>t==='@'?p.ans:t).join(' ');
 
 // ---------- 記録 ----------
 const KEY='enaga_math_v01';
@@ -277,17 +303,17 @@ function loadDB(){
 const DB=loadDB();
 let player=DB.last&&DB.players.includes(DB.last)?DB.last:null;
 function saveDB(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
-const recKey=star=>(kid?'k_':'')+COURSE+'_'+star;
-function recOf(name,star){const r=(DB.recs[name]||{})[recKey(star)];return r||{best:null,ghost:null,top:[]};}
+const recKey=(star,c=course,k=kid)=>(k?'k_addsub':c)+'_'+star;
+function recOf(name,star,c,k){const r=(DB.recs[name]||{})[recKey(star,c,k)];return r||{best:null,ghost:null,top:[]};}
 function getRec(star){return recOf(player,star);}
 function saveRec(star,rec){(DB.recs[player]=DB.recs[player]||{})[recKey(star)]=rec;saveDB();}
 const RANKS=['SSS','SS','S','AA','A','B','C','D'];
 const RO={SSS:9,SS:8,S:7,AA:6,A:5,B:4,C:3,D:2,E:1};
 const RANK_TITLE={SSS:'ゴッドエナガ',SS:'テラエナガ',S:'ギガエナガ',AA:'ウルトラエナガ',A:'ハイパーエナガ',B:'スーパーエナガ',C:'ちびエナガ',D:'ひなエナガ',E:'たまごエナガ'};
 const RANK_COL={SSS:'#e0455c',SS:'#d99a10',S:'#f07a96',AA:'#2f6fc0',A:'#4a90d9',B:'#58b37a',C:'#7fae5a',D:'#9a8fb8',E:'#a7a2b5'};
-function rankOf(isKid,star,ms){const th=COURSES[isKid?'k':'n'].th[star],s=ms/1000;for(let i=0;i<RANKS.length;i++)if(s<=th[i])return RANKS[i];return 'E';}
+function rankOf(ck,star,ms){const th=COURSES[ck].th[star],s=ms/1000;for(let i=0;i<RANKS.length;i++)if(s<=th[i])return RANKS[i];return 'E';}
 // ひとつ上のランクと、その基準タイム（秒）
-function nextRank(isKid,star,rank){const th=COURSES[isKid?'k':'n'].th[star],i=RANKS.indexOf(rank);if(i===0)return null;const j=i<0?RANKS.length-1:i-1;return {rank:RANKS[j],sec:th[j]};}
+function nextRank(ck,star,rank){const th=COURSES[ck].th[star],i=RANKS.indexOf(rank);if(i===0)return null;const j=i<0?RANKS.length-1:i-1;return {rank:RANKS[j],sec:th[j]};}
 function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 // なまえごとの つみあげ
 function statsOf(name){
@@ -309,7 +335,7 @@ function seedStats(name,s){
       s.maxCombo=Math.max(s.maxCombo,t.combo||0);
       const dm=/(\d+)\/(\d+)\/(\d+)/.exec(t.d||'');
       if(dm){const dk=dm[1]+'-'+dm[2].padStart(2,'0')+'-'+dm[3].padStart(2,'0');s.days[dk]=(s.days[dk]||0)+1;}
-      const rk=rankOf(!!m[1],+m[2],t.ms);if(!s.rk[key]||RO[rk]>RO[s.rk[key]])s.rk[key]=rk;
+      const rk=rankOf(m[1]?'k':'n',+m[2],t.ms);if(!s.rk[key]||RO[rk]>RO[s.rk[key]])s.rk[key]=rk;
       const avg=t.ms/1000/STEPS;if(s.bestAvg==null||avg<s.bestAvg)s.bestAvg=avg;
     }
   }
@@ -323,7 +349,7 @@ const anyRk=(s,L)=>Object.keys(s.rk).some(k=>rkAt(s,k,L));
 const dayCount=s=>Object.keys(s.days).length;
 const maxDay=s=>Math.max(0,...Object.values(s.days));
 function streak(s){let best=0,cur=0,prev=null;for(const d of Object.keys(s.days).sort()){const t=Date.parse(d);cur=(prev!=null&&t-prev===864e5)?cur+1:1;best=Math.max(best,cur);prev=t;}return best;}
-const N3=['n1','n2','n3'],K3=['k1','k2','k3'];
+const N3=['n1','n2','n3'],K3=['k1','k2','k3'],M3=['m1','m2','m3'];
 const TITLES=[
   ['はじめて','c1','けいさん ぼうけんしゃ','1回 クリアする',s=>s.clears>=1],
   ['はじめて','c5','みならい エナガせんし','5回 クリアする',s=>s.clears>=5],
@@ -349,13 +375,20 @@ const TITLES=[
   ['ランク','rS','ギガエナガ','Sランクを とる',s=>anyRk(s,'S')],
   ['ランク','rSS','テラエナガ','SSランクを とる',s=>anyRk(s,'SS')],
   ['ランク','rSSS','ゴッドエナガ','SSSランクを とる',s=>anyRk(s,'SSS')],
-  ['ランク','sn1','★1の チャンピオン','★1で Sランク',s=>rkAt(s,'n1','S')],
-  ['ランク','sn2','★2の チャンピオン','★2で Sランク',s=>rkAt(s,'n2','S')],
-  ['ランク','sn3','★3の チャンピオン','★3で Sランク',s=>rkAt(s,'n3','S')],
-  ['ランク','alln','コンプリート！','★1・★2・★3を ぜんぶ クリア',s=>N3.every(k=>s.cl[k])],
-  ['ランク','allnA','ハイパー トリオ','★1・★2・★3 ぜんぶ Aランク いじょう',s=>N3.every(k=>rkAt(s,k,'A'))],
-  ['ランク','allnS','ギガ トリオ','★1・★2・★3 ぜんぶ Sランク',s=>N3.every(k=>rkAt(s,k,'S'))],
-  ['ランク','allnSSS','けいさんの ゴッド','★1・★2・★3 ぜんぶ SSSランク',s=>N3.every(k=>rkAt(s,k,'SSS'))],
+  ['たし算・ひき算','sn1','★1の チャンピオン','★1で Sランク',s=>rkAt(s,'n1','S')],
+  ['たし算・ひき算','sn2','★2の チャンピオン','★2で Sランク',s=>rkAt(s,'n2','S')],
+  ['たし算・ひき算','sn3','★3の チャンピオン','★3で Sランク',s=>rkAt(s,'n3','S')],
+  ['たし算・ひき算','alln','コンプリート！','★1・★2・★3を ぜんぶ クリア',s=>N3.every(k=>s.cl[k])],
+  ['たし算・ひき算','allnA','ハイパー トリオ','★1・★2・★3 ぜんぶ Aランク いじょう',s=>N3.every(k=>rkAt(s,k,'A'))],
+  ['たし算・ひき算','allnS','ギガ トリオ','★1・★2・★3 ぜんぶ Sランク',s=>N3.every(k=>rkAt(s,k,'S'))],
+  ['たし算・ひき算','allnSSS','けいさんの ゴッド','★1・★2・★3 ぜんぶ SSSランク',s=>N3.every(k=>rkAt(s,k,'SSS'))],
+  ['かけ算','mc1','かけ算 デビュー','かけ算で クリア',s=>M3.some(k=>s.cl[k])],
+  ['かけ算','ms1','九九 マスター','かけ算★1で Sランク',s=>rkAt(s,'m1','S')],
+  ['かけ算','ms2','九九の まほうつかい','かけ算★2で Sランク',s=>rkAt(s,'m2','S')],
+  ['かけ算','ms3','かけ算 ドラゴン','かけ算★3で Sランク',s=>rkAt(s,'m3','S')],
+  ['かけ算','mc3','かけ算 コンプリート','かけ算★1〜★3を ぜんぶ クリア',s=>M3.every(k=>s.cl[k])],
+  ['かけ算','mSSS','かけ算の ゴッド','かけ算★1〜★3 ぜんぶ SSSランク',s=>M3.every(k=>rkAt(s,k,'SSS'))],
+  ['かけ算','allstar','けいさん オールスター','たし算・ひき算も かけ算も ★1〜★3 ぜんぶ クリア',s=>N3.concat(M3).every(k=>s.cl[k])],
   ['ようちえん','kc1','ちびっこ チャレンジャー','ようちえんモードで クリア',s=>K3.some(k=>s.cl[k])],
   ['ようちえん','kc3','ようちえん コンプリート','ようちえん★1〜★3を クリア',s=>K3.every(k=>s.cl[k])],
   ['ようちえん','ks1','ひよこ チャンピオン','ようちえん★1で Sランク',s=>rkAt(s,'k1','S')],
@@ -388,7 +421,7 @@ const TITLES=[
 const gotCount=s=>TITLES.filter(t=>s.titles[t.id]).length;
 function checkTitles(s){const got=[];for(const t of TITLES)if(!s.titles[t.id]&&t.test(s)){s.titles[t.id]=today();got.push(t);}return got;}
 function setKid(v){
-  kid=!!v;if(player){(DB.kid=DB.kid||{})[player]=kid;saveDB();}
+  kid=!!v;if(kid)course='addsub';if(player){(DB.kid=DB.kid||{})[player]=kid;saveDB();}
   document.body.classList.toggle('kid',kid);refreshTitle();
 }
 function selectPlayer(name){
@@ -408,7 +441,7 @@ function renderPlayers(){
   }
 }
 function needName(){const w=$('#who');w.classList.remove('need');void w.offsetWidth;w.classList.add('need');$('#nameIn').focus();}
-function tryStart(star){if(!player){needName();return;}startGame(star);}
+function tryStart(star,c=course){if(!player){needName();return;}if(kid)c='addsub';course=c;startGame(star);}
 function openForest(t){if(!player){needName();return;}ac();state='forest';show('sForest');setTab(t);}
 const sec=ms=>(ms/1000).toFixed(1);
 
@@ -753,11 +786,15 @@ let state='title',G=null,selStar=1,resultLock=0,runId=0;
 const screens=['sTitle','sCount','sPlay','sResult','sForest'];
 function show(id){screens.forEach(s=>$('#'+s).classList.toggle('on',s===id));document.body.classList.toggle('calm',id==='sTitle'||id==='sResult');document.body.classList.toggle('forest',id==='sForest');resize();}
 function refreshTitle(){
-  for(let s=1;s<=3;s++){const r=player?getRec(s):{};$('#bt'+s).textContent=!player?'-':r.best?`ベスト ${sec(r.best)}秒 ${rankOf(kid,s,r.best)}`:'まだ記録なし';}
-  document.querySelectorAll('.star').forEach(b=>b.classList.toggle('sel',+b.dataset.star===selStar));
-  const C=COURSES[modeKey()];
-  $('#cName').textContent=C.name+(kid?'（ようちえん）':'');
-  for(let i=1;i<=3;i++)$('#cd'+i).textContent=C.desc[i-1];
+  const bestText=(st,c,ck)=>{const r=recOf(player,st,c,kid);return r.best?`ベスト ${sec(r.best)}秒 ${rankOf(ck,st,r.best)}`:'まだ記録なし';};
+  for(let st=1;st<=3;st++){
+    $('#bt'+st).textContent=player?bestText(st,'addsub',kid?'k':'n'):'-';
+    $('#mbt'+st).textContent=player?bestText(st,'mul','m'):'-';
+  }
+  document.querySelectorAll('.star').forEach(b=>b.classList.toggle('sel',+b.dataset.star===selStar&&b.dataset.course===course));
+  const C=COURSES[modeKey()],CA=COURSES[kid?'k':'n'];
+  $('#cName').textContent=CA.name+(kid?'（ようちえん）':'');
+  for(let i=1;i<=3;i++)$('#cd'+i).textContent=CA.desc[i-1];
   $('#kidBtn').classList.toggle('on',kid);
   $('#hCourse').textContent=(player?player+' ・ ':'')+(kid?'ようちえん ':'')+`${C.name} ★${selStar}`;
   if(player){
@@ -801,7 +838,8 @@ function elapsed(){return (G.end||performance.now())-G.t0;}
 function showQuestion(){
   const q=G.queue[G.idx];
   G.input='';G.qMiss=0;G.qStart=performance.now();
-  $('#qa').textContent=q.a;$('#qop').textContent=opText(q.op);$('#qb').textContent=q.b;
+  const qe=$('#q');qe.textContent='';
+  for(const t of qTokens(q)){const sp=document.createElement('span');if(t==='@')sp.id='ans';else sp.textContent=t;qe.appendChild(sp);}
   $('#tag').innerHTML=q.retry?'<span>もういちど！</span>':'';
   $('#hint').textContent='';
   const box=$('#ans');box.className='caret';box.textContent='';
@@ -856,10 +894,10 @@ function finish(){
   rec.top=(rec.top||[]).concat([{ms:total,miss:G.miss,combo:G.maxCombo,d:new Date().toLocaleDateString('ja-JP')}]).sort((a,b)=>a.ms-b.ms).slice(0,5);
   saveRec(G.star,rec);
   // 結果
-  const s=total/1000,rank=rankOf(kid,G.star,total);
+  const s=total/1000,rank=rankOf(modeKey(),G.star,total);
   $('#rank').textContent=rank;$('#rank').style.color=RANK_COL[rank];
   $('#rtitle').textContent=`しょうごう「${RANK_TITLE[rank]}」`;
-  const nx=nextRank(kid,G.star,rank);
+  const nx=nextRank(modeKey(),G.star,rank);
   $('#rnext').textContent=nx?`つぎの ${nx.rank}（${nx.sec}秒）まで あと ${(s-nx.sec).toFixed(1)}秒`:'さいこうランク！ すごい！';
   $('#rsec').textContent=sec(total);
   $('#rnew').textContent=isNew?(hadBest?'自分のベスト こうしん！':'はじめての記録！ 次からゴーストと走れるよ'):`ベスト ${sec(rec.best)}秒 まで あと ${sec(total-rec.best)}秒`;
@@ -868,7 +906,7 @@ function finish(){
   const rs=$('#rstats');rs.textContent='';
   for(const [k,v,gold] of chips){const sp=document.createElement('span');if(gold)sp.className='gold';sp.textContent=k;const b=document.createElement('b');b.textContent=v;sp.appendChild(b);rs.appendChild(sp);}
   const slow=G.times.slice().sort((a,b)=>b.ms-a.ms)[0];
-  $('#rslow').textContent=slow?`いちばん 時間が かかった問題：${qText(slow.p)} = ${slow.p.ans}（${sec(slow.ms)}秒）`:'';
+  $('#rslow').textContent=slow?`いちばん 時間が かかった問題：${fullText(slow.p)}（${sec(slow.ms)}秒）`:'';
   const all=DB.players.map(n=>({n,b:recOf(n,G.star).best})).filter(x=>x.b!=null).sort((a,b)=>a.b-b.b).slice(0,3);
   $('#rall').textContent=all.length>1?`みんなの ベスト　`+all.map((x,i)=>`${i+1}位 ${x.n} ${sec(x.b)}秒`).join('　'):'';
   // つみあげ・シマエナガ・しょうごう
@@ -912,7 +950,8 @@ window.addEventListener('keydown',e=>{
       else if(c==='Escape')ni.blur();
       return;
     }
-    if(d==='1'||d==='2'||d==='3'){selStar=+d;refreshTitle();e.preventDefault();}
+    if(d==='1'||d==='2'||d==='3'){course='addsub';selStar=+d;refreshTitle();e.preventDefault();}
+    else if(!kid&&(d==='4'||d==='5'||d==='6')){course='mul';selStar=d-3;refreshTitle();e.preventDefault();}
     else if(enter||c==='Space'){e.preventDefault();tryStart(selStar);}
   }else if(state==='result'){
     if(performance.now()<resultLock)return;
@@ -925,7 +964,7 @@ window.addEventListener('keydown',e=>{
     else if(c==='ArrowLeft'||c==='ArrowRight'){e.preventDefault();setTab(tab==='forest'?'titles':'forest');}
   }
 });
-document.querySelectorAll('.star').forEach(b=>b.addEventListener('click',()=>{b.blur();if(state==='title')tryStart(+b.dataset.star);}));
+document.querySelectorAll('.star').forEach(b=>b.addEventListener('click',()=>{b.blur();if(state==='title')tryStart(+b.dataset.star,b.dataset.course);}));
 $('#nameOk').addEventListener('click',e=>{const ni=$('#nameIn');if(selectPlayer(ni.value))ni.value='';e.target.blur();});
 $('#kidBtn').addEventListener('click',e=>{setKid(!kid);e.currentTarget.blur();});
 $('#goForest').addEventListener('click',e=>{e.currentTarget.blur();openForest('forest');});
@@ -949,7 +988,7 @@ function loop(now){
 if(player){kid=!!(DB.kid||{})[player];document.body.classList.toggle('kid',kid);statsOf(player);}
 resize();renderPlayers();toTitle();if(!player)$('#nameIn').focus();requestAnimationFrame(loop);
 // テスト用フック
-window.__enaga={get state(){return state;},get G(){return G;},get player(){return player;},get kid(){return kid;},DB,startGame,makeSet,selectPlayer,setKid,statsOf,openForest,TITLES};
+window.__enaga={get state(){return state;},get G(){return G;},get player(){return player;},get kid(){return kid;},get course(){return course;},setCourse(c){course=c;},DB,startGame,makeSet,selectPlayer,setKid,statsOf,openForest,TITLES};
 </script>
 </body>
 </html>
