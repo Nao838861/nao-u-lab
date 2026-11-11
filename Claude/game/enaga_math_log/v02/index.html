@@ -98,21 +98,23 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
 .tcard.got{background:#fff;border-color:#f2d36b;color:var(--ink);box-shadow:0 2px 6px rgba(200,160,40,.2);}
 .tcard.got b{color:#c0761a;}
 .rhead{display:flex;align-items:center;justify-content:center;gap:20px;}
-#rgain{font-size:20px;color:#3b5f86;margin-top:4px;}
+#rgain{font-size:20px;color:#3b5f86;margin-top:10px;padding-top:8px;border-top:2px dashed #e3eaf3;line-height:1.45;}
 #rgain em{display:block;font-style:normal;color:var(--pink);font-weight:bold;}
-#rnewt{font-size:19px;color:#c0761a;font-weight:bold;min-height:4px;}
+#rnewt{font-size:19px;color:#c0761a;font-weight:bold;min-height:4px;line-height:1.45;}
 #mute{position:absolute;right:14px;bottom:10px;z-index:5;font-size:15px;background:#fff;border:2px solid #cfe0f2;border-radius:10px;padding:4px 10px;cursor:pointer;font-family:inherit;color:var(--soft);}
 /* result */
 .panel{background:rgba(255,255,255,.95);border-radius:22px;padding:14px 26px;box-shadow:0 4px 14px rgba(60,90,130,.2);text-align:center;max-width:760px;}
+#rnext{font-size:19px;color:#3b5f86;}
 #rank{font-size:70px;font-weight:bold;line-height:1;font-family:"BIZ UDGothic",monospace;}
 #rtitle{font-size:26px;margin:4px 0 8px;}
 #rtime{font-size:30px;}
 #rtime b{font-size:44px;font-family:"BIZ UDGothic",monospace;}
 #rnew{color:var(--pink);font-weight:bold;font-size:22px;min-height:28px;}
-#rstats{font-size:19px;color:var(--soft);margin:4px 0;}
-#rslow{font-size:17px;color:var(--soft);}
-#rbadge span{display:inline-block;background:#fff4c9;border:2px solid #f2d36b;border-radius:16px;padding:2px 12px;margin:4px;font-size:17px;}
-#rtop,#rall{font-size:16px;color:var(--soft);margin-top:4px;}
+.chips{display:flex;justify-content:center;gap:10px;margin:6px 0 4px;}
+.chips span{background:#f2f6fb;border:2px solid #dde7f2;border-radius:14px;padding:3px 14px;font-size:18px;color:var(--soft);}
+.chips span b{font-family:"BIZ UDGothic",monospace;font-size:22px;color:var(--ink);margin-left:6px;}
+.chips span.gold{background:#fff4c9;border-color:#f2d36b;color:#a86a12;}
+#rslow,#rall{font-size:16px;color:var(--soft);margin-top:2px;}
 </style>
 </head>
 <body>
@@ -175,10 +177,9 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
         <div class="rhead"><div id="rank">S</div><div id="rtitle"></div></div>
         <div id="rtime">タイム <b id="rsec">0.0</b> 秒</div>
         <div id="rnew"></div>
-        <div id="rbadge"></div>
-        <div id="rstats"></div>
+        <div id="rnext"></div>
+        <div class="chips" id="rstats"></div>
         <div id="rslow"></div>
-        <div id="rtop"></div>
         <div id="rall"></div>
         <div id="rgain"></div>
         <div id="rnewt"></div>
@@ -241,8 +242,8 @@ const RECIPES_K={
   ],
 };
 const COURSES={
-  n:{name:'たし算・ひき算',desc:['1けたどうし','2けた と 1けた','2けたどうし・百のくらい'],th:{1:[35,50,75],2:[50,70,100],3:[70,100,140]}},
-  k:{name:'たしざん・ひきざん',desc:['こたえ 5まで','こたえ 10まで','20までの かず'],th:{1:[40,60,90],2:[50,75,110],3:[60,90,130]}},
+  n:{name:'たし算・ひき算',desc:['1けたどうし','2けた と 1けた','2けたどうし・百のくらい'],th:{1:[24,30,38,48,60,80],2:[48,65,90,130,180,240],3:[65,80,100,130,170,220]}},
+  k:{name:'たしざん・ひきざん',desc:['こたえ 5まで','こたえ 10まで','20までの かず'],th:{1:[27,34,42,55,70,90],2:[32,40,50,65,85,110],3:[38,48,60,78,100,130]}},
 };
 let kid=false;
 const modeKey=()=>kid?'k':'n';
@@ -278,8 +279,13 @@ const recKey=star=>(kid?'k_':'')+COURSE+'_'+star;
 function recOf(name,star){const r=(DB.recs[name]||{})[recKey(star)];return r||{best:null,ghost:null,top:[]};}
 function getRec(star){return recOf(player,star);}
 function saveRec(star,rec){(DB.recs[player]=DB.recs[player]||{})[recKey(star)]=rec;saveDB();}
-const RO={S:4,A:3,B:2,C:1};
-function rankOf(isKid,star,ms){const th=COURSES[isKid?'k':'n'].th[star],s=ms/1000;return s<=th[0]?'S':s<=th[1]?'A':s<=th[2]?'B':'C';}
+const RANKS=['SSS','SS','S','AA','A','B'];
+const RO={SSS:7,SS:6,S:5,AA:4,A:3,B:2,C:1};
+const RANK_TITLE={SSS:'でんせつの シマエナガ',SS:'森の おうさま',S:'雪のようせい',AA:'エナガ団子名人',A:'もこもこ団子',B:'まんまるエナガ',C:'ふわふわエナガ'};
+const RANK_COL={SSS:'#e0455c',SS:'#d99a10',S:'#f07a96',AA:'#2f6fc0',A:'#4a90d9',B:'#58b37a',C:'#9a8fb8'};
+function rankOf(isKid,star,ms){const th=COURSES[isKid?'k':'n'].th[star],s=ms/1000;for(let i=0;i<RANKS.length;i++)if(s<=th[i])return RANKS[i];return 'C';}
+// ひとつ上のランクと、その基準タイム（秒）
+function nextRank(isKid,star,rank){const th=COURSES[isKid?'k':'n'].th[star],i=RANKS.indexOf(rank);if(i===0)return null;const j=i<0?RANKS.length-1:i-1;return {rank:RANKS[j],sec:th[j]};}
 function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 // なまえごとの つみあげ
 function statsOf(name){
@@ -334,14 +340,18 @@ const TITLES=[
   ['れんぞく','n5','しんちょう エナガ','ミスなしクリア 5回',s=>s.noMiss>=5],
   ['れんぞく','n20','パーフェクト マスター','ミスなしクリア 20回',s=>s.noMiss>=20],
   ['ランク','rB','まんまるエナガ','Bランクを とる',s=>anyRk(s,'B')],
-  ['ランク','rA','エナガ団子名人','Aランクを とる',s=>anyRk(s,'A')],
+  ['ランク','rA','もこもこ団子','Aランクを とる',s=>anyRk(s,'A')],
+  ['ランク','rAA','エナガ団子名人','AAランクを とる',s=>anyRk(s,'AA')],
   ['ランク','rS','雪の ようせい','Sランクを とる',s=>anyRk(s,'S')],
+  ['ランク','rSS','森の おうさま','SSランクを とる',s=>anyRk(s,'SS')],
+  ['ランク','rSSS','でんせつの シマエナガ','SSSランクを とる',s=>anyRk(s,'SSS')],
   ['ランク','sn1','1けたの ほし','★1で Sランク',s=>rkAt(s,'n1','S')],
   ['ランク','sn2','2けたの ほし','★2で Sランク',s=>rkAt(s,'n2','S')],
   ['ランク','sn3','百の ほし','★3で Sランク',s=>rkAt(s,'n3','S')],
   ['ランク','alln','ぜんぶ クリア','★1・★2・★3を ぜんぶ クリア',s=>N3.every(k=>s.cl[k])],
   ['ランク','allnA','3つの はなまる','★1・★2・★3 ぜんぶ Aランク いじょう',s=>N3.every(k=>rkAt(s,k,'A'))],
   ['ランク','allnS','ほしの おうさま','★1・★2・★3 ぜんぶ Sランク',s=>N3.every(k=>rkAt(s,k,'S'))],
+  ['ランク','allnSSS','ほしの かみさま','★1・★2・★3 ぜんぶ SSSランク',s=>N3.every(k=>rkAt(s,k,'SSS'))],
   ['ようちえん','kc1','ちいさな けいさんか','ようちえんモードで クリア',s=>K3.some(k=>s.cl[k])],
   ['ようちえん','kc3','ようちえん ぜんぶ クリア','ようちえん★1〜★3を クリア',s=>K3.every(k=>s.cl[k])],
   ['ようちえん','ks1','ひよこの ほし','ようちえん★1で Sランク',s=>rkAt(s,'k1','S')],
@@ -743,7 +753,7 @@ let state='title',G=null,selStar=1,resultLock=0,runId=0;
 const screens=['sTitle','sCount','sPlay','sResult','sForest'];
 function show(id){screens.forEach(s=>$('#'+s).classList.toggle('on',s===id));document.body.classList.toggle('calm',id==='sTitle'||id==='sResult');document.body.classList.toggle('forest',id==='sForest');resize();}
 function refreshTitle(){
-  for(let s=1;s<=3;s++){const r=player?getRec(s):{};$('#bt'+s).textContent=!player?'-':r.best?`ベスト ${sec(r.best)}秒`:'まだ記録なし';}
+  for(let s=1;s<=3;s++){const r=player?getRec(s):{};$('#bt'+s).textContent=!player?'-':r.best?`ベスト ${sec(r.best)}秒 ${rankOf(kid,s,r.best)}`:'まだ記録なし';}
   document.querySelectorAll('.star').forEach(b=>b.classList.toggle('sel',+b.dataset.star===selStar));
   const C=COURSES[modeKey()];
   $('#cName').textContent=C.name+(kid?'（ようちえん）':'');
@@ -840,20 +850,20 @@ function finish(){
   saveRec(G.star,rec);
   // 結果
   const s=total/1000,rank=rankOf(kid,G.star,total);
-  const titles={S:'雪のようせい',A:'エナガ団子名人',B:'まんまるエナガ',C:'ふわふわエナガ'};
-  const cols={S:'#f07a96',A:'#4a90d9',B:'#58b37a',C:'#9a8fb8'};
-  $('#rank').textContent=rank;$('#rank').style.color=cols[rank];
-  $('#rtitle').textContent=`しょうごう「${titles[rank]}」`;
+  $('#rank').textContent=rank;$('#rank').style.color=RANK_COL[rank];
+  $('#rtitle').textContent=`しょうごう「${RANK_TITLE[rank]}」`;
+  const nx=nextRank(kid,G.star,rank);
+  $('#rnext').textContent=nx?`つぎの ${nx.rank}（${nx.sec}秒）まで あと ${(s-nx.sec).toFixed(1)}秒`:'さいこうランク！ すごい！';
   $('#rsec').textContent=sec(total);
-  $('#rnew').textContent=isNew?(rec.top.length>1?'自分のベスト こうしん！':'はじめての記録！ 次からゴーストと走れるよ'):`ベストまで あと ${sec(total-rec.best)}秒`;
-  const badges=[];if(G.miss===0)badges.push('ノーミス');if(G.maxCombo>=20)badges.push('20れんぞく');else if(G.maxCombo>=10)badges.push('団子かんせい');
-  $('#rbadge').innerHTML=badges.map(b=>`<span>${b}</span>`).join('');
-  $('#rstats').textContent=`1問 へいきん ${(s/STEPS).toFixed(1)}秒 ・ 最大れんぞく ${G.maxCombo} ・ ミス ${G.miss}`;
-  const slow=G.times.slice().sort((a,b)=>b.ms-a.ms).slice(0,3);
-  $('#rslow').textContent='時間がかかった問題： '+slow.map(t=>`${qText(t.p)} = ${t.p.ans}（${sec(t.ms)}秒）`).join('　');
-  $('#rtop').textContent=`${player} の★${G.star} きろく： `+rec.top.map((r,i)=>`${i+1}位 ${sec(r.ms)}秒`).join('　');
-  const all=DB.players.map(n=>({n,b:recOf(n,G.star).best})).filter(x=>x.b!=null).sort((a,b)=>a.b-b.b).slice(0,5);
-  $('#rall').textContent=all.length>1?`みんなの★${G.star} ベスト： `+all.map((x,i)=>`${i+1}位 ${x.n} ${sec(x.b)}秒`).join('　'):'';
+  $('#rnew').textContent=isNew?(hadBest?'自分のベスト こうしん！':'はじめての記録！ 次からゴーストと走れるよ'):`ベスト ${sec(rec.best)}秒 まで あと ${sec(total-rec.best)}秒`;
+  // 数字は3つだけ。いい結果は金色に
+  const chips=[['1問',`${(s/STEPS).toFixed(1)}秒`,false],['れんぞく',G.maxCombo,G.maxCombo>=10],G.miss===0?['ノーミス','!',true]:['ミス',G.miss,false]];
+  const rs=$('#rstats');rs.textContent='';
+  for(const [k,v,gold] of chips){const sp=document.createElement('span');if(gold)sp.className='gold';sp.textContent=k;const b=document.createElement('b');b.textContent=v;sp.appendChild(b);rs.appendChild(sp);}
+  const slow=G.times.slice().sort((a,b)=>b.ms-a.ms)[0];
+  $('#rslow').textContent=slow?`いちばん 時間が かかった問題：${qText(slow.p)} = ${slow.p.ans}（${sec(slow.ms)}秒）`:'';
+  const all=DB.players.map(n=>({n,b:recOf(n,G.star).best})).filter(x=>x.b!=null).sort((a,b)=>a.b-b.b).slice(0,3);
+  $('#rall').textContent=all.length>1?`みんなの ベスト　`+all.map((x,i)=>`${i+1}位 ${x.n} ${sec(x.b)}秒`).join('　'):'';
   // つみあげ・シマエナガ・しょうごう
   const st=statsOf(player),key=modeKey()+G.star,before=st.enaga;
   st.correct+=G.times.length;st.clears++;if(G.miss===0)st.noMiss++;
