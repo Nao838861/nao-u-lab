@@ -43,19 +43,28 @@ body.calm #dango{height:190px;}
 #count{font-size:120px;font-weight:bold;color:var(--blue);font-family:"BIZ UDGothic","Meiryo",monospace;}
 /* title */
 h1{margin:0 0 6px;font-size:min(7vw,52px);letter-spacing:.06em;color:#3b5f86;text-shadow:0 3px 0 #fff;}
-.sub{font-size:19px;color:var(--soft);margin-bottom:18px;}
-.courses{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+.sub{font-size:19px;color:var(--soft);margin-bottom:10px;}
+.who{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;background:rgba(255,255,255,.88);
+  border-radius:18px;padding:8px 16px;max-width:1150px;border:3px solid transparent;box-shadow:0 3px 10px rgba(60,90,130,.12);}
+.who.need{border-color:var(--pink);animation:shake .32s;}
+.wl{font-size:19px;color:var(--soft);margin-right:4px;}
+.chip,#nameOk{font-family:inherit;font-size:19px;padding:5px 14px;border-radius:20px;border:3px solid #cfe0f2;background:#f7fbff;cursor:pointer;color:var(--ink);}
+.chip.sel{border-color:var(--pink);background:#ffeef2;font-weight:bold;}
+#nameOk{background:#e7f2ff;border-color:var(--blue);}
+#nameIn{font-family:inherit;font-size:19px;width:200px;padding:5px 10px;border-radius:12px;border:3px solid #cfe0f2;user-select:text;-webkit-user-select:text;}
+#nameIn:focus{outline:none;border-color:var(--blue);}
+.courses{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:flex-start;}
 .course{background:rgba(255,255,255,.92);border-radius:20px;padding:14px 18px;box-shadow:0 3px 10px rgba(60,90,130,.15);min-width:250px;}
 .course h2{margin:0 0 10px;font-size:24px;text-align:center;}
 .course.off{opacity:.45;}
 .course.off p{text-align:center;margin:18px 0;font-size:18px;}
-.star{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;margin:6px 0;padding:10px 14px;border-radius:14px;
+.star{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;margin:5px 0;padding:7px 14px;border-radius:14px;
   border:3px solid #cfe0f2;background:#f7fbff;cursor:pointer;font-family:inherit;font-size:19px;color:var(--ink);}
 .star.sel{border-color:var(--blue);background:#e7f2ff;}
 .star>span:first-child{text-align:left;}
 .star small{font-size:14px;color:var(--soft);display:block;}
 .star .bt{font-size:15px;color:var(--soft);}
-.keys{margin-top:16px;font-size:17px;color:var(--soft);text-align:center;line-height:1.7;}
+.keys{margin-top:10px;font-size:17px;color:var(--soft);text-align:center;line-height:1.7;}
 kbd{background:#fff;border:2px solid #c6d4e3;border-bottom-width:4px;border-radius:7px;padding:0 7px;font-family:inherit;}
 #mute{position:absolute;right:14px;bottom:10px;z-index:5;font-size:15px;background:#fff;border:2px solid #cfe0f2;border-radius:10px;padding:4px 10px;cursor:pointer;font-family:inherit;color:var(--soft);}
 /* result */
@@ -68,7 +77,7 @@ kbd{background:#fff;border:2px solid #c6d4e3;border-bottom-width:4px;border-radi
 #rstats{font-size:19px;color:var(--soft);margin:4px 0;}
 #rslow{font-size:17px;color:var(--soft);}
 #rbadge span{display:inline-block;background:#fff4c9;border:2px solid #f2d36b;border-radius:16px;padding:2px 12px;margin:4px;font-size:17px;}
-#rtop{font-size:16px;color:var(--soft);margin-top:6px;}
+#rtop,#rall{font-size:16px;color:var(--soft);margin-top:4px;}
 </style>
 </head>
 <body>
@@ -88,6 +97,8 @@ kbd{background:#fff;border:2px solid #c6d4e3;border-bottom-width:4px;border-radi
     <div class="screen on" id="sTitle">
       <h1>シマエナガのけいさん団子</h1>
       <div class="sub">正かいするたびに なかまが あつまってくるよ。20問を はやく とこう！</div>
+      <div class="who" id="who"><span class="wl">なまえ</span><span id="players"></span>
+        <input id="nameIn" maxlength="10" placeholder="あたらしい なまえ" autocomplete="off"><button id="nameOk">けってい</button></div>
       <div class="courses">
         <div class="course">
           <h2>たし算・ひき算</h2>
@@ -98,7 +109,7 @@ kbd{background:#fff;border:2px solid #c6d4e3;border-bottom-width:4px;border-radi
         <div class="course off"><h2>かけ算</h2><p>じゅんびちゅう</p></div>
         <div class="course off"><h2>わり算</h2><p>じゅんびちゅう</p></div>
       </div>
-      <div class="keys"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> でえらんで <kbd>Enter</kbd> でスタート<br>
+      <div class="keys"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> でえらんで <kbd>Enter</kbd> でスタート（マウスで★をおしてもOK）<br>
         こたえは 数字キー か テンキー で入れて <kbd>Enter</kbd>　（まちがえたら <kbd>BackSpace</kbd>）</div>
     </div>
     <!-- countdown -->
@@ -120,6 +131,7 @@ kbd{background:#fff;border:2px solid #c6d4e3;border-bottom-width:4px;border-radi
         <div id="rstats"></div>
         <div id="rslow"></div>
         <div id="rtop"></div>
+        <div id="rall"></div>
         <div class="keys"><kbd>Enter</kbd> もう一回　<kbd>Esc</kbd> もどる</div>
       </div>
     </div>
@@ -182,9 +194,34 @@ const qText=p=>`${p.a} ${opText(p.op)} ${p.b}`;
 
 // ---------- 記録 ----------
 const KEY='enaga_math_v01';
-function loadAll(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
-function getRec(star){return loadAll()[COURSE+'_'+star]||{best:null,ghost:null,top:[]};}
-function saveRec(star,rec){const all=loadAll();all[COURSE+'_'+star]=rec;try{localStorage.setItem(KEY,JSON.stringify(all));}catch(e){}}
+// { players:[最近つかった順], last:なまえ, recs:{なまえ:{addsub_1:{best,ghost,top}}} }
+function loadDB(){
+  let d=null;try{d=JSON.parse(localStorage.getItem(KEY));}catch(e){}
+  if(!d||!Array.isArray(d.players))d={players:[],last:null,recs:{}};
+  return d;
+}
+const DB=loadDB();
+let player=DB.last&&DB.players.includes(DB.last)?DB.last:null;
+function saveDB(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
+function recOf(name,star){const r=(DB.recs[name]||{})[COURSE+'_'+star];return r||{best:null,ghost:null,top:[]};}
+function getRec(star){return recOf(player,star);}
+function saveRec(star,rec){(DB.recs[player]=DB.recs[player]||{})[COURSE+'_'+star]=rec;saveDB();}
+function selectPlayer(name){
+  name=String(name||'').replace(/\s+/g,' ').trim().slice(0,10);
+  if(!name)return false;
+  DB.players=[name].concat(DB.players.filter(n=>n!==name));DB.last=name;player=name;saveDB();
+  $('#who').classList.remove('need');
+  renderPlayers();refreshTitle();return true;
+}
+function renderPlayers(){
+  const box=$('#players');box.textContent='';
+  for(const n of DB.players.slice(0,8)){
+    const b=document.createElement('button');b.className='chip'+(n===player?' sel':'');b.textContent=n;
+    b.addEventListener('click',()=>{selectPlayer(n);b.blur();});box.appendChild(b);
+  }
+}
+function needName(){const w=$('#who');w.classList.remove('need');void w.offsetWidth;w.classList.add('need');$('#nameIn').focus();}
+function tryStart(star){if(!player){needName();return;}startGame(star);}
 const sec=ms=>(ms/1000).toFixed(1);
 
 // ---------- 音 ----------
@@ -412,9 +449,9 @@ let state='title',G=null,selStar=1,resultLock=0,runId=0;
 const screens=['sTitle','sCount','sPlay','sResult'];
 function show(id){screens.forEach(s=>$('#'+s).classList.toggle('on',s===id));document.body.classList.toggle('calm',id==='sTitle'||id==='sResult');resize();}
 function refreshTitle(){
-  for(let s=1;s<=3;s++){const r=getRec(s);$('#bt'+s).textContent=r.best?`ベスト ${sec(r.best)}秒`:'まだ記録なし';}
+  for(let s=1;s<=3;s++){const r=player?getRec(s):{};$('#bt'+s).textContent=!player?'-':r.best?`ベスト ${sec(r.best)}秒`:'まだ記録なし';}
   document.querySelectorAll('.star').forEach(b=>b.classList.toggle('sel',+b.dataset.star===selStar));
-  $('#hCourse').textContent=`たし算・ひき算 ★${selStar}`;
+  $('#hCourse').textContent=(player?player+' ・ ':'')+`たし算・ひき算 ★${selStar}`;
 }
 function toTitle(){
   state='title';G=null;runId++;friends=[];leaving=[];banner=null;
@@ -511,7 +548,9 @@ function finish(){
   $('#rstats').textContent=`1問 へいきん ${(s/STEPS).toFixed(1)}秒 ・ 最大れんぞく ${G.maxCombo} ・ ミス ${G.miss}`;
   const slow=G.times.slice().sort((a,b)=>b.ms-a.ms).slice(0,3);
   $('#rslow').textContent='時間がかかった問題： '+slow.map(t=>`${qText(t.p)} = ${t.p.ans}（${sec(t.ms)}秒）`).join('　');
-  $('#rtop').textContent=`★${G.star} ランキング： `+rec.top.map((r,i)=>`${i+1}位 ${sec(r.ms)}秒`).join('　');
+  $('#rtop').textContent=`${player} の★${G.star} きろく： `+rec.top.map((r,i)=>`${i+1}位 ${sec(r.ms)}秒`).join('　');
+  const all=DB.players.map(n=>({n,b:recOf(n,G.star).best})).filter(x=>x.b!=null).sort((a,b)=>a.b-b.b).slice(0,5);
+  $('#rall').textContent=all.length>1?`みんなの★${G.star} ベスト： `+all.map((x,i)=>`${i+1}位 ${x.n} ${sec(x.b)}秒`).join('　'):'';
   // 記念写真：いちばん長かった団子
   friends=[];leaving=[];for(let i=0;i<G.maxCombo;i++)addFriend(now,true);setMood('happy',4000,now);
   setHud(G.step,total,G.miss,G.combo);
@@ -530,8 +569,14 @@ window.addEventListener('keydown',e=>{
     else if(c==='Backspace'||c==='Delete'||c==='NumpadDecimal'){G.input=G.input.slice(0,-1);renderInput();}
     else if(enter){submit();}
   }else if(state==='title'){
+    const ni=$('#nameIn');
+    if(document.activeElement===ni){
+      if(enter&&!e.isComposing&&e.keyCode!==229){e.preventDefault();if(selectPlayer(ni.value)){ni.value='';ni.blur();}}
+      else if(c==='Escape')ni.blur();
+      return;
+    }
     if(d==='1'||d==='2'||d==='3'){selStar=+d;refreshTitle();e.preventDefault();}
-    else if(enter||c==='Space'){e.preventDefault();startGame(selStar);}
+    else if(enter||c==='Space'){e.preventDefault();tryStart(selStar);}
   }else if(state==='result'){
     if(performance.now()<resultLock)return;
     if(enter||c==='Space'){e.preventDefault();startGame(G.star);}
@@ -540,7 +585,8 @@ window.addEventListener('keydown',e=>{
     if(c==='Escape')toTitle();
   }
 });
-document.querySelectorAll('.star').forEach(b=>b.addEventListener('click',()=>{if(state==='title')startGame(+b.dataset.star);}));
+document.querySelectorAll('.star').forEach(b=>b.addEventListener('click',()=>{b.blur();if(state==='title')tryStart(+b.dataset.star);}));
+$('#nameOk').addEventListener('click',e=>{const ni=$('#nameIn');if(selectPlayer(ni.value))ni.value='';e.target.blur();});
 $('#mute').addEventListener('click',e=>{muted=!muted;e.target.textContent='おと：'+(muted?'OFF':'ON');e.target.blur();});
 
 // ---------- ループ ----------
@@ -554,9 +600,9 @@ function loop(now){
   drawBg(now,dt);drawTrack(now);drawDango(now,dt);
   requestAnimationFrame(loop);
 }
-resize();toTitle();requestAnimationFrame(loop);
+resize();renderPlayers();toTitle();if(!player)$('#nameIn').focus();requestAnimationFrame(loop);
 // テスト用フック
-window.__enaga={get state(){return state;},get G(){return G;},startGame,makeSet};
+window.__enaga={get state(){return state;},get G(){return G;},get player(){return player;},DB,startGame,makeSet,selectPlayer};
 </script>
 </body>
 </html>
