@@ -1,5 +1,7 @@
 # シマエナガのけいさん団子 (enaga_math_log)
 
+**ブラウザで遊ぶ（最新 v02）: https://nao838861.github.io/nao-u-lab/Claude/game/enaga_math_log/v02/**
+
 小学4年生向け、タイピングソフト感覚の計算練習。20問をできるだけ速く解いてタイムを競う。
 
 | 版 | 内容 |
