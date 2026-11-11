@@ -102,7 +102,8 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
 #rgain{font-size:20px;color:#3b5f86;margin-top:10px;padding-top:8px;border-top:2px dashed #e3eaf3;line-height:1.45;}
 #rgain em{display:block;font-style:normal;color:var(--pink);font-weight:bold;}
 #rnewt{font-size:19px;color:#c0761a;font-weight:bold;min-height:4px;line-height:1.45;}
-#mute{position:absolute;right:14px;bottom:10px;z-index:5;font-size:15px;background:#fff;border:2px solid #cfe0f2;border-radius:10px;padding:4px 10px;cursor:pointer;font-family:inherit;color:var(--soft);}
+#snd{position:absolute;right:14px;bottom:10px;z-index:5;display:flex;gap:6px;}
+#snd button{font-size:15px;background:#fff;border:2px solid #cfe0f2;border-radius:10px;padding:4px 10px;cursor:pointer;font-family:inherit;color:var(--soft);}
 /* result */
 .panel{background:rgba(255,255,255,.95);border-radius:22px;padding:14px 26px;box-shadow:0 4px 14px rgba(60,90,130,.2);text-align:center;max-width:760px;}
 #rnext{font-size:19px;color:#3b5f86;}
@@ -194,7 +195,7 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
         <div class="keys"><kbd>Enter</kbd> もう一回　<kbd>Esc</kbd> もどる</div>
       </div>
     </div>
-    <button id="mute">おと：ON</button>
+    <div id="snd"><button id="bgmBtn">BGM：ON</button><button id="mute">おと：ON</button></div>
   </div>
   <canvas id="dango"></canvas>
 </div>
@@ -462,11 +463,93 @@ const sfx={
   chirp(c){const b=1150*Math.pow(2,Math.min(c,18)/24);tone(b,.06,'sine',.17,0,b*1.6);tone(b*1.3,.08,'sine',.14,.065,b*2.1);},
   wrong(){tone(240,.16,'triangle',.22,0,170);tone(190,.2,'triangle',.18,.11,140);},
   giveup(){tone(560,.3,'sine',.12,0,420);},
-  count(){tone(880,.12,'sine',.16);},
-  go(){tone(1320,.3,'sine',.18);},
+  // スタートの ジングル：3・2・1 で「ポン・ピン」と 上がって、スタート！で はなやかに
+  count(n){if(muted)return;const a=ac();if(!a)return;const t=a.currentTime+.02,ms={3:[67,72],2:[69,74],1:[71,76]}[n]||[67,72];
+    note(ms[0],t,.12,'square',.035);note(ms[1],t+.16,.16,'square',.04);note(ms[0]-24,t,.28,'triangle',.12);noise(t+.16,.03,.02,7000);},
+  go(){if(muted)return;const a=ac();if(!a)return;const t=a.currentTime+.02;
+    chord([72,76,79,84],t,.42,'square',.03);note(48,t,.45,'triangle',.14);noise(t,.25,.04,6000);
+    [84,88,91,96].forEach((m,i)=>note(m,t+.05+i*.05,.1,'sine',.05));
+    tone(2500,.05,'sine',.07,.3,3700);tone(3100,.06,'sine',.06,.37,4300);},
   dango(){[0,4,7,12].forEach((n,i)=>tone(1046*Math.pow(2,n/12),.14,'sine',.14,i*.07));},
-  finish(){[0,4,7,12,16,19,24].forEach((n,i)=>tone(784*Math.pow(2,n/12),.2,'triangle',.13,i*.08));},
 };
+
+// ---------- ファンファーレ・BGM ----------
+const mf=m=>440*Math.pow(2,(m-69)/12);
+let noiseBuf=null;
+function noise(t,dur,vol,hp=6000,dest){
+  const a=ac();if(!a)return;
+  if(!noiseBuf){noiseBuf=a.createBuffer(1,a.sampleRate,a.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}
+  const src=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();
+  src.buffer=noiseBuf;src.loop=true;f.type='highpass';f.frequency.value=hp;
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.005);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  src.connect(f);f.connect(g);g.connect(dest||a.destination);src.start(t);src.stop(t+dur+.05);
+}
+// 1音（エンベロープつき）。type=brass は のこぎり波＋ローパスで 金管っぽく
+function note(m,t,dur,type,vol,dest,atk=.01){
+  const a=ac();if(!a)return;
+  const o=a.createOscillator(),g=a.createGain();let out=o;
+  o.type=type==='brass'?'sawtooth':type;o.frequency.setValueAtTime(mf(m),t);
+  if(type==='brass'){const f=a.createBiquadFilter();f.type='lowpass';f.frequency.setValueAtTime(600,t);f.frequency.linearRampToValueAtTime(3200,t+.08);f.frequency.linearRampToValueAtTime(1800,t+dur);o.connect(f);out=f;}
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+atk);
+  g.gain.setValueAtTime(vol,t+Math.max(atk,dur*.6));g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  out.connect(g);g.connect(dest||a.destination);o.start(t);o.stop(t+dur+.05);
+}
+const chord=(ms,t,dur,type,vol)=>ms.forEach(m=>note(m,t,dur,type,vol));
+// クリア：はずむ「タタタ・タッタ・ターン！」
+function fanfareClear(){
+  if(muted)return 0;const a=ac();if(!a)return 0;const t=a.currentTime+.05,b=.13;
+  [[0,[72,76,79]],[1,[72,76,79]],[2,[72,76,79]],[3.5,[74,77,81]],[4.5,[76,79,83]],[6,[79,84,88]]].forEach(([k,ms],i)=>{
+    const d=i===5?.9:.11;chord(ms,t+k*b,d,'square',.035);note(ms[0]-24,t+k*b,d,'triangle',.12);
+  });
+  [0,1,2,3].forEach(i=>note(96+[0,4,7,12][i],t+6*b+.15+i*.06,.12,'sine',.05));
+  tone(2400,.06,'sine',.08,6*b+.5,3600);tone(3000,.07,'sine',.07,6*b+.58,4200);
+  noise(t+6*b,.4,.05,7000);
+  return 1.6;
+}
+// ハイスコア：ドラムロール → 金管の和音 → 長い和音とキラキラ
+function fanfareRecord(){
+  if(muted)return 0;const a=ac();if(!a)return 0;const t=a.currentTime+.05;
+  for(let i=0;i<14;i++)noise(t+i*.045,.05,.03+i*.006,1500);
+  const b=.16,s0=t+.7;
+  const seq=[[0,[67,72,76],.14],[1,[67,72,76],.14],[2,[67,72,76],.14],[3,[72,76,79],.45],
+             [6,[68,72,75],.42],[9,[70,74,77],.42],[12,[72,76,79,84],1.5]];
+  for(const [k,ms,d] of seq){chord(ms,s0+k*b,d,'brass',.035);note(ms[0]-24,s0+k*b,d,'triangle',.13);}
+  noise(s0+12*b,1.2,.07,5000);
+  for(let i=0;i<10;i++)note(84+[0,4,7,12,16,19,24,19,16,24][i],s0+12*b+.1+i*.07,.18,'sine',.05);
+  tone(2600,.06,'sine',.08,(s0-t)+12*b+.9,3800);tone(3200,.07,'sine',.07,(s0-t)+12*b+.98,4500);
+  return 3.4;
+}
+
+// プレイ中の BGM（小さめ）。れんぞく5で メロディ、10で キラキラが くわわる
+let bgmOn=true,bgm=null;
+const BPM=128,STEP=60/BPM/4;
+const PROG=[[48,[60,64,67]],[45,[60,64,69]],[41,[60,65,69]],[43,[62,67,71]],[48,[60,64,67]],[45,[60,64,69]],[41,[60,65,69]],[43,[62,65,71]]];
+const MEL=[[[0,76],[4,79],[8,84],[12,79]],[[0,81],[6,79],[8,76]],[[0,77],[4,81],[8,84],[12,81]],[[0,79],[4,86],[8,83],[10,79]],
+           [[0,88],[4,86],[6,84],[8,79]],[[0,81],[4,84],[8,88]],[[0,89],[4,88],[6,86],[8,84],[12,81]],[[0,83],[4,86],[8,79]]];
+function bgmStart(){
+  bgmStop();if(!bgmOn)return;const a=ac();if(!a)return;
+  const g=a.createGain();g.gain.value=muted?0:.55;g.connect(a.destination);
+  bgm={g,step:0,next:a.currentTime+.08,timer:null};
+  bgm.timer=setInterval(bgmTick,25);
+}
+function bgmStop(fade=.3){
+  if(!bgm)return;const a=ac(),b=bgm;bgm=null;clearInterval(b.timer);
+  if(a){b.g.gain.setTargetAtTime(.0001,a.currentTime,fade/3);setTimeout(()=>b.g.disconnect(),fade*1000+200);}
+}
+function bgmTick(){
+  const a=ac();if(!a||!bgm)return;
+  while(bgm.next<a.currentTime+.12){
+    const t=bgm.next,st=bgm.step%16,bar=Math.floor(bgm.step/16)%8,[root,tri]=PROG[bar],d=bgm.g;
+    const lv=G?G.combo:0;
+    if(st===0||st===3||st===8||st===11)note(root+(st===8?12:0),t,STEP*1.6,'triangle',.11,d);
+    if(st===6||st===14)note(root+7,t,STEP*1.4,'triangle',.08,d);
+    if(st===4||st===12)tri.forEach(m=>note(m+12,t,STEP*1.2,'sine',.022,d));
+    if(st%4===2)noise(t,.03,.012,8000,d);
+    if(lv>=5)for(const [k,m] of MEL[bar])if(k===st){note(m,t,STEP*3,'sine',.03,d);note(m+12,t,STEP*2,'sine',.008,d);}
+    if(lv>=10&&st%2===1)note(tri[(st>>1)%3]+24,t,STEP*.9,'sine',.012,d);
+    bgm.next+=STEP;bgm.step++;
+  }
+}
 
 // ---------- シマエナガを描く ----------
 function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
@@ -805,6 +888,7 @@ function refreshTitle(){
   }else{$('#stk').textContent='';$('#fCount').textContent='-';$('#tCount').textContent='-';$('#fNew').textContent=$('#tNew').textContent='';}
 }
 function toTitle(){
+  bgmStop();
   state='title';G=null;runId++;friends=[];leaving=[];banner=null;
   const now=performance.now();hopP.from=hopP.to=0;hopP.t=now;
   setHud(0,0,0,player?statsOf(player).streakNow:0);refreshTitle();show('sTitle');
@@ -822,17 +906,17 @@ function startGame(star){
   setHud(0,0,0,st0.streakNow);
   const id=++runId;
   state='count';show('sCount');
-  let n=3;$('#count').textContent=n;sfx.count();
+  let n=3;$('#count').textContent=n;sfx.count(3);
   const tick=()=>{
     if(id!==runId||state!=='count')return;n--;
-    if(n>0){$('#count').textContent=n;sfx.count();setTimeout(tick,650);}
+    if(n>0){$('#count').textContent=n;sfx.count(n);setTimeout(tick,650);}
     else{$('#count').textContent='スタート！';sfx.go();setTimeout(()=>{if(id===runId)beginPlay();},450);}
   };
   setTimeout(tick,650);
 }
 function beginPlay(){
   if(state!=='count')return;
-  state='play';show('sPlay');G.t0=performance.now();showQuestion();
+  state='play';show('sPlay');G.t0=performance.now();showQuestion();bgmStart();
 }
 function elapsed(){return (G.end||performance.now())-G.t0;}
 function showQuestion(){
@@ -888,8 +972,9 @@ function advance(counts){
 }
 function finish(){
   const now=performance.now();G.end=now;const total=now-G.t0;
-  state='result';resultLock=now+900;sfx.finish();
+  state='result';resultLock=now+900;bgmStop(.15);
   const rec=getRec(G.star);const isNew=rec.best==null||total<rec.best,hadBest=rec.best!=null;
+  const fanLen=isNew&&hadBest?fanfareRecord():fanfareClear();
   if(isNew){rec.best=total;rec.ghost=G.stepTimes.slice();}
   rec.top=(rec.top||[]).concat([{ms:total,miss:G.miss,combo:G.maxCombo,d:new Date().toLocaleDateString('ja-JP')}]).sort((a,b)=>a.ms-b.ms).slice(0,5);
   saveRec(G.star,rec);
@@ -925,7 +1010,7 @@ function finish(){
   if(up){const g2=document.createElement('em');g2.textContent=up;$('#rgain').appendChild(g2);}
   $('#rnewt').textContent=newT.length?'あたらしい しょうごう！ '+newT.slice(0,2).map(t=>`「${t.name}」`).join('')+(newT.length>2?` ほか${newT.length-2}こ`:''):'';
   $('#rslow').style.display=newT.length&&up?'none':'';
-  if(newT.length||up)sfx.title();
+  if(newT.length||up)setTimeout(()=>{if(state==='result')sfx.title();},fanLen*1000);
   // 記念写真：いちばん長かった団子
   friends=[];leaving=[];for(let i=0;i<G.maxCombo;i++)addFriend(now,true);setMood('happy',4000,now);
   setHud(G.step,total,G.miss,G.st.streakNow);
@@ -971,7 +1056,9 @@ $('#goForest').addEventListener('click',e=>{e.currentTarget.blur();openForest('f
 $('#goTitles').addEventListener('click',e=>{e.currentTarget.blur();openForest('titles');});
 document.querySelectorAll('.tab[data-tab]').forEach(b=>b.addEventListener('click',()=>{b.blur();setTab(b.dataset.tab);}));
 $('#fBack').addEventListener('click',e=>{e.currentTarget.blur();toTitle();});
-$('#mute').addEventListener('click',e=>{muted=!muted;e.target.textContent='おと：'+(muted?'OFF':'ON');e.target.blur();});
+$('#mute').addEventListener('click',e=>{muted=!muted;e.target.textContent='おと：'+(muted?'OFF':'ON');if(bgm)bgm.g.gain.value=muted?0:.55;e.target.blur();});
+$('#bgmBtn').addEventListener('click',e=>{bgmOn=!bgmOn;DB.bgm=bgmOn;saveDB();e.target.textContent='BGM：'+(bgmOn?'ON':'OFF');if(!bgmOn)bgmStop();else if(state==='play')bgmStart();e.target.blur();});
+if(DB.bgm===false){bgmOn=false;$('#bgmBtn').textContent='BGM：OFF';}
 
 // ---------- ループ ----------
 let last=performance.now();
@@ -988,7 +1075,7 @@ function loop(now){
 if(player){kid=!!(DB.kid||{})[player];document.body.classList.toggle('kid',kid);statsOf(player);}
 resize();renderPlayers();toTitle();if(!player)$('#nameIn').focus();requestAnimationFrame(loop);
 // テスト用フック
-window.__enaga={get state(){return state;},get G(){return G;},get player(){return player;},get kid(){return kid;},get course(){return course;},setCourse(c){course=c;},DB,startGame,makeSet,selectPlayer,setKid,statsOf,openForest,TITLES};
+window.__enaga={get state(){return state;},get G(){return G;},get player(){return player;},get kid(){return kid;},get course(){return course;},get bgm(){return bgm;},fanfareClear,fanfareRecord,setCourse(c){course=c;},DB,startGame,makeSet,selectPlayer,setKid,statsOf,openForest,TITLES};
 </script>
 </body>
 </html>
