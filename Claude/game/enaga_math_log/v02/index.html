@@ -242,8 +242,8 @@ const RECIPES_K={
   ],
 };
 const COURSES={
-  n:{name:'たし算・ひき算',desc:['1けたどうし','2けた と 1けた','2けたどうし・百のくらい'],th:{1:[24,30,38,48,60,80],2:[48,65,90,130,180,240],3:[65,80,100,130,170,220]}},
-  k:{name:'たしざん・ひきざん',desc:['こたえ 5まで','こたえ 10まで','20までの かず'],th:{1:[27,34,42,55,70,90],2:[32,40,50,65,85,110],3:[38,48,60,78,100,130]}},
+  n:{name:'たし算・ひき算',desc:['1けたどうし','2けた と 1けた','2けたどうし・百のくらい'],th:{1:[24,28,33,39,46,53,60,80],2:[48,60,75,95,120,150,185,250],3:[65,78,92,110,130,150,170,250]}},
+  k:{name:'たしざん・ひきざん',desc:['こたえ 5まで','こたえ 10まで','20までの かず'],th:{1:[27,32,38,45,54,64,76,95],2:[32,38,45,54,65,78,95,120],3:[38,45,54,65,78,94,112,140]}},
 };
 let kid=false;
 const modeKey=()=>kid?'k':'n';
@@ -279,11 +279,11 @@ const recKey=star=>(kid?'k_':'')+COURSE+'_'+star;
 function recOf(name,star){const r=(DB.recs[name]||{})[recKey(star)];return r||{best:null,ghost:null,top:[]};}
 function getRec(star){return recOf(player,star);}
 function saveRec(star,rec){(DB.recs[player]=DB.recs[player]||{})[recKey(star)]=rec;saveDB();}
-const RANKS=['SSS','SS','S','AA','A','B'];
-const RO={SSS:7,SS:6,S:5,AA:4,A:3,B:2,C:1};
-const RANK_TITLE={SSS:'でんせつの シマエナガ',SS:'森の おうさま',S:'雪のようせい',AA:'エナガ団子名人',A:'もこもこ団子',B:'まんまるエナガ',C:'ふわふわエナガ'};
-const RANK_COL={SSS:'#e0455c',SS:'#d99a10',S:'#f07a96',AA:'#2f6fc0',A:'#4a90d9',B:'#58b37a',C:'#9a8fb8'};
-function rankOf(isKid,star,ms){const th=COURSES[isKid?'k':'n'].th[star],s=ms/1000;for(let i=0;i<RANKS.length;i++)if(s<=th[i])return RANKS[i];return 'C';}
+const RANKS=['SSS','SS','S','AA','A','B','C','D'];
+const RO={SSS:9,SS:8,S:7,AA:6,A:5,B:4,C:3,D:2,E:1};
+const RANK_TITLE={SSS:'でんせつの シマエナガ',SS:'森の おうさま',S:'雪のようせい',AA:'エナガ団子名人',A:'もこもこ団子',B:'まんまるエナガ',C:'ふわふわエナガ',D:'ひなエナガ',E:'たまごエナガ'};
+const RANK_COL={SSS:'#e0455c',SS:'#d99a10',S:'#f07a96',AA:'#2f6fc0',A:'#4a90d9',B:'#58b37a',C:'#7fae5a',D:'#9a8fb8',E:'#a7a2b5'};
+function rankOf(isKid,star,ms){const th=COURSES[isKid?'k':'n'].th[star],s=ms/1000;for(let i=0;i<RANKS.length;i++)if(s<=th[i])return RANKS[i];return 'E';}
 // ひとつ上のランクと、その基準タイム（秒）
 function nextRank(isKid,star,rank){const th=COURSES[isKid?'k':'n'].th[star],i=RANKS.indexOf(rank);if(i===0)return null;const j=i<0?RANKS.length-1:i-1;return {rank:RANKS[j],sec:th[j]};}
 function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -339,6 +339,8 @@ const TITLES=[
   ['れんぞく','n1','ノーミス','ミスなしで クリア',s=>s.noMiss>=1],
   ['れんぞく','n5','しんちょう エナガ','ミスなしクリア 5回',s=>s.noMiss>=5],
   ['れんぞく','n20','パーフェクト マスター','ミスなしクリア 20回',s=>s.noMiss>=20],
+  ['ランク','rD','ひなエナガ','Dランクを とる',s=>anyRk(s,'D')],
+  ['ランク','rC','ふわふわエナガ','Cランクを とる',s=>anyRk(s,'C')],
   ['ランク','rB','まんまるエナガ','Bランクを とる',s=>anyRk(s,'B')],
   ['ランク','rA','もこもこ団子','Aランクを とる',s=>anyRk(s,'A')],
   ['ランク','rAA','エナガ団子名人','AAランクを とる',s=>anyRk(s,'AA')],
@@ -655,10 +657,11 @@ function digitsOf(n){return [0,1,2,3,4].map(p=>p<4?Math.floor(n/10**p)%10:Math.f
 function slotOf9(i){return i<4?{row:0,j:i,n:4}:i<7?{row:1,j:i-4,n:3}:{row:2,j:i-7,n:2};}
 function forestCols(n,W){
   const dg=digitsOf(n);let top=0;for(let p=4;p>=0;p--)if(dg[p]>0){top=p;break;}
-  const showTop=Math.min(4,top+1),ps=[];for(let p=showTop;p>=0;p--)ps.push(p);
+  // まだ とどいていない 上のくらいは ひみつ（列を出さない）
+  const ps=[];for(let p=top;p>=0;p--)ps.push(p);
   const ws=ps.map(p=>PL[p].r*7.8+40),sum=ws.reduce((a,b)=>a+b,0),k=Math.min(1,(W-40)/sum);
   let x=(W-sum*k)/2;const cols={};
-  ps.forEach((p,i)=>{cols[p]={x:x+ws[i]*k/2,r:PL[p].r*k,goal:p>top};x+=ws[i]*k;});
+  ps.forEach((p,i)=>{cols[p]={x:x+ws[i]*k/2,r:PL[p].r*k};x+=ws[i]*k;});
   return {cols,dg};
 }
 function birdPos(col,i,feetY){const s=slotOf9(i);return {x:col.x+(s.j-(s.n-1)/2)*col.r*1.95,y:feetY-col.r*1.12-s.row*col.r*1.7};}
@@ -713,13 +716,6 @@ function drawForest(now,dt){
   for(const p of Object.keys(L.cols).map(Number)){
     const col=L.cols[p];
     c.font='19px "BIZ UDPGothic",Meiryo,sans-serif';c.fillStyle='#6c7f95';c.fillText(PL[p].label,col.x,128);
-    if(col.goal){
-      c.font='bold 22px "BIZ UDPGothic",Meiryo,sans-serif';c.fillStyle='#f07a96';c.fillText(`あと ${(10**p-n).toLocaleString()}羽`,col.x,160);
-      const q=birdPos(col,1.5,feetY);
-      drawEnaga(c,col.x,feetY-col.r*1.12,col.r,{acc:PL[p].acc,t:now,alpha:.2});
-      c.font='bold 30px "BIZ UDPGothic",Meiryo,sans-serif';c.fillStyle='rgba(59,95,134,.45)';c.fillText('？',col.x,feetY-col.r*1.3);
-      continue;
-    }
     const d=L.dg[p];
     c.font='bold 30px "BIZ UDGothic",Meiryo,monospace';c.fillStyle='#3b5f86';c.fillText('×'+d,col.x,162);
     for(let i=0;i<Math.min(9,d);i++){
