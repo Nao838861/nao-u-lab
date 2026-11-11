@@ -6,21 +6,24 @@ import {Card, Grid, Hw, Label, Nes, Px, PxCrop, Txt, ramp} from './parts';
 const K = (id: string) => (i: number) => cueOf(id, i);
 
 // ---------------- S01 オープニング：実機 ----------------
+/** 実機映像の上にタイトル。sec は実機映像の秒、t はタイトルの濃さ、tag は撮影の注記の濃さ */
+const Opening: React.FC<{sec: number; t: number; tag: number; volume?: number}> = ({sec, t, tag, volume = 0}) => (
+  <AbsoluteFill style={{background: '#000'}}>
+    <Hw sec={sec} x={0} y={0} w={1920} volume={volume} style={{borderRadius: 0}} />
+    <AbsoluteFill style={{background: `linear-gradient(90deg, rgba(0,0,0,${0.15 + 0.55 * t}) 0%, rgba(0,0,0,0) 55%)`}} />
+    <div style={{position: 'absolute', left: 60, top: 50, opacity: tag}}>
+      <Tag color={C.amber}>ファミコン実機・ブラウン管をカメラで撮影</Tag>
+    </div>
+    <Txt x={70} y={300} size={44} color={C.cyan} o={t}>SuperFX ＋ Mode7 をカートリッジに</Txt>
+    <Txt x={70} y={370} size={104} o={t}>{'ファミコンで\n3Dレース'}</Txt>
+  </AbsoluteFill>
+);
 export const S01: React.FC = () => {
   const f = useCurrentFrame(), k = K('S01');
-  const t = ramp(f, k(2) - 10, k(2) + 20);
-  return (
-    <AbsoluteFill style={{background: '#000'}}>
-      <Hw sec={7} x={0} y={0} w={1920} volume={0.35} style={{borderRadius: 0}} />
-      <AbsoluteFill style={{background: `linear-gradient(90deg, rgba(0,0,0,${0.15 + 0.55 * t}) 0%, rgba(0,0,0,0) 55%)`}} />
-      <div style={{position: 'absolute', left: 60, top: 50, opacity: useIn(20)}}>
-        <Tag color={C.amber}>ファミコン実機・ブラウン管をカメラで撮影</Tag>
-      </div>
-      <Txt x={70} y={300} size={44} color={C.cyan} o={t}>SuperFX ＋ Mode7 をカートリッジに</Txt>
-      <Txt x={70} y={370} size={104} o={t}>{'ファミコンで\n3Dレース'}</Txt>
-    </AbsoluteFill>
-  );
+  return <Opening sec={7} t={ramp(f, k(2) - 10, k(2) + 20)} tag={useIn(20)} volume={0.35} />;
 };
+// サムネイル：S01 の2文目（車が大きく映るところ。画面の TIME 0:09.46）にタイトルを載せる。字幕なし
+export const Thumbnail: React.FC = () => <Opening sec={12.36} t={1} tag={1} />;
 
 // ---------------- S02 前回は回したふり ----------------
 const ANGLES = ['000', '008', '016', '024', '032', '040', '048', '056', '064', '072', '080', '088', '096', '104', '112', '120'];
