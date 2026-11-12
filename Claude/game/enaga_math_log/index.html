@@ -145,7 +145,7 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
 <div id="app">
   <div id="hud">
     <div class="hb" id="hCourse">たし算・ひき算</div>
-    <div class="hb"><b id="hStep">0</b> / 20</div>
+    <div class="hb"><b id="hStep">0</b> / <span id="hSteps">20</span></div>
     <div class="hb"><b id="hTime">0.0</b> 秒</div>
     <div class="hb">ミス <b id="hMiss">0</b></div>
     <div class="hb">れんぞく <b id="hCombo">0</b></div>
@@ -223,6 +223,8 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
 'use strict';
 const $=s=>document.querySelector(s);
 const STEPS=20;
+// かけ算★3は 10問。そのかわり 1問を「2問ぶん」として 数える（シマエナガ・正かい数・れんぞく・団子）
+const weightOf=(c,star,k)=>!k&&c==='mul'&&star===3?2:1;
 let course='addsub';
 
 // ---------- 乱数・問題づくり ----------
@@ -282,13 +284,13 @@ const RECIPES_M={
     [5,()=>mul(ri(2,9),ri(2,9)*10),p=>true],
   ],
   3:[
-    [14,()=>mul(ri(12,98),ri(2,9)),p=>p.a%10!==0&&(p.a%10)*p.b>=10],   // くり上がり
-    [6,()=>mul(ri(11,49),ri(2,4)),p=>p.a%10!==0&&(p.a%10)*p.b<10],
+    [7,()=>mul(ri(12,98),ri(2,9)),p=>p.a%10!==0&&(p.a%10)*p.b>=10],   // くり上がり
+    [3,()=>mul(ri(11,49),ri(2,4)),p=>p.a%10!==0&&(p.a%10)*p.b<10],
   ],
 };
 const COURSES={
   n:{name:'たし算・ひき算',desc:['1けたどうし','2けた と 1けた','2けたどうし・百のくらい'],th:{1:[24,28,33,39,46,53,60,80],2:[48,60,75,95,120,150,185,250],3:[65,78,92,110,130,150,170,250]}},
-  m:{name:'かけ算',desc:['九九','□をさがす・40×6','2けた × 1けた'],th:{1:[22,26,31,37,44,52,62,90],2:[30,36,44,54,66,80,100,140],3:[60,75,95,120,150,185,230,320]}},
+  m:{name:'かけ算',desc:['九九','□をさがす・40×6','2けた × 1けた'],th:{1:[22,26,31,37,44,52,62,90],2:[30,36,44,54,66,80,100,140],3:[30,38,48,60,75,93,115,160]}},
   k:{name:'たしざん・ひきざん',desc:['こたえ 5まで','こたえ 10まで','20までの かず'],th:{1:[27,32,38,45,54,64,76,95],2:[32,38,45,54,65,78,95,120],3:[38,45,54,65,78,94,112,140]}},
 };
 let kid=false;
@@ -700,14 +702,14 @@ function hopLift(h,now){const k=(now-h.t)/200;return k>=0&&k<1?Math.sin(Math.PI*
 function drawTrack(now){
   const {w,h}=dims.track,c=cx.track;c.clearRect(0,0,w,h);
   if(w<200)return;
-  const x0=110,x1=w-60,sp=(x1-x0)/STEPS,r=Math.min(17,sp*.36);
+  const NS=G?G.steps:STEPS,x0=110,x1=w-60,sp=(x1-x0)/NS,r=Math.min(17,sp*.36);
   const rows=[{y:56,name:'きみ'},{y:112,name:'ベスト'}];
   c.font='17px "BIZ UDPGothic",Meiryo,sans-serif';c.textBaseline='middle';
   rows.forEach((rw,i)=>{
     c.lineCap='round';c.strokeStyle='#8b6a52';c.lineWidth=5;c.beginPath();c.moveTo(x0-r,rw.y);c.lineTo(x1+r,rw.y);c.stroke();
     c.strokeStyle='#fff';c.lineWidth=2.5;c.beginPath();c.moveTo(x0-r,rw.y-2.5);c.lineTo(x1+r,rw.y-2.5);c.stroke();
     c.fillStyle='#8b6a52';
-    for(let k=1;k<=STEPS;k++){const x=x0+k*sp;c.fillRect(x-1,rw.y,2,7);}
+    for(let k=1;k<=NS;k++){const x=x0+k*sp;c.fillRect(x-1,rw.y,2,7);}
     c.fillStyle=i?'#8aa0b8':'#3b5f86';c.textAlign='right';c.fillText(rw.name,x0-r-14,rw.y-10);
   });
   // ゴールの旗
@@ -757,7 +759,7 @@ function drawDango(now,dt){
   for(let i=friends.length-1;i>=0;i--){
     const f=friends[i],{side,k}=slotOf(i);
     const tx=w/2+side*(k*sp+(mr-r)*.9),ty=ty0-Math.abs(Math.sin(now/380+f.ph))*1.5;
-    const p=Math.min(1,(now-f.t)/420);let x,y,flap=0;
+    const p=Math.max(0,Math.min(1,(now-f.t)/420));let x,y,flap=0;
     if(p<1){const e=1-Math.pow(1-p,3);x=f.sx+(tx-f.sx)*e;y=f.sy+(ty-f.sy)*e-Math.sin(Math.PI*p)*r*1.5;flap=(Math.sin(now/35)+1)/2;}
     else{x=f.cx==null?tx:f.cx+(tx-f.cx)*Math.min(1,dt/90);y=ty;}
     f.cx=x;f.cy=y;
@@ -925,12 +927,13 @@ function toTitle(){
   setHud(0,0,0,player?statsOf(player).streakNow:0);refreshTitle();show('sTitle');
   for(let i=0;i<6;i++)addFriend(now,true);
 }
-function setHud(step,ms,miss,combo){$('#hStep').textContent=step;$('#hTime').textContent=sec(ms);$('#hMiss').textContent=miss;$('#hCombo').textContent=combo;}
+function setHud(step,ms,miss,combo){$('#hSteps').textContent=G?G.steps:STEPS;$('#hStep').textContent=step;$('#hTime').textContent=sec(ms);$('#hMiss').textContent=miss;$('#hCombo').textContent=combo;}
 function startGame(star){
   ac();selStar=star;refreshTitle();
   const rec=getRec(star);
   const st0=statsOf(player);
-  G={st:st0,best0:st0.streakBest,recShown:false,star,queue:makeSet(star).map(p=>({...p,retry:false})),idx:0,step:0,input:'',miss:0,qMiss:0,combo:0,maxCombo:0,
+  const w=weightOf(course,star,kid);
+  G={w,steps:STEPS/w,st:st0,best0:st0.streakBest,recShown:false,star,queue:makeSet(star).map(p=>({...p,retry:false})),idx:0,step:0,input:'',miss:0,qMiss:0,combo:0,maxCombo:0,
      t0:0,qStart:0,times:[],stepTimes:[],ghost:rec.ghost,lock:false,end:0,fast:0,retryOk:0};
   friends=[];leaving=[];banner=null;
   const now=performance.now();hopP.from=hopP.to=0;hopG.from=hopG.to=0;hopP.t=hopG.t=now;
@@ -964,15 +967,16 @@ function submit(){
   if(G.input==='')return;
   const q=G.queue[G.idx],now=performance.now();
   if(parseInt(G.input,10)===q.ans){
-    G.combo++;G.maxCombo=Math.max(G.maxCombo,G.combo);
+    const c0=G.combo,k0=G.st.streakNow;G.combo+=G.w;G.maxCombo=Math.max(G.maxCombo,G.combo);
+    const crossed=(a,b,n)=>Math.floor(a/n)<Math.floor(b/n);
     G.times.push({p:q,ms:now-G.qStart});
     if(now-G.qStart<1000&&G.qMiss===0)G.fast++;if(q.retry)G.retryOk++;
-    sfx.chirp(G.combo);addFriend(now);setMood('happy',450,now);
-    if(G.combo===10||G.combo===20){banner={text:G.combo===10?'エナガ団子 かんせい！':'20羽の大団子！',t:now};sfx.dango();burst(now,dims.dango.w/2,dims.dango.h*.55,60);}
-    const st=G.st;st.streakNow++;
+    sfx.chirp(G.combo);for(let i=0;i<G.w;i++)addFriend(now+i*90);setMood('happy',450,now);
+    if((c0<10&&G.combo>=10)||(c0<20&&G.combo>=20)){banner={text:G.combo<20?'エナガ団子 かんせい！':'20羽の大団子！',t:now};sfx.dango();burst(now,dims.dango.w/2,dims.dango.h*.55,60);}
+    const st=G.st;st.streakNow+=G.w;
     if(st.streakNow>st.streakBest){st.streakBest=st.streakNow;
       if(!G.recShown&&G.best0>0){G.recShown=true;banner={text:`れんぞく きろく こうしん！ ${st.streakNow}`,t:now};sfx.dango();burst(now,dims.dango.w/2,dims.dango.h*.55,60);}}
-    if(st.streakNow%50===0){banner={text:`ミスなし ${st.streakNow}れんぞく！`,t:now};sfx.dango();burst(now,dims.dango.w/2,dims.dango.h*.55,80);}
+    if(crossed(k0,st.streakNow,50)){banner={text:`ミスなし ${st.streakNow}れんぞく！`,t:now};sfx.dango();burst(now,dims.dango.w/2,dims.dango.h*.55,80);}
     saveDB();
     advance(true);
     const qe=$('#q');qe.classList.remove('pop');void qe.offsetWidth;qe.classList.add('pop');
@@ -996,7 +1000,7 @@ function submit(){
 function advance(counts){
   const now=performance.now();
   if(counts){G.step++;G.stepTimes.push(now-G.t0);setHop(hopP,G.step,now);}
-  if(G.step>=STEPS){finish();return;}
+  if(G.step>=G.steps){finish();return;}
   G.idx++;
   if(G.idx>=G.queue.length){finish();return;}
   showQuestion();
@@ -1018,7 +1022,7 @@ function finish(){
   $('#rsec').textContent=sec(total);
   $('#rnew').textContent=isNew?(hadBest?'自分のベスト こうしん！':'はじめての記録！ 次からゴーストと走れるよ'):`ベスト ${sec(rec.best)}秒 まで あと ${sec(total-rec.best)}秒`;
   // 数字は3つだけ。いい結果は金色に
-  const chips=[['1問',`${(s/STEPS).toFixed(1)}秒`,false],[G.st.streakNow>G.best0&&G.st.streakNow>0?'れんぞく きろく！':'れんぞく',G.st.streakNow,G.st.streakNow>G.best0&&G.st.streakNow>0],G.miss===0?['ノーミス','!',true]:['ミス',G.miss,false]];
+  const chips=[['1問',`${(s/G.steps).toFixed(1)}秒`,false],[G.st.streakNow>G.best0&&G.st.streakNow>0?'れんぞく きろく！':'れんぞく',G.st.streakNow,G.st.streakNow>G.best0&&G.st.streakNow>0],G.miss===0?['ノーミス','!',true]:['ミス',G.miss,false]];
   const rs=$('#rstats');rs.textContent='';
   for(const [k,v,gold] of chips){const sp=document.createElement('span');if(gold)sp.className='gold';sp.textContent=k;const b=document.createElement('b');b.textContent=v;sp.appendChild(b);rs.appendChild(sp);}
   const slow=G.times.slice().sort((a,b)=>b.ms-a.ms)[0];
@@ -1027,13 +1031,13 @@ function finish(){
   $('#rall').textContent=all.length>1?`みんなの ベスト　`+all.map((x,i)=>`${i+1}位 ${x.n} ${sec(x.b)}秒`).join('　'):'';
   // つみあげ・シマエナガ・しょうごう
   const st=statsOf(player),key=modeKey()+G.star,before=st.enaga;
-  st.correct+=G.times.length;st.clears++;if(G.miss===0)st.noMiss++;
+  st.correct+=G.times.length*G.w;st.clears++;if(G.miss===0)st.noMiss++;
   st.maxCombo=Math.max(st.maxCombo,G.maxCombo);st.retryOk+=G.retryOk;st.fast+=G.fast;
-  const avg=s/STEPS;if(st.bestAvg==null||avg<st.bestAvg)st.bestAvg=avg;
+  const avg=s/G.steps;if(st.bestAvg==null||avg<st.bestAvg)st.bestAvg=avg;
   if(isNew&&hadBest)st.bestUp++;
   const td=today();st.days[td]=(st.days[td]||0)+1;st.cl[key]=(st.cl[key]||0)+1;
   if(!st.rk[key]||RO[rank]>RO[st.rk[key]])st.rk[key]=rank;
-  const gain=G.times.length+10+(G.miss===0?10:0);st.enaga+=gain;
+  const gain=G.times.length*G.w+10+(G.miss===0?10:0);st.enaga+=gain;
   const newT=checkTitles(st);saveDB();
   let up='';for(let p=4;p>=1;p--)if(Math.floor(st.enaga/10**p)>Math.floor(before/10**p)){up=`${PL[p].label}の 大きな シマエナガが きたよ！`;break;}
   $('#rgain').innerHTML='';
