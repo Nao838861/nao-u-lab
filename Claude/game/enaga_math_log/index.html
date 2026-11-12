@@ -101,7 +101,26 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
 .rhead{display:flex;align-items:center;justify-content:center;gap:20px;}
 #rgain{font-size:20px;color:#3b5f86;margin-top:10px;padding-top:8px;border-top:2px dashed #e3eaf3;line-height:1.45;}
 #rgain em{display:block;font-style:normal;color:var(--pink);font-weight:bold;}
-#rnewt{font-size:19px;color:#c0761a;font-weight:bold;min-height:4px;line-height:1.45;}
+.newbadge{display:inline-block;background:linear-gradient(#ff7a96,#e0455c);color:#fff;font-style:normal;font-weight:bold;border-radius:12px;padding:1px 10px;font-size:15px;
+  box-shadow:0 2px 6px rgba(224,69,92,.5);animation:hop .9s ease-in-out infinite;}
+@keyframes hop{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
+.recbtn .newbadge{margin-top:6px;}
+.tcard{position:relative;}
+.tcard.new{border-color:#e0455c;background:#fff3f6;animation:glow 1.2s ease-in-out infinite;}
+.tcard.new b{color:#e0455c;}
+.tcard.new::after{content:"NEW!";position:absolute;top:-11px;right:-6px;background:linear-gradient(#ff7a96,#e0455c);color:#fff;font-weight:bold;font-size:14px;
+  padding:2px 9px;border-radius:10px;transform:rotate(8deg);box-shadow:0 2px 5px rgba(224,69,92,.45);}
+@keyframes glow{0%,100%{box-shadow:0 0 0 rgba(240,122,150,0)}50%{box-shadow:0 0 18px rgba(240,122,150,.85)}}
+.newbox{background:linear-gradient(#fff8dc,#fff0f4);border:3px solid #f2b6c6;border-radius:18px;padding:8px 14px 12px;margin:4px 0 10px;}
+.newbox h3{margin:2px 0 8px;font-size:22px;color:#e0455c;text-align:center;}
+.newbox .tgrid{grid-template-columns:repeat(3,1fr);}
+.newbox .tcard b{font-size:22px;}
+#rnewt{min-height:4px;}
+#rnewt.on{display:inline-block;margin-top:8px;padding:6px 18px;border-radius:16px;background:linear-gradient(#fff6c8,#ffe08a);border:3px solid #f2b42b;
+  color:#9a5a00;font-weight:bold;font-size:20px;box-shadow:0 0 14px rgba(255,200,60,.7);animation:popin .5s cubic-bezier(.2,1.6,.4,1) both,shine 1.4s ease-in-out .5s infinite;}
+#rnewt .nb{display:inline-block;background:#e0455c;color:#fff;border-radius:10px;padding:0 8px;margin-right:8px;font-size:16px;}
+@keyframes popin{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes shine{0%,100%{box-shadow:0 0 8px rgba(255,200,60,.5)}50%{box-shadow:0 0 22px rgba(255,190,40,.95)}}
 #snd{position:absolute;right:14px;bottom:10px;z-index:5;display:flex;gap:6px;}
 #snd button{font-size:15px;background:#fff;border:2px solid #cfe0f2;border-radius:10px;padding:4px 10px;cursor:pointer;font-family:inherit;color:var(--soft);}
 /* result */
@@ -320,9 +339,10 @@ function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth
 function statsOf(name){
   DB.stats=DB.stats||{};
   let s=DB.stats[name];const fresh=!s;if(!s)s=DB.stats[name]={};
-  const def={correct:0,clears:0,noMiss:0,maxCombo:0,retryOk:0,fast:0,bestAvg:null,bestUp:0,days:{},cl:{},rk:{},enaga:0,seen:0,titles:{},tSeen:0,streakNow:0,streakBest:0};
+  const def={correct:0,clears:0,noMiss:0,maxCombo:0,retryOk:0,fast:0,bestAvg:null,bestUp:0,days:{},cl:{},rk:{},enaga:0,seen:0,titles:{},tSeen:0,tSeenIds:null,streakNow:0,streakBest:0};
   for(const k in def)if(s[k]===undefined)s[k]=JSON.parse(JSON.stringify(def[k]));
   if(fresh)seedStats(name,s);
+  if(!s.tSeenIds){s.tSeenIds={};if(s.tSeen>=gotCount(s))for(const id in s.titles)s.tSeenIds[id]=1;}
   return s;
 }
 // v01で あそんだ ぶんを きろくから ひきつぐ（上位5回ぶん）
@@ -420,6 +440,7 @@ const TITLES=[
     .map(([n,name])=>['エナガ','e'+n,name,`シマエナガを ${n.toLocaleString()}羽 あつめる`,s=>s.enaga>=n]),
 ].map(([grp,id,name,cond,test])=>({grp,id,name,cond,test}));
 const gotCount=s=>TITLES.filter(t=>s.titles[t.id]).length;
+const newTitles=s=>TITLES.filter(t=>s.titles[t.id]&&!(s.tSeenIds||{})[t.id]);
 function checkTitles(s){const got=[];for(const t of TITLES)if(!s.titles[t.id]&&t.test(s)){s.titles[t.id]=today();got.push(t);}return got;}
 function setKid(v){
   kid=!!v;if(kid)course='addsub';if(player){(DB.kid=DB.kid||{})[player]=kid;saveDB();}
@@ -793,19 +814,29 @@ function setTab(t){
   if(t==='forest'){
     fA={from:s.seen,to:s.enaga,t0:now+500,dur:Math.min(4000,Math.max(700,(s.enaga-s.seen)*35)),prev:s.seen,born:PL.map(()=>[]),tick:0};
     fSparks=[];fLeave=[];fMsg=null;s.seen=s.enaga;saveDB();
-  }else{renderTitles();s.tSeen=gotCount(s);saveDB();}
+  }else{const nw=newTitles(s).length;renderTitles();if(nw)sfx.title();for(const id in s.titles)s.tSeenIds[id]=1;s.tSeen=gotCount(s);saveDB();}
 }
 function renderTitles(){
   const s=statsOf(player),box=$('#titleList');box.textContent='';box.scrollTop=0;
   const got=TITLES.filter(t=>s.titles[t.id]).length;
   const hd=document.createElement('div');hd.className='thead';hd.textContent=`${player} の しょうごう　${got} / ${TITLES.length}`;box.appendChild(hd);
+  const nw=new Set(newTitles(s).map(t=>t.id));
+  const card=(t,isNew)=>{
+    const c=document.createElement('div'),has=s.titles[t.id];c.className='tcard'+(has?' got':'')+(isNew?' new':'');
+    const b=document.createElement('b');b.textContent=has?t.name:'？？？';
+    const sm=document.createElement('small');sm.textContent=t.cond+(has?`（${+has.slice(5,7)}/${+has.slice(8,10)}）`:'');
+    c.appendChild(b);c.appendChild(sm);return c;
+  };
+  if(nw.size){
+    const nb=document.createElement('div');nb.className='newbox';
+    const h=document.createElement('h3');h.textContent=`あたらしく とった しょうごう！ ${nw.size}こ`;nb.appendChild(h);
+    const g=document.createElement('div');g.className='tgrid';for(const t of TITLES)if(nw.has(t.id))g.appendChild(card(t,true));
+    nb.appendChild(g);box.appendChild(nb);
+  }
   let grid=null,grp=null;
   for(const t of TITLES){
     if(t.grp!==grp){grp=t.grp;const h=document.createElement('h3');h.className='tg';h.textContent=grp;box.appendChild(h);grid=document.createElement('div');grid.className='tgrid';box.appendChild(grid);}
-    const c=document.createElement('div'),has=s.titles[t.id];c.className='tcard'+(has?' got':'');
-    const b=document.createElement('b');b.textContent=has?t.name:'？？？';
-    const sm=document.createElement('small');sm.textContent=t.cond+(has?`（${+has.slice(5,7)}/${+has.slice(8,10)}）`:'');
-    c.appendChild(b);c.appendChild(sm);grid.appendChild(c);
+    grid.appendChild(card(t,nw.has(t.id)));
   }
 }
 function drawForest(now,dt){
@@ -884,8 +915,8 @@ function refreshTitle(){
     const s=statsOf(player),tg=gotCount(s);
     $('#stk').textContent=`ミスなし れんぞく ${s.streakNow}（きろく ${s.streakBest}）`;
     $('#fCount').textContent=s.enaga.toLocaleString()+'羽';$('#fNew').textContent=s.enaga>s.seen?`あたらしく +${s.enaga-s.seen}`:'';
-    $('#tCount').textContent=`${tg}/${TITLES.length}`;$('#tNew').textContent=tg>s.tSeen?`NEW ${tg-s.tSeen}`:'';
-  }else{$('#stk').textContent='';$('#fCount').textContent='-';$('#tCount').textContent='-';$('#fNew').textContent=$('#tNew').textContent='';}
+    $('#tCount').textContent=`${tg}/${TITLES.length}`;const nn=newTitles(s).length;$('#tNew').innerHTML=nn?`<span class="newbadge">NEW! ${nn}</span>`:'';
+  }else{$('#stk').textContent='';$('#fCount').textContent='-';$('#tCount').textContent='-';$('#fNew').textContent='';$('#tNew').innerHTML='';}
 }
 function toTitle(){
   bgmStop();
@@ -1008,7 +1039,13 @@ function finish(){
   $('#rgain').innerHTML='';
   const g1=document.createElement('span');g1.textContent=`シマエナガ +${gain}羽（ぜんぶで ${st.enaga.toLocaleString()}羽）`;$('#rgain').appendChild(g1);
   if(up){const g2=document.createElement('em');g2.textContent=up;$('#rgain').appendChild(g2);}
-  $('#rnewt').textContent=newT.length?'あたらしい しょうごう！ '+newT.slice(0,2).map(t=>`「${t.name}」`).join('')+(newT.length>2?` ほか${newT.length-2}こ`:''):'';
+  const rn=$('#rnewt');rn.textContent='';rn.className='';
+  if(newT.length){
+    const nb=document.createElement('span');nb.className='nb';nb.textContent='NEW!';rn.appendChild(nb);
+    rn.appendChild(document.createTextNode('しょうごう '+newT.slice(0,2).map(t=>`「${t.name}」`).join('')+(newT.length>2?` ほか${newT.length-2}こ`:'')));
+    setTimeout(()=>{if(state==='result')rn.className='on';},Math.max(0,fanLen*1000-300));
+    rn.style.visibility='hidden';setTimeout(()=>{rn.style.visibility='';},Math.max(0,fanLen*1000-300));
+  }
   $('#rslow').style.display=newT.length&&up?'none':'';
   if(newT.length||up)setTimeout(()=>{if(state==='result')sfx.title();},fanLen*1000);
   // 記念写真：いちばん長かった団子
