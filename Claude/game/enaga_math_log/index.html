@@ -105,6 +105,20 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
   box-shadow:0 2px 6px rgba(224,69,92,.5);animation:hop .9s ease-in-out infinite;}
 @keyframes hop{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
 .recbtn .newbadge{margin-top:6px;}
+.delbtn{display:block;margin:6px auto 0;background:none;border:none;color:#a9b8c8;font-family:inherit;font-size:13px;text-decoration:underline;cursor:pointer;}
+.delbtn:hover{color:#6c7f95;}
+#modal{position:absolute;inset:0;z-index:20;background:rgba(40,60,90,.45);display:none;align-items:center;justify-content:center;}
+#modal.on{display:flex;}
+.mbox{background:#fff;border-radius:22px;padding:22px 30px;min-width:520px;max-width:760px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.3);}
+.mbox h3{margin:0 0 12px;font-size:26px;color:#3b5f86;}
+#mBody{font-size:19px;color:var(--ink);line-height:1.6;margin-bottom:14px;}
+#mBody .warn{color:#e0455c;font-weight:bold;}
+#mBody input{font-family:inherit;font-size:22px;padding:6px 12px;border-radius:12px;border:3px solid #cfe0f2;width:260px;text-align:center;user-select:text;-webkit-user-select:text;}
+.mbtns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+.mbtns button{font-family:inherit;font-size:20px;padding:8px 22px;border-radius:16px;border:3px solid #cfe0f2;background:#f7fbff;cursor:pointer;color:var(--ink);}
+.mbtns button.safe{border-color:var(--blue);background:#e7f2ff;font-weight:bold;}
+.mbtns button.danger{border-color:#e0455c;background:#fff0f3;color:#c0304a;}
+.mbtns button:disabled{opacity:.35;cursor:default;}
 .tcard{position:relative;}
 .tcard.new{border-color:#e0455c;background:#fff3f6;animation:glow 1.2s ease-in-out infinite;}
 .tcard.new b{color:#e0455c;}
@@ -180,6 +194,7 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
           <div id="stk"></div>
           <button class="recbtn" id="goForest"><span>エナガのもり<br><i id="fNew"></i></span><b id="fCount">0羽</b></button>
           <button class="recbtn" id="goTitles"><span>しょうごう<br><i id="tNew"></i></span><b id="tCount">0</b></button>
+          <button class="delbtn" id="delBtn">きろくを けす</button>
         </div>
       </div>
       <div class="keys"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> たし算・ひき算　<span class="mulc"><kbd>4</kbd><kbd>5</kbd><kbd>6</kbd> かけ算　</span>でえらんで <kbd>Enter</kbd> でスタート（マウスで★をおしてもOK）<br>
@@ -218,6 +233,7 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
   </div>
   <canvas id="dango"></canvas>
 </div>
+<div id="modal"><div class="mbox"><h3 id="mTitle"></h3><div id="mBody"></div><div class="mbtns" id="mBtns"></div></div></div>
 </div>
 <script>
 'use strict';
@@ -1059,8 +1075,57 @@ function finish(){
 }
 
 // ---------- 入力 ----------
+// ---------- きろくを けす（なまえごと。しつこく 確認する） ----------
+let modalOpen=false;
+function closeModal(){modalOpen=false;$('#modal').classList.remove('on');refreshTitle();}
+function modal(title,bodyNodes,buttons){
+  modalOpen=true;$('#modal').classList.add('on');$('#mTitle').textContent=title;
+  const body=$('#mBody'),bt=$('#mBtns');body.textContent='';bt.textContent='';
+  for(const n of bodyNodes)body.appendChild(typeof n==='string'?document.createTextNode(n):n);
+  let first=null;
+  for(const [label,cls,fn] of buttons){const b=document.createElement('button');b.textContent=label;if(cls)b.className=cls;b.addEventListener('click',fn);bt.appendChild(b);if(cls==='safe'&&!first)first=b;}
+  return {first,buttons:bt.querySelectorAll('button')};
+}
+const el=(tag,text,cls)=>{const e=document.createElement(tag);if(text!=null)e.textContent=text;if(cls)e.className=cls;return e;};
+function delStep1(){
+  if(!DB.players.length){modal('きろくを けす',['けせる きろくは ありません。'],[['とじる','safe',closeModal]]);return;}
+  const names=el('div');names.className='mbtns';
+  for(const n of DB.players){const b=el('button',n);b.addEventListener('click',()=>delStep2(n));names.appendChild(b);}
+  modal('だれの きろくを けしますか？',[names],[['やめる','safe',closeModal]]).first.focus();
+}
+function delStep2(n){
+  const s=statsOf(n),tg=gotCount(s);
+  const r=modal(`「${n}」の きろくを ぜんぶ けしますか？`,[
+    'ベストタイム・ゴースト・ランク',el('br'),
+    `シマエナガ ${s.enaga.toLocaleString()}羽 ・ しょうごう ${tg}こ ・ れんぞく きろく ${s.streakBest}`,el('br'),
+    el('span','が ぜんぶ なくなります。','warn')],
+    [['やめる','safe',closeModal],['けす','danger',()=>delStep3(n)]]);
+  r.first.focus();
+}
+function delStep3(n){
+  modal('ほんとうに けしますか？',[el('span','けした きろくは もとに もどせません。','warn'),el('br'),'おうちの人と いっしょに たしかめてね。'],
+    [['やめる','safe',closeModal],['ほんとうに けす','danger',()=>delStep4(n)]]).first.focus();
+}
+function delStep4(n){
+  const inp=el('input');inp.maxLength=10;inp.autocomplete='off';
+  const r=modal('さいごの かくにん',[`けすなら、なまえ「${n}」を 入力してください。`,el('br'),inp],
+    [['やめる','safe',closeModal],['けす','danger',()=>{if(inp.value.trim()===n)delDo(n);}]]);
+  const del=r.buttons[1];del.disabled=true;
+  inp.addEventListener('input',()=>{del.disabled=inp.value.trim()!==n;});
+  inp.addEventListener('keydown',e=>{if((e.code==='Enter'||e.code==='NumpadEnter')&&!e.isComposing&&e.keyCode!==229&&!del.disabled){e.preventDefault();delDo(n);}});
+  setTimeout(()=>inp.focus(),0);
+}
+function delDo(n){
+  delete DB.recs[n];if(DB.stats)delete DB.stats[n];if(DB.kid)delete DB.kid[n];
+  DB.players=DB.players.filter(x=>x!==n);
+  if(player===n){player=null;DB.last=DB.players[0]||null;if(DB.last){player=DB.last;kid=!!(DB.kid||{})[player];}else kid=false;document.body.classList.toggle('kid',kid);}
+  saveDB();renderPlayers();
+  modal('けしました',[`「${n}」の きろくを けしました。`],[['とじる','safe',closeModal]]).first.focus();
+}
+
 window.addEventListener('keydown',e=>{
   const c=e.code,m=/^(Digit|Numpad)(\d)$/.exec(c),d=m?m[2]:null;
+  if(modalOpen){if(c==='Escape'){e.preventDefault();closeModal();}return;}
   const enter=c==='Enter'||c==='NumpadEnter';
   if(state==='play'){
     e.preventDefault();
@@ -1095,6 +1160,7 @@ $('#nameOk').addEventListener('click',e=>{const ni=$('#nameIn');if(selectPlayer(
 $('#kidBtn').addEventListener('click',e=>{setKid(!kid);e.currentTarget.blur();});
 $('#goForest').addEventListener('click',e=>{e.currentTarget.blur();openForest('forest');});
 $('#goTitles').addEventListener('click',e=>{e.currentTarget.blur();openForest('titles');});
+$('#delBtn').addEventListener('click',e=>{e.currentTarget.blur();if(state==='title')delStep1();});
 document.querySelectorAll('.tab[data-tab]').forEach(b=>b.addEventListener('click',()=>{b.blur();setTab(b.dataset.tab);}));
 $('#fBack').addEventListener('click',e=>{e.currentTarget.blur();toTitle();});
 $('#mute').addEventListener('click',e=>{muted=!muted;e.target.textContent='おと：'+(muted?'OFF':'ON');if(bgm)bgm.g.gain.value=muted?0:.55;e.target.blur();});
