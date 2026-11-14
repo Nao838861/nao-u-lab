@@ -1,0 +1,18 @@
+エナガの かんじの森　素材の出典
+
+漢字の筆画・部品の階層（data/g1〜g6.json の字形と部品分け）
+KanjiVG, copyright Ulrich Apel — https://kanjivg.tagaini.net/
+Creative Commons Attribution-ShareAlike 3.0 Unported
+
+学年・読み（KANJIDIC2）と語例（JMdict）
+Electronic Dictionary Research and Development Group (EDRDG) — https://www.edrdg.org/
+Creative Commons Attribution-ShareAlike 4.0（jmdict-simplified 版を利用 https://github.com/scriptin/jmdict-simplified）
+
+語ごとのふりがな
+JmdictFurigana — https://github.com/Doublevil/JmdictFurigana （CC BY-SA 4.0）
+
+data/*.json は上記から作った派生データで、同じく CC BY-SA で提供します。
+（作成スクリプト：nao-u-lab リポジトリの GPT/projects/kanji_learning/claude_v001/tools/build_grades.py）
+
+部品の分け方・名前は、ミチムラ式漢字学習法の公開資料（https://kanji.cloud/ ・考案者のブログ）から読み取った規則による推定で、公式教材の再現ではありません。字源を示すものでもありません。
+教科書の順（光村図書 令和6年版）は、公開されている学年別の新出漢字一覧から並べたものです。
