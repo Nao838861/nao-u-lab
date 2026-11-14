@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Composition, Sequence, staticFile} from 'remotion';
 import {FONT, FPS, H, W, Subtitle, leadOf, sceneFrames, sceneOrder, sceneInfo, videoOrder} from './common';
-import {S01, S02, S03, S04} from './scenesA';
+import {S01, S02, S03, S04, Thumbnail} from './scenesA';
 import {S03b, S05b, S07b} from './scenesDeep';
 import {S05c} from './scenesBus';
 import {S05, S06, S07} from './scenesB';
@@ -45,5 +45,6 @@ export const RemotionRoot: React.FC = () => (
     {sceneOrder.map((id) => (
       <Composition key={id} id={`Scene-${id}`} component={() => <Full order={[id]} bgm={false} />} durationInFrames={sceneFrames(id)} fps={FPS} width={W} height={H} />
     ))}
+    <Composition id="Thumbnail" component={Thumbnail} durationInFrames={1} fps={FPS} width={W} height={H} />
   </>
 );

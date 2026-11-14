@@ -103,6 +103,7 @@ node tools/rebuild_all.mjs     # 録画・層画像・地図・車のクリッ�
 npm run stills -- --video=overview   # 各ナレーション行の静止画（out/stills）。詳細編は --video=deep
 npm run render:overview        # 概要編（out/fxracing3d_overview.mp4、約6分半、同時2本で約35分）
 npm run render:deep            # 詳細編（out/fxracing3d_deep.mp4、約5分40秒）
+npx remotion still src/index.ts Thumbnail out/thumbnail.png   # サムネイル（S01の車が大きく映るコマにタイトル、字幕なし）
 ```
 
 必要なもの：Node 20以上、Python 3（numpy, Pillow）、ffmpeg。台本を変えたときは `pip install edge-tts` のうえで `node tools/tts.mjs --scene=S06`（`assets/narration` も更新される）。`--scene` を付けないと全場面を読み直し、他の場面の長さが少し変わることがある。
