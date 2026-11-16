@@ -27,6 +27,8 @@ const ok = (cond, label) => { console.log(`${cond ? 'ok  ' : 'FAIL'} ${label}`);
         if (u.n === 'ハ' || u.n === 'ソ') { const [a, b] = u.s.map(P); if ((u.n === 'ハ') !== (dx(a) < 0 && dx(b) > 0)) bad.push(`${k.c}(${u.n})`); }
         // ノノ＝同じ向き・同じくらいの長さの ノ が 2本（勿の形）。ちがえば 1画ずつ
         if (u.n === 'ノノ') { const [a, b] = u.s.map(P), r = len(a) / len(b); if (!(dx(a) < 0 && dx(b) < 0 && r > .6 && r < 1.6)) bad.push(`${k.c}(ノノ)`); }
+        // にじゅうあし＝横の下に 短い あしが 2本（井・曲・冊 のように 横を つらぬく たて は ちがう）
+        if (u.n === 'にじゅうあし') { const [a, b] = u.s.map(P), hz = Math.abs(dx(a)) > Math.abs(a.at(-1)[1] - a[0][1]); if (!(hz && dx(b) <= 2 && b[0][1] > a[0][1] - 20)) bad.push(`${k.c}(にじゅうあし)`); }
         // すぼまる てん・ノ を べつべつに 唱えていない（ソに まとめる）
         const v = k.u[j + 1];
         if (u.n === 'てん' && v && v.n === 'ノ' && u.s.length === 1 && v.s.length === 1) {
@@ -36,7 +38,7 @@ const ok = (cond, label) => { console.log(`${cond ? 'ok  ' : 'FAIL'} ${label}`);
       });
     }
   }
-  ok(!bad.length, 'ハ・ソ・ノノ の名前が 形と 合う' + (bad.length ? '：' + bad.join(' ') : ''));
+  ok(!bad.length, 'ハ・ソ・ノノ・にじゅうあし の名前が 形と 合う' + (bad.length ? '：' + bad.join(' ') : ''));
   // 唱えの順＝書き順（囲む形 だけは「囲んで、中、さいごに とじる」で 例外）。語例の ない字は ない
   const WRAP = new Set(['くにがまえ', 'はこがまえ', 'ぎょうがまえ', 'ははのかん', 'ふしづくり']), bad2 = [], noEx = [];
   for (let g = 1; g <= 6; g++) {
