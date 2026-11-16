@@ -701,10 +701,10 @@ function dPlayView() {
   const q = D.q, k = BY[q.char], ids = k.u.map(u => u.n);
   return `<div class="hud"><div class="hb">かんじ団子 ${GD.grade}年</div><div class="hb"><b>${D.i + 1}</b> / ${DSTEPS}</div><div class="hb"><b id="dTime">0.0</b> 秒</div>
     <div class="hb">ミス <b>${D.miss}</b></div><div class="hb combo">れんぞく <b>${D.combo}</b></div><div class="sp"></div>${btn('home', 'やめる', {cls: 'small'})}</div>
-    <div class="dplay"><div class="dq">${promptHtml(k)}<div class="gbox">${q.step ? buildSvg(q.char, q.step - 1) : '<span class="qmark">？</span>'}</div>
-      <div class="slots" style="max-width:260px">${ids.map((_, i) => `<span class="slot ${i < q.step ? 'done' : i === q.step ? 'now' : ''}" style="min-width:56px">${no(i)}${i < q.step ? '✓' : ''}</span>`).join('')}</div></div>
-      <div class="tiles">${q.choices.map(id => { const x = q.wrong.includes(id); return `<button type="button" class="tile ${x ? 'x' : ''}" data-act="dTap" data-v="${esc(id)}" ${x ? 'disabled' : ''}>${pathsSvg(shapeOf(id, q.char))}</button>`; }).join('')}</div>
-      <p class="msg" style="color:var(--soft)">ぶひんを 書く じゅんに タップ</p></div>`;
+    <div class="dplay"><div class="dleft"><div class="tiles">${q.choices.map(id => { const x = q.wrong.includes(id); return `<button type="button" class="tile ${x ? 'x' : ''}" data-act="dTap" data-v="${esc(id)}" ${x ? 'disabled' : ''}>${pathsSvg(shapeOf(id, q.char))}</button>`; }).join('')}</div>
+      <p class="msg" style="color:var(--soft)">ぶひんを 書く じゅんに タップ</p></div>
+      <div class="dq">${promptHtml(k)}<div class="gbox">${q.step ? buildSvg(q.char, q.step - 1) : '<span class="qmark">？</span>'}</div>
+      <div class="slots">${ids.map((_, i) => `<span class="slot ${i < q.step ? 'done' : i === q.step ? 'now' : ''}" style="min-width:56px">${no(i)}${i < q.step ? '✓' : ''}</span>`).join('')}</div></div></div>`;
 }
 function dResultView() {
   const r = S, nr = (() => { const i = RANKS.indexOf(r.rk); if (i === 0) return null; const j = i < 0 ? RANKS.length - 1 : i - 1; return {rank: RANKS[j], sec: TH[j]}; })();
