@@ -86,6 +86,30 @@ function fillChoices(correct, n, pool) {
   for (const id of shuffle(pool)) { if (out.length >= n) break; if (!out.includes(id) && !skip.has(id)) out.push(id); }
   return shuffle(out);
 }
+// 形の ダミー：見た目が ほぼ同じ形（口と くちへん、言と ごんべん など）は 2つ 出さない
+const sigCache = new WeakMap();
+function shapeSig(paths) {
+  if (sigCache.has(paths)) return sigCache.get(paths);
+  const S = paths.map(samplePath), all = S.flat(), xs = all.map(p => p[0]), ys = all.map(p => p[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const pick = f => S.map(st => Array.from({length: 8}, (_, i) => f(st[Math.round(i * (st.length - 1) / 7)])));
+  const u = Math.max(x1 - x0, y1 - y0, 20), cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, w = Math.max(x1 - x0, 8), h = Math.max(y1 - y0, 8);
+  const sig = {uni: pick(p => [(p[0] - cx) / u, (p[1] - cy) / u]), axis: pick(p => [(p[0] - x0) / w, (p[1] - y0) / h])};
+  sigCache.set(paths, sig); return sig;
+}
+const sigDist = (a, b) => { if (a.length !== b.length) return 9; let t = 0, n = 0; a.forEach((st, i) => st.forEach((p, j) => { t += Math.hypot(p[0] - b[i][j][0], p[1] - b[i][j][1]); n++; })); return t / n; };
+const looksSame = (pa, pb) => { const a = shapeSig(pa), b = shapeSig(pb); return sigDist(a.uni, b.uni) < .12 || sigDist(a.axis, b.axis) < .12; };
+function fillShapes(correct, n, pool, ch) {
+  const out = [...new Set(correct)], memo = new Map(), shp = id => memo.get(id) || (memo.set(id, shapeOf(id, ch)), memo.get(id));
+  const skip = new Set(CONFUSE.flatMap(g => g.some(x => out.includes(x)) ? g.filter(x => !out.includes(x)) : []));
+  for (const id of shuffle(pool)) {
+    if (out.length >= n) break;
+    if (out.includes(id) || skip.has(id) || !GD.parts[id]) continue;
+    if (out.some(o => looksSame(shp(o), shp(id)))) continue;
+    out.push(id);
+  }
+  return shuffle(out);
+}
 function say(text) {
   try {
     if (snd.muted || !('speechSynthesis' in window)) return;
@@ -214,14 +238,14 @@ function newKanjiQ(ch) {
   return {
     char: ch, phase: 'names', names: Array(n).fill(null), active: 0,
     nameChoices: K.nd ? [...new Set(ids)] : fillChoices(ids, Math.max(6, kinds + 3), pool),
-    step: 0, wrongShapes: [], shapeChoices: K.nd ? [...new Set(ids)] : fillChoices(ids, Math.max(12, kinds + 4), pool),
+    step: 0, wrongShapes: [], shapeChoices: K.nd ? [...new Set(ids)] : fillShapes(ids, Math.max(12, kinds + 4), pool, ch),
     wrong: Array(n).fill(false), ink: [], msg: null, hint: null, hints: Array(n).fill(0), hintIn: {names: false, shape: false},
     nameMiss: 0, shapeMiss: 0, model: false, sawModel: false, usedMode: null, gain: null,
   };
 }
 function startParts(ids, ret = null) { resetFriends(); S = {screen: 'parts', list: ids, i: 0, q: newPartQ(ids[0]), results: [], ret, sess: sessStart()}; }
 function newPartQ(id) {
-  return {id, stage: 'name', nameChoices: fillChoices([id], 6, QUIZ_PARTS), wrongNames: [], shapeChoices: fillChoices([id], 12, QUIZ_PARTS),
+  return {id, stage: 'name', nameChoices: fillChoices([id], 6, QUIZ_PARTS), wrongNames: [], shapeChoices: fillShapes([id], 12, QUIZ_PARTS),
     wrongShapes: [], ink: [], msg: null, nameMiss: 0, shapeMiss: 0, model: false, sawModel: false, usedMode: null, gain: 0};
 }
 function needName() {
@@ -718,7 +742,7 @@ function startDango() {
   }, 700);
 }
 function stopDango() { clearInterval(dTimer); dTimer = null; bgmStop(); }
-function dQ(ch) { const ids = BY[ch].u.map(u => u.n), kinds = new Set(ids).size; return {char: ch, step: 0, wrong: [], choices: BY[ch].nd ? [...new Set(ids)] : fillChoices(ids, Math.max(12, kinds + 4), QUIZ_PARTS.concat(Object.keys(GD.parts)))}; }
+function dQ(ch) { const ids = BY[ch].u.map(u => u.n), kinds = new Set(ids).size; return {char: ch, step: 0, wrong: [], choices: BY[ch].nd ? [...new Set(ids)] : fillShapes(ids, Math.max(12, kinds + 4), QUIZ_PARTS.concat(Object.keys(GD.parts)), ch)}; }
 function dangoTap(id) {
   if (S.screen !== 'dplay' || !D || D.done || D.pauseAt) return;
   const q = D.q, ids = BY[q.char].u.map(u => u.n), now = performance.now();

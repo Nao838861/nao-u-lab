@@ -195,6 +195,10 @@ try {
 
   // ---- まぎらわしい ダミーを 出さない（良：答えに てん → たて は 出ない） ----
   ok(await page.evaluate(async () => { const a = window.__app, pos = JSON.stringify(a.P.pos); let bad = 0; for (let i = 0; i < 40; i++) { a.act.oneKanji('良'); const q = a.S.q; if (q.nameChoices.includes('たて') || q.shapeChoices.includes('たて')) bad++; } a.P.pos = JSON.parse(pos); await a.act.home(); return bad === 0; }), 'てん が答えの時は たて を ダミーに 出さない');
+  // 見た目が 同じ形を 2つ 出さない（賀の くち と くちへん、言 と ごんべん）
+  ok(await page.evaluate(async () => { const a = window.__app, pos = JSON.stringify(a.P.pos); let bad = 0, ms = 0;
+    for (const c of ['賀', '信', '説', '加']) for (let i = 0; i < 15; i++) { const t = performance.now(); a.act.oneKanji(c); ms = Math.max(ms, performance.now() - t); const ch = a.S.q.shapeChoices; if ((ch.includes('くち') && ch.includes('くちへん')) || (ch.includes('いう') && ch.includes('ごんべん'))) bad++; }
+    a.P.pos = JSON.parse(pos); await a.act.home(); return bad === 0 && ms < 300; }), '見た目が 同じ形は 2つ 出さない（くち/くちへん・いう/ごんべん）');
   await page.evaluate(() => window.__app.render());
 
   // ---- かんじ団子（10字おぼえた状態を作る） ----
