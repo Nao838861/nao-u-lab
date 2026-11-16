@@ -431,7 +431,7 @@ function titleHtml(t) {
 }
 // fill：答えの字を □ に入れて見せる（かんじ団子で 字が できた時）
 const filledWord = (segs, ch) => `<span>${segs.map(([t, , target]) => target ? `<b class="fillch">${ch}</b>` : esc(t)).join('')}</span>`;
-const promptHtml = (k, fill = false) => `<div class="panel prompt"><p class="ptitle">${titleHtml(k.t)}</p>${k.x.length ? `<p class="pex">${k.x.slice(0, 2).map(w => fill ? filledWord(w, k.c) : wordHtml(w)).join('')}</p>` : ''}</div>`;
+const promptHtml = (k, fill = false) => `<div class="panel prompt"><p class="ptitle">${titleHtml(k.t)}</p>${k.x.length ? `<p class="pex">${k.x.slice(0, 2).map(w => fill ? filledWord(w, k.c) : wordHtml(w)).join('')}</p>` : ''}${k.h ? `<p class="phint">${esc(fill ? k.h : k.h.replaceAll(k.c, '□'))}</p>` : ''}</div>`;
 
 function render() {
   const sc = S.screen;
