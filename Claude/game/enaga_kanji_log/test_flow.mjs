@@ -37,6 +37,19 @@ const ok = (cond, label) => { console.log(`${cond ? 'ok  ' : 'FAIL'} ${label}`);
     }
   }
   ok(!bad.length, 'ハ・ソ・ノノ の名前が 形と 合う' + (bad.length ? '：' + bad.join(' ') : ''));
+  // 唱えの順＝書き順（囲む形 だけは「囲んで、中、さいごに とじる」で 例外）。語例の ない字は ない
+  const WRAP = new Set(['くにがまえ', 'はこがまえ', 'ぎょうがまえ', 'ははのかん', 'いちじゅう', 'にじゅう', 'ふしづくり']), bad2 = [], noEx = [];
+  for (let g = 1; g <= 6; g++) {
+    const d = JSON.parse(fs.readFileSync(path.join(here, 'data', `g${g}.json`), 'utf8'));
+    for (const k of d.kanji) {
+      const f = k.u.flatMap(u => u.s);
+      if (f.some((v, i) => i && v < f[i - 1]) && !k.u.some(u => WRAP.has(u.n))) bad2.push(k.c);
+      if (!k.x.length) noEx.push(k.c);
+      for (const u of k.u) if (!d.parts[u.n]) bad2.push(`${k.c}(${u.n}の形が ない)`);
+    }
+  }
+  ok(!bad2.length, '唱えの順が 書き順と 合う' + (bad2.length ? '：' + bad2.join(' ') : ''));
+  ok(!noEx.length, 'どの字にも 語例が ある' + (noEx.length ? '：' + noEx.join('') : ''));
 }
 const browser = await chromium.launch({executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe'});
 try {
