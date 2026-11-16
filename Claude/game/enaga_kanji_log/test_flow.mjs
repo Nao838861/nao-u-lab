@@ -191,6 +191,10 @@ try {
   await tap('nextPart');
   await tap('home');
 
+  // ---- まぎらわしい ダミーを 出さない（良：答えに てん → たて は 出ない） ----
+  ok(await page.evaluate(async () => { const a = window.__app, pos = JSON.stringify(a.P.pos); let bad = 0; for (let i = 0; i < 40; i++) { a.act.oneKanji('良'); const q = a.S.q; if (q.nameChoices.includes('たて') || q.shapeChoices.includes('たて')) bad++; } a.P.pos = JSON.parse(pos); await a.act.home(); return bad === 0; }), 'てん が答えの時は たて を ダミーに 出さない');
+  await page.evaluate(() => window.__app.render());
+
   // ---- かんじ団子（10字おぼえた状態を作る） ----
   await page.evaluate(() => {
     const a = window.__app, P = a.P;

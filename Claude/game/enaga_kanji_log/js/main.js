@@ -78,9 +78,12 @@ const gradeLearned = () => GD ? GD.kanji.filter(k => doneKanji(k.c)) : [];
 // ---------- 小道具 ----------
 const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const pickWeak = (kind, ids, n) => shuffle(ids).sort((a, b) => weakness(kind, a) - weakness(kind, b)).slice(0, n);
+// まぎらわしい 組（短い たて と てん など）は、答えに 片方しか ない時、もう片方を ダミーに 出さない
+const CONFUSE = [['てん', 'たて']];
 function fillChoices(correct, n, pool) {
   const out = [...new Set(correct)];
-  for (const id of shuffle(pool)) { if (out.length >= n) break; if (!out.includes(id)) out.push(id); }
+  const skip = new Set(CONFUSE.flatMap(g => g.some(x => out.includes(x)) ? g.filter(x => !out.includes(x)) : []));
+  for (const id of shuffle(pool)) { if (out.length >= n) break; if (!out.includes(id) && !skip.has(id)) out.push(id); }
   return shuffle(out);
 }
 function say(text) {
