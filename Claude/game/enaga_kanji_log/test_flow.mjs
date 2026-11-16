@@ -14,19 +14,29 @@ await new Promise(r => setTimeout(r, 1200));
 
 let fails = 0;
 const ok = (cond, label) => { console.log(`${cond ? 'ok  ' : 'FAIL'} ${label}`); if (!cond) fails++; };
-// ---- データ：ハ（ひらく）と ソ（すぼまる）の 名前が 筆の向きと 合っている ----
+// ---- データ：2画の くみ（ハ・ソ・ノノ）の 名前が 筆の向きと 合っている ----
 {
   const h = await import(new URL('./lib/handwriting.mjs', import.meta.url));
   const bad = [];
   for (let g = 1; g <= 6; g++) {
     const d = JSON.parse(fs.readFileSync(path.join(here, 'data', `g${g}.json`), 'utf8'));
-    for (const k of d.kanji) for (const u of k.u) {
-      if (u.n !== 'ハ' && u.n !== 'ソ') continue;
-      const [a, b] = u.s.map(i => h.samplePath(k.p[i])), d1 = a.at(-1)[0] - a[0][0], d2 = b.at(-1)[0] - b[0][0];
-      if ((u.n === 'ハ') !== (d1 < 0 && d2 > 0)) bad.push(`${k.c}(${u.n})`);
+    for (const k of d.kanji) {
+      const P = i => h.samplePath(k.p[i]), dx = p => p.at(-1)[0] - p[0][0], len = p => Math.hypot(dx(p), p.at(-1)[1] - p[0][1]);
+      k.u.forEach((u, j) => {
+        // ハ＝下へ ひらく、ソ＝上で すぼまる
+        if (u.n === 'ハ' || u.n === 'ソ') { const [a, b] = u.s.map(P); if ((u.n === 'ハ') !== (dx(a) < 0 && dx(b) > 0)) bad.push(`${k.c}(${u.n})`); }
+        // ノノ＝同じ向き・同じくらいの長さの ノ が 2本（勿の形）。ちがえば 1画ずつ
+        if (u.n === 'ノノ') { const [a, b] = u.s.map(P), r = len(a) / len(b); if (!(dx(a) < 0 && dx(b) < 0 && r > .6 && r < 1.6)) bad.push(`${k.c}(ノノ)`); }
+        // すぼまる てん・ノ を べつべつに 唱えていない（ソに まとめる）
+        const v = k.u[j + 1];
+        if (u.n === 'てん' && v && v.n === 'ノ' && u.s.length === 1 && v.s.length === 1) {
+          const a = P(u.s[0]), b = P(v.s[0]);
+          if (dx(a) > 0 && dx(b) < 0 && len(a) < 30 && len(b) < 40 && b[0][0] > a[0][0]) bad.push(`${k.c}(てん・ノ→ソ)`);
+        }
+      });
     }
   }
-  ok(!bad.length, 'ハ・ソ の名前が 形と 合う' + (bad.length ? '：' + bad.join(' ') : ''));
+  ok(!bad.length, 'ハ・ソ・ノノ の名前が 形と 合う' + (bad.length ? '：' + bad.join(' ') : ''));
 }
 const browser = await chromium.launch({executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe'});
 try {
