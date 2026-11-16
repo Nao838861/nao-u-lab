@@ -36,14 +36,20 @@ try {
   ok(await page.locator('[data-act=startKanji]').count() === 0, 'なまえ・学年の前は 学習ボタンが出ない');
   await page.fill('#nameIn', 'たろう'); await page.press('#nameIn', 'Enter');
   ok(await page.locator('.chip.sel', {hasText: 'たろう'}).count() === 1, 'なまえを入れると選ばれる');
+  ok(await page.locator('.gobtn[disabled]').count() === 1, '学年を えらぶまで「はじめる」は 押せない');
   await tap('grade', 4);
-  await page.waitForSelector('[data-act=startKanji]');
-  ok((await page.locator('.hereline').innerText()).includes('信'), '4年のいまここは 信');
+  await shot('00b_title.png');
+  await tap('go');
+  await page.waitForSelector('.homeL');
   ok(await page.locator('.big.locked').count() === 1, 'かんじ団子は おぼえた字が10字までは鍵つき');
   await shot('01_home.png');
+  await tap('kmenu');
+  ok((await page.locator('.kpick.k-new').innerText()).includes('信'), '4年のいまここは 信');
+  ok(await page.locator('.kpick.k-mid[disabled]').count() === 1 && await page.locator('.kpick.k-got[disabled]').count() === 1, 'はじめは あとすこし・おぼえた は 押せない');
+  await shot('01b_kmenu.png');
 
   // ---- 1字目：一発で ぜんぶ正かい ----
-  await tap('startKanji');
+  await tap('kpick', 'new');
   let s = await st();
   ok(JSON.stringify(s.list) === JSON.stringify(['信', '達', '飛']), '教科書の順に 信・達・飛');
   for (const n of await ids('信')) await tap('pickName', n);
@@ -125,10 +131,15 @@ try {
   ok((await page.locator('.day .ks').first().innerText()).includes('信飛'), 'あしあとに きょう おぼえた字');
   await tap('home');
 
-  // ---- ずかん → 部品れんしゅう ----
-  await tap('zukan');
+  // ---- かんじを つくる の えらび方・ずかん → 部品れんしゅう ----
+  await tap('kmenu');
   await shot('12_zukan.png');
   ok(await page.locator('.zcard.got').count() === 2 && await page.locator('.bd.here').count() === 1, 'ずかん：おぼえた2字・いまここ');
+  ok((await page.locator('.kpick.k-mid b').innerText()).startsWith('1') && (await page.locator('.kpick.k-got b').innerText()).startsWith('2'), 'あとすこし 1字（達）・おぼえた 2字');
+  await tap('kpick', 'mid');
+  ok(JSON.stringify((await st()).list) === JSON.stringify(['達']), 'あとすこし を えらぶと 達');
+  await tap('home'); await tap('pmenu');
+  await shot('12b_pmenu.png');
   await tap('onePart', 'にんべん');
   s = await st();
   await tap('answerName', 'にんべん');
@@ -147,7 +158,7 @@ try {
     for (const k of a.GD.kanji.slice(0, 12)) { const r = P.kanji[k.c] ||= {name: {ok: 1, miss: 0}, shape: {ok: 1, miss: 0}, pen: {ok: 0, miss: 0}, hinted: 0, model: 0, clean: 0, weak: false}; r.clean = 1; r.weak = false; if (!P.s.order.includes(k.c)) P.s.order.push(k.c); }
     a.render();
   });
-  await tap('pick', 'たろう'); await wait(300);
+  await page.evaluate(() => window.__app.render()); await wait(300);
   ok(await page.locator('.big.locked').count() === 0, '10字おぼえると かんじ団子が あそべる');
   await tap('dango');
   await wait(300); await shot('14_count.png');
@@ -179,7 +190,8 @@ try {
 
   // ---- 再読みこみで記録が残る ----
   const before = (await st()).s.enaga;
-  await page.reload(); await page.waitForSelector('.homeL');
+  await page.reload(); await page.waitForSelector('.titleScr');
+  ok(await page.locator('.gobtn:not([disabled])').count() === 1 && (await page.locator('.gobtn').innerText()).includes('たろう'), '再読みこみすると タイトルから（前の なまえ・学年は えらんだまま）');
   s = await st();
   ok(s.s.enaga === before && s.s.dClears === 1, '再読みこみ後も 記録が残る');
 
