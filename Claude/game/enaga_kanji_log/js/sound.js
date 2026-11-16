@@ -40,12 +40,13 @@ export const sfx = {
   tick() { tone(2600, .02, 'square', .02); },
   // 正かい：さえずり。れんぞくが のびるほど 高くなる
   chirp(c = 0) { const b = 1150 * Math.pow(2, Math.min(c, 18) / 24); tone(b, .06, 'sine', .17, 0, b * 1.6); tone(b * 1.3, .08, 'sine', .14, .065, b * 2.1); },
-  // かんじ団子で 字が できた：きらっと 上がる「ピロリン♪」＋ やわらかい和音。れんぞくで 少し高く
+  // かんじ団子で 字が できた：「ピ・ロ・リ・ロ・ーン！」と はずんで上がる 正解音。れんぞくで 少し高く
   solved(c = 0) {
-    if (!live()) return; const t = AC.currentTime + .02, k = Math.min(c, 8);
-    [76, 81, 85, 88].forEach((m, i) => note(m + k, t + i * .055, .16, 'sine', .11));
-    chord([69 + k, 76 + k, 81 + k], t + .2, .45, 'triangle', .05); note(57 + k, t + .2, .45, 'triangle', .09);
-    tone(2800, .05, 'sine', .06, .26, 4200); tone(3500, .06, 'sine', .05, .32, 5000);
+    if (!live()) return; const t = AC.currentTime + .02, k = Math.min(c, 6), d = .062;
+    [79, 84, 83, 88].forEach((m, i) => { note(m + k, t + i * d, .09, 'square', .045); note(m + k + 12, t + i * d, .07, 'sine', .05); });
+    const e = t + 4 * d;
+    chord([84 + k, 88 + k, 91 + k], e, .5, 'square', .035); note(96 + k, e, .5, 'sine', .07); note(60 + k, e, .5, 'triangle', .12);
+    tone(3200, .06, 'sine', .05, 4 * d + .12, 4600);
   },
   // まちがい：やわらかい「ぽよん」。責める音にしない
   oops() { tone(520, .12, 'sine', .14, 0, 380); tone(420, .14, 'sine', .1, .1, 330); },
