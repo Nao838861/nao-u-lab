@@ -14,6 +14,20 @@ await new Promise(r => setTimeout(r, 1200));
 
 let fails = 0;
 const ok = (cond, label) => { console.log(`${cond ? 'ok  ' : 'FAIL'} ${label}`); if (!cond) fails++; };
+// ---- データ：ハ（ひらく）と ソ（すぼまる）の 名前が 筆の向きと 合っている ----
+{
+  const h = await import(new URL('./lib/handwriting.mjs', import.meta.url));
+  const bad = [];
+  for (let g = 1; g <= 6; g++) {
+    const d = JSON.parse(fs.readFileSync(path.join(here, 'data', `g${g}.json`), 'utf8'));
+    for (const k of d.kanji) for (const u of k.u) {
+      if (u.n !== 'ハ' && u.n !== 'ソ') continue;
+      const [a, b] = u.s.map(i => h.samplePath(k.p[i])), d1 = a.at(-1)[0] - a[0][0], d2 = b.at(-1)[0] - b[0][0];
+      if ((u.n === 'ハ') !== (d1 < 0 && d2 > 0)) bad.push(`${k.c}(${u.n})`);
+    }
+  }
+  ok(!bad.length, 'ハ・ソ の名前が 形と 合う' + (bad.length ? '：' + bad.join(' ') : ''));
+}
 const browser = await chromium.launch({executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe'});
 try {
   const page = await browser.newPage({viewport: {width: 1280, height: 740}});
