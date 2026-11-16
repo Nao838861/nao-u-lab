@@ -99,6 +99,16 @@ body.s-home #homeCv,body.s-forest.t-forest #forestCv,body.s-dplay #track,body.s-
 /* 学習画面 */
 .stL{position:absolute;left:22px;top:70px;width:400px;height:522px;display:flex;flex-direction:column;gap:8px;}
 .stR{position:absolute;left:438px;top:70px;width:822px;height:522px;display:flex;flex-direction:column;gap:8px;align-items:center;}
+/* かんじを つくる：お題を上の真ん中に大きく。その下の左に できていく字、右に 手を動かす所 */
+.stTop{position:absolute;left:0;right:0;top:64px;display:flex;justify-content:center;pointer-events:none;}
+.stTop .prompt{pointer-events:auto;min-width:520px;max-width:1000px;padding:8px 30px;}
+.stTop .ptitle{font-size:36px;line-height:1.4;}
+.stTop .pex{font-size:26px;}
+.s-study .stL.under{top:206px;left:40px;width:330px;height:390px;}
+.s-study .stR.under{top:206px;left:392px;width:868px;height:390px;}
+.stR.under .ask{font-size:19px;color:var(--soft);}
+.stR.under .ask b{color:var(--ink);font-weight:normal;}
+.stR.under .padwrap{width:286px;height:286px;}
 .prompt{padding:10px 16px;text-align:center;}
 .ptitle{font-size:28px;line-height:1.5;margin:0;}
 .ptitle .on{color:var(--pink);}
@@ -215,13 +225,8 @@ h3.tg{margin:12px 0 6px;font-size:19px;color:#3b5f86;}
 .sumline{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:8px;}
 
 /* かんじ団子 */
-/* 問題（お題・できた形・番号）は右、部品は左。目線を横に少し動かすだけで見くらべられる */
-.dplay{position:absolute;left:0;right:0;top:170px;height:440px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:34px;}
-.dleft{display:flex;flex-direction:column;align-items:center;gap:6px;}
-.dplay .tiles{grid-template-columns:repeat(4,118px);gap:10px;}
-.dplay .tile{width:118px;height:118px;}
-.dq{display:flex;flex-direction:column;gap:12px;align-items:center;width:330px;}
-.dq .slots{max-width:330px;}
+.dplay{position:absolute;left:0;right:0;top:160px;height:440px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.dq{display:flex;gap:22px;align-items:center;}
 .dq .gbox{width:170px;height:170px;flex:none;background:#fff;border-radius:18px;border:3px solid var(--line);padding:8px;}
 .dq .gbox .glyph{width:150px;height:150px;}
 .dq .gbox .qmark{font-size:100px;}
