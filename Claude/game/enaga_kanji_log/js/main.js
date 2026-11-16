@@ -188,11 +188,24 @@ function onLearned(ch, wasWeak) {
 }
 
 // ---------- 状態 ----------
-let S = {screen: 'home'};
+let S = {screen: 'title'};  // 起動は かならず タイトル（なまえ・学年）から
 const mode = () => P?.mode || 'shape';
 function sessStart() { sessTitles = []; return {enaga0: P.s.enaga, learned0: gradeLearned().length, streak0: P.s.streakNow}; }
 
-function startKanji(chars) { resetFriends(); S = {screen: 'study', list: chars, i: 0, q: newKanjiQ(chars[0]), results: [], sess: sessStart()}; }
+function startKanji(chars, kind = null) { resetFriends(); S = {screen: 'study', list: chars, kind, i: 0, q: newKanjiQ(chars[0]), results: [], sess: sessStart()}; }
+// かんじを つくる の 3つの えらび方：まだ（教科書の順・いまここから）／あとすこし／おぼえた（ふくしゅう）
+const KIND = {new: 'まだ おぼえていない字', mid: 'あとすこしの字', got: 'おぼえた字'};
+function kindList(kind) {
+  const L = ASKABLE(), from = posOf(), rot = L.slice(from).concat(L.slice(0, from));
+  if (kind === 'new') return rot.filter(c => kState(c) === 'new');
+  if (kind === 'mid') return rot.filter(c => ['mid', 'again'].includes(kState(c)));
+  return L.filter(c => kState(c) === 'got');
+}
+function pickKind(kind, n = 3) {
+  const L = kindList(kind);
+  if (kind === 'got') { const dl = P.s.dLast || {}; return shuffle(L).sort((a, b) => (dl[a] || 0) - (dl[b] || 0)).slice(0, n); }
+  return L.slice(0, n);
+}
 function newKanjiQ(ch) {
   const K = BY[ch], ids = K.u.map(u => u.n), n = ids.length, kinds = new Set(ids).size, pool = Object.keys(GD.parts);
   return {
@@ -226,11 +239,16 @@ function selectPlayer(name) {
 const K = () => BY[S.q.char];
 const IDS = () => K().u.map(u => u.n);
 const act = {
-  async home() { if (S.screen === 'dplay' || S.screen === 'dcount') stopDango(); S = {screen: 'home'}; },
+  async home() { if (S.screen === 'dplay' || S.screen === 'dcount') stopDango(); S = {screen: P && GD ? 'home' : 'title'}; },
+  title() { S = {screen: 'title'}; },
+  go() { if (ready()) S = {screen: 'home'}; },
+  kmenu() { if (ready()) S = {screen: 'kmenu'}; },
+  pmenu() { if (ready()) S = {screen: 'pmenu'}; },
+  kpick(kind) { const L = pickKind(kind); if (L.length) startKanji(L, kind); },
   async pick(name) { if (selectPlayer(name)) { if (P.grade) await loadGrade(P.grade); else GD = null; } },
   async nameOk() { if (selectPlayer($('#nameIn').value)) { if (P.grade) await loadGrade(P.grade); else GD = null; } else needName(); },
   async grade(g) { if (!player) return needName(); P.grade = +g; saveDB(); await loadGrade(+g); },
-  startKanji() { if (ready()) startKanji(nextInOrder(3)); },
+  startKanji() { if (!ready()) return; const k = S.kind, L = k && pickKind(k); if (L && L.length) startKanji(L, k); else S = {screen: 'kmenu'}; },
   startParts() { if (ready()) startParts(pickWeak('parts', QUIZ_PARTS, 3)); },
   zukan() { if (!ready()) return; S = {screen: 'zukan', back: S.screen === 'study' || S.screen === 'parts' ? S : null}; },
   back() { S = S.back || {screen: 'home'}; },
@@ -410,40 +428,58 @@ const promptHtml = k => `<div class="panel prompt"><p class="ptitle">${titleHtml
 function render() {
   const sc = S.screen;
   document.body.className = 's-' + ({study: 'study', parts: 'parts', dcount: 'dplay', dplay: 'dplay', dresult: 'dresult'}[sc] || sc) + (sc === 'forest' ? ' t-' + S.tab : '');
-  const v = sc === 'home' ? homeView() : sc === 'study' ? studyView() : sc === 'parts' ? partsView() : sc === 'zukan' ? zukanView()
+  const v = sc === 'title' ? titleView() : sc === 'kmenu' ? kmenuView() : sc === 'pmenu' ? pmenuView() : sc === 'home' ? homeView() : sc === 'study' ? studyView() : sc === 'parts' ? partsView() : sc === 'zukan' ? zukanView()
     : sc === 'forest' ? forestView() : sc === 'dcount' ? dCountView() : sc === 'dplay' ? dPlayView() : dResultView();
   $ui.innerHTML = `<div class="scr">${v}</div>`;
   bindPad();
   $('#muteBtn').textContent = snd.muted ? 'おと：OFF' : 'おと：ON';
 }
 
+// タイトル：だれが・なん年 を えらぶ所。起動すると かならず ここ
+function titleView() {
+  const names = DB.players.slice(0, 8).map(n => `<button type="button" class="chip ${n === player ? 'sel' : ''}" data-act="pick" data-v="${esc(n)}">${esc(n)}</button>`).join('');
+  const who = `<div class="who">${names}<input id="nameIn" maxlength="10" placeholder="あたらしい なまえ" autocomplete="off">${btn('nameOk', 'けってい', {cls: 'small blue'})}</div>`;
+  const grades = `<div class="grades">${[1, 2, 3, 4, 5, 6].map(g => `<button type="button" class="chip ${P && P.grade === g ? 'sel' : ''}" data-act="grade" data-v="${g}">${g}年</button>`).join('')}</div>`;
+  const ok = !!(player && GD);
+  return `<div class="titleScr"><h1 class="logo">エナガの かんじの森</h1><p class="lead">字を おぼえると、その字を もった シマエナガが 森に あつまるよ</p>
+    <div class="tpanel"><h3>だれが あそぶ？</h3>${who}<h3>なん年の 字？</h3>${grades}
+      <button type="button" class="big primary gobtn" data-act="go" ${ok ? '' : 'disabled'}><span class="em">🌲</span>${ok ? `${esc(player)}・${GD.grade}年 で はじめる` : !player ? 'なまえを えらんでね' : '学年を えらんでね'}</button></div>
+    <div class="row tfoot">${player ? '<button type="button" class="delbtn" data-act="del">きろくを けす</button>' : '<span></span>'}
+      <p class="credit">字形 KanjiVG／読み・語例 EDRDG（CC BY-SA）<a href="./data/ATTRIBUTION.txt" target="_blank">出典</a></p></div></div>`;
+}
+// 森（ホーム）：あそぶ 3つ と きろく
 function homeView() {
-  const names = DB.players.slice(0, 6).map(n => `<button type="button" class="chip ${n === player ? 'sel' : ''}" data-act="pick" data-v="${esc(n)}">${esc(n)}</button>`).join('');
-  const who = `<div class="who"><span class="wl">なまえ</span>${names}<input id="nameIn" maxlength="10" placeholder="あたらしい なまえ" autocomplete="off">${btn('nameOk', 'けってい', {cls: 'small blue'})}</div>`;
-  const grades = `<div class="grades"><span class="wl">学年</span>${[1, 2, 3, 4, 5, 6].map(g => `<button type="button" class="chip ${P && P.grade === g ? 'sel' : ''}" data-act="grade" data-v="${g}">${g}年</button>`).join('')}</div>`;
-  let here = `<p class="hereline">${!player ? 'まず <b>なまえ</b> を 入れてね' : '<b>学年</b> を えらんでね'}</p>`;
-  let menu = '', recs = '', meter = '';
-  if (P && GD) {
-    const h = hereChar(), n = gradeLearned().length, N = ASKABLE().length, locked = n < 10, s = P.s, nt = newTitles().length;
-    here = `<p class="hereline">いまここ：<b>${BY[h].ss || ''}</b> の「<b class="ch">${h}</b>」から <small style="color:var(--soft)">（ずかんで えらぶと そこから）</small></p>`;
-    menu = `<div class="menu">
-      <button type="button" class="big primary" data-act="startKanji"><span class="em">字</span>かんじを つくる<small>3文字・きょうかしょの じゅん</small></button>
-      <button type="button" class="big" data-act="startParts"><span class="em">亻</span>ぶひん れんしゅう<small>3つ・なまえ と 形</small></button>
-      <button type="button" class="big ${locked ? 'locked' : ''}" data-act="dango">${locked ? `<span class="lock">あと${10 - n}字</span>` : ''}<span class="em">⏱</span>かんじ団子<small>おぼえた字で タイムアタック</small></button></div>`;
-    meter = `<div class="meterline">${GD.grade}年 おぼえた <b>${n}</b> / ${N}<div class="meter"><i style="width:${(100 * n / N).toFixed(1)}%"></i></div></div>`;
-    const td = s.days[today()];
-    recs = `<div class="recs">
+  const n = gradeLearned().length, N = ASKABLE().length, locked = n < 10, s = P.s, nt = newTitles().length, td = s.days[today()];
+  return `<div class="homeL"><div class="whoami"><b>${esc(player)}</b><span>${GD.grade}年</span><span class="sp"></span>${btn('title', 'なまえ・学年を かえる', {cls: 'small'})}</div>
+    <div class="meterline">${GD.grade}年 おぼえた <b>${n}</b> / ${N}<div class="meter"><i style="width:${(100 * n / N).toFixed(1)}%"></i></div></div>
+    <div class="menu">
+      <button type="button" class="big primary" data-act="kmenu"><span class="em">字</span>かんじを つくる<small>ずかんから えらぶ</small></button>
+      <button type="button" class="big" data-act="pmenu"><span class="em">亻</span>ぶひん れんしゅう<small>なまえ と 形</small></button>
+      <button type="button" class="big ${locked ? 'locked' : ''}" data-act="dango">${locked ? `<span class="lock">あと${10 - n}字</span>` : ''}<span class="em">⏱</span>かんじ団子<small>おぼえた字で タイムアタック</small></button></div>
+    <h3 class="rech">きろく</h3>
+    <div class="recs">
       <button type="button" class="recbtn" data-act="forest" data-v="forest"><span>エナガの もり<i>${s.enaga > s.seen ? `あたらしく +${s.enaga - s.seen}` : ''}</i></span><b>${s.enaga.toLocaleString()}羽</b></button>
       <button type="button" class="recbtn" data-act="forest" data-v="titles"><span>しょうごう<i>${nt ? `<em class="newbadge">NEW ${nt}</em>` : ''}</i></span><b>${gotCount()} / ${TITLES.length}</b></button>
       <button type="button" class="recbtn" data-act="forest" data-v="days"><span>あしあと<i>${td && td.learned.length ? `きょう ${td.learned.length}字 おぼえた` : ''}</i></span><b>${Object.keys(s.days).length}日</b></button>
-      <button type="button" class="recbtn plain" data-act="zukan"><span>ずかん<i style="color:var(--soft);font-weight:normal">${GD.grade}年の 字と ぶひん</i></span><b style="color:var(--blue)">▦</b></button>
-    </div><div class="meterline" style="justify-content:center">一発れんぞく <b style="color:var(--pink)">${s.streakNow}</b>（きろく ${s.streakBest}）</div>`;
-  }
-  return `<div class="homeL"><h1 class="logo">エナガの かんじの森</h1><p class="lead">字を おぼえると、その字を もった シマエナガが 森に あつまるよ</p>
-    ${who}${grades}${here}${menu}${meter}${recs}
-    <div class="row" style="margin-top:auto;justify-content:space-between">${player ? '<button type="button" class="delbtn" data-act="del">きろくを けす</button>' : '<span></span>'}
-      <p class="credit">字形 KanjiVG／読み・語例 EDRDG（CC BY-SA）<a href="./data/ATTRIBUTION.txt" target="_blank">出典</a></p></div></div>
-    <div class="cap">${P && GD ? `おぼえた字の シマエナガ <b>${gradeLearned().length}</b>羽 <small style="color:var(--soft)">（${GD.grade}年）</small>` : ''}</div>`;
+      <div class="recbtn plain"><span>一発れんぞく<i style="color:var(--soft);font-weight:normal">きろく ${s.streakBest}</i></span><b style="color:var(--pink)">${s.streakNow}</b></div>
+    </div></div>
+    <div class="cap">おぼえた字の シマエナガ <b>${n}</b>羽 <small style="color:var(--soft)">（${GD.grade}年）</small></div>`;
+}
+// かんじを つくる：3つの えらび方 ＋ 下に ずかん（字を えらぶと そこから）
+function kmenuView() {
+  const card = (kind, none, sub) => { const n = kindList(kind).length;
+    return `<button type="button" class="kpick k-${kind}" data-act="kpick" data-v="${kind}" ${n ? '' : 'disabled'}><span class="kn">${KIND[kind]}</span><b>${n}<small>字</small></b><small>${n ? sub : none}</small></button>`; };
+  const h = kindList('new')[0];
+  return `${hud('かんじを つくる')}<div class="scrollbox" style="top:70px">
+    <div class="kpicks">${card('new', 'ぜんぶ おぼえたよ！', h ? `いまここ「${h}」から 3文字` : '')}${card('mid', 'いまは ないよ', 'もうすこしの字を 3文字')}${card('got', 'まだ ないよ', 'ふくしゅう 3文字')}</div>
+    ${kanjiZukanHtml()}</div>`;
+}
+// ぶひん れんしゅう：にがてな ぶひん ＋ 下に ぶひんの ずかん
+function pmenuView() {
+  const pn = QUIZ_PARTS.filter(donePart).length;
+  return `${hud('ぶひん れんしゅう')}<div class="scrollbox" style="top:70px">
+    <div class="kpicks"><button type="button" class="kpick k-new" data-act="startParts"><span class="kn">にがてな ぶひん</span><b>${QUIZ_PARTS.length - pn}<small>こ</small></b><small>まだの ぶひんから 3つ</small></button></div>
+    ${partsZukanHtml()}</div>`;
 }
 
 function studyView() {
@@ -524,7 +560,7 @@ function studySummary() {
     <div class="tags"><span class="gold">シマエナガ +${P.s.enaga - g.enaga0}羽</span><span>${GD.grade}年 おぼえた ${g.learned0} → <b style="color:var(--green)">${n}</b> / ${N}</span><span>一発れんぞく ${P.s.streakNow}</span></div>
     <div class="meterline" style="width:600px"><div class="meter"><i style="width:${(100 * n / N).toFixed(1)}%"></i></div></div>
     ${newTitleBox()}
-    <div class="row" style="margin-top:auto">${btn('startKanji', 'つぎの 3文字', {cls: 'primary'})}${btn('startParts', 'ぶひん れんしゅう')}${btn('home', 'もりへ もどる', {cls: 'blue'})}</div></div>`;
+    <div class="row" style="margin-top:auto">${S.kind && pickKind(S.kind).length ? btn('startKanji', `つぎの 3文字（${KIND[S.kind]}）`, {cls: 'primary'}) : ''}${btn('kmenu', 'えらびなおす')}${btn('home', 'もりへ もどる', {cls: 'blue'})}</div></div>`;
 }
 
 const pname = id => GD.parts[id]?.r ? `${id}<small class="hen">（${GD.parts[id].r}）</small>` : id;
@@ -562,13 +598,12 @@ function partsSummary() {
     <small>形→なまえ ${r.nameFirst ? '◎' : '○'}　なまえ→形 ${r.shapeFirst ? '◎' : r.how ? '○' : '−'}</small></div>`).join('');
   return `${hud('ぶひん れんしゅう')}<div class="panel sum"><h2>3つの ぶひん、おわり！</h2><div class="res">${rows}</div>
     <div class="tags"><span class="gold">シマエナガ +${P.s.enaga - S.sess.enaga0}羽</span><span>一発れんぞく ${P.s.streakNow}</span></div>${newTitleBox()}
-    <div class="row" style="margin-top:auto">${btn('moreParts', 'つぎの 3つ', {cls: 'primary'})}${btn('startKanji', 'かんじを つくる')}${btn('home', 'もりへ もどる', {cls: 'blue'})}</div></div>`;
+    <div class="row" style="margin-top:auto">${btn('moreParts', 'つぎの 3つ', {cls: 'primary'})}${btn('pmenu', 'えらびなおす')}${btn('home', 'もりへ もどる', {cls: 'blue'})}</div></div>`;
 }
 
-function zukanView() {
-  const here = hereChar();
-  const badge = st => st === 'got' ? '<b class="bd hana">◎おぼえた</b>' : st === 'mid' ? '<b class="bd half">あとすこし</b>' : st === 'again' ? '<b class="bd again">もう一回</b>' : '';
-  const L = GD.kanji.filter(k => GD.book || !k.z);
+const zBadge = st => st === 'got' ? '<b class="bd hana">◎おぼえた</b>' : st === 'mid' ? '<b class="bd half">あとすこし</b>' : st === 'again' ? '<b class="bd again">もう一回</b>' : '';
+function kanjiZukanHtml() {
+  const here = hereChar(), L = GD.kanji.filter(k => GD.book || !k.z);
   const kanji = L.map((k, i) => {
     let sec = '';
     if (k.ss && (i === 0 || L[i - 1].ss !== k.ss)) {
@@ -576,18 +611,25 @@ function zukanView() {
       sec = `<div class="zsec">${k.ss} <span style="color:var(--soft);font-weight:normal">${got}/${m.length}</span>${done ? '<span class="fam">🐦🐦🐦 ぜんぶ おぼえた！</span>' : ''}</div>`;
     }
     const st = kState(k.c), rd = k.t.on || (k.t.kun || '').replace('_', '');
-    return `${sec}<button type="button" class="zcard ${st === 'again' ? 'mid' : st}" data-act="oneKanji" data-v="${k.c}">${k.c === here ? '<b class="bd here">いまここ</b>' : badge(st)}<span class="kc">${k.c}</span><span class="rd">${rd}</span></button>`;
+    return `${sec}<button type="button" class="zcard ${st === 'again' ? 'mid' : st}" data-act="oneKanji" data-v="${k.c}">${k.c === here ? '<b class="bd here">いまここ</b>' : zBadge(st)}<span class="kc">${k.c}</span><span class="rd">${rd}</span></button>`;
   }).join('');
+  const n = L.filter(k => doneKanji(k.c)).length;
+  return `<h3 class="tg">${GD.grade}年の 漢字 <small style="color:var(--soft)">${GD.book || ''}の きょうかしょの じゅん・字を えらぶと そこから</small></h3>
+    <div class="meterline">おぼえた <b>${n}</b> / ${L.length}<div class="meter"><i style="width:${(100 * n / L.length).toFixed(1)}%"></i></div></div>
+    <div class="zgrid">${kanji}</div>`;
+}
+function partsZukanHtml() {
   const parts = QUIZ_PARTS.map(id => `<button type="button" class="zcard p ${donePart(id) ? 'got' : ''}" data-act="onePart" data-v="${esc(id)}">${donePart(id) ? '<b class="bd hana">◎</b>' : ''}${partSvg(id)}<span class="rd">${id}</span></button>`).join('');
-  const n = L.filter(k => doneKanji(k.c)).length, pn = QUIZ_PARTS.filter(donePart).length;
+  const pn = QUIZ_PARTS.filter(donePart).length;
+  return `<h3 class="tg">${GD.grade}年の ぶひん <small style="color:var(--soft)">ぶひんを えらぶと その れんしゅう</small></h3>
+    <div class="meterline">できた <b>${pn}</b> / ${QUIZ_PARTS.length}<div class="meter"><i style="width:${(100 * pn / QUIZ_PARTS.length).toFixed(1)}%"></i></div></div>
+    <div class="zgrid p">${parts}</div>`;
+}
+// 問題の とちゅうで 開く ずかん（もどるボタンつき）
+function zukanView() {
   return `${hud('ずかん')}<div class="scrollbox" style="top:70px">
     ${S.back ? `<div class="row" style="margin-bottom:8px">${btn('back', '← とちゅうの 問題に もどる', {cls: 'primary'})}</div>` : ''}
-    <h3 class="tg">${GD.grade}年の 漢字 <small style="color:var(--soft)">${GD.book || ''}の きょうかしょの じゅん・字を えらぶと そこから</small></h3>
-    <div class="meterline">おぼえた <b>${n}</b> / ${L.length}<div class="meter"><i style="width:${(100 * n / L.length).toFixed(1)}%"></i></div></div>
-    <div class="zgrid">${kanji}</div>
-    <h3 class="tg">${GD.grade}年の ぶひん</h3>
-    <div class="meterline">できた <b>${pn}</b> / ${QUIZ_PARTS.length}<div class="meter"><i style="width:${(100 * pn / QUIZ_PARTS.length).toFixed(1)}%"></i></div></div>
-    <div class="zgrid p">${parts}</div></div>`;
+    ${kanjiZukanHtml()}${partsZukanHtml()}</div>`;
 }
 
 // もり・しょうごう・あしあと
@@ -960,7 +1002,7 @@ function openDelete() {
           modal('さいごの かくにん', `けすときは、下に なまえ「${esc(name)}」を 入れてね。<br><input id="delIn" autocomplete="off">`, [['やめる', 'blue safe', closeModal], ['けす', 'danger', () => {
             if (($('#delIn').value || '').trim() !== name) { toast('なまえが ちがうよ'); return; }
             delete DB.P[name]; DB.players = DB.players.filter(x => x !== name); if (DB.last === name) DB.last = DB.players[0] || null;
-            player = DB.last; P = player ? playerData(player) : null; saveDB(); closeModal(); S = {screen: 'home'};
+            player = DB.last; P = player ? playerData(player) : null; saveDB(); closeModal(); S = {screen: 'title'};
             (P && P.grade ? loadGrade(P.grade) : Promise.resolve(GD = null)).then(() => { render(); startHomeAnim(); });
           }]]);
         }]])]]);
@@ -978,9 +1020,9 @@ $ui.addEventListener('click', async e => {
   await act[b.dataset.act](b.dataset.v);
   if (S.screen === 'dcount') return;
   render();
-  if (S.screen === 'home' && (before !== 'home' || ['pick', 'nameOk', 'grade'].includes(b.dataset.act))) startHomeAnim();
+  if (S.screen === 'home' && before !== 'home') startHomeAnim();
 });
-$ui.addEventListener('keydown', async e => { if (e.target.id === 'nameIn' && e.key === 'Enter') { await act.nameOk(); render(); startHomeAnim(); } });
+$ui.addEventListener('keydown', async e => { if (e.target.id === 'nameIn' && e.key === 'Enter') { await act.nameOk(); render(); } });
 document.addEventListener('keydown', async e => {
   if ($('#modal').classList.contains('on')) { if (e.key === 'Escape') closeModal(); return; }
   if (S.screen === 'dresult') {
