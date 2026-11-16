@@ -174,9 +174,14 @@ try {
       await tap('dTap', L[1]); await tap('dTap', L[0]);
       ok(await page.locator(`[data-act=dTap][data-v="${L[1]}"]:not([disabled])`).count() === 1, '先に押してまちがえた部品も つぎの番では押せる');
       for (const n of L.slice(1)) await tap('dTap', n);
-      continue;
+    } else for (const n of L) await tap('dTap', n);
+    if (i === 0) {
+      ok(await page.locator('.dplay.solved .gbox').count() === 1 && await page.evaluate(() => !!window.__app.D.pauseAt), '字が できたら 完成した字を 見せて タイムを とめる');
+      const tt = await page.evaluate(() => new Promise(r => { const g = () => document.querySelector('#dTime').textContent; setTimeout(() => { const a = g(); setTimeout(() => r([a, g(), !!window.__app.D.pauseAt]), 250); }, 80); }));
+      ok(!tt[2] || tt[0] === tt[1], '見せている間は タイムが 進まない ' + tt.join(' '));
+      await shot('15b_solved.png');
     }
-    for (const n of L) await tap('dTap', n);
+    await page.waitForFunction(() => { const D = window.__app.D; return D.done || !D.pauseAt; });
   }
   await wait(500);
   await shot('16_dresult.png');
