@@ -464,7 +464,7 @@ function studyView() {
     left = `<div class="panel gbox"><span class="gl">${mode() === 'pen' ? '見本なしで 書こう' : `${q.step} / ${k.u.length}`}</span>${mode() === 'pen' || q.step === 0 ? '<span class="qmark">？</span>' : buildSvg(q.char, q.step - 1)}</div>`;
     right = shapeRight(q, k);
   }
-  return `${hud('かんじを つくる', dots(S.list.length, S.i))}<div class="stL">${promptHtml(k)}${left}${hintPanel(q, k)}</div><div class="stR">${right}</div>`;
+  return `${hud('かんじを つくる', dots(S.list.length, S.i))}<div class="stTop">${promptHtml(k)}</div><div class="stL under">${left}${hintPanel(q, k)}</div><div class="stR under">${right}</div>`;
 }
 const hintButtons = k => k.u.map((_, i) => btn('hint', `💡${no(i)}`, {v: i, cls: 'small'})).join('');
 function hintPanel(q, k) {
@@ -480,11 +480,11 @@ function hintPanel(q, k) {
 function namesRight(q, k) {
   const ready = q.names.every(Boolean);
   const slots = k.u.map((_, i) => `<button type="button" class="slot ${q.active === i ? 'active' : ''} ${q.wrong[i] ? 'wrong' : ''}" data-act="slot" data-v="${i}"><span class="no">${no(i)}</span>${q.names[i] || '？'}</button>`).join('');
-  return `<p class="ask">ぶひんの <b>なまえ</b>を、<b>書く じゅん</b>に 唱えよう <small>${k.u.length}つ。みどりの わくに 入るよ</small></p>
+  return `<p class="ask">ぶひんの <b>名前</b>を、<b>書く じゅん</b>に 唱えよう</p>
     <div class="slots">${slots}</div>${msgBox(q.msg)}
     <div class="choices">${q.nameChoices.map(id => `<button type="button" class="chip" data-act="pickName" data-v="${esc(id)}">${id}</button>`).join('')}</div>
     <div class="row">${btn('checkNames', 'これで OK', {cls: 'primary', dis: !ready})}</div>
-    <div class="tools" style="margin-top:auto">${hintButtons(k)}</div>`;
+    <div class="tools" style="margin-top:14px">${hintButtons(k)}</div>`;
 }
 function shapeRight(q, k) {
   const ids = IDS();
@@ -701,10 +701,10 @@ function dPlayView() {
   const q = D.q, k = BY[q.char], ids = k.u.map(u => u.n);
   return `<div class="hud"><div class="hb">かんじ団子 ${GD.grade}年</div><div class="hb"><b>${D.i + 1}</b> / ${DSTEPS}</div><div class="hb"><b id="dTime">0.0</b> 秒</div>
     <div class="hb">ミス <b>${D.miss}</b></div><div class="hb combo">れんぞく <b>${D.combo}</b></div><div class="sp"></div>${btn('home', 'やめる', {cls: 'small'})}</div>
-    <div class="dplay"><div class="dleft"><div class="tiles">${q.choices.map(id => { const x = q.wrong.includes(id); return `<button type="button" class="tile ${x ? 'x' : ''}" data-act="dTap" data-v="${esc(id)}" ${x ? 'disabled' : ''}>${pathsSvg(shapeOf(id, q.char))}</button>`; }).join('')}</div>
-      <p class="msg" style="color:var(--soft)">ぶひんを 書く じゅんに タップ</p></div>
-      <div class="dq">${promptHtml(k)}<div class="gbox">${q.step ? buildSvg(q.char, q.step - 1) : '<span class="qmark">？</span>'}</div>
-      <div class="slots">${ids.map((_, i) => `<span class="slot ${i < q.step ? 'done' : i === q.step ? 'now' : ''}" style="min-width:56px">${no(i)}${i < q.step ? '✓' : ''}</span>`).join('')}</div></div></div>`;
+    <div class="dplay"><div class="dq">${promptHtml(k)}<div class="gbox">${q.step ? buildSvg(q.char, q.step - 1) : '<span class="qmark">？</span>'}</div>
+      <div class="slots" style="max-width:260px">${ids.map((_, i) => `<span class="slot ${i < q.step ? 'done' : i === q.step ? 'now' : ''}" style="min-width:56px">${no(i)}${i < q.step ? '✓' : ''}</span>`).join('')}</div></div>
+      <div class="tiles">${q.choices.map(id => { const x = q.wrong.includes(id); return `<button type="button" class="tile ${x ? 'x' : ''}" data-act="dTap" data-v="${esc(id)}" ${x ? 'disabled' : ''}>${pathsSvg(shapeOf(id, q.char))}</button>`; }).join('')}</div>
+      <p class="msg" style="color:var(--soft)">ぶひんを 書く じゅんに タップ</p></div>`;
 }
 function dResultView() {
   const r = S, nr = (() => { const i = RANKS.indexOf(r.rk); if (i === 0) return null; const j = i < 0 ? RANKS.length - 1 : i - 1; return {rank: RANKS[j], sec: TH[j]}; })();
