@@ -38,7 +38,7 @@ const ok = (cond, label) => { console.log(`${cond ? 'ok  ' : 'FAIL'} ${label}`);
   }
   ok(!bad.length, 'ハ・ソ・ノノ の名前が 形と 合う' + (bad.length ? '：' + bad.join(' ') : ''));
   // 唱えの順＝書き順（囲む形 だけは「囲んで、中、さいごに とじる」で 例外）。語例の ない字は ない
-  const WRAP = new Set(['くにがまえ', 'はこがまえ', 'ぎょうがまえ', 'ははのかん', 'いちじゅう', 'にじゅう', 'ふしづくり']), bad2 = [], noEx = [];
+  const WRAP = new Set(['くにがまえ', 'はこがまえ', 'ぎょうがまえ', 'ははのかん', 'ふしづくり']), bad2 = [], noEx = [];
   for (let g = 1; g <= 6; g++) {
     const d = JSON.parse(fs.readFileSync(path.join(here, 'data', `g${g}.json`), 'utf8'));
     for (const k of d.kanji) {
