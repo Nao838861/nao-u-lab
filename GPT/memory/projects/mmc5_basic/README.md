@@ -2,7 +2,7 @@
 
 製品名は **FamiBASIC Turbo** に確定。現行本流の作業フォルダーは `D:\HomeBrew\FamiBASIC_Turbo_main`。
 
-スクロールの採用仕様は [共通BGスクロール仕様](D:/HomeBrew/FamiBASIC_Turbo_main/docs/common_scroll_spec.md)。通常制作は幅・高さ・X/Yカメラ・各軸の停止／循環で扱い、2画面を仕様上の区切りにしない。サンプルシューティングの仕様・実装は維持して移行せず、拡張の採用条件をROM全体・番地の完全一致とする。拡張部分は未実装。[採用経緯](scroll_sample_limit_20261116.md)と[分離の実測](20261117_scroll_isolation_report.md)を参照する。
+スクロールの正本は [共通BGスクロール仕様](D:/HomeBrew/FamiBASIC_Turbo_main/docs/common_scroll_spec.md)。幅・高さ・X/Yカメラ・各軸の停止／循環を実装し、2画面制限を廃止。縦320×960＋左右移動、横1024×256＋上下移動の入門サンプルも更新。関連19件成功、シューティングは保存版・新規生成版とも変更前後のROM全体と全番地が完全一致。[実装と検証](common_scroll_implemented_20261117.md)、[採用経緯](scroll_sample_limit_20261116.md)、[分離の実測](20261117_scroll_isolation_report.md)を参照する。
 
 2026-10-06〜07の起動時間調査は [起動時間の原因と短縮](startup_optimization_20261006.md) を読む。本流main `baa0dda`へpush済み。初回コンパイル結果のROM保存・復元に加え、保存RAMから使用済みフラグが残って約11秒へ戻る不具合を修正した。空RAM／実保存RAMとも5.530秒。ハイスコア32バイトを保持し、編集後RUNは本体コンパイラを維持。関連14回帰とMesenでも保存RAM起動を確認。PC側ROMビルド約8秒は別区間。通常入口ROMを更新済み、実行中の画面は次回F5で反映する。
 

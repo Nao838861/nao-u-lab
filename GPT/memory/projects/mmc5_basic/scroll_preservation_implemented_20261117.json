@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "baseline": "D:\\HomeBrew\\FamiBASIC_Turbo_main",
+  "candidate": "D:\\HomeBrew\\FamiBASIC_Turbo_main",
+  "comparisons": {
+    "saved": true,
+    "fresh": true
+  },
+  "before": {
+    "saved": {
+      "rom_sha256": "7e029511ad578d56c299adc2c03f93e29468ce0fb874635a5340bd4e3c650bcf",
+      "rom_bytes": 1572880,
+      "labels_sha256": "dabd3bc88960caa3d03a4549b24bbbcb8627e0e7ba6fd8c2b67663f8706280b1",
+      "source_sha256": "d46112b27c7b22c34345a4d43ab249d5ed2978b24d06b980539035ef9e371b9f",
+      "initial_save_sha256": null
+    },
+    "fresh": {
+      "rom_sha256": "d13f6c4582598aefe13a4ff2156d242597b4c9eca2e0377979066efe77384ac8",
+      "rom_bytes": 1572880,
+      "labels_sha256": "dabd3bc88960caa3d03a4549b24bbbcb8627e0e7ba6fd8c2b67663f8706280b1",
+      "source_sha256": "e0f812a20f27954eb26d32977942c7efacfa1d2d3cfc5c7873fd93adc11a157b",
+      "initial_save_sha256": null
+    }
+  },
+  "after": {
+    "saved": {
+      "rom_sha256": "7e029511ad578d56c299adc2c03f93e29468ce0fb874635a5340bd4e3c650bcf",
+      "rom_bytes": 1572880,
+      "labels_sha256": "dabd3bc88960caa3d03a4549b24bbbcb8627e0e7ba6fd8c2b67663f8706280b1",
+      "source_sha256": "d46112b27c7b22c34345a4d43ab249d5ed2978b24d06b980539035ef9e371b9f",
+      "initial_save_sha256": null
+    },
+    "fresh": {
+      "rom_sha256": "d13f6c4582598aefe13a4ff2156d242597b4c9eca2e0377979066efe77384ac8",
+      "rom_bytes": 1572880,
+      "labels_sha256": "dabd3bc88960caa3d03a4549b24bbbcb8627e0e7ba6fd8c2b67663f8706280b1",
+      "source_sha256": "e0f812a20f27954eb26d32977942c7efacfa1d2d3cfc5c7873fd93adc11a157b",
+      "initial_save_sha256": null
+    }
+  },
+  "note": "ROM全体・全ラベル番地・入力ソース・初期SAVを比較。FPSの許容差は使用しない。",
+  "date": "2026-11-17",
+  "baseline_state": "main a7acf4e + 開始時に存在した無関係な作業差分",
+  "candidate_state": "同一作業状態へ共通スクロール差分だけを適用。入力プロジェクトと音源変換結果を固定",
+  "regressions": {
+    "passed": 19,
+    "suites": [
+      "tests.test_common_scroll",
+      "tests.test_bg_render_modes",
+      "tests.test_bg_stream",
+      "tests.test_resource_catalog",
+      "tests.test_project_templates.TemplateTests.test_samples_roundtrip_and_do_not_share_state",
+      "tests.test_project_templates.TemplateTests.test_packaged_sources_do_not_need_examples_folder"
+    ]
+  },
+  "samples": {
+    "vertical": {
+      "width": 320,
+      "height": 960,
+      "x": "stop:0..64",
+      "y": "loop:up"
+    },
+    "horizontal": {
+      "width": 1024,
+      "height": 256,
+      "x": "loop:right",
+      "y": "stop:0..32"
+    }
+  },
+  "physical_hardware": false
+}
