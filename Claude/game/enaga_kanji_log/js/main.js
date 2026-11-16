@@ -663,7 +663,8 @@ function dangoTap(id) {
   if (S.screen !== 'dplay' || !D || D.done) return;
   const q = D.q, ids = BY[q.char].u.map(u => u.n), now = performance.now();
   if (id === ids[q.step]) {
-    q.step++; sfx.chirp(D.combo); setMood('happy', 300);
+    // ×は「いまの ばんごう」だけのもの。つぎの部品へ進んだら消す（先に押してまちがえた部品が、あとで答えになることがある）
+    q.step++; q.wrong = []; sfx.chirp(D.combo); setMood('happy', 300);
     if (q.step === ids.length) {
       const qm = D.qMiss[D.i] || 0; D.times.push(now - D.t0); D.qMiss[D.i] = qm; P.s.dLast[q.char] = Date.now();
       if (!qm) { D.combo++; D.maxCombo = Math.max(D.maxCombo, D.combo); const s = P.s; s.streakNow++; if (s.streakNow > s.streakBest) s.streakBest = s.streakNow; addEnaga(1); addFriend(false); }

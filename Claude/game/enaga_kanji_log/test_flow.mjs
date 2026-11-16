@@ -158,6 +158,13 @@ try {
     const d = await page.evaluate(() => { const D = window.__app.D; return {ch: D.q.char, choices: D.q.choices}; });
     const L = await ids(d.ch);
     if (i === 2) { missChar = d.ch; await tap('dTap', d.choices.find(c => !L.includes(c))); }
+    // 2番目の部品を先に押してまちがえても、2番目の番になったら押せる（×が残って詰まらない）
+    if (i === 3 && L.length >= 2 && L[1] !== L[0]) {
+      await tap('dTap', L[1]); await tap('dTap', L[0]);
+      ok(await page.locator(`[data-act=dTap][data-v="${L[1]}"]:not([disabled])`).count() === 1, '先に押してまちがえた部品も つぎの番では押せる');
+      for (const n of L.slice(1)) await tap('dTap', n);
+      continue;
+    }
     for (const n of L) await tap('dTap', n);
   }
   await wait(500);
