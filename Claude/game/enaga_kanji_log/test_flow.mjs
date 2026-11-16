@@ -224,6 +224,31 @@ try {
   s = await st();
   ok(s.s.enaga === before && s.s.dClears === 1, '再読みこみ後も 記録が残る');
 
+  // ---- ペン：お手本を なぞる ----
+  await tap('go'); await page.waitForSelector('.homeL');
+  await tap('kmenu'); await tap('kpick', 'new');
+  const tc = (await st()).q.char;
+  for (const n of await ids(tc)) await tap('pickName', n);
+  await tap('checkNames');
+  await tap('mode', 'pen'); await tap('trace');
+  ok(await page.locator('.pad .trace path').count() === await page.evaluate(c => window.__app.BY()[c].p.length, tc) && await page.locator('.pad .trace text').count() > 0, 'なぞる：うすい お手本と 書き順の数字が 出る');
+  await shot('18_trace.png');
+  {
+    const strokes = await page.evaluate(async c => { const h = await import('./lib/handwriting.mjs'); return window.__app.BY()[c].p.map(h.samplePath); }, tc);
+    const box = await page.locator('.pad').boundingBox();
+    for (const sk of strokes) {
+      const P = ([x, y]) => [box.x + x / 109 * box.width, box.y + y / 109 * box.height];
+      await page.mouse.move(...P(sk[0])); await page.mouse.down();
+      for (const p of sk.filter((_, i) => i % 3 === 0).concat([sk.at(-1)])) await page.mouse.move(...P(p));
+      await page.mouse.up();
+    }
+  }
+  await tap('checkPen');
+  s = await st();
+  ok(s.q.phase === 'done' && !s.s.order.includes(tc) && (await page.locator('.tags').first().innerText()).includes('なぞって'), 'なぞって書けた字は「おぼえた」に ならない');
+  await page.evaluate(() => { window.__app.P.mode = 'shape'; });
+  await tap('home'); await tap('title'); await page.waitForSelector('.titleScr');
+
   // ---- 画面の大きさ（iPad 横・縦、スマホ横） ----
   for (const [w, h, name] of [[1180, 820, 'ipad_land'], [820, 1180, 'ipad_port'], [844, 390, 'phone_land']]) {
     await page.setViewportSize({width: w, height: h}); await wait(300);

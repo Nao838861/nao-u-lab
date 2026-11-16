@@ -260,7 +260,7 @@ const act = {
     startKanji([ch, ...nextInOrder(2, (i + 1) % L.length).filter(c => c !== ch)]);
   },
   onePart(id) { startParts([id]); },
-  mode(v) { P.mode = v; saveDB(); if (S.q) S.q.msg = null; },
+  mode(v) { P.mode = v; saveDB(); if (S.q) { S.q.msg = null; if (v !== 'pen' && S.q.trace) { S.q.trace = false; S.q.ink = []; } } },
   say(t) { say(t); },
   dango() { if (!ready()) return; if (gradeLearned().length < 10) { toast(`あと ${10 - gradeLearned().length}字 おぼえると あそべるよ`); return; } startDango(); },
   del() { openDelete(); },
@@ -302,6 +302,12 @@ const act = {
     const q = S.q, res = judge(q.ink, q.char, KANJI_CANDS);
     if (res.ok) finishKanji('pen');
     else { q.shapeMiss++; mark('kanji', q.char, 'pen', false); miss(); saveDB(); q.msg = {ok: false, text: 'まだ ちがう ところが ありそう。もう一度 書くか、ヒントを 使おう。'}; }
+  },
+  // お手本を なぞる：うすい字の上を なぞって書く。見本を 見たのと 同じあつかい（おぼえた には ならない・子エナガ）
+  trace() {
+    const q = S.q; q.trace = !q.trace; q.ink = [];
+    if (q.trace) { q.sawModel = true; q.traced = true; q.msg = {ok: true, text: 'うすい 字を、数字の じゅんに なぞろう。なぞった字は「おぼえた」には ならないよ。'}; }
+    else q.msg = null;
   },
   undo() { S.q.ink.pop(); S.q.msg = null; },
   clearInk() { S.q.ink = []; S.q.msg = null; },
@@ -499,7 +505,7 @@ function studyView() {
     left = `<div class="panel gbox"><span class="gl">この字を つくろう</span><span class="qmark">？</span></div>`;
     right = namesRight(q, k);
   } else {
-    left = `<div class="panel gbox"><span class="gl">${mode() === 'pen' ? '見本なしで 書こう' : `${q.step} / ${k.u.length}`}</span>${mode() === 'pen' || q.step === 0 ? '<span class="qmark">？</span>' : buildSvg(q.char, q.step - 1)}</div>`;
+    left = `<div class="panel gbox"><span class="gl">${mode() === 'pen' ? (q.trace ? 'お手本を なぞろう' : '見本なしで 書こう') : `${q.step} / ${k.u.length}`}</span>${mode() === 'pen' || q.step === 0 ? '<span class="qmark">？</span>' : buildSvg(q.char, q.step - 1)}</div>`;
     right = shapeRight(q, k);
   }
   return `${hud('かんじを つくる', dots(S.list.length, S.i))}<div class="stTop">${promptHtml(k)}</div><div class="stL under">${left}${hintPanel(q, k)}</div><div class="stR under">${right}</div>`;
@@ -530,7 +536,7 @@ function shapeRight(q, k) {
   let core;
   if (mode() === 'pen') {
     core = `<div class="slots">${slots}</div><div class="row" style="align-items:flex-start;gap:16px">${pad()}<div style="display:flex;flex-direction:column;gap:10px;width:260px">
-      ${msgBox(q.msg)}${btn('checkPen', '書けた！', {cls: 'primary', dis: !q.ink.length})}${btn('undo', '↶ ひとつ けす', {cls: 'small'})}${btn('clearInk', 'ぜんぶ けす', {cls: 'small'})}</div></div>`;
+      ${msgBox(q.msg)}${btn('checkPen', '書けた！', {cls: 'primary', dis: !q.ink.length})}${btn('undo', '↶ ひとつ けす', {cls: 'small'})}${btn('clearInk', 'ぜんぶ けす', {cls: 'small'})}${traceBtn(q)}</div></div>`;
   } else {
     core = `<p class="ask">${no(q.step)}「<b>${ids[q.step]}</b>」の 形は どれ？</p><div class="slots">${slots}</div>${msgBox(q.msg)}
       <div class="tiles">${q.shapeChoices.map(id => { const x = q.wrongShapes.includes(id);
@@ -540,7 +546,7 @@ function shapeRight(q, k) {
 }
 function doneRight(q, k) {
   const ids = IDS(), last = S.i + 1 >= S.list.length;
-  const tag = q.usedMode === 'pen' ? '✎ ペンで 書けた' : q.usedMode === 'shape' ? '▦ 形を えらべた' : '👀 見本で かくにん';
+  const tag = q.usedMode === 'pen' ? (q.traced ? '✎ なぞって 書けた' : '✎ ペンで 書けた') : q.usedMode === 'shape' ? '▦ 形を えらべた' : '👀 見本で かくにん';
   const gain = q.gain.learned ? '<span class="learned">◎ おぼえた！ この字の シマエナガが 森に きたよ</span>'
     : q.gain.clean ? '<span style="color:var(--green)">◎ ばっちり！（もう おぼえている字）</span>'
     : 'もう一回 じぶんだけで できたら「おぼえた」に なるよ';
@@ -566,8 +572,15 @@ function studySummary() {
 }
 
 const pname = id => GD.parts[id]?.r ? `${id}<small class="hen">（${GD.parts[id].r}）</small>` : id;
+const traceBtn = q => btn('trace', q.trace ? '✎ なぞるのを やめる' : '✎ お手本を なぞる', {cls: 'small ' + (q.trace ? 'on' : '')});
+// なぞる時の うすい お手本（書き順の 数字つき）
+function traceSvg() {
+  const q = S.q, paths = q.char ? BY[q.char].p : GD.parts[q.id].d;
+  const num = paths.map((d, i) => { const m = d.match(/^M\s*(-?[\d.]+)[\s,]+(-?[\d.]+)/); return m ? `<text x="${(+m[1] - 3).toFixed(1)}" y="${(+m[2] - 2).toFixed(1)}">${i + 1}</text>` : ''; }).join('');
+  return `<g class="trace">${paths.map(d => `<path d="${d}"/>`).join('')}${num}</g>`;
+}
 function pad() {
-  return `<div class="padwrap"><svg class="pad" viewBox="0 0 109 109"><line x1="54.5" y1="2" x2="54.5" y2="107"/><line x1="2" y1="54.5" x2="107" y2="54.5"/><g class="ink"></g></svg></div>`;
+  return `<div class="padwrap ${S.q.trace ? 'tracing' : ''}"><svg class="pad" viewBox="0 0 109 109"><line x1="54.5" y1="2" x2="54.5" y2="107"/><line x1="2" y1="54.5" x2="107" y2="54.5"/>${S.q.trace ? traceSvg() : ''}<g class="ink"></g></svg></div>`;
 }
 function partsView() {
   if (!S.q) return partsSummary();
@@ -581,14 +594,14 @@ function partsView() {
     let core;
     if (q.model) core = `<div class="bigg">${partSvg(q.id, {anim: true})}</div><div class="row">${btn('partModelRetry', '見本を けして もう一度', {cls: 'primary'})}${btn('partModelNext', '見本を 見たので つぎへ')}</div>`;
     else if (mode() === 'pen') core = `<div class="row" style="align-items:flex-start;gap:16px">${pad()}<div style="display:flex;flex-direction:column;gap:10px;width:240px">${msgBox(q.msg)}
-      ${btn('checkPartPen', '書けた！', {cls: 'primary', dis: !q.ink.length})}${btn('undo', '↶ ひとつ けす', {cls: 'small'})}${btn('clearInk', 'ぜんぶ けす', {cls: 'small'})}</div></div>`;
+      ${btn('checkPartPen', '書けた！', {cls: 'primary', dis: !q.ink.length})}${btn('undo', '↶ ひとつ けす', {cls: 'small'})}${btn('clearInk', 'ぜんぶ けす', {cls: 'small'})}${traceBtn(q)}</div></div>`;
     else core = `${msgBox(q.msg)}<div class="tiles">${q.shapeChoices.map(id => { const x = q.wrongShapes.includes(id); return `<button type="button" class="tile ${x ? 'x' : ''}" data-act="answerShape" data-v="${esc(id)}" ${x ? 'disabled' : ''} aria-label="形の こうほ">${partSvg(id)}</button>`; }).join('')}</div>`;
     body = `${ask}${core}<div class="tools" style="margin-top:auto">${modeToggle()}${q.model ? '' : btn('model', '👀 見本', {cls: 'small'})}</div>`;
   } else {
     const last = S.i + 1 >= S.list.length;
     const kanjiWith = GD.kanji.filter(k => k.u.some(u => u.n === q.id)).slice(0, 12).map(k => `<span>${k.c}</span>`).join('');
     body = `<div class="bigg">${partSvg(q.id, {anim: true})}</div><p class="composed" style="font-size:30px">${pname(q.id)}</p>
-      <p class="tags"><span>${q.usedMode === 'pen' ? '✎ ペンで 書けた' : q.usedMode === 'shape' ? '▦ 形を えらべた' : '👀 見本で かくにん'}</span>${q.nameMiss + q.shapeMiss ? `<span>まちがい ${q.nameMiss + q.shapeMiss}回</span>` : '<span class="gold">ノーミス</span>'}${q.gain ? `<span class="gold">+${q.gain}羽</span>` : ''}</p>
+      <p class="tags"><span>${q.usedMode === 'pen' ? (q.traced ? '✎ なぞって 書けた' : '✎ ペンで 書けた') : q.usedMode === 'shape' ? '▦ 形を えらべた' : '👀 見本で かくにん'}</span>${q.nameMiss + q.shapeMiss ? `<span>まちがい ${q.nameMiss + q.shapeMiss}回</span>` : '<span class="gold">ノーミス</span>'}${q.gain ? `<span class="gold">+${q.gain}羽</span>` : ''}</p>
       ${q.newDone ? '<div class="gain"><span class="learned">◎ この ぶひん、できた！ +3羽</span></div>' : ''}
       <p class="family">この ぶひんが 入っている ${GD.grade}年の 字：${kanjiWith || 'なし'}</p>
       <div class="row">${last && S.ret ? btn('returnToKanji', 'お題に もどる', {cls: 'primary'}) : btn('nextPart', last ? 'けっかを 見る' : 'つぎの ぶひんへ', {cls: 'primary'})}</div>`;
