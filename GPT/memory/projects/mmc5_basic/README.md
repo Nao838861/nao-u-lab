@@ -1,5 +1,7 @@
 # FamiBASIC Turbo
 
+最新：main `6f7d41f` に [CHR領域分割・最新サンプル・HUD修正](chr_layout_implemented_20261117.md) を反映済み。スプライト0始まりとBG自動配置、54件の検証は完了。負荷試験の更新遅れは22→15回で、**処理落ちゼロは未達**。
+
 製品名は **FamiBASIC Turbo** に確定。現行本流の作業フォルダーは `D:\HomeBrew\FamiBASIC_Turbo_main`。
 
 スクロールの正本は [共通BGスクロール仕様](D:/HomeBrew/FamiBASIC_Turbo_main/docs/common_scroll_spec.md)。幅・高さ・X/Yカメラ・各軸の停止／循環を実装し、2画面制限を廃止。縦320×960＋左右移動、横1024×256＋上下移動の入門サンプルも更新。関連19件成功、シューティングは保存版・新規生成版とも変更前後のROM全体と全番地が完全一致。[実装と検証](common_scroll_implemented_20261117.md)、[採用経緯](scroll_sample_limit_20261116.md)、[分離の実測](20261117_scroll_isolation_report.md)を参照する。
