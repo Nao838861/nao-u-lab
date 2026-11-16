@@ -40,6 +40,13 @@ export const sfx = {
   tick() { tone(2600, .02, 'square', .02); },
   // 正かい：さえずり。れんぞくが のびるほど 高くなる
   chirp(c = 0) { const b = 1150 * Math.pow(2, Math.min(c, 18) / 24); tone(b, .06, 'sine', .17, 0, b * 1.6); tone(b * 1.3, .08, 'sine', .14, .065, b * 2.1); },
+  // かんじ団子で 字が できた：きらっと 上がる「ピロリン♪」＋ やわらかい和音。れんぞくで 少し高く
+  solved(c = 0) {
+    if (!live()) return; const t = AC.currentTime + .02, k = Math.min(c, 8);
+    [76, 81, 85, 88].forEach((m, i) => note(m + k, t + i * .055, .16, 'sine', .11));
+    chord([69 + k, 76 + k, 81 + k], t + .2, .45, 'triangle', .05); note(57 + k, t + .2, .45, 'triangle', .09);
+    tone(2800, .05, 'sine', .06, .26, 4200); tone(3500, .06, 'sine', .05, .32, 5000);
+  },
   // まちがい：やわらかい「ぽよん」。責める音にしない
   oops() { tone(520, .12, 'sine', .14, 0, 380); tone(420, .14, 'sine', .1, .1, 330); },
   title() { [0, 7, 12, 16].forEach((n, i) => tone(988 * Math.pow(2, n / 12), .18, 'triangle', .12, .1 + i * .09)); },

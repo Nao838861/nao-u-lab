@@ -423,7 +423,9 @@ function titleHtml(t) {
   if (t.kun) parts.push(t.kun.replace(/^([^_]+)/, '<b>$1</b>'));
   return parts.map(x => `<span class="nw">${x}</span>`).join('　');
 }
-const promptHtml = k => `<div class="panel prompt"><p class="ptitle">${titleHtml(k.t)}</p>${k.x.length ? `<p class="pex">${k.x.slice(0, 2).map(wordHtml).join('')}</p>` : ''}</div>`;
+// fill：答えの字を □ に入れて見せる（かんじ団子で 字が できた時）
+const filledWord = (segs, ch) => `<span>${segs.map(([t, , target]) => target ? `<b class="fillch">${ch}</b>` : esc(t)).join('')}</span>`;
+const promptHtml = (k, fill = false) => `<div class="panel prompt"><p class="ptitle">${titleHtml(k.t)}</p>${k.x.length ? `<p class="pex">${k.x.slice(0, 2).map(w => fill ? filledWord(w, k.c) : wordHtml(w)).join('')}</p>` : ''}</div>`;
 
 function render() {
   const sc = S.screen;
@@ -702,19 +704,25 @@ function startDango() {
 function stopDango() { clearInterval(dTimer); dTimer = null; bgmStop(); }
 function dQ(ch) { const ids = BY[ch].u.map(u => u.n), kinds = new Set(ids).size; return {char: ch, step: 0, wrong: [], choices: BY[ch].nd ? [...new Set(ids)] : fillChoices(ids, Math.max(12, kinds + 4), QUIZ_PARTS.concat(Object.keys(GD.parts)))}; }
 function dangoTap(id) {
-  if (S.screen !== 'dplay' || !D || D.done) return;
+  if (S.screen !== 'dplay' || !D || D.done || D.pauseAt) return;
   const q = D.q, ids = BY[q.char].u.map(u => u.n), now = performance.now();
   if (id === ids[q.step]) {
     // ×は「いまの ばんごう」だけのもの。つぎの部品へ進んだら消す（先に押してまちがえた部品が、あとで答えになることがある）
-    q.step++; q.wrong = []; sfx.chirp(D.combo); setMood('happy', 300);
-    if (q.step === ids.length) {
-      const qm = D.qMiss[D.i] || 0; D.times.push(now - D.t0); D.qMiss[D.i] = qm; P.s.dLast[q.char] = Date.now();
-      if (!qm) { D.combo++; D.maxCombo = Math.max(D.maxCombo, D.combo); const s = P.s; s.streakNow++; if (s.streakNow > s.streakBest) s.streakBest = s.streakNow; addEnaga(1); addFriend(false); }
-      D.qDur.push(now - D.qt); D.qt = now;
+    q.step++; q.wrong = []; setMood('happy', 300);
+    if (q.step < ids.length) { sfx.chirp(D.combo); return; }
+    // 字が できた：できた字を しっかり見せてから つぎへ（見せている間は タイムを とめる）。うろ覚えで当てた字ほど 長めに見せる
+    const qm = D.qMiss[D.i] || 0; D.times.push(now - D.t0); D.qMiss[D.i] = qm; P.s.dLast[q.char] = Date.now();
+    if (!qm) { D.combo++; D.maxCombo = Math.max(D.maxCombo, D.combo); const s = P.s; s.streakNow++; if (s.streakNow > s.streakBest) s.streakBest = s.streakNow; addEnaga(1); addFriend(false); }
+    D.qDur.push(now - D.qt);
+    q.solved = true; D.pauseAt = now; sfx.solved(D.combo);
+    const d0 = D, hold = qm ? 1300 : 750;
+    setTimeout(() => {
+      if (D !== d0 || S.screen !== 'dplay') return;
+      const t = performance.now(); D.t0 += t - D.pauseAt; D.qt = t; D.pauseAt = 0;
       D.i++;
-      if (D.i >= D.list.length) return finishDango(now);
-      D.q = dQ(D.list[D.i]);
-    }
+      if (D.i >= D.list.length) return finishDango(D.t0 + D.times.at(-1));
+      D.q = dQ(D.list[D.i]); render();
+    }, hold);
   } else if (!q.wrong.includes(id)) {
     q.wrong.push(id); D.miss++; D.qMiss[D.i] = (D.qMiss[D.i] || 0) + 1; D.combo = 0; P.s.streakNow = 0;
     scatter(); setMood('oops', 700, 'おしい！'); sfx.oops();
@@ -741,9 +749,10 @@ function finishDango(now) {
 function dCountView() { return `<div id="count">${S.n}</div>`; }
 function dPlayView() {
   const q = D.q, k = BY[q.char], ids = k.u.map(u => u.n);
+  const solved = q.solved, box = solved ? kanjiSvg(q.char) : q.step ? buildSvg(q.char, q.step - 1) : '<span class="qmark">？</span>';
   return `<div class="hud"><div class="hb">かんじ団子 ${GD.grade}年</div><div class="hb"><b>${D.i + 1}</b> / ${DSTEPS}</div><div class="hb"><b id="dTime">0.0</b> 秒</div>
     <div class="hb">ミス <b>${D.miss}</b></div><div class="hb combo">れんぞく <b>${D.combo}</b></div><div class="sp"></div>${btn('home', 'やめる', {cls: 'small'})}</div>
-    <div class="dplay"><div class="dq">${promptHtml(k)}<div class="gbox">${q.step ? buildSvg(q.char, q.step - 1) : '<span class="qmark">？</span>'}</div>
+    <div class="dplay ${solved ? 'solved' : ''}"><div class="dq">${promptHtml(k, solved)}<div class="gbox">${box}</div>
       <div class="slots" style="max-width:260px">${ids.map((_, i) => `<span class="slot ${i < q.step ? 'done' : i === q.step ? 'now' : ''}" style="min-width:56px">${no(i)}${i < q.step ? '✓' : ''}</span>`).join('')}</div></div>
       <div class="tiles">${q.choices.map(id => { const x = q.wrong.includes(id); return `<button type="button" class="tile ${x ? 'x' : ''}" data-act="dTap" data-v="${esc(id)}" ${x ? 'disabled' : ''}>${pathsSvg(shapeOf(id, q.char))}</button>`; }).join('')}</div>
       <p class="msg" style="color:var(--soft)">ぶひんを 書く じゅんに タップ</p></div>`;
@@ -945,7 +954,7 @@ function drawTrack(now) {
   });
   const fx = x1 + 12; c.strokeStyle = '#8b6a52'; c.lineWidth = 2.5; c.beginPath(); c.moveTo(fx, rows[0].y - 36); c.lineTo(fx, rows[0].y); c.stroke();
   c.fillStyle = '#f07a96'; c.beginPath(); c.moveTo(fx, rows[0].y - 36); c.lineTo(fx + 22, rows[0].y - 30); c.lineTo(fx, rows[0].y - 24); c.closePath(); c.fill();
-  const el = S.screen === 'dplay' && !D.done ? now - D.t0 : (D.times.at(-1) || 0);
+  const el = S.screen === 'dplay' && !D.done ? (D.pauseAt || now) - D.t0 : (D.times.at(-1) || 0);
   if (D.ghost) { const gi = D.ghost.filter(t => t <= el).length; setHop(hopG, gi, now); drawEnaga(c, x0 + hopPos(hopG, now) * sp, rows[1].y - r * 1.1 - hopLift(hopG, now) * r, r, {alpha: .4}); }
   else { c.fillStyle = '#a9b8c8'; c.textAlign = 'left'; c.fillText('はじめての きろくが ゴーストに なるよ', x0 + 30, rows[1].y - 12); }
   setHop(hopP, D.i, now);
@@ -964,7 +973,7 @@ function frame(now) {
   }
   if (sc === 'forest' && S.tab === 'forest') drawForest(now, dt);
   if (sc === 'dplay' || sc === 'dcount' || sc === 'dresult') drawTrack(now);
-  if (sc === 'dplay' && D && !D.done) { const el = $('#dTime'); if (el) el.textContent = sec(now - D.t0); }
+  if (sc === 'dplay' && D && !D.done) { const el = $('#dTime'); if (el) el.textContent = sec((D.pauseAt || now) - D.t0); }
   requestAnimationFrame(frame);
 }
 
