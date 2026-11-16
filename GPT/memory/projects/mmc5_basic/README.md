@@ -1,6 +1,6 @@
 # FamiBASIC Turbo
 
-最新：main `6f7d41f` に [CHR領域分割・最新サンプル・HUD修正](chr_layout_implemented_20261117.md) を反映済み。スプライト0始まりとBG自動配置、54件の検証は完了。負荷試験の更新遅れは22→15回で、**処理落ちゼロは未達**。
+最新：main `a186d52` で [未使用BG 2枚を削除し、使用中の5枚を0〜4へ整理](bg_cleanup_20261117.md)。編集正本・テンプレート・保存済みサンプルへ反映し、BASICと生成された実行用データの完全一致を確認。先行のmain `6f7d41f` による [CHR領域分割・最新サンプル・HUD修正](chr_layout_implemented_20261117.md) も反映済み。スプライト0始まりとBG自動配置、54件の検証は完了。負荷試験の更新遅れは22→15回で、**処理落ちゼロは未達**。
 
 製品名は **FamiBASIC Turbo** に確定。現行本流の作業フォルダーは `D:\HomeBrew\FamiBASIC_Turbo_main`。
 
