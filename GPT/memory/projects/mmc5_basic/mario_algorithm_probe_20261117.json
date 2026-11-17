@@ -1,0 +1,38 @@
+{
+  "walk": {
+    "vx_fixed": 384,
+    "pixels_per_frame": 1.5,
+    "floor_y": 193.0
+  },
+  "dash": {
+    "vx_fixed": 640,
+    "pixels_per_frame": 2.5,
+    "floor_y": 193.0
+  },
+  "tap_jump": {
+    "height_pixels": 28.2734375,
+    "landed": true
+  },
+  "held_jump": {
+    "height_pixels": 69.6875,
+    "landed": true
+  },
+  "wall": {
+    "player_x": 144.0,
+    "wall_x": 160,
+    "blocked": true
+  },
+  "ceiling": {
+    "upward_velocity_stopped": true
+  },
+  "friction_16bit": {
+    "velocity_cases": 1281,
+    "exact": true,
+    "largest_product": 31750
+  },
+  "position_split": {
+    "cases": 655616,
+    "exact": true,
+    "world_pixel_coordinate_separate": true
+  }
+}
