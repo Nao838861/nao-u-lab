@@ -64,6 +64,7 @@ async function loadGrade(g) {
   BY = Object.fromEntries(GD.kanji.map(k => [k.c, k]));
   QUIZ_PARTS = Object.keys(GD.parts).filter(id => !GD.parts[id].k);
   KANJI_CANDS = Object.fromEntries(GD.kanji.map(k => [k.c, k.p]));
+  installGradeTitles();
 }
 const ASKABLE = () => GD.kanji.filter(k => GD.book || !k.z).map(k => k.c);
 const posOf = () => P.pos[GD.grade] || 0;
@@ -160,15 +161,43 @@ function titleCtx() {
     learned: Object.keys(P.kanji).filter(doneKanji).length, sections: Object.keys(s.secDone).length, terms: Object.keys(s.termDone).length,
     grades: Object.keys(s.gradeDone).map(Number), streakBest: s.streakBest, pen: Object.keys(s.pen).length, cleanSets: s.cleanSets,
     parts: Object.keys(P.parts).filter(donePart).length, days: ds.length, dayStreak, enaga: s.enaga, dClears: s.dClears, dNoMiss: s.dNoMiss,
-    rank: s.rank, regained: s.regained, dayMax: Math.max(0, ...Object.values(s.days).map(d => d.learned.length)),
+    rank: s.rank, regained: s.regained, secDone: s.secDone, termDone: s.termDone, gl: GD ? {[GD.grade]: gradeLearned().length} : {}, dayMax: Math.max(0, ...Object.values(s.days).map(d => d.learned.length)),
   };
 }
-const gotCount = () => TITLES.filter(t => P.s.titles[t.id]).length;
-const newTitles = () => TITLES.filter(t => P.s.titles[t.id] && !P.s.tSeen[t.id]);
+// 学年べつ しょうごう（えらんだ 学年の ときだけ 見える）：教科書の 回ごと・学期・半分・ぜんぶ。
+// 道のりが 長いので、回（1学期① など）を おぼえきる たびに ほめる。
+const SEASON = {'1学期': 'はる', '2学期': 'あき', '3学期': 'ふゆ'};
+const STEP = ['めばえ', 'ふたば', 'わかば', 'つぼみ', 'はなさき', 'みのり', 'おおぞら', 'にじ', 'ながれぼし', 'たいよう', 'ぎんが', 'うちゅう'];
+function gradeTitles() {
+  const g = GD.grade, grp = `${g}年の きょうかしょ`, out = [];
+  const prog = cs => () => `<i class="tprog">${cs.filter(doneKanji).length} / ${cs.length}字</i>`;
+  const secs = [...new Set(GD.kanji.map(k => k.ss).filter(x => x && x !== '順番不明'))];
+  const terms = [...new Set(secs.map(x => x.replace(/[①-⑫]$/, '')))];
+  for (const term of terms) {
+    const ts = secs.filter(x => x.replace(/[①-⑫]$/, '') === term), se = SEASON[term] || term;
+    ts.forEach((ss, j) => { const cs = GD.kanji.filter(k => k.ss === ss).map(k => k.c);
+      out.push({g, grp, id: `gs${g}:${ss}`, name: `${g}年 ${se}の ${STEP[j] || 'ほし'}`, cond: `${ss}の 字を ぜんぶ おぼえる`, test: c => !!c.secDone[g + ':' + ss], prog: prog(cs)}); });
+    const cs = GD.kanji.filter(k => ts.includes(k.ss)).map(k => k.c);
+    out.push({g, grp, id: `gt${g}:${term}`, name: `${g}年 ${se}の チャンピオン`, cond: `${term}の 字を ぜんぶ おぼえる`, test: c => !!c.termDone[g + ':' + term], prog: prog(cs)});
+  }
+  const all = ASKABLE(), half = Math.ceil(all.length / 2);
+  out.push({g, grp, id: `gh${g}`, name: `${g}年 はんぶん たっせい`, cond: `${g}年の 字を 半分（${half}字） おぼえる`, test: c => (c.gl[g] || 0) >= half, prog: prog(all)});
+  out.push({g, grp, id: 'g' + g, name: `${g}年生 コンプリート`, cond: `${g}年の 字を ぜんぶ おぼえる`, test: c => c.grades.includes(g), prog: prog(all)});
+  return out;
+}
+function installGradeTitles() {
+  for (let i = TITLES.length - 1; i >= 0; i--) if (TITLES[i].g) TITLES.splice(i, 1);
+  if (GD) TITLES.unshift(...gradeTitles());
+}
+// tier つきの しょうごうは、ひとつ前の tier を ぜんぶ とると ひらく
+const tierOpen = t => !t.tier || TITLES.filter(x => x.grp === t.grp && x.tier === t.tier - 1).every(x => P.s.titles[x.id]);
+const visT = () => TITLES.filter(t => (!t.g || (GD && t.g === GD.grade)) && tierOpen(t));
+const gotCount = () => visT().filter(t => P.s.titles[t.id]).length;
+const newTitles = () => visT().filter(t => P.s.titles[t.id] && !P.s.tSeen[t.id]);
 let sessTitles = null;  // いまの まとまり（3文字・かんじ団子1回）で取ったしょうごう
 function checkTitles(quiet = false) {
   const c = titleCtx(), got = [];
-  for (const t of TITLES) if (!P.s.titles[t.id] && t.test(c)) { P.s.titles[t.id] = today(); dayLog().titles.push(t.id); got.push(t); }
+  for (const t of TITLES) if (!P.s.titles[t.id] && tierOpen(t) && t.test(c)) { P.s.titles[t.id] = today(); dayLog().titles.push(t.id); got.push(t); }
   if (got.length) {
     if (sessTitles) sessTitles.push(...got);
     if (!quiet) { setTimeout(() => sfx.title(), 350); got.slice(0, 3).forEach((t, i) => setTimeout(() => toast(`<span class="nb">しょうごう</span>「${esc(t.name)}」ゲット！`), 300 + i * 500)); }
@@ -494,7 +523,7 @@ function homeView() {
     <h3 class="rech">きろく</h3>
     <div class="recs">
       <button type="button" class="recbtn" data-act="forest" data-v="forest"><span>エナガの もり<i>${s.enaga > s.seen ? `あたらしく +${s.enaga - s.seen}` : ''}</i></span><b>${s.enaga.toLocaleString()}羽</b></button>
-      <button type="button" class="recbtn" data-act="forest" data-v="titles"><span>しょうごう<i>${nt ? `<em class="newbadge">NEW ${nt}</em>` : ''}</i></span><b>${gotCount()} / ${TITLES.length}</b></button>
+      <button type="button" class="recbtn" data-act="forest" data-v="titles"><span>しょうごう<i>${nt ? `<em class="newbadge">NEW ${nt}</em>` : ''}</i></span><b>${gotCount()} / ${visT().length}</b></button>
       <button type="button" class="recbtn" data-act="forest" data-v="days"><span>あしあと<i>${td && td.learned.length ? `きょう ${td.learned.length}字 おぼえた` : ''}</i></span><b>${Object.keys(s.days).length}日</b></button>
       <div class="recbtn plain"><span>一発れんぞく<i style="color:var(--soft);font-weight:normal">きろく ${s.streakBest}</i></span><b style="color:var(--pink)">${s.streakNow}</b></div>
     </div></div><div class="homeScroll"></div>
@@ -685,12 +714,14 @@ function forestView() {
 let shownNewTitles = new Set();
 function titlesHtml() {
   const card = (t, isNew) => { const has = P.s.titles[t.id];
-    return `<div class="tcard ${has ? 'got' : ''} ${isNew ? 'new' : ''}"><b>${has ? esc(t.name) : '？？？'}</b><small>${esc(t.cond)}${has ? `（${+has.slice(5, 7)}/${+has.slice(8, 10)}）` : ''}</small></div>`; };
-  let html = `<div class="thead">${esc(player)} の しょうごう　<b>${gotCount()}</b> / ${TITLES.length}</div>`;
+    return `<div class="tcard ${has ? 'got' : ''} ${isNew ? 'new' : ''}"><b>${has ? esc(t.name) : '？？？'}</b><small>${esc(t.cond)}${has ? `（${+has.slice(5, 7)}/${+has.slice(8, 10)}）` : t.prog ? t.prog() : ''}</small></div>`; };
+  let html = `<div class="thead">${esc(player)} の しょうごう　<b>${gotCount()}</b> / ${visT().length}</div>`;
   if (shownNewTitles.size) html += `<div class="newbox"><h3>あたらしく とった しょうごう！ ${shownNewTitles.size}こ</h3><div class="tgrid">${TITLES.filter(t => shownNewTitles.has(t.id)).map(t => card(t, true)).join('')}</div></div>`;
+  const GT = visT().filter(t => t.g);
+  if (GT.length) html += `<div class="gradeT"><h3 class="tg">★ ${GD.grade}年の きょうかしょ <small>${GT.filter(t => P.s.titles[t.id]).length} / ${GT.length}　（${GD.grade}年を えらんだ時だけ 見えるよ）</small></h3><div class="tgrid">${GT.map(t => card(t, shownNewTitles.has(t.id))).join('')}</div></div>`;
   let grp = null;
-  for (const t of TITLES) {
-    if (t.grp !== grp) { if (grp) html += '</div>'; grp = t.grp; html += `<h3 class="tg">${grp}</h3><div class="tgrid">`; }
+  for (const t of visT().filter(t => !t.g)) {
+    if (t.grp !== grp) { if (grp) html += '</div>'; grp = t.grp; html += `<h3 class="tg">${grp}${TITLES.some(x => x.grp === grp && !tierOpen(x)) ? '<small class="tlock">ぜんぶ とると つぎの しょうごうが ひらくよ</small>' : ''}</h3><div class="tgrid">`; }
     html += card(t, shownNewTitles.has(t.id));
   }
   return html + '</div>';
@@ -706,7 +737,7 @@ function daysHtml() {
     return `<div class="day"><div class="dt">${dt.getMonth() + 1}月${dt.getDate()}日（${W[dt.getDay()]}）<small>シマエナガ +${L.enaga}羽${L.dango ? `・団子 ${L.dango}回` : ''}</small></div>
       <div><div class="ks">${L.learned.length ? L.learned.join('') : '<span class="meta">（れんしゅう した日）</span>'}</div>
       ${L.learned.length ? `<div class="meta">おぼえた字 <b>${L.learned.length}</b>字</div>` : ''}
-      ${L.titles.length ? `<div class="meta">しょうごう：<b>${L.titles.map(id => esc(T[id] || id)).join('、')}</b></div>` : ''}</div></div>`; }).join('')}</div>`;
+      ${L.titles.some(id => T[id]) ? `<div class="meta">しょうごう：<b>${L.titles.filter(id => T[id]).map(id => esc(T[id])).join('、')}</b></div>` : ''}</div></div>`; }).join('')}</div>`;
 }
 function onTab(t) {
   if (t === 'forest') startForestAnim();

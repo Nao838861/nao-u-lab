@@ -187,6 +187,11 @@ try {
   await tap('tab', 'titles');
   await shot('10_titles.png');
   ok(await page.locator('.tcard.new').count() >= 1, 'しょうごう一覧で NEW が光る');
+  ok(await page.evaluate(() => { const T = window.__app.TITLES, ss = window.__app.GD.kanji[0].ss, t = T.find(x => x.id === 'gs4:' + ss);
+    return !T.some(x => x.id === 'sec1' || x.id === 'term1') && T.every(x => !x.g || x.g === 4) && !!t && !t.test({secDone: {}}) && t.test({secDone: {['4:' + ss]: '2026-01-01'}}); }), '教科書の しょうごうは 学年べつ（4年の 回ごと）だけ');
+  ok((await page.locator('.scrollbox h3.tg').first().innerText()).includes('4年の きょうかしょ') && await page.locator('.gradeT .tcard').count() > 10, '学年べつ しょうごうが いちばん上');
+  ok(await page.evaluate(() => { const E = window.__app.TITLES.filter(t => t.grp === 'シマエナガ'); return E.length === 24 && E.at(-1).id === 'e100000' && E[7].id === 'e2000' && E[7].tier === 0 && E[8].tier === 1; })
+    && await page.locator('h3.tg .tlock').count() >= 1, 'シマエナガの しょうごうは 2000羽までの 2行から、とるごとに 2行ずつ ひらく');
   await tap('tab', 'days');
   await shot('11_days.png');
   ok((await page.locator('.day .ks').first().innerText()).includes('信飛'), 'あしあとに きょう おぼえた字');
