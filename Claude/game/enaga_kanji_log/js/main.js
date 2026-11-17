@@ -497,7 +497,7 @@ function homeView() {
       <button type="button" class="recbtn" data-act="forest" data-v="titles"><span>しょうごう<i>${nt ? `<em class="newbadge">NEW ${nt}</em>` : ''}</i></span><b>${gotCount()} / ${TITLES.length}</b></button>
       <button type="button" class="recbtn" data-act="forest" data-v="days"><span>あしあと<i>${td && td.learned.length ? `きょう ${td.learned.length}字 おぼえた` : ''}</i></span><b>${Object.keys(s.days).length}日</b></button>
       <div class="recbtn plain"><span>一発れんぞく<i style="color:var(--soft);font-weight:normal">きろく ${s.streakBest}</i></span><b style="color:var(--pink)">${s.streakNow}</b></div>
-    </div></div>
+    </div></div><div class="homeScroll"></div>
     <div class="cap">おぼえた字の シマエナガ <b>${n}</b>羽 <small style="color:var(--soft)">（${GD.grade}年）</small></div>`;
 }
 // かんじを つくる：3つの えらび方 ＋ 下に ずかん（字を えらぶと そこから）
@@ -876,25 +876,33 @@ function startHomeAnim() {
   const g = GD.grade, set = new Set(GD.kanji.map(k => k.c));
   const list = P.s.order.filter(c => set.has(c) && doneKanji(c));
   const seen = new Set(P.s.homeSeen[g] || []);
-  const now = performance.now(), MAX = 48;
-  const shown = list.length > MAX ? list.slice(-(MAX - 1)) : list;
+  const now = performance.now();
   let d = 0;
-  const birds = shown.map(c => ({c, t: seen.has(c) ? now - 5000 : now + 500 + (d++) * 260, ph: Math.random() * 6, new: !seen.has(c)}));
-  homeAnim = {birds, more: list.length - shown.length, chirped: new Set()};
+  const birds = list.map(c => ({c, t: seen.has(c) ? now - 5000 : now + 500 + (d++) * 260, ph: Math.random() * 6, new: !seen.has(c)}));
+  homeAnim = {birds, chirped: new Set(), y: 0, ty: 0};
+  if (d) homeAnim.y = homeAnim.ty = homeMaxY();
   P.s.homeSeen[g] = list; saveDB();
 }
+// ホームの 枝の ならび（羽が ふえたら 枝も 下へ ふえて、たてに スクロール）
+const HOME = {w: 630, h: 640, perRow: 8, r: 26, sp: 66, top: 76, gap: 94};
+const homeRows = () => Math.max(6, Math.ceil((homeAnim ? homeAnim.birds.length : 0) / HOME.perRow));
+const homeMaxY = () => Math.max(0, HOME.top + (homeRows() - 1) * HOME.gap + 40 - HOME.h);
+function homeScroll(dy) { if (!homeAnim) return; homeAnim.ty = Math.max(0, Math.min(homeMaxY(), homeAnim.ty + dy)); }
 function drawHome(now, dt) {
   const c = cx.homeCv, w = 630, h = 640; c.clearRect(0, 0, w, h);
   if (!homeAnim) return;
-  const rows = 6, perRow = 8, r = 26, sp = 66, top = 76, gap = 94;
-  for (let i = 0; i < rows; i++) { const y = top + i * gap; snowyBranch(c, i % 2 ? 50 : 10, i % 2 ? w - 10 : w - 50, y, 9); }
+  const {perRow, r, sp, top, gap} = HOME, rows = homeRows(), A = homeAnim;
+  A.y += (A.ty - A.y) * Math.min(1, dt / 70); if (Math.abs(A.ty - A.y) < .3) A.y = A.ty;
+  const oy = A.y;
+  c.save(); c.translate(0, -oy);
+  for (let i = 0; i < rows; i++) { const y = top + i * gap; if (y - oy > -40 && y - oy < h + 40) snowyBranch(c, i % 2 ? 50 : 10, i % 2 ? w - 10 : w - 50, y, 9); }
   const B = homeAnim.birds;
   if (!B.length) {
     drawEnaga(c, w / 2, top + 2 * gap - r * 1.8 * 1.12 + 6, r * 1.8, {blink: blinkNow(now, 3), tilt: Math.sin(now / 900) * .08});
     c.textAlign = 'center'; c.fillStyle = '#3b5f86'; c.font = '20px "BIZ UDPGothic",Meiryo,sans-serif';
     c.fillText(P && GD ? '字を おぼえると、その字を もった' : 'なまえと 学年を えらんでね', w / 2, top + 3 * gap + 10);
     if (P && GD) c.fillText('なかまが ここに あつまってくるよ', w / 2, top + 3 * gap + 38);
-    return;
+    c.restore(); return;
   }
   B.forEach((b, i) => {
     const row = Math.floor(i / perRow), col = i % perRow, y = top + row * gap - 3;
@@ -903,11 +911,19 @@ function drawHome(now, dt) {
     if (now < b.t) return;
     if (b.new && !homeAnim.chirped.has(i)) { homeAnim.chirped.add(i); sfx.chirp(i % 12); burst(sparks, now, x, ty, 10); }
     let fx = x, fy = ty, flap = 0;
-    if (p < 1) { const e = 1 - Math.pow(1 - p, 3), sx = w + 30, sy = -40; fx = sx + (x - sx) * e; fy = sy + (ty - sy) * e - Math.sin(Math.PI * p) * 60; flap = (Math.sin(now / 35) + 1) / 2; }
+    if (y - oy < -60 || y - oy > h + 60) { if (p >= 1) return; }
+    if (p < 1) { const e = 1 - Math.pow(1 - p, 3), sx = w + 30, sy = oy - 40; fx = sx + (x - sx) * e; fy = sy + (ty - sy) * e - Math.sin(Math.PI * p) * 60; flap = (Math.sin(now / 35) + 1) / 2; }
     drawEnaga(c, fx, fy - Math.abs(Math.sin(now / 420 + b.ph)) * 1.2, r, {label: b.c, flap, blink: blinkNow(now, i + b.ph), mood: p < 1 || now - b.t < 1200 && b.new ? 'happy' : 'normal'});
   });
-  if (homeAnim.more > 0) { c.textAlign = 'center'; c.fillStyle = '#6c7f95'; c.font = '17px "BIZ UDPGothic",Meiryo,sans-serif'; c.fillText(`ほかにも ${homeAnim.more}羽 いるよ`, w / 2, h - 20); }
   sparksHome = drawSparks(c, sparksHome.concat(sparks.splice(0)), now, dt);
+  c.restore();
+  // スクロールバー（スクロールできる時だけ）
+  const M = homeMaxY();
+  if (M > 0) {
+    const th = Math.max(50, h * h / (h + M)), ty = (h - th) * oy / M;
+    c.fillStyle = 'rgba(59,95,134,.12)'; c.beginPath(); c.roundRect(w - 9, 0, 6, h, 3); c.fill();
+    c.fillStyle = 'rgba(59,95,134,.45)'; c.beginPath(); c.roundRect(w - 9, ty, 6, th, 3); c.fill();
+  }
 }
 let sparksHome = [];
 
@@ -1071,6 +1087,23 @@ $ui.addEventListener('click', async e => {
   render();
   if (S.screen === 'home' && before !== 'home') startHomeAnim();
 });
+$ui.addEventListener('wheel', e => {
+  if (S.screen !== 'home' || !e.target.closest('.homeScroll')) return;
+  e.preventDefault(); homeScroll(e.deltaMode === 1 ? e.deltaY * 40 : e.deltaY);
+}, {passive: false});
+let homeDrag = null;
+$ui.addEventListener('pointerdown', e => {
+  if (S.screen !== 'home' || !e.target.closest('.homeScroll') || !homeAnim) return;
+  homeDrag = {id: e.pointerId, y: e.clientY, k: 720 / $('#frame').getBoundingClientRect().height};
+  e.target.setPointerCapture(e.pointerId);
+});
+$ui.addEventListener('pointermove', e => {
+  if (!homeDrag || e.pointerId !== homeDrag.id || !homeAnim) return;
+  const dy = (homeDrag.y - e.clientY) * homeDrag.k; homeDrag.y = e.clientY;
+  homeScroll(dy); homeAnim.y = homeAnim.ty;
+});
+const endDrag = e => { if (homeDrag && e.pointerId === homeDrag.id) homeDrag = null; };
+$ui.addEventListener('pointerup', endDrag); $ui.addEventListener('pointercancel', endDrag);
 $ui.addEventListener('keydown', async e => { if (e.target.id === 'nameIn' && e.key === 'Enter') { await act.nameOk(); render(); } });
 document.addEventListener('keydown', async e => {
   if ($('#modal').classList.contains('on')) { if (e.key === 'Escape') closeModal(); return; }
@@ -1085,7 +1118,7 @@ $('#muteBtn').addEventListener('click', () => { snd.muted = !snd.muted; DB.snd =
   resize();
   if (P && P.grade) await loadGrade(P.grade);
   if (P) { checkTitles(true); }
-  window.__app = {get S() { return S; }, get P() { return P; }, get GD() { return GD; }, get D() { return D; }, BY: () => BY, act, render, DB, TITLES};
+  window.__app = {get S() { return S; }, get P() { return P; }, get GD() { return GD; }, get D() { return D; }, BY: () => BY, act, render, DB, TITLES, get homeAnim() { return homeAnim; }};
   render(); startHomeAnim();
   requestAnimationFrame(frame);
 })();

@@ -160,6 +160,26 @@ try {
   s = await st();
   ok(JSON.stringify(s.s.homeSeen[4]) === JSON.stringify(['信', '飛']), '森に おぼえた字のシマエナガ（信・飛）');
 
+  // ---- ホームの森：たくさん おぼえたら たてに スクロール ----
+  {
+    const back = await page.evaluate(() => { const a = window.__app, P = a.P; const b = JSON.stringify({k: P.kanji, o: P.s.order, h: P.s.homeSeen});
+      for (const k of a.GD.kanji.slice(0, 70)) { P.kanji[k.c] = {...(P.kanji[k.c] || {}), clean: 1, weak: false}; if (!P.s.order.includes(k.c)) P.s.order.push(k.c); }
+      P.s.homeSeen[a.GD.grade] = P.s.order.slice(); return b; });
+    await tap('forest', 'forest'); await tap('home'); await wait(300);
+    const n = await page.evaluate(() => window.__app.homeAnim.birds.length);
+    const box = await page.locator('.homeScroll').boundingBox();
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.wheel(0, 5000); await wait(600);
+    const y1 = await page.evaluate(() => window.__app.homeAnim.y);
+    await shot('08b_home_scroll.png');
+    await page.mouse.wheel(0, -5000); await wait(600);
+    const y0 = await page.evaluate(() => window.__app.homeAnim.y);
+    ok(n >= 70 && y1 > 200 && y0 === 0, `ホームの シマエナガが ぜんぶ出て、ホイールで スクロールできる（${n}羽・下 ${Math.round(y1)}）`);
+    await page.evaluate(b => { const P = window.__app.P, o = JSON.parse(b);
+      for (const c of Object.keys(P.kanji)) if (!(c in o.k)) delete P.kanji[c]; Object.assign(P.kanji, o.k);
+      P.s.order.splice(0, P.s.order.length, ...o.o); Object.assign(P.s.homeSeen, o.h); window.__app.act.mode(window.__app.P.mode); }, back);
+  }
+
   // ---- もり・しょうごう・あしあと ----
   await tap('forest', 'forest');
   await wait(1800);
