@@ -18,7 +18,10 @@ lua=r'''
 local frame=0
 local cells={}
 local tiles=assert(io.open(DIR..'/../stage_tiles.bin','rb')):read('*a')
+local meta=assert(io.open(DIR..'/../stage_meta.bin','rb')):read('*a')
 local cols=0
+local patchWrites=0
+local activeWrites=0
 local streamBytes=0
 local increment=1
 local lastCamera=-1
@@ -29,8 +32,6 @@ local ntWrites=0
 local addr=0
 local highNext=true
 local paletteWrites=0
-local allowedAddr={0x3f05,0x3f06,0x3f0a,0x3f05,0x3f06,0x3f0a,0x3f05,0x3f06,0x3f0a}
-local allowedColor={0x02,0x22,0x12,0x0f,0x16,0x2c,0x02,0x22,0x12}
 local maxLit=0
 local transfers=0
 local trace=assert(io.open(DIR..'/rays.txt','w'))
@@ -45,7 +46,7 @@ end
 emu.addMemoryCallback(function(a,v)
  if frame>45 then
   if a<0x5c00 or a>=0x5fc0 then fail('wall write') end
-  cells[a]=(v==0 or v==0xc1 or v==0xfe) and 0 or v
+  cells[a]=(v>=66 and v<=125) and v or 0
  end
 end,emu.callbackType.write,0x5c00,0x5fff)
 emu.addMemoryCallback(function(a,v) increment=(v==0x84) and 32 or 1 end,emu.callbackType.write,0x2000)
@@ -57,22 +58,27 @@ end,emu.callbackType.write,0x2006)
 emu.addMemoryCallback(function(a,v)
  if frame<=45 then return end
  if increment==32 and addr>=0x2000 and addr<0x23c0 then
-  local col=read(STAGE_LABEL)+32
+  local col=read(COLUMN_LABEL)
   local row=math.floor((addr-0x2000)/32)
-  if addr%32~=col%32 or tiles:byte(col*32+row+1)~=v then fail('wrong column at '..frame);return end
+  local i=col*32+row+1
+  local expected=(read(DARK_LABEL)~=0 and meta:byte(i)<128) and 0 or tiles:byte(i)
+  if addr%32~=col%32 or expected~=v then fail('wrong column at '..frame);return end
   streamBytes=streamBytes+1
   if row==29 then cols=cols+1 end
  elseif addr==0x3f00 or addr==0x3f02 or addr==0x3f03 then
   bright=bright+1
- elseif addr==allowedAddr[paletteWrites+1] and v==allowedColor[paletteWrites+1] then
-  paletteWrites=paletteWrites+1
+ elseif (addr==0x3f1d or addr==0x3f01) and v==0x2a then paletteWrites=paletteWrites+1
+ elseif read(BOSS_LABEL)~=0 and increment==1 and addr>=0x2000 and addr<0x23c0 then
+  patchWrites=patchWrites+1
+  local line=emu.getState()['ppu.scanline']
+  if line>=0 and line<240 then activeWrites=activeWrites+1 end
  else ntWrites=ntWrites+1 end
  addr=addr+increment
 end,emu.callbackType.write,0x2007)
 emu.addMemoryCallback(function()
  transfers=transfers+1
  if ((frame>=750 and frame<990) or (frame>=2200 and frame<2460) or (frame>=4100 and frame<4400)) and read(BLUE_LABEL)~=0 then
-  trace:write(string.format('%d %d %d %d',read(BLUE_LABEL+3),read(BLUE_LABEL+1),read(BLUE_LABEL+2),read(STAGE_LABEL)*8+(read(SCROLL_LABEL)%8)))
+  trace:write(string.format('%d %d %d %d %d',read(BLUE_LABEL+3),read(BLUE_LABEL+1),read(BLUE_LABEL+2),read(STAGE_LABEL)*8+(read(SCROLL_LABEL)%8),read(BOSS_LABEL)~=0 and read(POSE_LABEL) or -1))
   for a,v in pairs(cells) do if v~=0 then trace:write(string.format(' %04x:%02x',a,v)) end end
   trace:write('\n')
  end
@@ -115,15 +121,17 @@ emu.addEventCallback(function()
  if frame==4490 then
   trace:close()
   positions:close()
-  if missed[1]+missed[2]+missed[3]~=0 or count~=0 or ntWrites~=0 or paletteWrites~=9 or streamBytes~=cols*30 or bright~=18 or settled<40 or allMissed~=0 then fail('DMA / clear / PPUDATA '..transfers..' '..count..' '..ntWrites..' light='..bright..' colours='..paletteWrites..' stop='..settled..' missed='..table.concat(missed,','));return end
+  if missed[1]+missed[2]+missed[3]~=0 or count~=0 or ntWrites~=0 or paletteWrites~=2 or patchWrites<1000 or activeWrites~=0 or streamBytes~=cols*30 or bright~=21 or settled<40 or allMissed~=0 then fail('DMA / clear / PPUDATA '..transfers..' '..count..' '..ntWrites..' light='..bright..' colours='..paletteWrites..' visible writes='..activeWrites..' stop='..settled..' missed='..table.concat(missed,','));return end
   local f=assert(io.open(DIR..'/result.txt','w'))
-  f:write('frames='..frame..' DMA='..transfers..' peak_lit='..maxLit..' final_lit='..count..' columns='..cols..' camera='..lastCamera..' palette_writes='..paletteWrites..' other_PPUDATA_writes='..ntWrites..' missed idle/A/B='..table.concat(missed,','));f:close()
+  f:write('frames='..frame..' DMA='..transfers..' peak_lit='..maxLit..' final_lit='..count..' columns='..cols..' camera='..lastCamera..' boss_tile_writes='..patchWrites..' visible_writes='..activeWrites..' other_PPUDATA_writes='..ntWrites..' missed idle/A/B='..table.concat(missed,','));f:close()
   emu.stop(0)
  end
 end,emu.eventType.endFrame)
 '''.replace('DIR',json.dumps(out.as_posix())).replace('RECORD','true' if os.environ.get('RECORD_STAGE') else 'false')
 labels={name:int(address,16) for address,name in re.findall(r'al ([0-9A-Fa-f]+) \.(_\w+)',(root/'build/cart.lbl').read_text())}
 lua=lua.replace('BLUE_LABEL',str(labels['_blue'])).replace('SCROLL_LABEL',str(labels['_scroll_x'])).replace('STAGE_LABEL',str(labels['_stage_tile'])).replace('BACKDROP_LABEL',str(labels['_backdrop']))
+for key,label in [('COLUMN_LABEL','_stage_col'),('BOSS_LABEL','_boss_active'),('POSE_LABEL','_boss_pose'),('DARK_LABEL','_dark_room')]:
+    lua=lua.replace(key,str(labels[label]))
 (out/'check.lua').write_text(lua)
 for name in ['result.txt','error.txt']:
     (out/name).unlink(missing_ok=True)

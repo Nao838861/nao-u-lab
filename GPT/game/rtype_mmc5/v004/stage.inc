@@ -19,9 +19,9 @@ column_lo: .repeat STAGE_COLS,I
 column_hi: .repeat STAGE_COLS,I
  .byte >(I*32)
 .endrepeat
-sky_color: .byte $0f,$01,$0c,$2d
-red_lamp: .byte $0f,$06,$06,$16
-blue_lamp: .byte $0f,$01,$0c,$2c
+sky_color: .byte $0f,$01,$0c,$2d,$0f
+red_lamp: .byte $0f,$06,$06,$16,$16
+blue_lamp: .byte $0f,$01,$0c,$11,$36
 .segment "CODE"
 _prepare_column:
  ldx _stage_col
@@ -50,18 +50,42 @@ _prepare_column:
   sta $0400+I
   lda (attribute_ptr),y
   sta $6400+I*32,x
-  cmp #$80
-  lda #0
-  bcc :+
-  lda (attribute_ptr),y
-  cmp #$c0
-  lda #$c1
-  bcc :+
-  lda #$fe
-: sta $0420+I
+  tay
+  lda base_attribute,y
+  sta $0420+I
  .endrepeat
- rts
+ lda _dark_room
+ beq @done
+ ldy #29
+@blank:
+ lda (attribute_ptr),y
+ bmi :+
+ lda #0
+ sta $0400,y
+: dey
+ bpl @blank
+@done: rts
 
+.segment "RODATA"
+base_attribute:
+ .repeat 128
+  .byte 0
+ .endrepeat
+ .repeat 32
+  .byte $c1
+ .endrepeat
+ .repeat 32
+  .byte $bf
+ .endrepeat
+ .repeat 32
+  .byte $fe
+ .endrepeat
+ .repeat 32
+  .byte $ff
+ .endrepeat
+.segment "CODE"
+.export _upload_column
+_upload_column:
 stream_column:
  ldx pending_column
  bne :+
@@ -105,6 +129,21 @@ update_backdrop:
  sta $2007
  lda blue_lamp,x
  sta $2007
+ cpx #4
+ bne @reset
+ lda #$3f
+ sta $2006
+ lda #1
+ sta $2006
+ lda #$2a
+ sta $2007
+ lda #$3f
+ sta $2006
+ lda #$1d
+ sta $2006
+ lda #$2a
+ sta $2007
+@reset:
  lda #0
  sta $2006
  sta $2006

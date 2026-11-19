@@ -1,7 +1,7 @@
 from pathlib import Path
 import numpy as np
 from PIL import Image
-from waveform import make_phases, split_tile
+from waveform import make_phases
 ROOT=Path(__file__).resolve().parent
 ART=ROOT/'art'
 OUT=ROOT/'build'
@@ -95,17 +95,20 @@ def build_art():
         while top<14 and attrs[top*width+x]: top+=1
         while bottom>15 and attrs[bottom*width+x]: bottom-=1
         tops.append(max(3,top)); floors.append(min(26,bottom))
+    from boss_art import body_tiles
     spr,meta=sprite_data()
+    boss_banks=body_tiles(slots,attrs,width,spr,planar,walls)
+    boss_on=int(np.where(positions==1130)[0][0])
+    boss_phase=(boss_on-round(2125*60.0988/30))%157
     phases,offsets=make_phases()
     blank=bytes(64)
-    neutral=[];colored=[];palettes=[]
+    neutral=[]
     for phase in phases:
         for y in range(0,56,8):
             for x in range(0,56,8):
                 block=phase[y:y+8,x:x+8]
-                pal,mask=split_tile(block)
-                neutral.append(mask);palettes.append(pal)
-                colored.append(np.where(block,1+(block%2==0),0).astype('u1').tobytes())
+                mask=np.minimum(block,3).astype('u1').tobytes()
+                neutral.append(mask)
 
     def templates(mapping):
         masks=list(dict.fromkeys(m for m in mapping if m!=blank))
@@ -122,76 +125,53 @@ def build_art():
         return [masks[i] for i in sel],[ids.get(m,0) for m in mapping]
 
     masks,ids=templates(neutral)
-    color_masks,color_ids=templates(colored)
     first=2+len(masks)
     centers=(tuple(range(8)),tuple(reversed(range(8))),(4,)*8)
     for center in centers:
         # 1 = rim and 2 = hot core. Corner pixels stay in the path's own tile.
         mask=bytes(2 if y==center[x] else int(abs(y-center[x])==1)
                    for y in range(8) for x in range(8))
-        masks.append(mask);color_masks.append(bytes(2 if v else 0 for v in mask))
-    # Each ray tile gets the richest palette that can represent every uncovered
-    # source pixel. Flat panels have a third ink for the lighter trailing rim.
-    def ray_style(tile,direction):
-        mask=masks[first-2+direction]
-        outside={p for p,v in zip(tile,mask) if not v}
-        if outside & {2,3}: return 0
-        return 2 if 1 in outside else 1
-    descriptor=[(128 if a==0xc1 else 192) if a else
-                (64 if max(t)>1 else 0) | sum(ray_style(t,k)<<(2*k) for k in range(3))
-                for t,a in zip(source,attrs)]
+        masks.append(mask)
+    descriptor=[{0xc1:128,0xfe:192,0xbf:160,0xff:224}.get(a,0) for a in attrs]
     def columns(name,data):
         a=np.array(data,'u1').reshape(30,width).T
         (OUT/name).write_bytes(np.pad(a,((0,0),(0,2))).tobytes())
     columns('stage_tiles.bin',slots)
     columns('stage_meta.bin',descriptor)
-    # Four bytes per lit cell. Empty cells cost no runtime loop iterations.
+    # Three bytes per lit cell. Empty cells cost no runtime loop iterations.
     commands=bytearray();starts=[]
     for phase in range(32):
         starts.append(len(commands))
         for j in range(49):
             i=phase*49+j
-            if ids[i]: commands.extend((j%7,j//7,ids[i]|palettes[i]<<6,color_ids[i]))
+            if ids[i]: commands.extend((j%7,j//7,ids[i]))
         commands.append(255)
     def page(patterns):return b''.join(planar(t) for t in patterns)
     from functools import lru_cache
     @lru_cache(None)
     def composite(tile,mask):
-        pixels=bytes(1+v if v else p for p,v in zip(tile,mask))
-        assert all(m or a==b for a,b,m in zip(tile,pixels,mask))
-        return planar(pixels)
+        base=(0,0,1,2)
+        return planar(bytes(v if v else base[p] for p,v in zip(tile,mask)))
     windows=[]
-    for field,wall in zip(fields,walls):
+    for field,wall,spr in zip(fields,walls,boss_banks):
         banks=[page(field),page(wall[:256])]
-        for i,(mask,cmask) in enumerate(zip(masks,color_masks)):
-            if i<first-2:
-                banks.append(b''.join(composite(t,cmask if max(t)>1 else mask) for t in field))
-                continue
-            k=i-(first-2)
-            def ray_tile(t):
-                style=ray_style(t,k)
-                pixels=list(t)
-                for n,v in enumerate(mask):
-                    if not v: continue
-                    x,y=n%8,n//8
-                    center=centers[k][x]
-                    if v==2: pixels[n]=3
-                    elif style==0: continue
-                    elif style==1: pixels[n]=1 if y<center else 2
-                    else: pixels[n]=2
-                return planar(bytes(pixels))
-            banks.append(b''.join(ray_tile(t) for t in field))
+        for i,mask in enumerate(masks):
+            if i>=first-2:
+                mask=bytes(3 if v==2 else 2 if v else 0 for v in mask)
+            banks.append(b''.join(composite(t,mask) for t in field))
         windows.append(b''.join(banks)+page(wall[256:])+spr)
     def coverage(ms):
         return bytes(sum(1<<x for x in range(8) if m[y*8+x]) for m in [blank,blank]+ms for y in range(8))
     # The glow is visual; collision uses the original one-pixel centerline.
     ray_hits=[bytes(int(v==2) for v in mask) for mask in masks[-3:]]
-    (OUT/'coverage.bin').write_bytes(b''.join(coverage(group[:-3]+ray_hits).ljust(512,b'\0')
-                                              for group in (masks,color_masks)))
+    (OUT/'coverage.bin').write_bytes(coverage(masks[:-3]+ray_hits).ljust(512,b'\0'))
     (OUT/'waves.bin').write_bytes(commands)
     (OUT/'waveptr.inc').write_text('wlo: .byte '+','.join(f'<(wave_data+{n})' for n in starts)+'\nwhi: .byte '+','.join(f'>(wave_data+{n})' for n in starts))
     (OUT/'attrs.bin').write_bytes(attrs.astype('u1').tobytes())
     (OUT/'kinds.bin').write_bytes(bytes(128 if a else int(max(t)>1) for t,a in zip(source,attrs)))
     (OUT/'sprite.inc').write_text(f'STAGE_COLS = {width}\nSPR_BANK = 63\nRAY_FIRST = {first}\n'+'\n'.join(line.replace('#define ','').replace(' ',' = ',1) for line in meta.splitlines() if line.startswith('#define ')))
-    (OUT/'art.h').write_text(f'#define STAGE_END {Image.open(ART/"stage.png").width-256}\n'+meta+array('camera_steps',motion)+array('phase_for_age',[t if t<32 else 20+(t-32)%12 for t in range(128)])+array('advance_for_age',[0 if t<32 else 6*(1+(t-32)//12) for t in range(128)])+array('wave_offsets',offsets)+array('nametable',list(slots.reshape(30,width)[:,:32].flat))+array('attributes',list(attrs.reshape(30,width)[:,:32].flat))+array('ceilrow',tops)+array('floorrow',floors)+array('diagonal',range(first,first+3)))
-    return b''.join(windows)
+    (OUT/'art.h').write_text(f'#define BOSS_PHASE {boss_phase}\n#define STAGE_END {Image.open(ART/"stage.png").width-256}\n'+meta+array('camera_steps',motion)+array('phase_for_age',[t if t<32 else 20+(t-32)%12 for t in range(128)])+array('advance_for_age',[0 if t<32 else 6*(1+(t-32)//12) for t in range(128)])+array('wave_offsets',offsets)+array('nametable',list(slots.reshape(30,width)[:,:32].flat))+array('attributes',list(attrs.reshape(30,width)[:,:32].flat))+array('ceilrow',tops)+array('floorrow',floors)+array('diagonal',range(first,first+3)))
+    from boss_patches import pack_tail
+    chr_data,boss_data=pack_tail(b''.join(windows),slots,attrs,width,planar)
+    (OUT/'boss-data.bin').write_bytes(boss_data)
+    return chr_data

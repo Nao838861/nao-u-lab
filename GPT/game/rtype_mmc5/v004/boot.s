@@ -1,5 +1,5 @@
 .include "build/sprite.inc"
-.import _scroll_x,_ray_colors
+.import _scroll_x
 .import _main
 .importzp c_sp
 .export _ready,_ink,_begin_list,_end_list,_readpad
@@ -9,7 +9,6 @@ cursor: .res 2
 previous: .res 2
 drawpage: .res 1
 window: .res 1
-visible_colors: .res 1
 _ready: .res 1
 _ink: .res 1
 pad: .res 1
@@ -24,7 +23,7 @@ reset:
  stx $2001
  stx $4010
  stx $5100
- lda #$80
+ lda #$9f
  sta $5117
  lda #$40
  sta $4017
@@ -64,6 +63,15 @@ reset:
  sta $5103
  lda #0
  sta $5113
+ lda #$9c
+ sta $5114
+ lda #$9d
+ sta $5115
+ lda #$9e
+ sta $5116
+ lda #3
+ sta $5100
+ lda #0
  sta cursor
  lda #$60
  sta cursor+1
@@ -144,7 +152,9 @@ nmi:
  lda #64
  sta $5203
  lda _ready
- beq @exit
+ bne :+
+ jmp @exit
+:
  lda #2
  sta $5104
  lda drawpage
@@ -152,44 +162,22 @@ nmi:
  beq @draw_a
  jsr $6000
  jsr stream_column
+ jsr restore_beads
  jsr $6200
  jmp @done
 @draw_a:
  jsr $6200
  jsr stream_column
+ jsr restore_beads
  jsr $6000
 @done:
+ jsr paint_beads
  lda #1
  sta $5104
  lda #0
  sta $2003
  lda #2
  sta $4014
- ; Change weapon inks once on selection. Static field and wall palettes
- ; remain resident; ray extension, reflection and erasure use only ExRAM.
- lda _ray_colors
- cmp visible_colors
- beq @scroll
- sta visible_colors
- tax
- lda #$3f
- sta $2006
- lda #$05
- sta $2006
- lda upper_rim,x
- sta $2007
- lda lower_rim,x
- sta $2007
- lda #$3f
- sta $2006
- lda #$0a
- sta $2006
- lda panel_rim,x
- sta $2007
- lda #0
- sta $2006
- sta $2006
-@scroll:
  jsr update_backdrop
  lda _scroll_x
  sta $2005
@@ -207,8 +195,13 @@ irq:
  lda $5204
  bpl @return
  inc window
+ lda _boss_active
+ beq :+
+ lda #3
+ bne @switch
+: lda window
+@switch: sta $5130
  lda window
- sta $5130
  asl
  asl
  asl
@@ -221,12 +214,10 @@ irq:
 @return:
  pla
  rti
-upper_rim: .byte $0f,$02
-lower_rim: .byte $16,$22
-panel_rim: .byte $2c,$12
 .segment "VECTORS"
 .word nmi, reset, irq
 
 
 .include "stage.inc"
 .include "laser.inc"
+.include "boss.inc"

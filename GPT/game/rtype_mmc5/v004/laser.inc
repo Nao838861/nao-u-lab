@@ -17,7 +17,6 @@ mask: .res 1
 xpos: .res 1
 lamp_ink: .res 1
 hit_bank: .res 1
-ray_offset: .res 1
 cell_lo: .res 1
 column_hits: .res 32
 row_hits: .res 32
@@ -34,7 +33,10 @@ _prepare_hits:
  sta row_hits,x
  dex
  bpl :-
- ldx #2
+ lda _boss_active
+ beq :+
+ rts
+: ldx #2
 @mark:
  lda _explosion,x
  bne @next
@@ -169,32 +171,9 @@ _light:
  lda (addr),y
  bmi @out
  ldx lamp_ink
- cpx #RAY_FIRST
- bcc @wave
- ; The cell's base palette and ray style are baked from its uncovered pixels.
  stx hit_bank
- tay
- lda ray_offset
- sta addr+1
- lda #0
- sta addr
- lda (addr),y
- ora lamp_ink
- jmp @emit
-@wave:
- and #64
- beq @neutral
- lda lamp_ink
- tax
- ora #64
- sta hit_bank
  txa
- jmp @emit
-@neutral:
- lda _ink
- and #63
- sta hit_bank
- lda _ink
+ ora #64
 @emit:
  ldy #1
  sta (cursor),y
@@ -311,10 +290,10 @@ attrlo: .repeat 30,I
 attrhi: .repeat 30,I
  .byte >(attrs+32*I)
 .endrepeat
-covlo: .repeat 128,I
+covlo: .repeat 64,I
  .byte <(coverage+8*I)
 .endrepeat
-covhi: .repeat 128,I
+covhi: .repeat 64,I
  .byte >(coverage+8*I)
 .endrepeat
 wave_data: .incbin "build/waves.bin"
@@ -347,9 +326,6 @@ _draw_wave:
  clc
  adc _wave_y
  sta _row
- iny
- lda (waveptr),y
- sta _ink
  iny
  lda (waveptr),y
  sta lamp_ink
@@ -447,11 +423,7 @@ _draw_ray:
  tay
  lda (spriteptr),y
  sta lamp_ink
- sec
- sbc #RAY_FIRST
- clc
- adc #>ray_palette
- sta ray_offset
+
  jsr _light
 @skip: ldy ray_i
  iny
@@ -549,7 +521,7 @@ effects_one:
  sta $0200,x
  lda #BOLT
  sta $0201,x
- lda #0
+ lda #3
  sta $0202,x
  inx
  inx
@@ -558,10 +530,3 @@ effects_one:
 @done: rts
 
 .segment "RODATA"
- .align 256
-ray_palette:
- .repeat 3,K
-  .repeat 256,I
-   .byte ((I >> (2*K)) & 3) << 6
-  .endrepeat
- .endrepeat

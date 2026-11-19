@@ -13,16 +13,21 @@ void start_irq(void);
 u8 readpad(void);
 
 static const u8 palette[]={
-  0x0f,0x0f,0x0f,0x0f, 0x2d,0x0f,0x16,0x30, 0x2d,0x0f,0x2c,0x30, 0x2d,0x0f,0x10,0x37,
-  0x0f,0x00,0x2c,0x30, 0x2d,0x07,0x16,0x38, 0x2d,0x00,0x10,0x30, 0x2d,0x01,0x11,0x2c
+  0x0f,0x0f,0x0f,0x0f, 0x2d,0x16,0x11,0x3c, 0x2d,0x06,0x16,0x36, 0x2d,0x0f,0x10,0x37,
+  0x0f,0x00,0x2c,0x30, 0x2d,0x07,0x16,0x38, 0x2d,0x00,0x10,0x30, 0x2d,0x01,0x11,0x3c
 };
 static u8 px,py,tick,step_mask,step_byte;
 u8 scroll_x,scroll_tile,stage_tile;
+u8 dark_room,boss_active,boss_offset,boss_pose;
+static u8 sweep_col;
+void draw_boss_details(void);
+void prepare_tail(void);
 static u16 camera,step_index;
 extern u8 stage_col,backdrop;
 #pragma zpsym ("stage_col")
 #pragma zpsym ("backdrop")
 void prepare_column(void);
+void upload_column(void);
 static void advance_camera(void){
     if(camera==STAGE_END) return;
     if(!step_mask){step_byte=camera_steps[step_index++];step_mask=1;}
@@ -34,10 +39,12 @@ static void advance_camera(void){
     if(camera==44 || camera==1059) backdrop=1;
     if(camera==55 || camera==1043) backdrop=2;
     if(camera==75) backdrop=3;
-    if(camera==1066) backdrop=0;
+    if(camera==1066){backdrop=0;dark_room=1;sweep_col=stage_tile+32;}
+    if(camera==1130){boss_active=1;backdrop=4;boss_pose=BOSS_PHASE;}
+    if(boss_active) boss_offset=STAGE_END-camera;
 }
 u8 oam_index;
-u8 hit_count, ray_colors;
+u8 hit_count;
 u8 enemy_x[3],enemy_y[3],explosion[3];
 static const u8 lanes[]={115,57,163,96,140,76};
 static u8 next_lane;
@@ -61,7 +68,11 @@ static void setup(void){
     REG(0x2003)=0;REG(0x4014)=2;
     REG(0x2005)=0;REG(0x2005)=0;
     REG(0x4015)=9;REG(0x4001)=0;REG(0x4000)=0x30;REG(0x400c)=0x30;
-    for(stage_col=0;stage_col<32;++stage_col) prepare_column();
+    if(boss_active){
+        REG(0x5104)=2;
+        for(i=1;i<=32;++i){stage_col=stage_tile+i;prepare_column();upload_column();}
+        REG(0x5104)=1;
+    }else for(stage_col=0;stage_col<32;++stage_col) prepare_column();
     start_irq();REG(0x2000)=0x80;REG(0x2001)=0x1c;
 }
 static void obj(u8 x,u8 y,u8 id,u8 pal){
@@ -81,7 +92,8 @@ static void sprites(void){
     meta(px+21,py-12,force_tiles+18*((tick>>3)&3),3,3);
     meta(px+6,py-29,bit_tiles+8*((tick>>2)%5),2,2);
     launch_effects();
-    for(i=0;i<3;++i){
+    if(boss_active) draw_boss_details();
+    else for(i=0;i<3;++i){
         if(explosion[i]){
             u8 d=(12-explosion[i])/2;
             if(enemy_x[i]>d && enemy_x[i]<242){
@@ -185,24 +197,34 @@ void main(void){
     px=9;py=120;
     enemy_x[0]=170;enemy_x[1]=220;enemy_x[2]=218;
     enemy_y[0]=115;enemy_y[1]=62;enemy_y[2]=171;
+#ifdef BOSS_PREVIEW
+    camera=STAGE_END;scroll_x=(u8)camera;stage_tile=camera>>3;scroll_tile=stage_tile&31;
+    dark_room=1;boss_active=1;backdrop=4;
+#endif
     setup();
     for(;;){
         while(ready){}
+        if(boss_active && ++boss_pose==157) boss_pose=0;
+        stage_col=255;
         advance_camera();
+        if(sweep_col && stage_col==255){
+            if(sweep_col<=stage_tile) sweep_col=0;
+            else {stage_col=sweep_col--;prepare_column();}
+        }
         ++tick;pad=readpad();
         if((pad&1)&&px<200) px+=2;
         if((pad&2)&&px>2) px-=2;
         if((pad&4)&&py<190) py+=2;
         if((pad&8)&&py>48) py-=2;
-        enemies();prepare_hits();
+        if(!boss_active) enemies();
+        prepare_hits();
         if(cooldown) --cooldown;
         if((pad&0x80) && !cooldown){
             if(!red[0].active) {spawn(&red[0]);cooldown=25;}
             else if(!red[1].active) {spawn(&red[1]);cooldown=25;}
         }
         if((pad&0x40) && !blue.active) launch_blue();
-        if(red[0].active || red[1].active) ray_colors=0;
-        else if(blue.active) ray_colors=1;
+        if(boss_active) prepare_tail();
         begin_list();erase_lights();
         x_bias=scroll_tile;wave_shot(&red[0]);wave_shot(&red[1]);
         x_bias=launch_tile;reflect_shot();sprites();
