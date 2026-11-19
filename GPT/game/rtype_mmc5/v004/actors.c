@@ -11,7 +11,7 @@ u8 enemy_live[SLOTS],enemy_x[SLOTS],enemy_y[SLOTS],explosion[SLOTS],beam_hit[SLO
 u8 boss_cleared,invulnerable,dying,drill,weapon,bit_owned,request_wave,request_ray;
 u8 pickups,deaths,deflected,boss_hp,death_cause;
 static u8 event_index,initialized,charge,force_state;
-u8 banking,force_phase,bit_phase,weak_extend,bit_x,bit_y,force_level,sprite_page,shield_w,shield_h,orb_phase;
+u8 banking,force_phase,bit_phase,bit_x,bit_y,force_level,sprite_page,shield_w,shield_h,orb_phase;
 static u8 bit_delay;
 u8 fx,fy,scroll_delta,previous_scroll,bullet_x[6],bullet_y[6],in_room;
 u8 origin_y[MOBS],drop[MOBS],hp[MOBS];
@@ -148,20 +148,15 @@ static void player(void){
 }
 u8 boss_contact(void);
 static void boss(void){
-    u8 x,p;
+    u8 x;
     u8* shadow=(u8*)0x6400;
     if(explosion[MOBS])--explosion[MOBS];
     if(boss_cleared)return;
-    if(boss_offset<48){
-        /* The smaller head extends from the abdominal opening. Its
-           unrecorded attack cycle continues after the original clip ends. */
-        p=tick;
-        weak_extend=p<32?p>>1:p<168?16:p<200?(200-p)>>1:0;
-        x=202+boss_offset-weak_extend;
-        enemy_x[MOBS]=x-8;enemy_y[MOBS]=117;
-        enemy_live[MOBS]=weak_extend>=4?WEAK:EMPTY;
-        if(p==58 || p==76 || p==94)fire_enemy(x,125);
-        if(enemy_live[MOBS] && within(fx+12,x,13)&&within(fy,125,9)){
+    collide_bubbles();
+    if(enemy_live[MOBS]){
+        x=enemy_x[MOBS]+8;
+        if(within(px+10,x,7)&&within(py,enemy_y[MOBS]+8,6))die(4);
+        if(within(fx+12,x,13)&&within(fy,enemy_y[MOBS]+8,9)){
             if(force_state==1){fx=x-12;force_state=2;}
             damage(MOBS,1);
         }
@@ -182,6 +177,7 @@ void actor_update(void){
     shield_w=drill||force_level==3?11:force_level==2?9:7;
     shield_h=drill||force_level==3?11:force_level==2?8:7;
     if(cooled)--cooled;
+    core_flash=cooled>=7;
     for(i=0;i<SLOTS;++i)if(beam_hit[i]){beam_hit[i]=0;damage(i,1);}
     player();
     if(bit_owned || drill){
@@ -212,11 +208,6 @@ void actor_render(void){
     else if(!invulnerable || !(tick&4)){
         draw_player();
         if(charge>23 && (tick&4))sprite(px+20,py-4,CHARGE,3);
-    }
-    if(boss_active && !boss_cleared && boss_offset<48 && weak_extend){
-        x=enemy_x[MOBS];
-        sprite(x,121,HEAD_LEFT,3);sprite(x+8,121,HEAD_RIGHT,3);
-        if(cooled && (tick&2))sprite(x,121,SPARK,1);
     }
     draw_bullets();
     if(!boss_active)draw_guns();

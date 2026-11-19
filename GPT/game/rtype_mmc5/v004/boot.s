@@ -13,6 +13,9 @@ window: .res 1
 _ready: .res 1
 _ink: .res 1
 pad: .res 1
+.export _oam_prepared
+_oam_prepared: .res 1
+early_dma: .res 1
 .segment "STARTUP"
 reset:
  sei
@@ -70,6 +73,7 @@ reset:
  sta $5113
  ldx #0
 @clear_actors:
+ sta $7800,x
  .repeat 8,I
  sta $6800+I*256,x
  .endrepeat
@@ -192,38 +196,74 @@ nmi:
 :
  lda #2
  sta $5104
+ lda bubble_lists_live
+ beq :+
+ lda #$a0
+ sta $5115
+ jsr $7000
+ jsr main_bank
+:
  lda drawpage
  cmp #$60
  beq @draw_a
+ lda early_dma
+ bne :+
  jsr $6000
- jsr stream_column
+: jsr stream_column
  jsr restore_beads
  jsr $6200
  jmp @done
 @draw_a:
+ lda early_dma
+ bne :+
  jsr $6200
- jsr stream_column
+: jsr stream_column
  jsr restore_beads
  jsr $6000
 @done:
- lda _sprite_page
- sta $5121
- sta $5125
+ lda early_dma
+ bne :+
+ jsr upload_sprite_pages
+:
  jsr paint_beads
- lda #1
+ lda bubble_lists_live
+ beq @no_ink
+ lda #$a0
+ sta $5115
+ jsr $7100
+ lda bubble_frame
+ cmp #2
+ bcc :+
+ lda _boss_cleared
+ bne :+
+ lda z:bubble_nmi_bank
+ sta $5115
+ jsr draw_bubble_attributes
+: jsr main_bank
+ ; Bubble writes use paired $2006 writes entirely within nametable zero.
+@no_ink: lda #1
  sta $5104
+ lda early_dma
+ bne :+
  lda #0
  sta $2003
  lda #2
  sta $4014
- jsr update_backdrop
+: jsr update_backdrop
  lda _scroll_x
  sta $2005
  lda #0
  sta $2005
+ sta _oam_prepared
  sta _ready
 @exit:
- pla
+ lda early_dma
+ beq :+
+ lda #$1c
+ sta $2001
+ lda #0
+ sta early_dma
+: pla
  tay
  pla
  tax
@@ -232,6 +272,40 @@ irq:
  pha
  lda $5204
  bpl @return
+ lda window
+ cmp #3
+ bne @band
+ lda _boss_active
+ beq @band
+ lda _boss_offset
+ bne @band
+ lda _oam_prepared
+ beq @stop
+ ; The room ends at line 223. Transfer completed sprites in the black
+ ; lower border, so the full VBlank remains available for BG animation.
+ lda #0
+ sta _oam_prepared
+ sta $2001
+ sta $2003
+ lda #2
+ sta $4014
+ sta early_dma
+ sta $5104
+ lda drawpage
+ cmp #$60
+ beq @old_b
+ jsr $6000
+ jmp @erased
+@old_b: jsr $6200
+@erased:
+ jsr upload_sprite_pages
+ lda #1
+ sta $5104
+@stop:
+ lda #0
+ sta $5203
+ beq @return
+@band:
  inc window
  lda _boss_active
  beq :+
@@ -239,6 +313,16 @@ irq:
  bne @switch
 : lda window
 @switch: sta $5130
+ lda window
+ cmp #3
+ bne @regular
+ lda _boss_active
+ beq @regular
+ lda _boss_offset
+ bne @regular
+ lda #228
+ bne @line
+@regular:
  lda window
  asl
  asl
@@ -248,10 +332,30 @@ irq:
  asl
  clc
  adc #64
- sta $5203
+@line: sta $5203
 @return:
  pla
  rti
+upload_sprite_pages:
+ lda #0
+ sta $5130
+ lda _sprite_page
+ sta $5121
+ sta $5125
+ lda _boss_active
+ beq @stage_sprites
+ lda #1
+ sta $5130
+ lda #237
+ bne @upper_page
+@stage_sprites:
+ lda #253
+@upper_page:
+ sta $5123
+ sta $5127
+ lda #0
+ sta $5130
+ rts
 .segment "VECTORS"
 .word nmi, reset, irq
 
@@ -280,3 +384,8 @@ finish_actor_bank:
  lda #$9e
  sta $5116
  jmp main_bank
+
+.include "boss_attack.inc"
+
+.segment "STARTUP"
+draw_bubble_attributes: jmp (bubble_nmi_ptr)

@@ -1300,3 +1300,41 @@ _fire_aimed:
  lda #190
  sta _bullets+6,x
  rts
+
+; Each membrane has its own position and goes away on contact with equipment.
+; The R-9 samples the same center that is used to draw the bright rim.
+.import _bubble_age,_bubble_x,_bubble_y
+.export _collide_bubbles
+.segment "ACTORS"
+_collide_bubbles:
+ ldx #8
+@bubble:
+ lda _bubble_age,x
+ beq @next
+ lda _bubble_x,x
+ sta cx
+ lda _bubble_y,x
+ sta cy
+ jsr touches_force
+ bcs @absorb
+ lda _bit_owned
+ beq @ship
+ outside cx,_bit_x,0,8,@ship
+ outside cy,_bit_y,0,9,@ship
+@absorb:
+ inc _deflected
+ jmp @remove
+@ship:
+ outside cx,_px,10,8,@next
+ outside cy,_py,0,8,@next
+ stx offset_i
+ lda #2
+ jsr _die
+ ldx offset_i
+@remove:
+ lda #0
+ sta _bubble_age,x
+@next:
+ dex
+ bpl @bubble
+ rts

@@ -82,12 +82,17 @@ emu.addMemoryCallback(function()
  if firstGameFrame==nil and read(TICK_LABEL)==1 then
   firstGameFrame=frame;local p=assert(io.open(DIR..'/first-game-frame.txt','w'));p:write(frame);p:close()
  end
+end,emu.callbackType.write,0x4014)
+-- The boss room uploads OAM in the lower black border. Sample the
+-- background only after the following VBlank has committed ExRAM.
+emu.addMemoryCallback(function(a,v)
+ if v~=0 then return end
  if ((frame>=750 and frame<990) or (frame>=2200 and frame<2460) or (frame>=4100 and frame<4400)) and read(BLUE_LABEL)~=0 then
   trace:write(string.format('%d %d %d %d %d',read(BLUE_LABEL+3),read(BLUE_LABEL+1),read(BLUE_LABEL+2),read(STAGE_LABEL)*8+(read(SCROLL_LABEL)%8),read(BOSS_LABEL)~=0 and read(POSE_LABEL) or -1))
   for a,v in pairs(cells) do if v~=0 then trace:write(string.format(' %04x:%02x',a,v)) end end
   trace:write('\n')
  end
-end,emu.callbackType.write,0x4014)
+end,emu.callbackType.write,READY_LABEL)
 emu.addEventCallback(function()
  emu.setInput({a=(frame>=405 and frame<645) or frame==1040,
  b=(frame>=750 and frame<990) or (frame>=2200 and frame<2460) or (frame>=4100 and frame<4400),
@@ -136,7 +141,7 @@ end,emu.eventType.endFrame)
 '''.replace('DIR',json.dumps(out.as_posix())).replace('RECORD','true' if os.environ.get('RECORD_STAGE') else 'false')
 labels={name:int(address,16) for address,name in re.findall(r'al ([0-9A-Fa-f]+) \.(_\w+)',(root/'build/cart.lbl').read_text())}
 lua=lua.replace('BLUE_LABEL',str(labels['_blue'])).replace('SCROLL_LABEL',str(labels['_scroll_x'])).replace('STAGE_LABEL',str(labels['_stage_tile'])).replace('BACKDROP_LABEL',str(labels['_backdrop']))
-for key,label in [('TICK_LABEL','_tick'),('COLUMN_LABEL','_stage_col'),('BOSS_LABEL','_boss_active'),('POSE_LABEL','_boss_pose'),('DARK_LABEL','_dark_room')]:
+for key,label in [('READY_LABEL','_ready'),('TICK_LABEL','_tick'),('COLUMN_LABEL','_stage_col'),('BOSS_LABEL','_boss_active'),('POSE_LABEL','_boss_pose'),('DARK_LABEL','_dark_room')]:
     lua=lua.replace(key,str(labels[label]))
 (out/'check.lua').write_text(lua)
 for name in ['result.txt','error.txt']:

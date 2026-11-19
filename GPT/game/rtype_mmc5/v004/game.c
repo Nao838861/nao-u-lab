@@ -77,13 +77,16 @@ u8 mx,my,mw,mh,sprite_count;
 const u8* tile_list;
 void launch_effects(void);
 void prepare_hits(void);
+extern unsigned char oam_prepared;
+#pragma zpsym ("oam_prepared")
 static void sprites(void){
     u8 end;
     oam_index=0;render_actors();launch_effects();
-    if(boss_active && !boss_cleared)draw_boss_details();
+    if(boss_active && !boss_cleared){draw_attack();draw_boss_details();}
     end=oam_index;
     while(oam_index<sprite_count){OAM[oam_index]=255;oam_index+=4;}
     sprite_count=end;
+    oam_prepared=1;
 }
 extern u8 column,row,bank;
 #pragma zpsym ("column")
@@ -150,6 +153,7 @@ void main(void){
         }
         ++tick;oldpad=pad;pad=readpad();
         if(boss_active && !boss_cleared)prepare_tail();
+        if(boss_active)boss_attack_tick();
         update_actors();
         prepare_hits();
         if(cooldown) --cooldown;
@@ -162,7 +166,9 @@ void main(void){
         begin_list();erase_lights();
         x_bias=scroll_tile;wave_shot(&red[0]);wave_shot(&red[1]);
         x_bias=launch_tile;reflect_shot();sprites();
-        end_list();ready=1;
+        end_list();
+        if(boss_active)prepare_bubble_display();
+        ready=1;
     }
 }
 

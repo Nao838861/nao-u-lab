@@ -7,8 +7,8 @@ restore_beads:
  lda _boss_active
  beq @done
  jsr select_patch
- jsr restore_tiles
- jmp main_bank
+ ; The RAM laser list between restore and paint preserves X/Y and PRG banking.
+ jmp (restore_ptr)
 @done: rts
 
 paint_beads:
@@ -19,7 +19,6 @@ paint_beads:
  bne :+
  rts
 :
- jsr select_patch
  jsr paint_tiles
  lda #0
  sta $2006
@@ -34,5 +33,4 @@ select_patch:
  ldx right_edge
  ldy _stage_col
  rts
-restore_tiles: jmp (restore_ptr)
 paint_tiles: jmp (paint_ptr)

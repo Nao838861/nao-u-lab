@@ -176,7 +176,7 @@ _light:
  lda lamp_ink
  sta hit_bank
  ldx _row
- jmp @collide
+ jmp light_collide
 @lit: ldx lamp_ink
  stx hit_bank
  txa
@@ -198,7 +198,7 @@ _light:
  bcc :+
  inc cursor+1
 : inc count
-@collide: ldy worldcol
+light_collide: ldy worldcol
  lda column_hits,y
  and row_hits,x
  bne :+
@@ -318,6 +318,12 @@ wi: .res 1
 .include "build/waveptr.inc"
 .segment "CODE"
 _draw_wave:
+ lda _boss_active
+ beq :+
+ lda _boss_offset
+ bne :+
+ jmp fast_boss_wave
+:
  ldx _wave_phase
  lda wlo,x
  sta waveptr
@@ -416,6 +422,12 @@ _draw_meta:
  stx _oam_index
  rts
 _draw_ray:
+ lda _boss_active
+ beq :+
+ lda _boss_offset
+ bne :+
+ jmp fast_ray
+:
  lda _ray_data
  sta spriteptr
  lda _ray_data+1
@@ -754,3 +766,5 @@ _reflect_shot:
  lda #0
  sta _blue
 : rts
+
+.include "boss_wave.inc"

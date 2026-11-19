@@ -141,4 +141,7 @@ def build_art():
     used=slots.reshape(30,width)[8:17][band==0xc1]
     assert not len(used) or used.max()<128
     image[65*4096+2048:66*4096]=(OUT/'small-force.chr').read_bytes()
+    from boss_attack_art import make_attack_page
+    start=(192+54)*4096+2048
+    image[start:start+2048]=make_attack_page(objbank,planar)
     return bytes(image)

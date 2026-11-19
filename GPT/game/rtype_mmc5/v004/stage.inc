@@ -22,7 +22,7 @@ column_hi: .repeat STAGE_COLS,I
 .endrepeat
 sky_color: .byte $0f,$01,$0c,$2d,$0f
 red_lamp: .byte $0f,$06,$06,$16,$16
-blue_lamp: .byte $0f,$01,$0c,$11,$36
+blue_lamp: .byte $0f,$01,$0c,$11,$37
 .segment "CODE"
 _prepare_column:
  ldx _stage_col

@@ -66,4 +66,25 @@ def main():
     cleared=np.asarray(Image.open(OUT/'boss-clear.png').convert('RGB'))
     assert (cleared[65:178,142:242].max(2)>50).mean()<.06,'Boss room did not clear'
 
+    run('rtype-mmc5-boss.nes','boss.lbl','boss_attack_test.lua',args.film)
+    print((OUT/'attack-result.txt').read_text())
+    def picture(frame):
+        return np.asarray(Image.open(OUT/f'attack-{frame}.png').convert('RGB'))
+    # This part of the corridor is empty between volleys. Check the actual
+    # captured pixels as well as the in-game positions and clock.
+    def cream_count(frame):
+        rgb=picture(frame)[100:145,25:138].astype(int)
+        return ((rgb[:,:,0]>205)&(rgb[:,:,1]>160)&(rgb[:,:,2]>95)).sum()
+    assert cream_count(201)>150 and cream_count(260)<25
+    mouth=np.s_[114:138,186:210]
+    closed=picture(23)[mouth]
+    assert np.array_equal(closed,picture(560)[mouth])
+    assert ((closed!=picture(145)[mouth]).any(2)).sum()>100
+    run('rtype-mmc5-boss.nes','boss.lbl','boss_bubble_contact_test.lua')
+    print((OUT/'bubble-contact.txt').read_text())
+    if args.film:
+        subprocess.run(['ffmpeg','-v','error','-y','-framerate','60.0988','-i',str(OUT/'attackfilm%04d.png'),
+            '-frames:v','740','-vf','scale=512:480:flags=neighbor','-c:v','libx264','-crf','16','-pix_fmt','yuv420p',
+            '-movflags','+faststart',str(ROOT/'boss-attack.mp4')],check=True)
+
 if __name__=='__main__':main()

@@ -24,6 +24,17 @@ def pack_tail(chr_data,slots,attrs,width,planar):
     late=attrs[8:,141:]
     for attr,slot in zip(late.flat,slots[8:,141:].flat):
         if attr:used[3].add((int(attr)&63,int(slot)))
+    # The lower playfield only uses field tile IDs 0..116. One upper
+    # half holds all six head poses and the shared OAM graphics.
+    for slot in range(128,256):
+        assert (54,slot) not in used[3]
+        used[3].add((54,slot))
+    from boss_bubbles import prepare
+    for (bank,slot),tile in prepare(planar).items():
+        assert (bank,slot) not in used[3]
+        used[3].add((bank,slot))
+        start=(192+bank)*4096+slot*16
+        data[start:start+16]=tile
     def bands_for(row):
         return (0,3) if row==8 else (3,)
     def base(c,r):

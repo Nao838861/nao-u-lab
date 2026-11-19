@@ -14,3 +14,8 @@ extern const u8* tile_list;
 void draw_meta(void);
 void update_actors(void);
 void render_actors(void);
+extern u8 core_flash;
+void boss_attack_tick(void);
+void draw_attack(void);
+void collide_bubbles(void);
+void prepare_bubble_display(void);

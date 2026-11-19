@@ -26,8 +26,18 @@ def build(preview=False):
     assert len(boss)<=26*8192
     auxiliary=boss.ljust(26*8192,bytes(1))+(OUT/'actor-bank.bin').read_bytes()
     assert len(auxiliary)==224*1024
-    header=b'NES\x1a'+bytes([16,size//2,0x50,0])+bytes(8)
-    (ROOT/('rtype-mmc5-boss.nes' if preview else 'rtype-mmc5-v004.nes')).write_bytes(header+auxiliary+(OUT/'prg.bin').read_bytes()+chrrom)
+    resident=(OUT/'prg.bin').read_bytes()
+    streams=(OUT/'bubble-stream.bin').read_bytes()
+    # Banks 32..47 hold the attack programs. At power-on the MMC5 maps the
+    # last bank, which needs the same fixed code and vectors as bank 31.
+    from boss_wave_program import compile_programs
+    labels=(OUT/('boss.lbl' if preview else 'cart.lbl')).read_text()
+    waves=compile_programs(OUT,labels)
+    assert len(streams)<=16*8192 and len(waves)<=14*8192
+    head=(OUT/'head-code.bin').read_bytes().ljust(8192,b'\0')
+    prg=auxiliary+resident+streams.ljust(16*8192,b'\0')+waves.ljust(14*8192,b'\0')+head+resident[-8192:]
+    header=b'NES\x1a'+bytes([32,size//2,0x50,0])+bytes(8)
+    (ROOT/('rtype-mmc5-boss.nes' if preview else 'rtype-mmc5-v004.nes')).write_bytes(header+prg+chrrom)
 if __name__=='__main__':
     import sys
     build('--boss' in sys.argv)
