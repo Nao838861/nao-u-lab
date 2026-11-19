@@ -77,13 +77,12 @@ static void setup(void){
 }
 u8 mx,my,mw,mh,sprite_count;
 const u8* tile_list;
-void launch_effects(void);
 void prepare_hits(void);
 extern unsigned char oam_prepared;
 #pragma zpsym ("oam_prepared")
 static void sprites(void){
     u8 end;
-    oam_index=0;render_actors();launch_effects();
+    oam_index=0;render_actors();
     if(boss_active && !boss_cleared){draw_attack();draw_boss_details();}
     end=oam_index;
     while(oam_index<sprite_count){OAM[oam_index]=255;oam_index+=4;}
@@ -96,10 +95,14 @@ extern u8 column,row,bank;
 #pragma zpsym ("bank")
 void light(void);
 void erase_lights(void);
+/* The laser launch runs with the stage banks mapped. Leave the first 8 KiB
+   available to actor code and to the cc65 runtime during actor-bank swaps. */
+#pragma code-name (push,"RODATA")
 static void spawn(struct Shot* s){
     s->active=1;s->origin=(px+23+(scroll_x&7))>>3;s->row=(py+4)>>3;s->age=0;
     REG(0x4000)=0x88;REG(0x4002)=s==&blue?0x91:0x5c;REG(0x4003)=8;
 }
+#pragma code-name (pop)
 extern u8 wave_x,wave_y,wave_phase;
 void draw_wave(void);
 static void wave_shot(struct Shot* s){

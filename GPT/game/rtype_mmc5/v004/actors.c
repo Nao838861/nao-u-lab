@@ -15,7 +15,7 @@ static u8 event_index,initialized,force_state;
 static u16 encounter_tick;
 u8 charge;
 u8 banking,force_phase,bit_phase,bit_x,bit_y,force_level,sprite_page,shield_w,shield_h,orb_phase;
-static u8 bit_delay;
+static u8 bit_delay,missile_delay,gun_delay;
 u8 fx,fy,scroll_delta,previous_scroll,bullet_x[6],bullet_y[6],in_room;
 u8 origin_y[SLOTS],drop[SLOTS],hp[SLOTS],route[SLOTS];
 int posx[SLOTS],posy[SLOTS];
@@ -29,7 +29,10 @@ struct Bullet {int x,y; s8 dx,dy;u8 life;};
 struct Bullet bullets[6];
 s8 terminal_dy[6];
 struct Bolt {u8 x,y,power;};
-struct Bolt bolts[4];
+/* Four gun/charge slots, four Bit shots, then the upper/lower missile. */
+struct Bolt bolts[10];
+u8 missile_age[2];
+s8 missile_vy[2];
 u8 bolt_travel[4];
 struct Item {u16 world;u8 y,type;};
 struct Item items[3];
@@ -59,7 +62,7 @@ static void damage(u8 i,u8 power){
 }
 void die(u8 cause){
     if(invulnerable || dying || drill)return;
-    dying=30;++deaths;charge=0;death_cause=cause;
+    dying=30;++deaths;charge=0;gun_delay=bit_delay=missile_delay=0;death_cause=cause;
 }
 u8 muzzle_x,muzzle_y;
 void fire_aimed(void);
@@ -103,18 +106,32 @@ static void move_items(void){
     }
 }
 static void shoot_bolt(u8 power){
-    u8 i;
-    for(i=0;i<4 && bolts[i].power;++i){}
-    if(i==4){
-        /* Releasing a stored charge takes priority over a normal or Bit shot. */
+    u8 i=power==5?4:0;
+    u8 limit=power==5?8:4;
+    for(;i<limit && bolts[i].power;++i){}
+    if(i==limit){
         if(power!=2 && power!=4)return;
-        for(i=0;i<4 && bolts[i].power!=1 && bolts[i].power!=5;++i){}
+        for(i=0;i<4 && bolts[i].power!=1;++i){}
         if(i==4)return;
     }
-    bolts[i].x=power==5?bit_x+3:px+22;
+    bolts[i].x=power==5?bit_x+3:px+18;
     bolts[i].y=power==5?bit_y:py;
     bolts[i].power=power;
-    bolt_travel[i]=0;
+    if(i<4){
+        bolt_travel[i]=0;
+        if(power!=1)bolts[i].x=px+22;
+    }
+}
+static void fire_salvo(void){
+    if(!gun_delay){shoot_bolt(1);gun_delay=10;}
+    if((bit_owned || drill) && !bit_delay){shoot_bolt(5);bit_delay=10;}
+    if((weapon!=BASIC || drill) && !missile_delay){
+        bolts[8].power=bolts[9].power=6;
+        bolts[8].x=bolts[9].x=px+15;
+        bolts[8].y=py-6;bolts[9].y=py+6;
+        missile_vy[0]=missile_vy[1]=0;
+        missile_age[0]=missile_age[1]=0;missile_delay=96;
+    }
 }
 void move_bolts(void);
 u8 cannon_strength;
@@ -147,13 +164,15 @@ static void player(void){
     }
     col=(camera+px+10)>>2;
     if(py<ceiling_px[col]+2 || py+2>=floor_px[col])die(1);
+    if(gun_delay)--gun_delay;
+    if(bit_delay)--bit_delay;
+    if(missile_delay)--missile_delay;
     if(drill){
+        if(pad&0xc0)fire_salvo();
         request_wave=pad&0x80;request_ray=pad&0x40;
     }else{
-        if(bit_delay)--bit_delay;
         if((pad&0x80)&&!(oldpad&0x80)){
-            if(bit_owned && !bit_delay){shoot_bolt(5);bit_delay=18;}
-            if(force_state || weapon==BASIC)shoot_bolt(1);
+            fire_salvo();
             if(!force_state){
                 if(weapon==RED)request_wave=1;
                 if(weapon==BLUE)request_ray=1;
@@ -226,6 +245,7 @@ void single_sprite(void);
 void draw_bullets(void);
 void draw_player(void);
 void draw_cannon(void);
+void draw_salvo(void);
 #define sprite(X,Y,T,P) do{spr_x=(X);spr_y=(Y);spr_id=(T);spr_pal=(P);single_sprite();}while(0)
 #define META(X,Y,T,W,H) do{mx=(X);my=(Y);tile_list=(T);mw=(W);mh=(H);draw_meta();}while(0)
 void actor_render(void){
@@ -237,15 +257,9 @@ void actor_render(void){
     else if(!invulnerable || !(tick&4)){
         draw_player();
     }
+    draw_salvo();
     draw_bullets();
     if(!boss_active && (tick&1))draw_guns();
-    for(i=0;i<4;++i)if(bolts[i].power){
-        if(bolts[i].power==5){
-            sprite(bolts[i].x,bolts[i].y-4,ION,3);
-            sprite(bolts[i].x-8,bolts[i].y-4,ION_TRAIL,0);continue;
-        }
-        if(bolts[i].power==1)sprite(bolts[i].x,bolts[i].y-4,BOLT,3);
-    }
     for(i=0;i<3;++i)if(items[i].type){
         x=(u8)(items[i].world-camera);if(x<7)continue;
         if(items[i].type==BIT){META(x-6,items[i].y-6,satellite_tiles,2,2);}

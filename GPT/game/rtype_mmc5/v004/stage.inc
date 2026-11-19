@@ -9,7 +9,7 @@ pending_column: .res 1
 _backdrop: .res 1
 shown_backdrop: .res 1
 .segment "RODATA"
-body_mask: .incbin "build/body-mask.bin"
+cleared_meta: .incbin "build/cleared-meta.bin"
 stage_tiles: .incbin "build/stage_tiles.bin"
 .segment "STAGEDATA"
 stage_meta: .incbin "build/stage_meta.bin"
@@ -33,13 +33,25 @@ _prepare_column:
  lda column_hi,x
  adc #>stage_tiles
  sta stage_ptr+1
+ lda _boss_cleared
+ beq @normal_meta
+ cpx #181
+ bcc @normal_meta
+ lda column_lo,x
+ clc
+ adc #<(cleared_meta-181*32)
+ sta attribute_ptr
+ lda column_hi,x
+ adc #>(cleared_meta-181*32)
+ jmp @set_meta
+@normal_meta:
  lda column_lo,x
  clc
  adc #<stage_meta
  sta attribute_ptr
  lda column_hi,x
  adc #>stage_meta
- sta attribute_ptr+1
+@set_meta: sta attribute_ptr+1
  txa
  and #31
  tax
@@ -65,44 +77,6 @@ _prepare_column:
  sta $0400,y
 : dey
  bpl @blank
- lda _boss_cleared
- beq @done
- ldx _stage_col
- cpx #181
- bcc @done
- txa
- sec
- sbc #181
- tax
- lda column_lo,x
- clc
- adc #<body_mask
- sta stage_ptr
- lda column_hi,x
- adc #>body_mask
- sta stage_ptr+1
- ldy #3
-@remove_body:
- lda (stage_ptr),y
- beq @keep
- lda #0
- sta $0400,y
- sta $0420,y
- lda attrlo,y
- sta attribute_ptr
- lda attrhi,y
- sta attribute_ptr+1
- tya
- pha
- ldy pending_column
- dey
- lda #0
- sta (attribute_ptr),y
- pla
- tay
-@keep: iny
- cpy #27
- bne @remove_body
 @done: jmp patch_mount_column
 
 .segment "RODATA"

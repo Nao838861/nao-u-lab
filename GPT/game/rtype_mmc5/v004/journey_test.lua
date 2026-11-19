@@ -83,8 +83,53 @@ emu.addEventCallback(function()
 end,emu.eventType.inputPolled)
 local lastDma=0;local dma=0;local missed=0;local first=nil
 emu.addMemoryCallback(function() dma=dma+1;if first==nil and rd('tick')==1 then first=frame end end,emu.callbackType.write,0x4014)
+local previous={}
+local salvo={bare=0,blue=0,red=0,bit=0,normal=0,turn=0,straight=0}
+local clip=SALVOCLIP and assert(io.open(DIR..'/salvo-frames.csv','w'))
+local function checkSalvo()
+ local w,b=rd('weapon'),rd('bit_owned')
+ local capture=SALVOCLIP and frame>=150 and frame<=4400
+ if capture and frame%2==0 then save(string.format('salvo%04d',frame)) end
+ for slot=0,9 do
+  local p=rd('bolts',3*slot+2)
+  local x,y=rd('bolts',3*slot),rd('bolts',3*slot+1)
+  local prev=previous[slot]
+  if p~=0 then
+   if slot>=8 then
+    local age=rd('missile_age',slot-8)
+    if age==1 then
+     assert(w~=0 and rd('drill')==0)
+     if slot==8 and rd('bolts',29)==6 then
+      assert(rd('bolts',27)==x and rd('bolts',28)-y==14)
+      local color=w==1 and 'red' or 'blue'
+      salvo[color]=salvo[color]+1
+      if capture then clip:write(string.format('launch,%d,%d,%d,%d\n',frame,w,rd('px'),rd('py'))) end
+     end
+    elseif prev and prev.p==6 then
+     local vy=rd('missile_vy',slot-8)
+     if vy>=128 then vy=vy-256 end
+     assert(math.abs(vy)<=4)
+     local dy=age<=6 and (slot==8 and -1 or 1) or vy
+     if vy~=0 then
+      salvo.turn=1
+      if capture and prev.vy==0 then clip:write(string.format('turn,%d,%d,%d,%d\n',frame,slot,x,y)) end
+     elseif age>40 then salvo.straight=1 end
+     assert(y==prev.y+dy)
+     assert(x-prev.x>=1 and x-prev.x<=6)
+    end
+   elseif prev and p==prev.p and x>prev.x then
+    if p==1 then
+     assert(x-prev.x==10)
+     if w==0 then salvo.bare=1 else salvo.normal=1 end
+    elseif p==5 then assert(b==1 and x-prev.x==5);salvo.bit=1 end
+   end
+  end
+  previous[slot]={p=p,x=x,y=y,vy=slot>=8 and rd('missile_vy',slot-8) or 0}
+ end
+end
 emu.addEventCallback(function()
  frame=frame+1
+ checkSalvo()
  if frame>60 and dma==lastDma then missed=missed+1 end
  lastDma=dma
  local cam=word('camera')
@@ -107,7 +152,7 @@ emu.addEventCallback(function()
  if lastDeath>0 and rd('invulnerable')>0 then seen.restored=1 end
  if cam>228 and cam<260 and math.abs(rd('fx')-rd('px')-14)>30 then seen.detached=1 end
  if cam>252 and seen.detached==1 and math.abs(rd('fx')-rd('px')-14)<=1 then seen.returned=1 end
- for i=0,3 do
+ for i=0,7 do
   local power=rd('bolts',3*i+2)
   if power>=2 and power<=4 then seen.charge=1 end
   if power==5 then seen.ion=1 end
@@ -118,6 +163,7 @@ emu.addEventCallback(function()
   local result=assert(io.open(DIR..'/journey-result.txt','w'))
   for k,v in pairs(seen) do result:write(k..'='..v..' ') end
   result:write('first='..first..' guns='..guns..' deflected='..rd('deflected')..' pickups='..rd('pickups')..' deaths='..rd('deaths')..' missed='..missed)
-  result:close();stats:close();emu.stop(0)
+  for k,v in pairs(salvo) do result:write(' salvo_'..k..'='..v) end
+  result:close();stats:close();if clip then clip:close() end;emu.stop(0)
  end
 end,emu.eventType.endFrame)

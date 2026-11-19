@@ -11,13 +11,15 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 OUT=ROOT/'build/actor-check'
 
-def run(rom,labels,script,film=False):
+def run(rom,labels,script,film=False,salvo_clip=False,victory_fire=False):
     exe=Path(os.environ.get('MESEN_EXE') or shutil.which('Mesen') or 'Mesen.exe').resolve()
     OUT.mkdir(parents=True,exist_ok=True)
     for item in (exe,*exe.parent.glob('*.dll')):shutil.copy2(item,OUT/item.name)
     (OUT/'settings.json').write_text(json.dumps({'Debug':{'ScriptWindow':{'AllowIoOsAccess':True}},'Nes':{'Port1':{'Type':'NesController'}}}))
     symbols={n[1:]:int(a,16) for a,n in re.findall(r'al (\w+) \.(_\w+)',(ROOT/'build'/labels).read_text())}
     src=(ROOT/script).read_text('utf8').replace('DIR',json.dumps(OUT.as_posix())).replace('FILM','true' if film else 'false')
+    src=src.replace('SALVOCLIP','true' if salvo_clip else 'false')
+    src=src.replace('VICTORYFIRE','true' if victory_fire else 'false')
     slots=re.search(r'#define SLOTS (\d+)',(ROOT/'actors.h').read_text()).group(1)
     src=src.replace('ENCOUNTER_SLOTS',slots)
     from turret_layout import TURRETS
@@ -57,6 +59,8 @@ def main():
         for key in ('blue','red','bit','medium','large','charge','ion','detached','returned','restored'):
             assert data[key]=='1',(key,result)
         assert int(data['guns'])>=3 and int(data['deflected']) and int(data['pickups'])>=4 and data['missed']=='0',result
+        for key in ('bare','normal','red','blue','bit','turn','straight'):
+            assert int(data['salvo_'+key])>0,result
         compare_positions(int(data['first']))
         if args.film:
             subprocess.run(['ffmpeg','-v','error','-y','-framerate','30.0494','-i',str(OUT/'play%04d.png'),
@@ -84,6 +88,7 @@ def main():
     closed=picture(23)[mouth]
     assert np.array_equal(closed,picture(560)[mouth])
     assert ((closed!=picture(145)[mouth]).any(2)).sum()>100
+    run('rtype-mmc5-boss.nes','boss.lbl','boss_attack_test.lua',victory_fire=True)
     run('rtype-mmc5-boss.nes','boss.lbl','boss_bubble_contact_test.lua')
     print((OUT/'bubble-contact.txt').read_text())
     if args.film:

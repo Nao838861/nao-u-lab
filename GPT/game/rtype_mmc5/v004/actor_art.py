@@ -15,9 +15,19 @@ def build_sprites(planar,array):
         return tiles.index(raw)
     defs='';tables='';player={};shared={0}
     for name,w,h,n in [('ship',24,18,3),('force',25,24,8),('core',25,24,8),
-                          ('bit',13,14,8),('carrier',23,23,2),('green',18,20,1),
-                          ('red',19,17,1),('pod',22,24,1),('walker',34,44,4),
+                          ('bit',13,14,8),('carrier',23,23,2),
+                          ('pod',22,24,1),('walker',34,44,4),
                           ('crystal',16,17,2),('satellite',12,12,1)]:
+        if name=='crystal':
+            # 214 is shared by both flight pages and the boss room. Keep
+            # capsules and the common effects at their established tile IDs.
+            assert len(tiles)<=214
+            tiles.extend([bytes(16)]*(214-len(tiles)))
+            rows=('00000000','01200000','01231000','00123200',
+                  '00012320','00001232','00000120','00000000')
+            slot=intern(np.array([[int(c) for c in row] for row in rows]))
+            assert slot==214
+            defs+=f'#define MISSILE_TURN {slot}\n'
         im=Image.open(ROOT/'art'/('actor-'+('force' if name=='core' else name)+'.png'))
         entries=[]
         for k in range(n):
@@ -26,7 +36,7 @@ def build_sprites(planar,array):
             if name=='walker':pic=pic.resize((32,40),Image.Resampling.NEAREST)
             if name in ('force','core'):pic=pic.crop((1,0,25,24))
             if name=='ship':pic=pic.resize((24,16),Image.Resampling.NEAREST)
-            if name in ('green','red','crystal','pod'):pic=pic.resize((16,16),Image.Resampling.NEAREST)
+            if name in ('crystal','pod'):pic=pic.resize((16,16),Image.Resampling.NEAREST)
             if name=='carrier':pic=pic.resize((24,16),Image.Resampling.NEAREST)
             for y in range(0,pic.height,8):
                 for x in range(0,pic.width,8):
@@ -38,8 +48,8 @@ def build_sprites(planar,array):
                     if name=='core':opaque &= hot
                     if name=='force':opaque &= ~hot
                     dist=((rgb[None,:,:,None,:]-colors[:,None,None,:,:])**2).sum(4)
-                    pal={'ship':0,'force':2,'core':1,'carrier':0,'walker':1,'red':1,
-                         'green':1,'pod':2,'crystal':1 if k==0 else 3}.get(name)
+                    pal={'ship':0,'force':2,'core':1,'carrier':0,'walker':1,
+                         'pod':2,'crystal':1 if k==0 else 3}.get(name)
                     if pal is None:pal=int((dist.min(3)*opaque).sum((1,2)).argmin())
                     ids=np.where(opaque,dist[pal].argmin(2)+1,0)
                     flip=0
@@ -51,19 +61,12 @@ def build_sprites(planar,array):
                     entries.extend([slot,pal|flip])
         if name not in ('force','core'):shared.update(entries[::2])
         if name in ('crystal','satellite'):tables+=array(name+'_tiles',entries)
-        if name in ('ship','core','force','bit','walker','carrier','pod','green','red'):
+        if name in ('ship','core','force','bit','walker','carrier','pod'):
             cols=(pic.width+7)//8
             stride=len(entries)//n
             player[name]=[[(8*(j//cols),tile,pal,8*(j%cols))
                 for j,(tile,pal) in enumerate(zip(entries[k*stride:(k+1)*stride:2],entries[k*stride+1:(k+1)*stride:2])) if tile]
                 for k in range(n)]
-        if name in ('green','red'):
-            # Preserve the cool belly on a warm sprite using one 8x8 overlay.
-            rgb=np.asarray(pic.crop((3,4,11,12)),float)
-            r,g,b=rgb.transpose(2,0,1)
-            ink=(g>r*1.1)&(g>b*1.05)&(g>50)
-            if ink.any():
-                tile=intern(ink);shared.add(tile);player[name][0].insert(0,(4,tile,3,3))
     # The narrow red canopy stripe shares a scanline with silver and cyan.
     # One transparent sprite keeps all three hull colors and the red accent.
     stripe=np.zeros((8,8),'u1');stripe[0,:3]=(1,2,2)
@@ -71,7 +74,7 @@ def build_sprites(planar,array):
     for k,hull in enumerate(player['ship']):
         hull.insert(0,((3,4,5)[k],canopy,1,3))
     inc=[]
-    for name in ('ship','force','bit','walker','carrier','pod','green','red'):
+    for name in ('ship','force','bit','walker','carrier','pod'):
         labels=[]
         for k,parts in enumerate(player[name]):
             if name=='force':parts=player['core'][k]+parts
@@ -81,10 +84,10 @@ def build_sprites(planar,array):
             inc.append(f'{name}_{side}: .byte '+','.join(op+label for label in labels))
     for name,rows in {
         'FLARE':['00000000','01221000','12332100','12332100','01221000','00000000','00000000','00000000'],
-        'STREAK':['00000000','00000000','00233210','00111110','00000000','00000000','00000000','00000000'],
-        'BOLT':['00000000','00000000','00000020','20202333','00000020','00000000','00000000','00000000'],
+        'MISSILE':['00000000','00000000','01233320','11222221','00000000','00000000','00000000','00000000'],
+        'BOLT':['00000000','00000000','00002032','20202033','00000032','00000000','00000000','00000000'],
         'ION':['00000000','00000000','00000023','22200233','00222123','00000000','00000000','00000000'],
-        'ION_TRAIL':['00000000','00000000','00000000','00022222','11220000','00000000','00000000','00000000'],
+        'ION_TRAIL':['00000000','00000000','00000000','02220022','22002220','00000000','00000000','00000000'],
         'PELLET':['00000000','00000000','00021000','00232000','00021000','00000000','00000000','00000000'],
         'CHARGE':['00022000','00233200','02333320','23333332','23333332','02333320','00233200','00022000'],
         'SPARK':['30000003','02030020','00232200','03233230','00233200','02032020','20030002','30000003'],
@@ -206,7 +209,7 @@ def flight_page(standard,planar):
             def add(x,y,pal,block):
                 nonlocal slot
                 if not block.any():return
-                assert 149<=slot<=214
+                assert 149<=slot<214
                 offset=(slot-128)*16
                 page[offset:offset+16]=planar(block.astype('u1').tobytes())
                 parts.extend((y,slot,pal,x));slot+=1

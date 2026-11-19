@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parent
 
 def make_attack_page(common, planar):
     page = bytearray(common[2048:])
-    # 128..214 are corridor enemies. The R-9, all Force sizes, capsules,
+    # 128..213 are corridor enemies. The R-9, all Force sizes, capsules,
     # projectile effects, and cable/eye highlights keep their original IDs.
     tiles = []
     def tile_id(pixels):
@@ -15,7 +15,7 @@ def make_attack_page(common, planar):
         if raw not in tiles:
             tiles.append(raw)
         index = tiles.index(raw)
-        assert index < 87
+        assert index < 86
         page[index*16:index*16+16] = raw
         return 128+index
     poses = []

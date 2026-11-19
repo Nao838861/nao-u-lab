@@ -552,38 +552,57 @@ _draw_bullets:
 @full: stx _oam_index
  rts
 .import _bolts,_ceiling_px,_cannon_hit,_cannon_strength
+.import _missile_age,_missile_vy
 .export _move_bolts
 .segment "ZEROPAGE"
 bolt_index: .res 1
 victim: .res 1
 radius: .res 1
+last_target: .res 1
+seeker_slot: .res 1
+seeker_range: .res 1
+seeker_y: .res 1
+candidate_dx: .res 1
+heading: .res 1
 .segment "ACTORS"
 ; Test the gun before the hull: its muzzle can project into a wall cell.
 bolt_ordinal: .byte 0,0,0,1,1,1,2,2,2,3
 _move_bolts:
+ ldy #9
+@highest:
+ lda _enemy_live,y
+ bne :+
+ dey
+ bpl @highest
+: sty last_target
  ldx #0
 @bolt:
  stx bolt_index
  lda _bolts+2,x
  jeq @next
+ cmp #6
+ beq @missile
  cmp #5
- beq @ordinary
- cmp #2
- bcc @ordinary
+ beq @ion
+ cmp #1
+ beq @gun
  ldy bolt_ordinal,x
  lda _bolt_travel,y
  cmp #4
  bcs :+
  adc #1
  sta _bolt_travel,y
-: lda _bolts,x
+: lda #6
+ bne @speed
+@gun: lda #10
+ bne @speed
+@ion: lda #5
+ bne @speed
+@missile:
+ jsr missile_step
+@speed:
  clc
- adc #6
- jmp @front
-@ordinary:
- lda _bolts,x
- clc
- adc #4
+ adc _bolts,x
 @front:
  jcs @remove
  cmp #252
@@ -594,7 +613,7 @@ _move_bolts:
  bcc :+
  lda _bolts+2,x
  cmp #5
- jeq @remove
+ jcs @remove
  cmp #3
  jcc @remove
 : lda cx
@@ -624,16 +643,17 @@ _move_bolts:
  jcs @remove
 @test:
  sta cy
+ ldy last_target
+ bmi @next
  lda _bolts+2,x
  cmp #5
- beq @small
+ bcs @small
  cmp #2
  bcs @charged
 @small: lda #11
  bne @radius
 @charged: lda #16
 @radius: sta radius
- ldy #9
 @enemy:
  lda _enemy_live,y
  beq @advance
@@ -662,7 +682,7 @@ _move_bolts:
  sty victim
  lda _bolts+2,x
  cmp #5
- bne :+
+ bcc :+
  lda #1
 : sta _cannon_strength
  tya
@@ -671,7 +691,7 @@ _move_bolts:
  ldy victim
  lda _bolts+2,x
  cmp #5
- beq @remove
+ bcs @remove
  cmp #3
  bcc @remove
  lda _enemy_live,y
@@ -688,9 +708,264 @@ _move_bolts:
  inx
  inx
  inx
- cpx #12
+ cpx #30
  jne @bolt
  rts
+
+.segment "ACTORS"
+; The recording has two horizontal tracks once the rails open. X is the
+; warhead, and each increment is a difference of rounded capture positions.
+missile_dx:
+ .byte 2,2,2,2,2,3,2,2,3,2,2,3,3,2,3,3,3,2
+ .byte 3,3,3,4,3,3,3,3,4,3,4,3,4,3,4,4,4,3
+ .byte 4,4,4,4,5,4,4,4,5,4,4,5,4,5,5,4,5,5
+ .byte 5,5,5,5,5,5,5,5,6,5,6,5,6,5,6,5,6,6
+missile_step:
+ ldy #0
+ cpx #24
+ beq :+
+ iny
+: sty seeker_slot
+ lda _missile_age,y
+ cmp #6
+ bcs @fly
+ cpy #0
+ bne @down
+ dec _bolts+1,x
+ jmp @advance
+@down: inc _bolts+1,x
+ jmp @advance
+@fly:
+ ; Stagger the two seekers to keep a salvo within the NES frame budget.
+ sec
+ sbc seeker_slot
+ and #3
+ bne @move
+ jsr seek_ahead
+@move:
+ ldy seeker_slot
+ lda _bolts+1,x
+ clc
+ adc _missile_vy,y
+ sta _bolts+1,x
+@advance:
+ lda _missile_age,y
+ clc
+ adc #1
+ sta _missile_age,y
+ tay
+ lda missile_dx-1,y
+ rts
+
+; Select the closest target in front that is reachable from this rail.
+; With no new target the missile keeps its heading until impact or exit.
+.segment "CODE"
+seek_ahead:
+ lda #49
+ sta seeker_range
+ ldy last_target
+ bmi @mounts
+@mob:
+ lda _enemy_live,y
+ beq @next_mob
+ lda _enemy_x,y
+ clc
+ adc #8
+ bcs @next_mob
+ sec
+ sbc _bolts,x
+ bcc @next_mob
+ cmp seeker_range
+ bcs @next_mob
+ sta candidate_dx
+ lda _enemy_y,y
+ clc
+ adc #8
+ jsr consider_height
+@next_mob:
+ dey
+ bpl @mob
+@mounts:
+ lda _boss_active
+ bne @turn
+ lda _bolts+1,x
+ cmp #105
+ bcc @find_mount
+ cmp #139
+ bcc @turn
+@find_mount:
+ ldy #MOUNT_COUNT-1
+@mount:
+ lda _gun_live,y
+ beq @next_mount
+ lda _gun_dead,y
+ bne @next_mount
+ lda _gun_screen,y
+ sec
+ sbc _bolts,x
+ bcc @next_mount
+ cmp seeker_range
+ bcs @next_mount
+ sta candidate_dx
+ lda _gun_height,y
+ jsr consider_height
+@next_mount:
+ dey
+ bpl @mount
+@turn:
+ lda seeker_range
+ cmp #49
+ beq @done
+ ldy seeker_slot
+ lda seeker_y
+ sec
+ sbc _bolts+1,x
+ clc
+ adc #2
+ cmp #5
+ bcc @level
+ bmi @up
+ lda _missile_vy,y
+ cmp #4
+ beq @done
+ clc
+ adc #1
+ jmp @store
+@up:
+ lda _missile_vy,y
+ cmp #$fc
+ beq @done
+ sec
+ sbc #1
+ jmp @store
+@level: lda #0
+@store: sta _missile_vy,y
+@done: rts
+consider_height:
+ pha
+ sec
+ sbc _bolts+1,x
+ clc
+ adc #32
+ cmp #65
+ bcs @far
+ pla
+ sta seeker_y
+ lda candidate_dx
+ sta seeker_range
+ rts
+@far: pla
+ rts
+
+.export _draw_salvo
+; Put the warhead at its collision coordinate and clip its trail at the edge.
+; No CHR or palette updates are needed while any of the three guns is firing.
+_draw_salvo:
+ ldx _oam_index
+ ldy #27
+@slot:
+ lda _bolts+2,y
+ beq @next
+ cmp #6
+ beq @missile
+ cmp #5
+ beq @ion
+ cmp #1
+ bne @next
+ lda #BOLT
+ jsr @head
+ jmp @next
+@ion:
+ lda #ION
+ jsr @head
+ ; Offset only the wake as the bright nose flies level.
+ lda _bolts,y
+ and #8
+ beq :+
+ dec cy
+:
+ lda _bolts,y
+ sec
+ sbc #15
+ bcc @next
+ sta cx
+ lda #0
+ sta temp
+ lda #ION_TRAIL
+ jsr @put
+ jmp @next
+@missile:
+ lda _missile_vy
+ cpy #24
+ beq :+
+ lda _missile_vy+1
+: sta heading
+ cmp #0
+ beq @flat
+ lda #MISSILE_TURN
+ jmp @warhead
+@flat: lda #MISSILE
+@warhead: jsr @head
+ lda _bolts,y
+ sec
+ sbc #14
+ bcc @next
+ sta cx
+ lda cy
+ sec
+ sbc heading
+ sta cy
+ lda #1
+ sta temp
+ lda _tick
+ and #4
+ beq @ember
+ lda #CHARGE
+ bne @put_tail
+@ember: lda #FLARE
+@put_tail: jsr @put
+@next:
+ dey
+ dey
+ dey
+ jpl @slot
+ stx _oam_index
+ rts
+@head:
+ pha
+ lda _bolts,y
+ sec
+ sbc #7
+ sta cx
+ lda _bolts+1,y
+ sec
+ sbc #4
+ sta cy
+ lda #0
+ sta temp
+ cpy #24
+ bcc @tile
+ lda #2
+ bit heading
+ bpl :+
+ ora #$80
+: sta temp
+@tile: pla
+@put:
+ cpx #248
+ bcs @full
+ sta $201,x
+ lda cx
+ sta $203,x
+ lda cy
+ sta $200,x
+ lda temp
+ sta $202,x
+ inx
+ inx
+ inx
+ inx
+@full: rts
 
 .import _force_level
 .import _banking,_force_phase,_bit_phase,_force_frames,_bit_frames,_drill
@@ -908,6 +1183,8 @@ _move_guns:
 .include "mount_draw.inc"
 .segment "ACTORS"
 bolt_gun:
+ lda _boss_active
+ bne @none
  lda _bolts+1,x
  cmp #80
  bcc @index

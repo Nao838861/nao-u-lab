@@ -101,6 +101,11 @@ def build_art():
         (OUT/name).write_bytes(np.pad(a,((0,0),(0,2))).tobytes())
     columns('stage_tiles.bin',slots)
     columns('stage_meta.bin',descriptor)
+    # Once the boss dies each column can use the normal dark-room blit.
+    # A zero descriptor erases both the body tile and its ExRAM selection.
+    stage_meta=np.frombuffer((OUT/'stage_meta.bin').read_bytes(),'u1').reshape(width,32)
+    body=np.frombuffer((OUT/'body-mask.bin').read_bytes(),'u1').reshape(width-181,32)
+    (OUT/'cleared-meta.bin').write_bytes(np.where(body,0,stage_meta[181:]).astype('u1').tobytes())
     # Three bytes per lit cell. Empty cells cost no runtime loop iterations.
     commands=bytearray();starts=[]
     for phase in range(32):

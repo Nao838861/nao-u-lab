@@ -19,7 +19,7 @@ end
 emu.addMemoryCallback(function()writes=writes+1 end,emu.callbackType.write,0x4014)
 emu.addEventCallback(function()
  local y=rd('py')
- local target=frame<240 and 153 or frame<475 and 83 or 150
+ local target=frame<240 and 153 or frame<475 and 83 or (frame>740 and not VICTORYFIRE) and 175 or 150
  emu.setInput({up=y>target+1,down=y<target-1,a=frame>745 and frame<1020,b=frame>=1020 and frame<1240},0)
 end,emu.eventType.inputPolled)
 emu.addEventCallback(function()
@@ -54,7 +54,9 @@ emu.addEventCallback(function()
  if elapsed==1240 then
   local result=assert(io.open(DIR..'/attack-result.txt','w'))
   result:write('peak='..peak..' missed='..missed..' repeatsAt='..table.concat(repeatsAt,',')..' repeatedTicks='..repeatedTicks..' lateVRAM='..lateVRAM..' lateScroll='..lateScroll..' salvos='..rd('salvos')..' closed='..tostring(closed)..' launches='..table.concat(volley,','));result:close()
-  local ok=peak==9 and missed==0 and repeatedTicks==0 and closed and #volley==54 and lateVRAM==0 and lateScroll==0
+  local ok=peak==9 and missed==0 and repeatedTicks==0 and closed and lateVRAM==0 and lateScroll==0
+  -- Fire through the eye in the victory run and keep shooting during cleanup.
+  if VICTORYFIRE then ok=ok and rd('boss_cleared')~=0 else ok=ok and #volley==54 end
   ok=ok and volley[1]==137 and volley[10]==275 and volley[19]==414
   emu.stop(ok and 0 or 1)
  end

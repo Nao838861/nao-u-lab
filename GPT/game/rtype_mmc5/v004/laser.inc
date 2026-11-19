@@ -23,6 +23,7 @@ cell_lo: .res 1
 column_hits: .res 32
 row_hits: .res 32
 hits: .res 1
+cleared_hits: .res 1
 .exportzp _beam_pending
 _beam_pending: .res 1
 .segment "RODATA"
@@ -31,7 +32,13 @@ enemy_for_bits: .byte 0,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,
 .segment "CODE"
 .export _prepare_hits
 _prepare_hits:
- lda #0
+ lda _boss_cleared
+ beq @clear
+ lda cleared_hits
+ beq :+
+ rts
+: inc cleared_hits
+@clear: lda #0
  ; Leave time for the full formation and a laser on the same update.
  .repeat 32,I
   sta column_hits+I
@@ -484,109 +491,6 @@ _draw_ray:
  cpy _ray_length
  bcc @cell
  rts
-
-.segment "CODE"
-.import _red
-.export _launch_effects
-_launch_effects:
- ldx _oam_index
- ldy #0
- jsr effects_one
- ldy #4
- jsr effects_one
- stx _oam_index
- rts
-effects_one:
- cpx #232
- bcc :+
- rts
-: lda _red,y
- bne :+
- rts
-:
- lda _red+2,y
- asl
- asl
- asl
- sta py0
- lda _red+1,y
- asl
- asl
- asl
- sta px0
- lda _red+3,y
- asl
- clc
- adc px0
- bcs :+
- cmp #248
- bcc :++
-: jmp @bolt
-:
- sta sprite_x
- ; Four OAM records; offsets match the original flare / streak metasprite.
- .repeat 4,I
- lda py0
- clc
- .if (I & 1)
- adc #7
- .else
- adc #241
- .endif
- sta $0200,x
- .if I<2
- lda #FLARE
- .else
- lda #STREAK
- .endif
- sta $0201,x
- .if I<2
- lda #1
- .else
- lda #2
- .endif
- sta $0202,x
- lda sprite_x
- .if I>=2
- clc
- adc #5
- .endif
- sta $0203,x
- inx
- inx
- inx
- inx
- .endrepeat
-@bolt:
- lda _red+3,y
- cmp #49
- bcs @done
- asl
- asl
- clc
- adc _red+3,y
- adc #12
- bcs @done
- adc px0
- bcs @done
- cmp #249
- bcs @done
- sta $0203,x
- lda py0
- sec
- sbc #4
- sta $0200,x
- lda #BOLT
- sta $0201,x
- lda #3
- sta $0202,x
- inx
- inx
- inx
- inx
-@done: rts
-
-.segment "RODATA"
 
 ; The two mounts at world X=804 share a column, with independent HP.
 .segment "CODE"
