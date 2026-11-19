@@ -44,6 +44,8 @@ _draw_boss_details:
 @marks:
  ldy #0
 @mark:
+ cpx #248
+ bcs @end
  lda mark_x,y
  clc
  adc _boss_offset
@@ -63,7 +65,7 @@ _draw_boss_details:
  iny
  cpy #MARK_COUNT
  bne @mark
- stx _oam_index
+@end: stx _oam_index
  rts
 .segment "RODATA"
 .include "build/boss-marks.inc"

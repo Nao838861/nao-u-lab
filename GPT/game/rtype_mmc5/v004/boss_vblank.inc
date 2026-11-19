@@ -1,6 +1,9 @@
 .import _stage_tile
 .segment "STARTUP"
+.import _boss_cleared
 restore_beads:
+ lda _boss_cleared
+ bne @done
  lda _boss_active
  beq @done
  jsr select_patch
@@ -9,7 +12,10 @@ restore_beads:
 @done: rts
 
 paint_beads:
- lda _boss_active
+ lda _boss_cleared
+ beq :+
+ rts
+: lda _boss_active
  bne :+
  rts
 :

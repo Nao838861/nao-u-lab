@@ -1,7 +1,7 @@
 ; Sparse ink writes and collision against the central 8x8 of each enemy.
 ; ZP arguments avoid cc65 argument-stack access for each individual cell.
 .import _x_bias,_scroll_x,_scroll_tile
-.import _enemy_x,_enemy_y,_explosion,_hit_count
+.import _enemy_x,_enemy_y,_enemy_live,_beam_hit,_hit_count
 .exportzp _column,_row,_bank
 .export _light,_erase_lights
 .segment "ZEROPAGE"
@@ -17,13 +17,15 @@ mask: .res 1
 xpos: .res 1
 lamp_ink: .res 1
 hit_bank: .res 1
+target_x: .res 1
+target_y: .res 1
 cell_lo: .res 1
 column_hits: .res 32
 row_hits: .res 32
 hits: .res 1
 .segment "RODATA"
-enemy_bit: .byte 1,2,4
-enemy_for_bits: .byte 0,0,1,0,2,0,1,0
+enemy_bit: .byte 1,2,4,8,16,32,64
+enemy_for_bits: .byte 0,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,6,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0
 .segment "CODE"
 .export _prepare_hits
 _prepare_hits:
@@ -33,13 +35,10 @@ _prepare_hits:
  sta row_hits,x
  dex
  bpl :-
- lda _boss_active
- beq :+
- rts
-: ldx #2
+ ldx #6
 @mark:
- lda _explosion,x
- bne @next
+ lda _enemy_live,x
+ beq @next
  lda _enemy_x,x
  clc
  adc #4
@@ -163,22 +162,27 @@ _light:
 @row:
  ora rowlo,y
  sta cell_lo
+ jsr gun_cell
+ ldy _row
  lda attrlo,y
  sta addr
  lda attrhi,y
  sta addr+1
  ldy worldcol
  lda (addr),y
- bmi @out
- ldx lamp_ink
+ bpl @lit
+ lda _boss_active
+ beq @out
+ lda lamp_ink
+ sta hit_bank
+ ldx _row
+ jmp @collide
+@lit: ldx lamp_ink
  stx hit_bank
  txa
  ora #64
 @emit:
  ldy #1
- sta (cursor),y
- dey
- lda #$a9
  sta (cursor),y
  ldy #3
  lda cell_lo
@@ -194,7 +198,7 @@ _light:
  bcc :+
  inc cursor+1
 : inc count
- ldy worldcol
+@collide: ldy worldcol
  lda column_hits,y
  and row_hits,x
  bne :+
@@ -215,13 +219,18 @@ _light:
 @enemy:
  ldy hits
  ldx enemy_for_bits,y
- lda _explosion,x
+ lda _beam_hit,x
  bne @next
+ lda _enemy_x,x
+ sta target_x
+ lda _enemy_y,x
+ sta target_y
  jsr exact_hit
  bcc @next
- lda #12
- sta _explosion,x
+ lda #1
+ sta _beam_hit,x
  inc _hit_count
+ lda #12
  sta $400c
  lda #7
  sta $400e
@@ -245,7 +254,7 @@ exact_hit:
  clc
  adc py0
  sec
- sbc _enemy_y,x
+ sbc target_y
  cmp #4
  bcc @skip
  cmp #12
@@ -262,7 +271,7 @@ exact_hit:
  clc
  adc px0
  sec
- sbc _enemy_x,x
+ sbc target_x
  cmp #4
  bcc @advance
  cmp #12
@@ -364,23 +373,30 @@ _draw_meta:
  lda _mw
  sta sprites_wide
 @cell:
- lda sprite_y
- sta $0200,x
  lda (spriteptr),y
+ beq @empty_tile
  iny
+ cpx #248
+ bcs @transparent
  sta $0201,x
  lda (spriteptr),y
- iny
  sta $0202,x
+ lda sprite_y
+ sta $0200,x
  lda sprite_x
  sta $0203,x
+ inx
+ inx
+ inx
+ inx
+ bne @transparent
+@empty_tile: iny
+@transparent:
+ iny
+ lda sprite_x
  clc
  adc #8
  sta sprite_x
- inx
- inx
- inx
- inx
  dec sprites_wide
  beq @rowend
  bcc @cell
@@ -443,7 +459,10 @@ _launch_effects:
  stx _oam_index
  rts
 effects_one:
- lda _red,y
+ cpx #232
+ bcc :+
+ rts
+: lda _red,y
  bne :+
  rts
 :
@@ -530,3 +549,208 @@ effects_one:
 @done: rts
 
 .segment "RODATA"
+
+; The two mounts at world X=804 share a column, with independent HP.
+.segment "CODE"
+.export gun_upper,gun_lower,gun_wlo,gun_whi,_gun_height
+gun_upper: .incbin "build/turret-grid.bin"
+gun_lower=gun_upper+200
+gun_wlo=gun_lower+200
+gun_whi=gun_wlo+15
+_gun_height=gun_whi+15
+.import _gun_live,_gun_dead,_gun_screen
+gun_cell:
+ cpy #10
+ bcc @lookup
+ cpy #20
+ bcc @none
+ cpy #23
+ bcs @none
+@lookup:
+ lda _boss_active
+ bne @none
+ lda worldcol
+ sec
+ sbc _scroll_tile
+ and #31
+ clc
+ adc _stage_tile
+ tax
+ cpy #14
+ bcs @floor
+ lda gun_upper,x
+ jmp @found
+@floor: lda gun_lower,x
+@found: tax
+ beq @none
+ dex
+ lda _gun_live,x
+ beq @none
+ lda _gun_dead,x
+ bne @none
+ lda _gun_screen,x
+ sec
+ sbc #8
+ sta target_x
+ lda _gun_height,x
+ sec
+ sbc #8
+ sta target_y
+ tya
+ asl
+ asl
+ asl
+ sta py0
+ lda worldcol
+ asl
+ asl
+ asl
+ sec
+ sbc _scroll_x
+ sta px0
+ lda lamp_ink
+ sta hit_bank
+ jsr exact_hit
+ bcc @none
+ lda #12
+ sta _gun_dead,x
+ inc _hit_count
+@none: rts
+
+.import _rays,_head_index,_launch_tile,_blue,_ceilrow,_floorrow
+.export _reflect_shot
+.segment "ZEROPAGE"
+ray_slot: .res 1
+next_x: .res 1
+next_y: .res 1
+ray_advance: .res 1
+.segment "CODE"
+_reflect_shot:
+ lda _blue
+ bne :+
+ rts
+: lda _scroll_tile
+ sec
+ sbc _launch_tile
+ and #31
+ sta _ray_min_col
+ lda _blue+3
+ and #3
+ eor #3
+ sta ray_advance
+ ldx #0
+@ray:
+ stx ray_slot
+ lda ray_advance
+ bne :+
+ jmp @draw
+:
+ txa
+ clc
+ adc _head_index
+ tay
+ lda _rays,x
+ sta _rays+5,y
+ lda _rays+1,x
+ sta _rays+17,y
+ lda _rays+3,x
+ beq @flat
+ cmp _rays+2,x
+ bne :+
+ lda #RAY_FIRST
+ bne @shape
+:
+ lda #RAY_FIRST+1
+ bne @shape
+@flat: lda #RAY_FIRST+2
+@shape: sta _rays+29,y
+ lda _rays+4,x
+ cmp #12
+ bcs :+
+ inc _rays+4,x
+: lda _rays,x
+ cmp #32
+ bcs @draw_jump
+ clc
+ adc _rays+2,x
+ sta next_x
+ lda _rays+1,x
+ clc
+ adc _rays+3,x
+ sta next_y
+ lda _rays,x
+ clc
+ adc _launch_tile
+ tay
+ lda next_y
+ cmp _ceilrow,y
+ bcc @horizontal
+ cmp _floorrow,y
+ beq @across
+ bcs @horizontal
+@across:
+ lda next_x
+ cmp #32
+ bcs @move
+ clc
+ adc _launch_tile
+ tay
+ lda next_y
+ cmp _ceilrow,y
+ bcc @vertical
+ cmp _floorrow,y
+ beq @move
+ bcc @move
+@vertical:
+ lda #0
+ sec
+ sbc _rays+2,x
+ sta _rays+2,x
+ lda _rays,x
+ sta next_x
+ jmp @move
+@draw_jump: jmp @draw
+@horizontal:
+ lda #0
+ sec
+ sbc _rays+3,x
+ sta _rays+3,x
+ lda _rays+1,x
+ sta next_y
+@move: lda next_x
+ sta _rays,x
+ lda next_y
+ sta _rays+1,x
+@draw:
+ txa
+ clc
+ adc #<(_rays+5)
+ sta _ray_data
+ lda #>(_rays+5)
+ adc #0
+ sta _ray_data+1
+ lda _rays+4,x
+ sta _ray_length
+ jsr _draw_ray
+ lda ray_slot
+ clc
+ adc #41
+ tax
+ cpx #123
+ beq :+
+ jmp @ray
+: lda ray_advance
+ beq :+
+ inc _head_index
+ lda _head_index
+ cmp #12
+ bcc :+
+ lda #0
+ sta _head_index
+: inc _blue+3
+ lda _blue+3
+ cmp #62
+ bcc :+
+ lda #0
+ sta _blue
+: rts

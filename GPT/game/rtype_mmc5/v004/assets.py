@@ -10,57 +10,6 @@ def planar(v):
     return b''.join(np.packbits((a>>bit)&1,axis=1).tobytes() for bit in (0,1))
 def array(name,values):
     return 'static const unsigned char '+name+'[]={'+','.join(map(str,values))+'};\n'
-def sprite_data():
-    # RGB targets describe the source art. The actual NES colors are in game.c.
-    palettes=np.array([[(65,65,76),(38,197,215),(228,230,228)],
-                       [(110,86,57),(234,89,15),(255,228,104)],
-                       [(77,75,71),(150,145,132),(242,234,211)],
-                       [(28,35,68),(40,104,171),(141,211,226)]],float)
-    chroma=[];metadata=''
-    for name,w,h,count in [('r9',24,13,1),('force',20,24,4),('bit',13,13,5),('drone',16,18,1),('walker',31,30,1)]:
-        strip=Image.open(ART/(name+'.png')).convert('RGB')
-        offsets=[]
-        for frame in range(count):
-            pic=strip.crop((frame*w,0,(frame+1)*w,h))
-            for y in range(0,h,8):
-                for x in range(0,w,8):
-                    rgb=np.array(pic.crop((x,y,x+8,y+8)),float)
-                    opaque=rgb.max(axis=2)>36
-                    if name=='drone':
-                        opaque &= ((rgb.max(2)-rgb.min(2)>30)|(rgb.max(2)>110))
-                    dist=((rgb[None,:,:,None,:]-palettes[:,None,None,:,:])**2).sum(4)
-                    best=int((dist.min(3)*opaque).sum((1,2)).argmin())
-                    if name=='walker':
-                        opaque &= (rgb[:,:,0]>rgb[:,:,2]+16)|(rgb.max(2)>128)
-                        best=1
-                    if name=='r9': best=0
-                    if name=='force': best=2
-                    ids=np.where(opaque,dist[best].argmin(2)+1,0).astype('u1')
-                    offsets.extend([len(chroma),best]);chroma.append(planar(ids.tobytes()))
-        if name=='force':
-            core=[]
-            for frame in range(count):
-                for y in (4,12):
-                    for x in (4,12):
-                        rgb=np.array(strip.crop((frame*w+x,y,frame*w+x+8,y+8)),float)
-                        r,g,b=rgb.transpose(2,0,1)
-                        lit=(r>b+22)&(r>82)&(r>g*.91)
-                        ids=np.where(lit,np.where(g>150,3,np.where(r>130,2,1)),0).astype('u1')
-                        core.extend([len(chroma),1]);chroma.append(planar(ids.tobytes()))
-            metadata+=array('core_tiles',core)
-        metadata+=array(name+'_tiles',offsets)
-    # The warm paired shots and the dotted cyan bolt leave the Force with A.
-    for label,rows in [
-        ('FLARE',['........','.1221...','123321..','123321..','.1221...','........','........','........']),
-        ('STREAK',['........','........','..23321.','..11111.','........','........','........','........']),
-        ('BOLT',['........','........','......2.','2.2.2333','......2.','........','........','........'])]:
-        meta_id=len(chroma)
-        metadata+=f'#define {label} {meta_id}\n'
-        chroma.append(planar(bytes(0 if c=='.' else int(c) for line in rows for c in line)))
-    explosion=bytes(3 if (x==3 or y==3 or x==y or x+y==7) else 0 for y in range(8) for x in range(8))
-    metadata+=f'#define SPARK {len(chroma)}\n'
-    return b''.join(chroma+[planar(explosion)]).ljust(4096,b'\0'),metadata
-
 def indicator_dots(rgb):
     """Pick the center of each colored lamp against its black recess."""
     r,g,b=rgb.astype('int16').transpose(2,0,1)
@@ -88,7 +37,10 @@ def build_art():
     assert min(steps)==0 and max(steps)==1 and positions[-1]==Image.open(ART/'stage.png').width-256
     motion=np.packbits(steps,bitorder='little')
     from stage_tiles import make_map
-    width,fields,walls,source,slots,attrs=make_map(ART/'stage.png',indicator_dots)
+    from turret_layout import clean_stage,build_tables
+    clean_stage(ART/'stage.png',OUT/'stage-clean.png')
+    build_tables(OUT)
+    width,fields,walls,source,slots,attrs=make_map(OUT/'stage-clean.png',indicator_dots)
     tops=[];floors=[]
     for x in range(width):
         top,bottom=2,27
@@ -96,7 +48,10 @@ def build_art():
         while bottom>15 and attrs[bottom*width+x]: bottom-=1
         tops.append(max(3,top)); floors.append(min(26,bottom))
     from boss_art import body_tiles
-    spr,meta=sprite_data()
+    from actor_art import build_sprites,terrain
+    spr,meta=build_sprites(planar,array)
+    top,floor=terrain()
+    (OUT/'terrain.h').write_text(array('ceiling_px',top).replace('static const','const')+array('floor_px',floor).replace('static const','const'))
     boss_banks=body_tiles(slots,attrs,width,spr,planar,walls)
     boss_on=int(np.where(positions==1130)[0][0])
     boss_phase=(boss_on-round(2125*60.0988/30))%157
@@ -153,13 +108,13 @@ def build_art():
         base=(0,0,1,2)
         return planar(bytes(v if v else base[p] for p,v in zip(tile,mask)))
     windows=[]
-    for field,wall,spr in zip(fields,walls,boss_banks):
+    for field,wall,body in zip(fields,walls,boss_banks):
         banks=[page(field),page(wall[:256])]
         for i,mask in enumerate(masks):
             if i>=first-2:
                 mask=bytes(3 if v==2 else 2 if v else 0 for v in mask)
             banks.append(b''.join(composite(t,mask) for t in field))
-        windows.append(b''.join(banks)+page(wall[256:])+spr)
+        windows.append(b''.join(banks)+page(wall[256:])+body)
     def coverage(ms):
         return bytes(sum(1<<x for x in range(8) if m[y*8+x]) for m in [blank,blank]+ms for y in range(8))
     # The glow is visual; collision uses the original one-pixel centerline.
@@ -169,9 +124,21 @@ def build_art():
     (OUT/'waveptr.inc').write_text('wlo: .byte '+','.join(f'<(wave_data+{n})' for n in starts)+'\nwhi: .byte '+','.join(f'>(wave_data+{n})' for n in starts))
     (OUT/'attrs.bin').write_bytes(attrs.astype('u1').tobytes())
     (OUT/'kinds.bin').write_bytes(bytes(128 if a else int(max(t)>1) for t,a in zip(source,attrs)))
-    (OUT/'sprite.inc').write_text(f'STAGE_COLS = {width}\nSPR_BANK = 63\nRAY_FIRST = {first}\n'+'\n'.join(line.replace('#define ','').replace(' ',' = ',1) for line in meta.splitlines() if line.startswith('#define ')))
-    (OUT/'art.h').write_text(f'#define BOSS_PHASE {boss_phase}\n#define STAGE_END {Image.open(ART/"stage.png").width-256}\n'+meta+array('camera_steps',motion)+array('phase_for_age',[t if t<32 else 20+(t-32)%12 for t in range(128)])+array('advance_for_age',[0 if t<32 else 6*(1+(t-32)//12) for t in range(128)])+array('wave_offsets',offsets)+array('nametable',list(slots.reshape(30,width)[:,:32].flat))+array('attributes',list(attrs.reshape(30,width)[:,:32].flat))+array('ceilrow',tops)+array('floorrow',floors)+array('diagonal',range(first,first+3)))
+    (OUT/'sprite.inc').write_text(f'STAGE_COLS = {width}\nSPR_BANK = 126\nRAY_FIRST = {first}\n'+'\n'.join(line.replace('#define ','').replace(' ',' = ',1) for line in meta.splitlines() if line.startswith('#define ')))
+    (OUT/'art.h').write_text(f'#define BOSS_PHASE {boss_phase}\n#define STAGE_END {Image.open(ART/"stage.png").width-256}\n'+meta+array('camera_steps',motion)+array('phase_for_age',[t if t<32 else 20+(t-32)%12 for t in range(128)])+array('advance_for_age',[0 if t<32 else 6*(1+(t-32)//12) for t in range(128)])+array('wave_offsets',offsets)+array('nametable',list(slots.reshape(30,width)[:,:32].flat))+array('attributes',list(attrs.reshape(30,width)[:,:32].flat))+array('ceilrow',tops).replace('static const','const')+array('floorrow',floors).replace('static const','const')+array('diagonal',range(first,first+3)).replace('static const','const'))
     from boss_patches import pack_tail
     chr_data,boss_data=pack_tail(b''.join(windows),slots,attrs,width,planar)
     (OUT/'boss-data.bin').write_bytes(boss_data)
-    return chr_data
+    # Band 1 has no overflow wall tiles, including both IRQ seam rows.
+    assert not np.any(attrs.reshape(30,width)[8:17]==0xfe)
+    image=bytearray(chr_data)
+    objbank=bytearray(spr)
+    objbank[240*16:]=boss_banks[0][240*16:]
+    image[126*4096:127*4096]=objbank
+    # Band 1's wall atlas ends below tile 128. Its upper 2 KiB can
+    # simultaneously supply the small and medium sprite pattern page.
+    band=attrs.reshape(30,width)[8:17]
+    used=slots.reshape(30,width)[8:17][band==0xc1]
+    assert not len(used) or used.max()<128
+    image[65*4096+2048:66*4096]=(OUT/'small-force.chr').read_bytes()
+    return bytes(image)

@@ -133,6 +133,7 @@ def check_camera():
     reference=np.fromfile(ROOT/'art/camera.bin','<u2')/16
     poses=np.loadtxt(ROOT/'build/check/positions.txt',dtype=int,ndmin=2)
     errors=[]
+    first=int((ROOT/'build/check/first-game-frame.txt').read_text())
     for tick,pos,_ in poses:
         img=np.array(Image.open(ROOT/f'build/check/stage{tick}.png').convert('RGB'))
         cream=(img[:,:,0]==247)&(img[:,:,1]==216)
@@ -141,8 +142,8 @@ def check_camera():
         best=min(range(max(0,pos-2),min(hull.shape[1]-255,pos+3)),key=mismatch)
         # CPU camera can be one VBlank ahead of the last visible frame.
         assert abs(pos-best)<=2 and mismatch(best)<.006,(tick,pos,best,mismatch(best))
-        # Screenshot 0 is emulator frame 50; gameplay begins at frame 14.
-        t=(tick+36)*30/60.0988
+        # Screenshot zero is emulator frame 50. Measure startup latency at DMA.
+        t=(tick+50-first)*30/60.0988
         errors.append(abs(best-np.interp(t,np.arange(len(reference)),reference)))
     assert max(errors)<2,(max(errors),poses[np.argmax(errors)])
     return len(poses),max(errors)

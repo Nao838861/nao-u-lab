@@ -11,6 +11,13 @@ def body_tiles(slots,attrs,width,sprite_bank,planar,walls):
     rgb=np.zeros((240,8*width,3),'uint8')
     body=np.asarray(Image.open(ART/'boss-body.png').convert('RGB'))
     rgb[30:30+len(body),1448:1448+body.shape[1]]=body
+    # Two-pixel body occupancy and the exact 157 tail poses share their
+    # origin with the picture, including during the room's scroll-in.
+    body_ink=body.max(2)>50
+    padded=np.pad(body_ink,((0,1),(0,2)))
+    mask=padded.reshape(90,2,72,2).sum((1,3))>=2
+    (ART.parent/'build/body-contact.bin').write_bytes(np.packbits(mask,axis=1,bitorder='little').tobytes())
+    (ART.parent/'build/tail-contact.bin').write_bytes(tail_rom())
     skin=np.array([(0,0,0),(108,6,0),(181,49,32),(254,204,197)])
     metal=np.array([(0,0,0),(0,0,0),(173,173,173),(247,216,165)])
     cells={}
@@ -40,6 +47,9 @@ def body_tiles(slots,attrs,width,sprite_bank,planar,walls):
         bands=({0,3,1} if r==8 else {r//8,3} if r>=8 else {0})
         if r in (16,24):bands.add(r//8-1)
         for b in bands:banks[b][16*i:16*i+16]=data
+    body_mask=np.zeros((width-181,32),'u1')
+    for r,c in cells:body_mask[c-181,r]=1
+    (ART.parent/'build/body-mask.bin').write_bytes(body_mask.tobytes())
     # The last lower platform crosses the old window-2/window-3 boundary.
     for r in range(8,24):
         for c in range(141,width):
@@ -65,7 +75,7 @@ def body_tiles(slots,attrs,width,sprite_bank,planar,walls):
                 else:
                     ids=np.where((b>r*1.12)&(b>g*.94)&(b>65),np.where(g>120,3,2),0)
                 if np.count_nonzero(ids)<3:continue
-                i=232+len(marks)
+                i=240+len(marks)
                 assert i<256 and i not in low.values()
                 banks[0][16*i:16*i+16]=planar(ids.astype('u1').tobytes())
                 marks.append((x+dx,y+dy+15,i))

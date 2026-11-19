@@ -34,10 +34,12 @@ local highNext=true
 local paletteWrites=0
 local maxLit=0
 local transfers=0
+local firstGameFrame=nil
 local trace=assert(io.open(DIR..'/rays.txt','w'))
 local function read(addr) return emu.read(addr,emu.memType.nesMemory) end
 local last=0
 local allMissed=0
+local dropped={}
 local missed={0,0,0}
 local spans={{60,300},{405,645},{750,990}}
 local function fail(s)
@@ -77,6 +79,9 @@ emu.addMemoryCallback(function(a,v)
 end,emu.callbackType.write,0x2007)
 emu.addMemoryCallback(function()
  transfers=transfers+1
+ if firstGameFrame==nil and read(TICK_LABEL)==1 then
+  firstGameFrame=frame;local p=assert(io.open(DIR..'/first-game-frame.txt','w'));p:write(frame);p:close()
+ end
  if ((frame>=750 and frame<990) or (frame>=2200 and frame<2460) or (frame>=4100 and frame<4400)) and read(BLUE_LABEL)~=0 then
   trace:write(string.format('%d %d %d %d %d',read(BLUE_LABEL+3),read(BLUE_LABEL+1),read(BLUE_LABEL+2),read(STAGE_LABEL)*8+(read(SCROLL_LABEL)%8),read(BOSS_LABEL)~=0 and read(POSE_LABEL) or -1))
   for a,v in pairs(cells) do if v~=0 then trace:write(string.format(' %04x:%02x',a,v)) end end
@@ -86,7 +91,7 @@ end,emu.callbackType.write,0x4014)
 emu.addEventCallback(function()
  emu.setInput({a=(frame>=405 and frame<645) or frame==1040,
  b=(frame>=750 and frame<990) or (frame>=2200 and frame<2460) or (frame>=4100 and frame<4400),
- up=false, right=false},0)
+ select=frame==34, left=frame>=38 and frame<66, up=frame>=38 and frame<63, right=false},0)
 end,emu.eventType.inputPolled)
 local function shot(name)
  local f=assert(io.open(DIR..'/'..name..'.png','wb'));f:write(emu.takeScreenshot());f:close()
@@ -105,7 +110,7 @@ emu.addEventCallback(function()
   shot('stage'..(frame-50))
  end
  for i,v in ipairs(spans) do if frame>=v[1] and frame<v[2] and transfers==last then missed[i]=missed[i]+1 end end
- if frame>=60 and transfers==last then allMissed=allMissed+1 end
+ if frame>=60 and transfers==last then allMissed=allMissed+1;dropped[#dropped+1]=frame end
  last=transfers
  local count=0
  for _,v in pairs(cells) do if v~=0 then count=count+1 end end
@@ -113,6 +118,7 @@ emu.addEventCallback(function()
  if frame>=405 and frame<=483 and frame%3==0 then shot('anim'..(frame-369)) end
  if frame>=750 and frame<=831 and frame%3==0 then shot('anim'..(frame-633)) end
  if frame>=405 and frame<=463 then shot('opening'..(frame-367)) end
+ if frame>=230 and frame<336 and frame%2==0 then shot('equipment'..frame) end
  if frame==32 then shot('idle') end
  if frame==434 or frame==780 then
   if count==0 then fail('laser missing at '..frame);return end
@@ -121,7 +127,7 @@ emu.addEventCallback(function()
  if frame==4490 then
   trace:close()
   positions:close()
-  if missed[1]+missed[2]+missed[3]~=0 or count~=0 or ntWrites~=0 or paletteWrites~=2 or patchWrites<1000 or activeWrites~=0 or streamBytes~=cols*30 or bright~=21 or settled<40 or allMissed~=0 then fail('DMA / clear / PPUDATA '..transfers..' '..count..' '..ntWrites..' light='..bright..' colours='..paletteWrites..' visible writes='..activeWrites..' stop='..settled..' missed='..table.concat(missed,','));return end
+  if missed[1]+missed[2]+missed[3]~=0 or count~=0 or ntWrites~=0 or paletteWrites~=2 or patchWrites<1000 or activeWrites~=0 or streamBytes~=cols*30 or bright~=21 or settled<40 or allMissed~=0 then fail('DMA / clear / PPUDATA '..transfers..' '..count..' '..ntWrites..' light='..bright..' colours='..paletteWrites..' visible writes='..activeWrites..' stop='..settled..' missed='..table.concat(missed,',')..' at '..table.concat(dropped,','));return end
   local f=assert(io.open(DIR..'/result.txt','w'))
   f:write('frames='..frame..' DMA='..transfers..' peak_lit='..maxLit..' final_lit='..count..' columns='..cols..' camera='..lastCamera..' boss_tile_writes='..patchWrites..' visible_writes='..activeWrites..' other_PPUDATA_writes='..ntWrites..' missed idle/A/B='..table.concat(missed,','));f:close()
   emu.stop(0)
@@ -130,7 +136,7 @@ end,emu.eventType.endFrame)
 '''.replace('DIR',json.dumps(out.as_posix())).replace('RECORD','true' if os.environ.get('RECORD_STAGE') else 'false')
 labels={name:int(address,16) for address,name in re.findall(r'al ([0-9A-Fa-f]+) \.(_\w+)',(root/'build/cart.lbl').read_text())}
 lua=lua.replace('BLUE_LABEL',str(labels['_blue'])).replace('SCROLL_LABEL',str(labels['_scroll_x'])).replace('STAGE_LABEL',str(labels['_stage_tile'])).replace('BACKDROP_LABEL',str(labels['_backdrop']))
-for key,label in [('COLUMN_LABEL','_stage_col'),('BOSS_LABEL','_boss_active'),('POSE_LABEL','_boss_pose'),('DARK_LABEL','_dark_room')]:
+for key,label in [('TICK_LABEL','_tick'),('COLUMN_LABEL','_stage_col'),('BOSS_LABEL','_boss_active'),('POSE_LABEL','_boss_pose'),('DARK_LABEL','_dark_room')]:
     lua=lua.replace(key,str(labels[label]))
 (out/'check.lua').write_text(lua)
 for name in ['result.txt','error.txt']:
@@ -158,3 +164,9 @@ timeline[0].save(root/'preview.gif',save_all=True,append_images=timeline[1:],dur
 
 reflection=Image.open(out/'anim132.png').convert('RGB').crop((0,42,126,208))
 reflection.resize((504,664),Image.Resampling.NEAREST).save(root/'reflection-detail.png')
+
+# Two NES frames per GIF frame; use centisecond timing without speeding up the cycle.
+equipment=[Image.open(out/f'equipment{n}.png').convert('RGB').crop((0,80,56,140))
+           .resize((280,300),Image.Resampling.NEAREST) for n in range(230,336,2)]
+equipment[0].save(root/'r9-force-bit.gif',save_all=True,append_images=equipment[1:],
+                  duration=[30,30,40]*17+[30,30],loop=0)
