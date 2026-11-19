@@ -1,0 +1,101 @@
+"""Mesen 2でパッド入力、ExRAM転送、通路の復元を実ROMで検査する。"""
+import json
+import os
+import re
+import shutil
+import subprocess
+from pathlib import Path
+root=Path(__file__).resolve().parent
+out=root/'build'/'check'
+out.mkdir(parents=True,exist_ok=True)
+rom=Path(os.environ.get('CHECK_ROM',root/'rtype-mmc5-v004.nes')).resolve()
+src=Path(os.environ.get('MESEN_EXE') or shutil.which('Mesen') or 'Mesen.exe').resolve()
+for path in [src,*src.parent.glob('*.dll')]:
+    shutil.copy2(path,out/path.name)
+config={'Debug':{'ScriptWindow':{'AllowIoOsAccess':True}},'Nes':{'Port1':{'Type':'NesController'}}}
+(out/'settings.json').write_text(json.dumps(config))
+lua=r'''
+local frame=0
+local cells={}
+local walls=assert(io.open(DIR..'/../attrs.bin','rb')):read('*a')
+local ntWrites=0
+local maxLit=0
+local transfers=0
+local trace=assert(io.open(DIR..'/rays.txt','w'))
+local function read(addr) return emu.read(addr,emu.memType.nesMemory) end
+local last=0
+local missed={0,0,0}
+local spans={{60,300},{405,645},{750,990}}
+local function fail(s)
+ local f=assert(io.open(DIR..'/error.txt','w'));f:write(s);f:close();emu.stop(1)
+end
+emu.addMemoryCallback(function(a,v)
+ if frame>45 then
+  if a<0x5c00 or a>=0x5fc0 or walls:byte(a-0x5c00+1)>=192 then fail('wall write') end
+  cells[a]=(v==walls:byte(a-0x5c00+1)) and 0 or v
+ end
+end,emu.callbackType.write,0x5c00,0x5fff)
+emu.addMemoryCallback(function() if frame>45 then ntWrites=ntWrites+1 end end,emu.callbackType.write,0x2007)
+emu.addMemoryCallback(function()
+ transfers=transfers+1
+ if frame>=750 and frame<990 and read(BLUE_LABEL)~=0 then
+  trace:write(string.format('%d %d %d %d',read(BLUE_LABEL+3),read(BLUE_LABEL+1),read(BLUE_LABEL+2),read(SCROLL_LABEL)))
+  for a,v in pairs(cells) do if v~=0 then trace:write(string.format(' %04x:%02x',a,v)) end end
+  trace:write('\n')
+ end
+end,emu.callbackType.write,0x4014)
+emu.addEventCallback(function()
+ emu.setInput({a=(frame>=405 and frame<645),
+ b=(frame>=750 and frame<990),
+ up=false, right=false},0)
+end,emu.eventType.inputPolled)
+local function shot(name)
+ local f=assert(io.open(DIR..'/'..name..'.png','wb'));f:write(emu.takeScreenshot());f:close()
+end
+emu.addEventCallback(function()
+ frame=frame+1
+ for i,v in ipairs(spans) do if frame>=v[1] and frame<v[2] and transfers==last then missed[i]=missed[i]+1 end end
+ last=transfers
+ local count=0
+ for _,v in pairs(cells) do if v~=0 then count=count+1 end end
+ maxLit=math.max(maxLit,count)
+ if frame>=405 and frame<=483 and frame%3==0 then shot('anim'..(frame-369)) end
+ if frame>=750 and frame<=831 and frame%3==0 then shot('anim'..(frame-633)) end
+ if frame>=405 and frame<=463 then shot('opening'..(frame-367)) end
+ if frame==32 then shot('idle') end
+ if frame==434 or frame==780 then
+  if count==0 then fail('laser missing at '..frame);return end
+  shot(frame==434 and 'wave' or 'reflection')
+ end
+ if frame==1100 then
+  trace:close()
+  if missed[1]+missed[2]+missed[3]~=0 or count~=0 or ntWrites~=0 then fail('DMA / clear / PPUDATA '..transfers..' '..count..' '..ntWrites);return end
+  local f=assert(io.open(DIR..'/result.txt','w'))
+  f:write('frames='..frame..' DMA='..transfers..' peak_lit='..maxLit..' final_lit='..count..' PPUDATA_writes='..ntWrites..' missed idle/A/B='..table.concat(missed,','));f:close()
+  emu.stop(0)
+ end
+end,emu.eventType.endFrame)
+'''.replace('DIR',json.dumps(out.as_posix()))
+labels={name:int(address,16) for address,name in re.findall(r'al ([0-9A-Fa-f]+) \.(_\w+)',(root/'build/cart.lbl').read_text())}
+lua=lua.replace('BLUE_LABEL',str(labels['_blue'])).replace('SCROLL_LABEL',str(labels['_scroll_x']))
+(out/'check.lua').write_text(lua)
+for name in ['result.txt','error.txt']:
+    (out/name).unlink(missing_ok=True)
+p=subprocess.run([str(out/src.name),'--testrunner','--timeout=25','--donotsavesettings','--enableStdout',str(rom),str(out/'check.lua')],cwd=out,timeout=40,capture_output=True,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+if p.returncode or not (out/'result.txt').exists():
+    raise RuntimeError((out/'error.txt').read_text() if (out/'error.txt').exists() else (p.stdout+p.stderr).decode(errors='replace'))
+print((out/'result.txt').read_text())
+from check_render import check_background,check_rays
+checked,digest=check_background()
+# Decoded nametable and static colors from the last v003 cartridge.
+assert digest=='07b1fb10bc76b799b69c9c24e40fb9c547a78a7036d0eb734fff457c8660a90e'
+frames_checked,wrapped=check_rays()
+print(f'Background composites: {checked}; ray frames: {frames_checked} ({wrapped} after scroll wrap)')
+
+
+# Show the first shot at 6x slow motion and the whole test at normal speed.
+from PIL import Image
+frames=[Image.open(out/f'opening{i}.png').convert('RGB').crop((0,83,164,158)).resize((656,300),Image.Resampling.NEAREST) for i in range(39,84)]
+frames[0].save(root/'launch-slow.gif',save_all=True,append_images=frames[1:],duration=100,loop=0)
+timeline=[Image.open(out/f'anim{i}.png').convert('RGB').resize((512,480),Image.Resampling.NEAREST) for i in range(36,201,3)]
+timeline[0].save(root/'preview.gif',save_all=True,append_images=timeline[1:],duration=50,loop=0)
