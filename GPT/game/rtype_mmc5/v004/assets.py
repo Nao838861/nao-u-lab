@@ -81,54 +81,20 @@ def indicator_dots(rgb):
     return dots
 
 def build_art():
-    rgb=np.array(Image.open(ART/'corridor.png').convert('RGB'))
-    # Remove a wall-mounted enemy from the backdrop; place moving enemies in OAM.
-    rgb[83:104,136:157]=rgb[83:104,93:114].copy()
-    rgb[178:193,209:229]=rgb[178:193,167:187].copy()
-    screen=np.zeros((240,256,3),'uint8');screen[16:224]=rgb
-    dots=indicator_dots(screen)
-    pats=[[],[]]; slots=[]; attrs=[]; tops=[]; floors=[]
-    for ty in range(30):
-        for tx in range(32):
-            t=screen[ty*8:ty*8+8,tx*8:tx*8+8].astype(float)
-            r,g,b=t.transpose(2,0,1)
-            wall=((ty<7 or ty>22 or tx<2) and ((r>92)&(r>b*.98)).sum()>=2)
-            if wall:
-                lum=.40*r+.45*g+.15*b
-                ids=np.select([lum>197,lum>116,lum<64],[3,2,1],default=0)
-            else:
-                lum=t.mean(2)
-                lamps=dots[ty*8:ty*8+8,tx*8:tx*8+8]
-                ids=np.where(lamps,lamps,np.where(lum<49,1,0))
-            p=ids.astype('u1').tobytes(); bucket=pats[int(wall)]
-            if p not in bucket: bucket.append(p)
-            slots.append(bucket.index(p));attrs.append(0xc1 if wall else 0)
-    for x in range(32):
-        top=2
-        while top<8 and attrs[top*32+x]: top+=1
-        bottom=27
-        while bottom>22 and attrs[bottom*32+x]: bottom-=1
-        tops.append(max(3,top));floors.append(min(26,bottom))
-    # Each 64-scanline region sees its own 256 KiB CHR window. Reserve both
-    # boundary rows in it so the PPU's prefetched tiles match across the IRQ.
-    fields=[]; walls=[]
-    source=[pats[int(bool(a))][i] for a,i in zip(attrs,slots)]
-    kinds=[128 if a else int(max(t)>1) for a,t in zip(attrs,source)]
-    for band in range(4):
-        sets=[[bytes(64)]*256 for _ in range(2)]
-        assigned=[{},{}]
-        for y in range(band*8,min(30,band*8+9)):
-            for x in range(32):
-                cell=y*32+x; wall=int(bool(attrs[cell])); tile=source[cell]
-                if y%8==0:
-                    idx=(y//8%2)*32+x
-                else:
-                    lookup=assigned[wall]
-                    idx=lookup.setdefault(tile,64+len(lookup))
-                assert idx<256
-                sets[wall][idx]=tile
-                if y//8==band: slots[cell]=idx
-        fields.append(sets[0]);walls.append(sets[1])
+    track=np.fromfile(ART/'camera.bin',dtype='<u2')/16
+    ticks=np.arange(int(np.ceil(len(track)*60.0988/30))+1)
+    positions=np.rint(np.interp(ticks*30/60.0988,np.arange(len(track)),track)).astype(int)
+    steps=np.diff(positions)
+    assert min(steps)==0 and max(steps)==1 and positions[-1]==Image.open(ART/'stage.png').width-256
+    motion=np.packbits(steps,bitorder='little')
+    from stage_tiles import make_map
+    width,fields,walls,source,slots,attrs=make_map(ART/'stage.png',indicator_dots)
+    tops=[];floors=[]
+    for x in range(width):
+        top,bottom=2,27
+        while top<14 and attrs[top*width+x]: top+=1
+        while bottom>15 and attrs[bottom*width+x]: bottom-=1
+        tops.append(max(3,top)); floors.append(min(26,bottom))
     spr,meta=sprite_data()
     phases,offsets=make_phases()
     blank=bytes(64)
@@ -171,8 +137,14 @@ def build_art():
         outside={p for p,v in zip(tile,mask) if not v}
         if outside & {2,3}: return 0
         return 2 if 1 in outside else 1
-    for k in range(3):
-        (OUT/f'raypal{k}.bin').write_bytes(bytes(ray_style(t,k)<<6 for t in source))
+    descriptor=[(128 if a==0xc1 else 192) if a else
+                (64 if max(t)>1 else 0) | sum(ray_style(t,k)<<(2*k) for k in range(3))
+                for t,a in zip(source,attrs)]
+    def columns(name,data):
+        a=np.array(data,'u1').reshape(30,width).T
+        (OUT/name).write_bytes(np.pad(a,((0,0),(0,2))).tobytes())
+    columns('stage_tiles.bin',slots)
+    columns('stage_meta.bin',descriptor)
     # Four bytes per lit cell. Empty cells cost no runtime loop iterations.
     commands=bytearray();starts=[]
     for phase in range(32):
@@ -190,7 +162,7 @@ def build_art():
         return planar(pixels)
     windows=[]
     for field,wall in zip(fields,walls):
-        banks=[page(field),page(wall)]
+        banks=[page(field),page(wall[:256])]
         for i,(mask,cmask) in enumerate(zip(masks,color_masks)):
             if i<first-2:
                 banks.append(b''.join(composite(t,cmask if max(t)>1 else mask) for t in field))
@@ -209,7 +181,7 @@ def build_art():
                     else: pixels[n]=2
                 return planar(bytes(pixels))
             banks.append(b''.join(ray_tile(t) for t in field))
-        windows.append(b''.join(banks).ljust(63*4096,b'\0')+spr)
+        windows.append(b''.join(banks)+page(wall[256:])+spr)
     def coverage(ms):
         return bytes(sum(1<<x for x in range(8) if m[y*8+x]) for m in [blank,blank]+ms for y in range(8))
     # The glow is visual; collision uses the original one-pixel centerline.
@@ -218,8 +190,8 @@ def build_art():
                                               for group in (masks,color_masks)))
     (OUT/'waves.bin').write_bytes(commands)
     (OUT/'waveptr.inc').write_text('wlo: .byte '+','.join(f'<(wave_data+{n})' for n in starts)+'\nwhi: .byte '+','.join(f'>(wave_data+{n})' for n in starts))
-    (OUT/'attrs.bin').write_bytes(bytes(attrs))
-    (OUT/'kinds.bin').write_bytes(bytes(kinds))
-    (OUT/'sprite.inc').write_text(f'SPR_BANK = 63\nRAY_FIRST = {first}\n'+'\n'.join(line.replace('#define ','').replace(' ',' = ',1) for line in meta.splitlines() if line.startswith('#define ')))
-    (OUT/'art.h').write_text(meta+array('phase_for_age',[t if t<32 else 20+(t-32)%12 for t in range(128)])+array('advance_for_age',[0 if t<32 else 6*(1+(t-32)//12) for t in range(128)])+array('wave_offsets',offsets)+array('nametable',slots)+array('attributes',attrs)+array('ceilrow',tops)+array('floorrow',floors)+array('diagonal',range(first,first+3)))
+    (OUT/'attrs.bin').write_bytes(attrs.astype('u1').tobytes())
+    (OUT/'kinds.bin').write_bytes(bytes(128 if a else int(max(t)>1) for t,a in zip(source,attrs)))
+    (OUT/'sprite.inc').write_text(f'STAGE_COLS = {width}\nSPR_BANK = 63\nRAY_FIRST = {first}\n'+'\n'.join(line.replace('#define ','').replace(' ',' = ',1) for line in meta.splitlines() if line.startswith('#define ')))
+    (OUT/'art.h').write_text(f'#define STAGE_END {Image.open(ART/"stage.png").width-256}\n'+meta+array('camera_steps',motion)+array('phase_for_age',[t if t<32 else 20+(t-32)%12 for t in range(128)])+array('advance_for_age',[0 if t<32 else 6*(1+(t-32)//12) for t in range(128)])+array('wave_offsets',offsets)+array('nametable',list(slots.reshape(30,width)[:,:32].flat))+array('attributes',list(attrs.reshape(30,width)[:,:32].flat))+array('ceilrow',tops)+array('floorrow',floors)+array('diagonal',range(first,first+3)))
     return b''.join(windows)

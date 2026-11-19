@@ -1,6 +1,6 @@
 ; Sparse ink writes and collision against the central 8x8 of each enemy.
 ; ZP arguments avoid cc65 argument-stack access for each individual cell.
-.import _x_bias,_scroll_x
+.import _x_bias,_scroll_x,_scroll_tile
 .import _enemy_x,_enemy_y,_explosion,_hit_count
 .exportzp _column,_row,_bank
 .export _light,_erase_lights
@@ -152,6 +152,13 @@ _light:
  adc _x_bias
  and #31
  sta worldcol
+ cmp _scroll_tile
+ bne @row
+ lda _scroll_x
+ and #7
+ bne @out
+ lda worldcol
+@row:
  ora rowlo,y
  sta cell_lo
  lda attrlo,y
@@ -166,18 +173,16 @@ _light:
  bcc @wave
  ; The cell's base palette and ray style are baked from its uncovered pixels.
  stx hit_bank
- ldx _row
- lda ray_palette_lo,x
- sta addr
- lda ray_palette_hi,x
- clc
- adc ray_offset
+ tay
+ lda ray_offset
  sta addr+1
+ lda #0
+ sta addr
  lda (addr),y
  ora lamp_ink
  jmp @emit
 @wave:
- cmp #0
+ and #64
  beq @neutral
  lda lamp_ink
  tax
@@ -299,7 +304,7 @@ exact_hit:
 coverage: .incbin "build/coverage.bin"
 
 
-attrs: .incbin "build/kinds.bin"
+attrs = $6400
 attrlo: .repeat 30,I
  .byte <(attrs+32*I)
 .endrepeat
@@ -444,8 +449,8 @@ _draw_ray:
  sta lamp_ink
  sec
  sbc #RAY_FIRST
- asl
- asl
+ clc
+ adc #>ray_palette
  sta ray_offset
  jsr _light
 @skip: ldy ray_i
@@ -553,15 +558,10 @@ effects_one:
 @done: rts
 
 .segment "RODATA"
+ .align 256
 ray_palette:
- .incbin "build/raypal0.bin"
- .res 64
- .incbin "build/raypal1.bin"
- .res 64
- .incbin "build/raypal2.bin"
-ray_palette_lo: .repeat 30,I
- .byte <(ray_palette+I*32)
-.endrepeat
-ray_palette_hi: .repeat 30,I
- .byte >(ray_palette+I*32)
-.endrepeat
+ .repeat 3,K
+  .repeat 256,I
+   .byte ((I >> (2*K)) & 3) << 6
+  .endrepeat
+ .endrepeat

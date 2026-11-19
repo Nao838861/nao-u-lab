@@ -13,11 +13,29 @@ void start_irq(void);
 u8 readpad(void);
 
 static const u8 palette[]={
-  0x2d,0x0f,0x16,0x2c, 0x2d,0x0f,0x16,0x30, 0x2d,0x0f,0x2c,0x30, 0x2d,0x0f,0x10,0x37,
-  0x2d,0x00,0x2c,0x30, 0x2d,0x07,0x16,0x38, 0x2d,0x00,0x10,0x30, 0x2d,0x01,0x11,0x2c
+  0x0f,0x0f,0x0f,0x0f, 0x2d,0x0f,0x16,0x30, 0x2d,0x0f,0x2c,0x30, 0x2d,0x0f,0x10,0x37,
+  0x0f,0x00,0x2c,0x30, 0x2d,0x07,0x16,0x38, 0x2d,0x00,0x10,0x30, 0x2d,0x01,0x11,0x2c
 };
-static u8 px,py,tick,scroll_delay;
-u8 scroll_x,scroll_tile;
+static u8 px,py,tick,step_mask,step_byte;
+u8 scroll_x,scroll_tile,stage_tile;
+static u16 camera,step_index;
+extern u8 stage_col,backdrop;
+#pragma zpsym ("stage_col")
+#pragma zpsym ("backdrop")
+void prepare_column(void);
+static void advance_camera(void){
+    if(camera==STAGE_END) return;
+    if(!step_mask){step_byte=camera_steps[step_index++];step_mask=1;}
+    if(!(step_byte&step_mask)){step_mask<<=1;return;}
+    step_mask<<=1;
+    ++camera; ++scroll_x;
+    if(!(scroll_x&7)){++stage_tile;scroll_tile=stage_tile&31;}
+    if((scroll_x&7)==1){stage_col=stage_tile+32;prepare_column();}
+    if(camera==44 || camera==1059) backdrop=1;
+    if(camera==55 || camera==1043) backdrop=2;
+    if(camera==75) backdrop=3;
+    if(camera==1066) backdrop=0;
+}
 u8 oam_index;
 u8 hit_count, ray_colors;
 u8 enemy_x[3],enemy_y[3],explosion[3];
@@ -43,7 +61,8 @@ static void setup(void){
     REG(0x2003)=0;REG(0x4014)=2;
     REG(0x2005)=0;REG(0x2005)=0;
     REG(0x4015)=9;REG(0x4001)=0;REG(0x4000)=0x30;REG(0x400c)=0x30;
-    start_irq();REG(0x2000)=0x80;REG(0x2001)=0x1e;
+    for(stage_col=0;stage_col<32;++stage_col) prepare_column();
+    start_irq();REG(0x2000)=0x80;REG(0x2001)=0x1c;
 }
 static void obj(u8 x,u8 y,u8 id,u8 pal){
     OAM[oam_index++]=y-1;OAM[oam_index++]=id;
@@ -126,7 +145,7 @@ static u8 head_index,launch_tile;
 u8 x_bias,ray_min_col;
 static void launch_blue(void){
     u8 i;
-    spawn(&blue);head_index=0;launch_tile=scroll_tile;
+    spawn(&blue);head_index=0;launch_tile=stage_tile;
     for(i=0;i<3;++i){
         struct Ray* r=&rays[i];
         r->x=blue.origin+1;r->y=blue.row;r->dx=1;r->dy=(signed char)i-1;r->used=0;
@@ -147,9 +166,9 @@ static void reflect_shot(void){
             if(r->used<12) ++r->used;
             if(r->x>=0 && r->x<32){
                 signed char nx=r->x+r->dx,ny=r->y+r->dy;
-                if(ny<ceilrow[((u8)r->x+launch_tile)&31] || ny>floorrow[((u8)r->x+launch_tile)&31]){
+                if(ny<ceilrow[(u8)(r->x+launch_tile)] || ny>floorrow[(u8)(r->x+launch_tile)]){
                     r->dy=-r->dy;ny=r->y;
-                }else if(nx>=0 && nx<32 && (ny<ceilrow[((u8)nx+launch_tile)&31] || ny>floorrow[((u8)nx+launch_tile)&31])){
+                }else if(nx>=0 && nx<32 && (ny<ceilrow[(u8)(nx+launch_tile)] || ny>floorrow[(u8)(nx+launch_tile)])){
                     r->dx=-r->dx;nx=r->x;
                 }
                 r->x=nx;r->y=ny;
@@ -169,7 +188,7 @@ void main(void){
     setup();
     for(;;){
         while(ready){}
-        if(++scroll_delay==3) {scroll_delay=0;++scroll_x;scroll_tile=scroll_x>>3;}
+        advance_camera();
         ++tick;pad=readpad();
         if((pad&1)&&px<200) px+=2;
         if((pad&2)&&px>2) px-=2;

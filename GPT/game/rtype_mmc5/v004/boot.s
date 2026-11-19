@@ -151,10 +151,12 @@ nmi:
  cmp #$60
  beq @draw_a
  jsr $6000
+ jsr stream_column
  jsr $6200
  jmp @done
 @draw_a:
  jsr $6200
+ jsr stream_column
  jsr $6000
 @done:
  lda #1
@@ -188,6 +190,7 @@ nmi:
  sta $2006
  sta $2006
 @scroll:
+ jsr update_backdrop
  lda _scroll_x
  sta $2005
  lda #0
@@ -225,4 +228,5 @@ panel_rim: .byte $2c,$12
 .word nmi, reset, irq
 
 
+.include "stage.inc"
 .include "laser.inc"
