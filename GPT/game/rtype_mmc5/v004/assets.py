@@ -163,4 +163,15 @@ def build_art():
     mounts=turret_page(planar)
     start=126*4096+240*16
     image[start:start+len(mounts)]=mounts
+    from actor_art import scout_page
+    extra=scout_page(planar)
+    assert len(mounts)+len(extra)<=16*16
+    image[start+len(mounts):start+len(mounts)+len(extra)]=extra
+    # Window 2 has no high overflow-wall slots. Neither the tail nor
+    # bubbles allocate CHR in this window. Sprite page 381 occupies its
+    # unused 2 KiB and is selected only in the early/middle corridor.
+    occupied=(attrs.reshape(30,width)[16:25]&63)==62
+    assert not (slots.reshape(30,width)[16:25][occupied]>=128).any()
+    from actor_art import flight_page
+    image[381*2048:382*2048]=flight_page(image[253*2048:254*2048],planar)
     return bytes(image)

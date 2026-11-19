@@ -23,19 +23,24 @@ cell_lo: .res 1
 column_hits: .res 32
 row_hits: .res 32
 hits: .res 1
+.exportzp _beam_pending
+_beam_pending: .res 1
 .segment "RODATA"
-enemy_bit: .byte 1,2,4,8,16,32,64
+enemy_bit: .byte 1,2,4,8,16,32,64,128,128,128
 enemy_for_bits: .byte 0,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,6,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0
 .segment "CODE"
 .export _prepare_hits
 _prepare_hits:
  lda #0
- ldx #31
-: sta column_hits,x
- sta row_hits,x
- dex
- bpl :-
+ ; Leave time for the full formation and a laser on the same update.
+ .repeat 32,I
+  sta column_hits+I
+  sta row_hits+I
+ .endrepeat
  ldx #6
+ lda _boss_active
+ bne @mark
+ ldx #9
 @mark:
  lda _enemy_live,x
  beq @next
@@ -216,19 +221,44 @@ light_collide: ldy worldcol
  asl
  asl
  sta py0
+ lda hits
+ bpl @enemy
+ ; The high bit is a broad-phase group for the last three flyers.
+ ; Test each live member against the actual lit pixels before applying damage.
+ ldx #7
+@extra:
+ lda _enemy_live,x
+ beq :+
+ jsr try_hit
+: inx
+ cpx #10
+ bne @extra
+ lda hits
+ and #127
+ sta hits
+ bne @enemy
+ rts
 @enemy:
  ldy hits
  ldx enemy_for_bits,y
+ jsr try_hit
+ lda hits
+ eor enemy_bit,x
+ sta hits
+ bne @enemy
+ rts
+try_hit:
  lda _beam_hit,x
- bne @next
+ bne @done
  lda _enemy_x,x
  sta target_x
  lda _enemy_y,x
  sta target_y
  jsr exact_hit
- bcc @next
+ bcc @done
  lda #1
  sta _beam_hit,x
+ sta _beam_pending
  inc _hit_count
  lda #12
  sta $400c
@@ -236,11 +266,7 @@ light_collide: ldy worldcol
  sta $400e
  lda #8
  sta $400f
-@next: lda hits
- eor enemy_bit,x
- sta hits
- bne @enemy
- rts
+@done: rts
 
 exact_hit:
  ldy hit_bank

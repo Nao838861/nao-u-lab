@@ -3,7 +3,7 @@
 .import _bit_x,_bit_y,_shield_w,_shield_h,_orb_phase
 .import _px,_py,_fx,_fy,_bit_owned,_deflected,_die,_tick,_camera
 .import _bullets,_bullet_x,_bullet_y,_enemy_live,_explosion
-.import _enemy_x,_enemy_y,_origin_y,_posx,_posy,_age,_bob,_pod_path,_floor_px
+.import _enemy_x,_enemy_y,_origin_y,_posx,_posy,_age,_route,_floor_px
 .import _mob_fire,_force_impact,_scroll_delta,_drop
 .export _move_mobs,_move_bullets
 .segment "ZEROPAGE"
@@ -185,23 +185,15 @@ _move_mobs:
 : lda _enemy_live,y
  cmp #5
  jeq @walker
+ cmp #8
+ jeq @scout
  cmp #3
- beq @fly
+ jeq @fly
  cmp #2
  jeq @pod
  cmp #4
  jeq @dart
- cmp #6
- bne @anchored
- lda _age+1,x
- bne @anchored
- lda age_lo
- cmp #70
- beq :+
- cmp #178
- bne @anchored
-: jsr @fire
-@anchored:
+ ; Floor carriers follow the passing terrain. Static guns have their own slots.
  lda _scroll_delta
  asl
  asl
@@ -236,70 +228,100 @@ _move_mobs:
  subtract_step _posx
  jmp @coords
 @fly:
- lda _age+1,x
- bne @fly_level
  lda age_lo
  cmp #62
  bne :+
  jsr @fire
-: lda age_lo
- cmp #60
- bcs @turn
- lda #5
- subtract_step _posx
- lda #19
- rise_step _posy
- jmp @coords
-@turn:
- cmp #90
- bcs @fly_level
- lda #15
- subtract_step _posx
- lda #9
- rise_step _posy
- jmp @coords
-@fly_level:
- lda #24
- subtract_step _posx
- lda #5
- subtract_step _posy
- jmp @coords
-@pod:
- lda #25
- subtract_step _posx
- lda age_lo
- lsr
- lsr
- and #31
- tay
- lda _pod_path,y
- jmp @relative_y
-@dart:
- lda _age+1,x
- bne :+
- lda age_lo
- cmp #33
- bne :+
- jsr @fire
-: lda #23
- subtract_step _posx
- lda age_lo
- lsr
-: cmp #20
+: ldy age_lo
+ cpy #77
  bcc :+
- sbc #20
- bcs :-
-: tay
- lda _bob,y
-@relative_y:
+ ldy #76
+: lda fly_dy,y
+ rise_step _posy
+ lda fly_dx,y
+ jmp @world_step
+@pod:
+ lda _route,y
+ cmp #10
+ beq @gate
+ lda age_lo
+ and #127
+ tay
+ lda pod_height,y
  ldy actor_i
  clc
  adc _origin_y,y
  set_fixed _posy
+ lda age_lo
+ cmp #2
+ jcc @coords
+ and #1
+ clc
+ adc #19
+ bne @world_step
+@gate:
+ ldy age_lo
+ lda _age+1,x
+ bne @released
+ cpy #48
+ bcs @released
+ lda gate_height,y
+ ldy actor_i
+ clc
+ adc _origin_y,y
+ set_fixed _posy
+ lda #0
+ beq @world_step
+@released:
+ lda #20
+ bne @world_step
+@dart:
+ lda age_lo
+ cmp #33
+ bne :+
+ jsr @fire
+: ldy age_lo
+@phase:
+ cpy #80
+ bcc :+
+ tya
+ sec
+ sbc #80
+ tay
+ bcs @phase
+: lda dart_height,y
+ ldy actor_i
+ clc
+ adc _origin_y,y
+ set_fixed _posy
+ lda age_lo
+ jeq @coords
+ lda #19
+ bne @world_step
+@scout:
+ lda #9
+@world_step:
+ sta temp
+ lda _scroll_delta
+ asl
+ asl
+ asl
+ asl
+ clc
+ adc temp
+ subtract_step _posx
  jmp @coords
 ; The shoulder track in art/actor-tracks.csv changes speed around source
 ; frames 1373 and 1417, then leaves the floor around frame 1461.
 @walker:
+ lda _route,y
+ cmp #9
+ bne @walk_ground
+ lda #12
+ rise_step _posy
+ lda #0
+ jmp @world_step
+@walk_ground:
  lda _age+1,x
  bne @lift
  lda age_lo
@@ -366,15 +388,17 @@ _move_mobs:
  lda _enemy_live,y
  cmp #1
  beq @floor
+ cmp #8
+ beq @floor
  cmp #5
- bne @locate
+ jne @locate
  lda _age+1,x
  beq @floor
  cmp #1
- bne @locate
+ jne @locate
  lda age_lo
  cmp #36
- bcs @locate
+ jcs @locate
 @floor:
  lda cx
  clc
@@ -397,13 +421,41 @@ _move_mobs:
  sbc #8
  sta cy
  lda _enemy_live,y
+ cmp #8
+ bne @large_floor
+ lda cy
+ sec
+ sbc #7
+ sta cy
+ ; Walk off a ledge at a finite downward speed before settling on the next floor.
+ to_pixel _posy,x
+ clc
+ adc #2
+ cmp cy
+ bcs @snap
+ sta cy
+ jmp @snap
+@large_floor:
  cmp #5
- bne :+
+ bne @snap
  lda cy
  sec
  sbc #14
  sta cy
-: lda cy
+ lda _route,y
+ cmp #9
+ bne @snap
+ to_pixel _posy,x
+ cmp cy
+ bcs @land
+ sta cy
+ jmp @locate
+@land:
+ lda #5
+ sta _route,y
+ lda #32
+ sta _age,x
+@snap: lda cy
  set_fixed _posy
 @locate:
  lda cx
@@ -434,7 +486,7 @@ _move_mobs:
 @next:
  ldy actor_i
  iny
- cpy #6
+ cpy #10
  jne @next_slot
  rts
 @fire:
@@ -581,7 +633,7 @@ _move_bolts:
  bne @radius
 @charged: lda #16
 @radius: sta radius
- ldy #6
+ ldy #9
 @enemy:
  lda _enemy_live,y
  beq @advance
@@ -731,6 +783,8 @@ _draw_player:
 emit_parts:
  ldy #0
 @tile:
+ cpx #248
+ bcs @end
  lda (parts_ptr),y
  bmi @end
  clc
@@ -915,14 +969,32 @@ bolt_gun:
  rts
 
 .export _draw_mobs
+.segment "ZEROPAGE"
+mob_start: .res 1
+mob_remaining: .res 1
+mob_limit: .res 1
 .segment "ACTORS"
 _draw_mobs:
  ldx _oam_index
  cpx #248
  jcs @done
+ lda _tick
+ and #1
+ beq :+
+ lda #152                    ; leave 24 OAM slots for the R-9 and its equipment
+ bne :++
+: lda #248
+: sta mob_limit
+ ldy mob_start
+ iny
+ cpy #10
+ bcc :+
  ldy #0
+: sty mob_start
+ lda #10
+ sta mob_remaining
 @mob:
- cpx #248
+ cpx mob_limit
  jcs @done
  sty actor_i
  lda _explosion,y
@@ -961,22 +1033,40 @@ _draw_mobs:
  sbc #1
  sta base_y
  lda _enemy_live,y
+ cmp #8
+ beq @scout_pic
  cmp #5
  beq @walker
  cmp #1
  beq @carrier
  cmp #2
  beq @pod
- cmp #3
- beq @green
- lda #<pose_red_0
- ldy #>pose_red_0
+ jsr flight_pose
+ sta parts_ptr
+ sty parts_ptr+1
+ jsr emit_flight
+ jcs @next
+ ldy #0
+ jmp @part
+@scout_pic:
+ lda base_y
+ sec
+ sbc #4
+ sta base_y
+ tya
+ asl
+ tay
+ lda _age,y
+ and #8
+ beq :+
+ lda #<scout_b
+ ldy #>scout_b
+ jmp @parts
+: lda #<scout_a
+ ldy #>scout_a
  jmp @parts
 @pod: lda #<pose_pod_0
  ldy #>pose_pod_0
- jmp @parts
-@green: lda #<pose_green_0
- ldy #>pose_green_0
  jmp @parts
 @carrier:
  lda base_x
@@ -1008,6 +1098,9 @@ _draw_mobs:
  sec
  sbc #14
  sta base_y
+ lda _route,y
+ cmp #9
+ beq @air
  tya
  asl
  tay
@@ -1065,7 +1158,7 @@ _draw_mobs:
  inx
  inx
  inx
- cpx #248
+ cpx mob_limit
  bcs @done
  jmp @more
 @hide: lda #255
@@ -1075,7 +1168,10 @@ _draw_mobs:
 @next:
  ldy actor_i
  iny
- cpy #6
+ cpy #10
+ bcc :+
+ ldy #0
+: dec mob_remaining
  jne @mob
 @done: stx _oam_index
  rts
@@ -1357,3 +1453,118 @@ _collide_bubbles:
  rts
 
 .include "cannon.inc"
+
+.segment "STARTUP"
+.include "build/flight.inc"
+.segment "CODE"
+.include "build/scout.inc"
+
+.include "build/flight-poses.inc"
+; The red silhouette repeats in about nine capture frames. Index by
+; individual age so each entrant starts on its own wing beat.
+wing_cycle: .repeat 15
+ .byte 3,4,4,1,1,0,2,2,3
+.endrepeat
+flight_pose:
+ cmp #3
+ beq @turn
+ tya
+ asl
+ tay
+ lda _age,y
+ lsr
+ tay
+ lda wing_cycle,y
+ tay
+ lda wing_lo,y
+ pha
+ lda wing_hi,y
+ tay
+ pla
+ rts
+@turn:
+ tya
+ asl
+ tay
+ lda _age,y
+ ldy #0
+ cmp #35
+ bcc @pose
+ iny
+ cmp #46
+ bcc @pose
+ iny
+ cmp #54
+ bcc @pose
+ iny
+ cmp #65
+ bcc @pose
+ iny
+@pose:
+ lda turn_lo,y
+ pha
+ lda turn_hi,y
+ tay
+ pla
+ rts
+ ; Each flight pose has a cool highlight followed by a 2x2 warm body.
+ ; Emit repeated coordinates once while the entire pose fits. The general
+ ; renderer handles right-edge clipping and the last few OAM slots.
+emit_flight:
+ txa
+ clc
+ adc #20
+ bcs @partial
+ cmp mob_limit
+ bcc @space
+ bne @partial
+@space:
+ lda base_x
+ cmp #248
+ bcs @partial
+ sta $207,x
+ sta $20f,x
+ adc #8
+ sta $20b,x
+ sta $213,x
+ lda base_y
+ sta $204,x
+ sta $208,x
+ clc
+ adc #8
+ sta $20c,x
+ sta $210,x
+ ldy #0
+ lda (parts_ptr),y
+ clc
+ adc base_y
+ sta $200,x
+ iny
+ lda (parts_ptr),y
+ sta $201,x
+ clc
+ .repeat 4,I
+  adc #1
+  sta $205+I*4,x
+ .endrepeat
+ ldy #3
+ lda (parts_ptr),y
+ clc
+ adc base_x
+ sta $203,x
+ lda #3
+ sta $202,x
+ lda #1
+ .repeat 4,I
+  sta $206+I*4,x
+ .endrepeat
+ txa
+ clc
+ adc #20
+ tax
+ sec
+ rts
+@partial:
+ clc
+ rts
+.assert * <= $a000, lderror, "Flight poses must remain in the resident bank"

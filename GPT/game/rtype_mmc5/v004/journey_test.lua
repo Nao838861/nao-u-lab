@@ -44,8 +44,10 @@ emu.addEventCallback(function()
  if frame-lastPickup<28 and lastPickup>0 then tx=x;ty=155 end
  if cam<12 then ty=174;fire=frame%5==0 end
  if cam<68 and rd('pickups')>=1 then tx=x;ty=140 end
+ -- Pass below the returning volley before climbing to the blue capsule.
+ if cam>=923 and cam<942 and rd('pickups')==3 then ty=134 end
  local pad=approach(x,y,tx,ty);pad.a=fire
- if cam>=515 and cam<932 then
+ if cam>=515 and (cam<932 or cam<985 and rd('pickups')<4) then
   -- Roll each of the nine pad directions forward a short distance. All
   -- movement, pickups and hits still go through the real controller port.
   local best=1e9;local bestX,bestY=0,0
@@ -64,6 +66,8 @@ emu.addEventCallback(function()
       local bx=rd('bullet_x',i)+vx*t/16;local by=rd('bullet_y',i)+vy*t/16
       if math.abs(bx-(nx+10))<8 and math.abs(by-ny)<6 then cost=cost+1000/(t+2) end
      end
+    end
+    for i=0,ENCOUNTER_SLOTS-1 do
      if rd('enemy_live',i)>0 and math.abs(rd('enemy_x',i)+8-nx-10)<13
         and math.abs(rd('enemy_y',i)+8-ny)<12 then cost=cost+20 end
     end

@@ -3,8 +3,10 @@ typedef unsigned short u16;
 typedef signed char s8;
 enum { EMPTY, POW, POD, FLY, DART, WALK, GUN, WEAK };
 enum { BASIC, RED, BLUE, BIT };
-#define SLOTS 7
-#define MOBS 6
+/* The moving enemies leave before the boss uses slot six for its core. */
+#define SLOTS 10
+#define CORE_SLOT 6
+enum { SCOUT=8, FALLING_WALK, GATE_POD };
 extern u8 px,py,pad,oldpad,tick,scroll_x,stage_tile,boss_active,boss_offset,boss_pose;
 extern u16 camera;
 extern u8 enemy_live[SLOTS],enemy_x[SLOTS],enemy_y[SLOTS],explosion[SLOTS],beam_hit[SLOTS];

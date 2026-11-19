@@ -5,23 +5,24 @@
 #include "build/actors.h"
 #include "build/terrain.h"
 #include "build/mount-count.h"
-struct Event {u16 camera; u8 kind,x,y,drop;};
+struct Event {u16 tick; u8 kind,x,y,drop;};
 #include "build/encounters.h"
 
 u8 enemy_live[SLOTS],enemy_x[SLOTS],enemy_y[SLOTS],explosion[SLOTS],beam_hit[SLOTS];
 u8 boss_cleared,invulnerable,dying,drill,weapon,bit_owned,request_wave,request_ray;
 u8 pickups,deaths,deflected,boss_hp,death_cause;
 static u8 event_index,initialized,force_state;
+static u16 encounter_tick;
 u8 charge;
 u8 banking,force_phase,bit_phase,bit_x,bit_y,force_level,sprite_page,shield_w,shield_h,orb_phase;
 static u8 bit_delay;
 u8 fx,fy,scroll_delta,previous_scroll,bullet_x[6],bullet_y[6],in_room;
-u8 origin_y[MOBS],drop[MOBS],hp[MOBS];
-int posx[MOBS],posy[MOBS];
-u16 age[MOBS];
+u8 origin_y[SLOTS],drop[SLOTS],hp[SLOTS],route[SLOTS];
+int posx[SLOTS],posy[SLOTS];
+u16 age[SLOTS];
+extern u8 beam_pending;
+#pragma zpsym ("beam_pending")
 static u8 cooled;
-const s8 bob[]={0,2,4,6,7,8,7,6,4,2,0,-2,-4,-6,-7,-8,-7,-6,-4,-2};
-const s8 pod_path[]={0,1,3,6,10,15,21,28,35,41,44,47,49,50,50,50,48,46,43,39,33,27,20,14,9,5,2,0,-1,-1,-1,0};
 const u8 force_frames[]={0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,5,5,6,6,6,6,7,7,7,7,7};
 const u8 bit_frames[]={0,0,0,0,0,0,1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,5,5,5,5,5,5,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7};
 struct Bullet {int x,y; s8 dx,dy;u8 life;};
@@ -46,7 +47,7 @@ static void drop_item(u8 i){
 }
 static void damage(u8 i,u8 power){
     if(!enemy_live[i] || explosion[i])return;
-    if(i==MOBS){
+    if(boss_active && i==CORE_SLOT){
         if(cooled || boss_cleared)return;
         cooled=10;
         boss_hp=boss_hp>power?boss_hp-power:0;
@@ -75,15 +76,17 @@ static void enter(void){
     u8 i;
     while(event_index<sizeof(events)/sizeof(events[0])){
         e=&events[event_index];
-        if(camera<e->camera)break;
+        if(encounter_tick<e->tick)break;
         ++event_index;
-        for(i=0;i<MOBS;++i)if(!enemy_live[i]&&!explosion[i]){
-            enemy_live[i]=e->kind;origin_y[i]=e->y;drop[i]=e->drop;
+        for(i=0;i<SLOTS;++i)if(!enemy_live[i]&&!explosion[i]){
+            route[i]=e->kind;
+            enemy_live[i]=e->kind==GATE_POD?POD:e->kind==FALLING_WALK?WALK:e->kind;origin_y[i]=e->y;drop[i]=e->drop;
             posx[i]=(int)e->x<<4;posy[i]=(int)e->y<<4;age[i]=0;
-            hp[i]=e->kind==WALK?4:e->kind==POW?2:1;
+            hp[i]=enemy_live[i]==WALK?4:e->kind==POW?2:1;
             break;
         }
     }
+    ++encounter_tick;
 }
 void move_mobs(void);
 void mob_fire(u8 i){fire_enemy(enemy_x[i]+5,enemy_y[i]+8);}
@@ -169,15 +172,15 @@ u8 boss_contact(void);
 static void boss(void){
     u8 x;
     u8* shadow=(u8*)0x6400;
-    if(explosion[MOBS])--explosion[MOBS];
+    if(explosion[CORE_SLOT])--explosion[CORE_SLOT];
     if(boss_cleared)return;
     collide_bubbles();
-    if(enemy_live[MOBS]){
-        x=enemy_x[MOBS]+8;
-        if(within(px+10,x,7)&&within(py,enemy_y[MOBS]+8,6))die(4);
-        if(within(fx+12,x,13)&&within(fy,enemy_y[MOBS]+8,9)){
+    if(enemy_live[CORE_SLOT]){
+        x=enemy_x[CORE_SLOT]+8;
+        if(within(px+10,x,7)&&within(py,enemy_y[CORE_SLOT]+8,6))die(4);
+        if(within(fx+12,x,13)&&within(fy,enemy_y[CORE_SLOT]+8,9)){
             if(force_state==1){fx=x-12;force_state=2;}
-            damage(MOBS,1);
+            damage(CORE_SLOT,1);
         }
     }
     /* The MMC5 shadow includes this pose's body and tail cells. The room
@@ -197,7 +200,10 @@ void actor_update(void){
     shield_h=drill||force_level==3?11:force_level==2?8:7;
     if(cooled)--cooled;
     core_flash=cooled>=7;
-    for(i=0;i<SLOTS;++i)if(beam_hit[i]){beam_hit[i]=0;damage(i,1);}
+    if(beam_pending){
+        beam_pending=0;
+        for(i=0;i<SLOTS;++i)if(beam_hit[i]){beam_hit[i]=0;damage(i,1);}
+    }
     player();
     if(bit_owned || drill){
         s8 dx=(s8)(px+11-bit_x),dy=(s8)(py-25-bit_y);
@@ -209,7 +215,7 @@ void actor_update(void){
     }
     if(!boss_active){enter();move_mobs();move_guns();}
     else{
-        if(!in_room){in_room=1;for(i=0;i<MOBS;++i){enemy_live[i]=0;explosion[i]=0;}}
+        if(!in_room){in_room=1;for(i=0;i<SLOTS;++i){enemy_live[i]=0;explosion[i]=0;}}
         boss();
     }
     move_items();move_bolts();move_bullets();
@@ -225,13 +231,14 @@ void draw_cannon(void);
 void actor_render(void){
     u8 i,x;
     draw_cannon();
-    if(!boss_active && (tick&1))draw_guns();
+    if(!boss_active && (tick&1))draw_mobs();
+    if(!boss_active && !(tick&1))draw_guns();
     if(dying)sprite(px+8,py-4,SPARK,1);
     else if(!invulnerable || !(tick&4)){
         draw_player();
     }
     draw_bullets();
-    if(!boss_active && !(tick&1))draw_guns();
+    if(!boss_active && (tick&1))draw_guns();
     for(i=0;i<4;++i)if(bolts[i].power){
         if(bolts[i].power==5){
             sprite(bolts[i].x,bolts[i].y-4,ION,3);
@@ -244,6 +251,6 @@ void actor_render(void){
         if(items[i].type==BIT){META(x-6,items[i].y-6,satellite_tiles,2,2);}
         else{META(x-7,items[i].y-8,crystal_tiles+(items[i].type==BLUE?8:0),2,2);}
     }
-    if(boss_active){if(explosion[MOBS])sprite(enemy_x[MOBS],119,SPARK,1);return;}
-    draw_mobs();
+    if(boss_active){if(explosion[CORE_SLOT])sprite(enemy_x[CORE_SLOT],119,SPARK,1);return;}
+    if(!(tick&1))draw_mobs();
 }

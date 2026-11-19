@@ -366,6 +366,14 @@ upload_sprite_pages:
  lda #237
  bne @upper_page
 @stage_sprites:
+ lda _stage_tile
+ cmp #96
+ bcs @walking
+ lda #1
+ sta $5130
+ lda #125                    ; upper page 381 with individual flight poses
+ bne @upper_page
+@walking:
  lda #253
 @upper_page:
  sta $5123

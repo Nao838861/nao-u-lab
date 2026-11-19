@@ -155,3 +155,74 @@ def terrain():
         top.append(16+(up[-1]+1 if len(up) else 0))
         floor.append(16+(117+lo[0] if len(lo) else 208))
     return top,floor
+
+def scout_page(planar):
+    # Stage-only slots 243..255 follow the three gun tiles. The room has
+    # separate upper sprite CHR, so its eye highlights can reuse these IDs.
+    strip=Image.open(ROOT/'art/actor-scout.png')
+    tiles=[];poses=[]
+    for k in range(2):
+        pic=np.asarray(strip.crop((21*k,0,21*k+21,29)).resize((16,24),Image.Resampling.NEAREST)).astype(int)
+        r,g,b=pic.transpose(2,0,1)
+        blue=(b>r+15)&(b>g+8)
+        solid=(pic.max(2)>42)&~blue
+        parts=[]
+        for y in (0,8,16):
+            for x in (0,8):
+                region=np.s_[y:y+8,x:x+8]
+                lum=(r[region]+2*g[region]+b[region])//4
+                metal=(y==16)
+                ink=np.where(solid[region],np.where(lum>147,3,np.where(lum>(88 if metal else 118),2,1)),0)
+                parts.append((y,243+len(tiles),2 if metal else 1,x))
+                tiles.append(planar(ink.astype('u1').tobytes()))
+        yy,xx=np.where(blue & (np.indices(blue.shape)[0]<10))
+        parts.insert(0,(int(yy.min()),255,3,int(xx.min())))
+        poses.append(parts)
+    ink=np.zeros((8,8),'u1');ink[0,1:4]=(2,3,2);ink[1,:4]=(2,2,3,2)
+    tiles.append(planar(ink.tobytes()))
+    (ROOT/'build/scout.inc').write_text('\n'.join('scout_'+name+': .byte '+
+        ','.join(map(str,[v for part in parts for v in part]+[128])) for name,parts in zip('ab',poses)))
+    return b''.join(tiles)
+
+def flight_page(standard,planar):
+    # The regular upper page can show all four large-walker poses. Before
+    # those walkers arrive, the same sprite IDs hold individual flight poses.
+    page=bytearray(standard)
+    slot=149
+    lines=[]
+    for name,w in (('turn',22),('wing',20)):
+        strip=Image.open(ROOT/'art'/('actor-'+name+'.png'))
+        poses=[]
+        for k in range(strip.width//w):
+            pic=np.asarray(strip.crop((k*w,0,(k+1)*w,22)).resize((16,16),Image.Resampling.NEAREST)).astype(int)
+            r,g,b=pic.transpose(2,0,1)
+            solid=pic.max(2)>47
+            cool=(g>r*1.08)&(g>b*1.06)&(g>50)&solid
+            if name=='wing':
+                ink=np.where(solid,np.where(r>g+32,np.where(r>110,2,1),3),0)
+            else:
+                ink=np.where(solid,np.where(g>136,3,np.where(r>g+45,2,1)),0)
+            parts=[]
+            def add(x,y,pal,block):
+                nonlocal slot
+                if not block.any():return
+                assert 149<=slot<=214
+                offset=(slot-128)*16
+                page[offset:offset+16]=planar(block.astype('u1').tobytes())
+                parts.extend((y,slot,pal,x));slot+=1
+            yy,xx=np.where(cool)
+            if len(xx):
+                x=int(np.clip(round(xx.mean())-3,0,8));y=int(np.clip(round(yy.mean())-3,0,8))
+                add(x,y,3,cool[y:y+8,x:x+8])
+            for y in (0,8):
+                for x in (0,8):add(x,y,1,ink[y:y+8,x:x+8])
+            # emit_flight draws this particular five-tile layout directly.
+            entries=list(zip(*[iter(parts)]*4))
+            assert len(entries)==5 and [e[1] for e in entries]==list(range(slot-5,slot))
+            assert [(y,p,x) for y,_,p,x in entries[1:]]==[(0,1,0),(0,1,8),(8,1,0),(8,1,8)]
+            label=name+str(k);poses.append(label)
+            lines.append(label+': .byte '+','.join(map(str,parts+[128])))
+        for op,suffix in (('<','lo'),('>','hi')):
+            lines.append(name+'_'+suffix+': .byte '+','.join(op+p for p in poses))
+    (ROOT/'build/flight-poses.inc').write_text('\n'.join(lines))
+    return page
