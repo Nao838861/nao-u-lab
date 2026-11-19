@@ -61,12 +61,32 @@ def sprite_data():
     metadata+=f'#define SPARK {len(chroma)}\n'
     return b''.join(chroma+[planar(explosion)]).ljust(4096,b'\0'),metadata
 
+def indicator_dots(rgb):
+    """Pick the center of each colored lamp against its black recess."""
+    r,g,b=rgb.astype('int16').transpose(2,0,1)
+    def neighborhood(a):
+        padded=np.pad(a,1,mode='edge')
+        return np.lib.stride_tricks.sliding_window_view(padded,(3,3))
+    dark=rgb.max(axis=2)<24
+    recess=neighborhood(dark).sum(axis=(-2,-1))>=3
+    dots=np.zeros(r.shape,dtype='uint8')
+    for index,chroma,signal,threshold in [
+        (2,np.minimum(r-g,r-b),r,5),
+        (3,np.minimum(g-r,b-r),g,10)
+    ]:
+        strength=np.where(recess & (signal>=26) & (chroma>=threshold),
+                          4*chroma+signal,0)
+        peak=neighborhood(strength).max(axis=(-2,-1))
+        dots[(strength>0)&(strength==peak)]=index
+    return dots
+
 def build_art():
     rgb=np.array(Image.open(ART/'corridor.png').convert('RGB'))
     # Remove a wall-mounted enemy from the backdrop; place moving enemies in OAM.
     rgb[83:104,136:157]=rgb[83:104,93:114].copy()
     rgb[178:193,209:229]=rgb[178:193,167:187].copy()
     screen=np.zeros((240,256,3),'uint8');screen[16:224]=rgb
+    dots=indicator_dots(screen)
     pats=[[],[]]; slots=[]; attrs=[]; tops=[]; floors=[]
     for ty in range(30):
         for tx in range(32):
@@ -78,7 +98,8 @@ def build_art():
                 ids=np.select([lum>197,lum>116,lum<64],[3,2,1],default=0)
             else:
                 lum=t.mean(2)
-                ids=np.select([(g>100)&(g>r+10),lum<49],[3,1],default=0)
+                lamps=dots[ty*8:ty*8+8,tx*8:tx*8+8]
+                ids=np.where(lamps,lamps,np.where(lum<49,1,0))
             p=ids.astype('u1').tobytes(); bucket=pats[int(wall)]
             if p not in bucket: bucket.append(p)
             slots.append(bucket.index(p));attrs.append(0xc1 if wall else 0)
@@ -143,7 +164,7 @@ def build_art():
     def page(patterns):return b''.join(planar(t) for t in patterns).ljust(4096,b'\0')
     banks=[page(p) for p in pages]
     for m in chosen+diag:
-        banks.append(page([bytes(1+v if v else (1 if p in (1,2) else 0) for p,v in zip(t,m)) for t in field]))
+        banks.append(page([bytes(1+v if v else int(p!=0) for p,v in zip(t,m)) for t in field]))
     assert len(banks)<=63
     (OUT/'waves.bin').write_bytes(bytes(waves))
     (OUT/'attrs.bin').write_bytes(bytes(attrs))
