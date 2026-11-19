@@ -61,3 +61,4 @@ VS Codeユーザー設定の `chatgpt.cliExecutable` 指定を削除して、拡
 - 編集前後のJSONを比較し、当該キーの削除以外に設定値の変化がないことを確認した。
 - 改行とBOMの有無を維持した。`config.toml` の既定モデルは変更していない。
 - 設定変更は保存済み。実行中の拡張への反映にはVS Codeウィンドウの再読み込みが必要。
+- VS Codeの標準コマンドパレットから再読み込みを試みたが、操作ツールが `user input was detected in this window; call get_window_state before continuing` を返した。再観測後にも新版の起動は確認できず、反映操作は未完了としてユーザーに伝えた。設定の固定指定が削除された状態は再確認済み。
