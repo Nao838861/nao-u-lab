@@ -110,7 +110,7 @@ emu.addEventCallback(function()
  end
  if frame==4490 then
   local guns=0
-  for i=0,14 do if rd('gun_dead',i)>0 then guns=guns+1 end end
+  for i=0,MOUNT_TOTAL-1 do if rd('gun_dead',i)>0 then guns=guns+1 end end
   local result=assert(io.open(DIR..'/journey-result.txt','w'))
   for k,v in pairs(seen) do result:write(k..'='..v..' ') end
   result:write('first='..first..' guns='..guns..' deflected='..rd('deflected')..' pickups='..rd('pickups')..' deaths='..rd('deaths')..' missed='..missed)

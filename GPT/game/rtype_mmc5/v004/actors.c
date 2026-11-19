@@ -4,13 +4,15 @@
 #pragma bss-name ("ACTORRAM")
 #include "build/actors.h"
 #include "build/terrain.h"
+#include "build/mount-count.h"
 struct Event {u16 camera; u8 kind,x,y,drop;};
 #include "build/encounters.h"
 
 u8 enemy_live[SLOTS],enemy_x[SLOTS],enemy_y[SLOTS],explosion[SLOTS],beam_hit[SLOTS];
 u8 boss_cleared,invulnerable,dying,drill,weapon,bit_owned,request_wave,request_ray;
 u8 pickups,deaths,deflected,boss_hp,death_cause;
-static u8 event_index,initialized,charge,force_state;
+static u8 event_index,initialized,force_state;
+u8 charge;
 u8 banking,force_phase,bit_phase,bit_x,bit_y,force_level,sprite_page,shield_w,shield_h,orb_phase;
 static u8 bit_delay;
 u8 fx,fy,scroll_delta,previous_scroll,bullet_x[6],bullet_y[6],in_room;
@@ -27,6 +29,7 @@ struct Bullet bullets[6];
 s8 terminal_dy[6];
 struct Bolt {u8 x,y,power;};
 struct Bolt bolts[4];
+u8 bolt_travel[4];
 struct Item {u16 world;u8 y,type;};
 struct Item items[3];
 
@@ -61,8 +64,8 @@ u8 muzzle_x,muzzle_y;
 void fire_aimed(void);
 #define fire_enemy(X,Y) do{muzzle_x=(X);muzzle_y=(Y);fire_aimed();}while(0)
 void move_bullets(void);
-u8 gun_screen[15],gun_live[15],gun_dead[15],gun_timer[15];
-extern const u8 gun_height[15];
+u8 gun_screen[MOUNT_COUNT],gun_live[MOUNT_COUNT],gun_dead[MOUNT_COUNT],gun_timer[MOUNT_COUNT];
+extern const u8 gun_height[MOUNT_COUNT];
 void move_guns(void);
 void draw_guns(void);
 void draw_mobs(void);
@@ -98,15 +101,23 @@ static void move_items(void){
 }
 static void shoot_bolt(u8 power){
     u8 i;
-    if(fx>225 && force_state)return;
-    for(i=0;i<4;++i)if(!bolts[i].power){
-        bolts[i].x=power==5?bit_x+3:force_state?fx+17:px+23;
-        bolts[i].y=power==5?bit_y:force_state?fy:py;bolts[i].power=power;break;
+    for(i=0;i<4 && bolts[i].power;++i){}
+    if(i==4){
+        /* Releasing a stored charge takes priority over a normal or Bit shot. */
+        if(power!=2 && power!=4)return;
+        for(i=0;i<4 && bolts[i].power!=1 && bolts[i].power!=5;++i){}
+        if(i==4)return;
     }
+    bolts[i].x=power==5?bit_x+3:px+22;
+    bolts[i].y=power==5?bit_y:py;
+    bolts[i].power=power;
+    bolt_travel[i]=0;
 }
 void move_bolts(void);
 u8 cannon_strength;
 void cannon_hit(u8 i){damage(i,cannon_strength);}
+void cannon_hum(void);
+void cannon_report(void);
 static void player(void){
     u16 col;
     if(invulnerable)--invulnerable;
@@ -133,18 +144,26 @@ static void player(void){
     }
     col=(camera+px+10)>>2;
     if(py<ceiling_px[col]+2 || py+2>=floor_px[col])die(1);
-    if(drill){request_wave=pad&0x80;request_ray=pad&0x40;return;}
-    if(bit_delay)--bit_delay;
-    if((pad&0x80)&&!(oldpad&0x80)){
-        if(bit_owned && !bit_delay){shoot_bolt(5);bit_delay=18;}
-        if(force_state || weapon==BASIC)shoot_bolt(1);
-        if(!force_state){
-            if(weapon==RED)request_wave=1;
-            if(weapon==BLUE)request_ray=1;
+    if(drill){
+        request_wave=pad&0x80;request_ray=pad&0x40;
+    }else{
+        if(bit_delay)--bit_delay;
+        if((pad&0x80)&&!(oldpad&0x80)){
+            if(bit_owned && !bit_delay){shoot_bolt(5);bit_delay=18;}
+            if(force_state || weapon==BASIC)shoot_bolt(1);
+            if(!force_state){
+                if(weapon==RED)request_wave=1;
+                if(weapon==BLUE)request_ray=1;
+            }
         }
     }
-    if(pad&0x80){if(charge<96)++charge;}
-    else{if(charge>=24)shoot_bolt(charge>=64?4:2);charge=0;}
+    if(pad&0x80){
+        if(charge<96)++charge;
+        if(charge>=16 && !(tick&7))cannon_hum();
+    }else if(charge){
+        if(charge>=24){shoot_bolt(charge>=64?4:2);cannon_report();}
+        charge=0;
+    }
 }
 u8 boss_contact(void);
 static void boss(void){
@@ -200,24 +219,25 @@ u8 spr_x,spr_y,spr_id,spr_pal;
 void single_sprite(void);
 void draw_bullets(void);
 void draw_player(void);
+void draw_cannon(void);
 #define sprite(X,Y,T,P) do{spr_x=(X);spr_y=(Y);spr_id=(T);spr_pal=(P);single_sprite();}while(0)
 #define META(X,Y,T,W,H) do{mx=(X);my=(Y);tile_list=(T);mw=(W);mh=(H);draw_meta();}while(0)
 void actor_render(void){
     u8 i,x;
+    draw_cannon();
+    if(!boss_active && (tick&1))draw_guns();
     if(dying)sprite(px+8,py-4,SPARK,1);
     else if(!invulnerable || !(tick&4)){
         draw_player();
-        if(charge>23 && (tick&4))sprite(px+20,py-4,CHARGE,3);
     }
     draw_bullets();
-    if(!boss_active)draw_guns();
+    if(!boss_active && !(tick&1))draw_guns();
     for(i=0;i<4;++i)if(bolts[i].power){
         if(bolts[i].power==5){
             sprite(bolts[i].x,bolts[i].y-4,ION,3);
             sprite(bolts[i].x-8,bolts[i].y-4,ION_TRAIL,0);continue;
         }
-        sprite(bolts[i].x,bolts[i].y-4,bolts[i].power>1?CHARGE:BOLT,3);
-        if(bolts[i].power>=3)sprite(bolts[i].x-7,bolts[i].y-4,CHARGE,0);
+        if(bolts[i].power==1)sprite(bolts[i].x,bolts[i].y-4,BOLT,3);
     }
     for(i=0;i<3;++i)if(items[i].type){
         x=(u8)(items[i].world-camera);if(x<7)continue;

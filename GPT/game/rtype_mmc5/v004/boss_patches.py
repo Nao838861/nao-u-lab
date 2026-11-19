@@ -35,6 +35,8 @@ def pack_tail(chr_data,slots,attrs,width,planar):
         used[3].add((bank,slot))
         start=(192+bank)*4096+slot*16
         data[start:start+16]=tile
+    from mount_background import attach
+    attach(data,slots,attrs,width,used,planar)
     def bands_for(row):
         return (0,3) if row==8 else (3,)
     def base(c,r):

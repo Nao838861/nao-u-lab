@@ -125,10 +125,15 @@ def build_art():
     (OUT/'attrs.bin').write_bytes(attrs.astype('u1').tobytes())
     (OUT/'kinds.bin').write_bytes(bytes(128 if a else int(max(t)>1) for t,a in zip(source,attrs)))
     (OUT/'sprite.inc').write_text(f'STAGE_COLS = {width}\nSPR_BANK = 126\nRAY_FIRST = {first}\n'+'\n'.join(line.replace('#define ','').replace(' ',' = ',1) for line in meta.splitlines() if line.startswith('#define ')))
-    (OUT/'art.h').write_text(f'#define BOSS_PHASE {boss_phase}\n#define STAGE_END {Image.open(ART/"stage.png").width-256}\n'+meta+array('camera_steps',motion)+array('phase_for_age',[t if t<32 else 20+(t-32)%12 for t in range(128)])+array('advance_for_age',[0 if t<32 else 6*(1+(t-32)//12) for t in range(128)])+array('wave_offsets',offsets)+array('nametable',list(slots.reshape(30,width)[:,:32].flat))+array('attributes',list(attrs.reshape(30,width)[:,:32].flat))+array('ceilrow',tops).replace('static const','const')+array('floorrow',floors).replace('static const','const')+array('diagonal',range(first,first+3)).replace('static const','const'))
     from boss_patches import pack_tail
     chr_data,boss_data=pack_tail(b''.join(windows),slots,attrs,width,planar)
     (OUT/'boss-data.bin').write_bytes(boss_data)
+    first_tiles=slots.reshape(30,width)[:,:32].copy()
+    first_attrs=attrs.reshape(30,width)[:,:32].copy()
+    for line in (OUT/'mount-cells.csv').read_text().splitlines():
+        col,row,owner,tile=map(int,line.split(','))
+        if col<32:first_tiles[row,col]=tile;first_attrs[row,col]=255
+    (OUT/'art.h').write_text(f'#define BOSS_PHASE {boss_phase}\n#define STAGE_END {Image.open(ART/"stage.png").width-256}\n'+meta+array('camera_steps',motion)+array('phase_for_age',[t if t<32 else 20+(t-32)%12 for t in range(128)])+array('advance_for_age',[0 if t<32 else 6*(1+(t-32)//12) for t in range(128)])+array('wave_offsets',offsets)+array('nametable',list(first_tiles.flat))+array('attributes',list(first_attrs.flat))+array('ceilrow',tops).replace('static const','const')+array('floorrow',floors).replace('static const','const')+array('diagonal',range(first,first+3)).replace('static const','const'))
     # Band 1 has no overflow wall tiles, including both IRQ seam rows.
     assert not np.any(attrs.reshape(30,width)[8:17]==0xfe)
     image=bytearray(chr_data)
@@ -144,4 +149,10 @@ def build_art():
     from boss_attack_art import make_attack_page
     start=(192+54)*4096+2048
     image[start:start+2048]=make_attack_page(objbank,planar)
+    # The room uses its own upper OAM page for the boss highlights.
+    # Reuse the same tile IDs in the corridor for the ceiling/floor mounts.
+    from weapon_art import turret_page
+    mounts=turret_page(planar)
+    start=126*4096+240*16
+    image[start:start+len(mounts)]=mounts
     return bytes(image)

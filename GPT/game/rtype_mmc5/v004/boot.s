@@ -389,3 +389,5 @@ finish_actor_bank:
 
 .segment "STARTUP"
 draw_bubble_attributes: jmp (bubble_nmi_ptr)
+
+.include "mount_stream.inc"

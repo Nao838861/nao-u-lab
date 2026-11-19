@@ -565,11 +565,12 @@ effects_one:
 ; The two mounts at world X=804 share a column, with independent HP.
 .segment "CODE"
 .export gun_upper,gun_lower,gun_wlo,gun_whi,_gun_height
+.include "build/mount-count.inc"
 gun_upper: .incbin "build/turret-grid.bin"
 gun_lower=gun_upper+200
 gun_wlo=gun_lower+200
-gun_whi=gun_wlo+15
-_gun_height=gun_whi+15
+gun_whi=gun_wlo+MOUNT_COUNT
+_gun_height=gun_whi+MOUNT_COUNT
 .import _gun_live,_gun_dead,_gun_screen
 gun_cell:
  cpy #10
@@ -624,8 +625,7 @@ gun_cell:
  sta hit_bank
  jsr exact_hit
  bcc @none
- lda #12
- sta _gun_dead,x
+ jsr kill_mount
  inc _hit_count
 @none: rts
 

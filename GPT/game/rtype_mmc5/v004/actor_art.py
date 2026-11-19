@@ -17,7 +17,7 @@ def build_sprites(planar,array):
     for name,w,h,n in [('ship',24,18,3),('force',25,24,8),('core',25,24,8),
                           ('bit',13,14,8),('carrier',23,23,2),('green',18,20,1),
                           ('red',19,17,1),('pod',22,24,1),('walker',34,44,4),
-                          ('crystal',16,17,2),('satellite',12,12,1),('gun',13,12,1)]:
+                          ('crystal',16,17,2),('satellite',12,12,1)]:
         im=Image.open(ROOT/'art'/('actor-'+('force' if name=='core' else name)+'.png'))
         entries=[]
         for k in range(n):
@@ -25,7 +25,6 @@ def build_sprites(planar,array):
             # Trim the transparent margins and keep the tallest enemy to 4 rows.
             if name=='walker':pic=pic.resize((32,40),Image.Resampling.NEAREST)
             if name in ('force','core'):pic=pic.crop((1,0,25,24))
-            if name=='gun':pic=pic.resize((8,8),Image.Resampling.NEAREST)
             if name=='ship':pic=pic.resize((24,16),Image.Resampling.NEAREST)
             if name in ('green','red','crystal','pod'):pic=pic.resize((16,16),Image.Resampling.NEAREST)
             if name=='carrier':pic=pic.resize((24,16),Image.Resampling.NEAREST)
@@ -40,7 +39,7 @@ def build_sprites(planar,array):
                     if name=='force':opaque &= ~hot
                     dist=((rgb[None,:,:,None,:]-colors[:,None,None,:,:])**2).sum(4)
                     pal={'ship':0,'force':2,'core':1,'carrier':0,'walker':1,'red':1,
-                         'green':1,'pod':2,'gun':1,'crystal':1 if k==0 else 3}.get(name)
+                         'green':1,'pod':2,'crystal':1 if k==0 else 3}.get(name)
                     if pal is None:pal=int((dist.min(3)*opaque).sum((1,2)).argmin())
                     ids=np.where(opaque,dist[pal].argmin(2)+1,0)
                     flip=0
@@ -51,8 +50,7 @@ def build_sprites(planar,array):
                     else:slot=intern(ids)
                     entries.extend([slot,pal|flip])
         if name not in ('force','core'):shared.update(entries[::2])
-        if name=='gun':defs+=f'#define GUN_TILE {entries[0]}\n'
-        elif name in ('crystal','satellite'):tables+=array(name+'_tiles',entries)
+        if name in ('crystal','satellite'):tables+=array(name+'_tiles',entries)
         if name in ('ship','core','force','bit','walker','carrier','pod','green','red'):
             cols=(pic.width+7)//8
             stride=len(entries)//n
@@ -87,8 +85,6 @@ def build_sprites(planar,array):
         'BOLT':['00000000','00000000','00000020','20202333','00000020','00000000','00000000','00000000'],
         'ION':['00000000','00000000','00000023','22200233','00222123','00000000','00000000','00000000'],
         'ION_TRAIL':['00000000','00000000','00000000','00022222','11220000','00000000','00000000','00000000'],
-        'HEAD_LEFT':['00000111','00011132','00113331','01111311','13321111','02331123','00131132','00011221'],
-        'HEAD_RIGHT':['11100000','12110000','13211000','11221110','11112221','21111110','11111000','11000000'],
         'PELLET':['00000000','00000000','00021000','00232000','00021000','00000000','00000000','00000000'],
         'CHARGE':['00022000','00233200','02333320','23333332','23333332','02333320','00233200','00022000'],
         'SPARK':['30000003','02030020','00232200','03233230','00233200','02032020','20030002','30000003'],
@@ -96,6 +92,11 @@ def build_sprites(planar,array):
         slot=intern(np.array([[int(c) for c in row] for row in rows]))
         shared.add(slot)
         defs+=f'#define {name} {slot}\n'
+    from weapon_art import cannon_tiles
+    for k,block in enumerate(cannon_tiles()):
+        slot=intern(block)
+        shared.add(slot)
+        defs+=f'#define CANNON_{k} {slot}\n'
     if len(tiles)>240:raise ValueError(f'{len(tiles)} sprite tiles; 240 available')
     # Switch the lower 2 KiB of sprite CHR when the Force grows. Shared
     # actor tiles keep their IDs. Only slots exclusive to the full shell move.

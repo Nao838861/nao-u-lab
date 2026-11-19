@@ -103,7 +103,7 @@ _prepare_column:
 @keep: iny
  cpy #27
  bne @remove_body
-@done: rts
+@done: jmp patch_mount_column
 
 .segment "RODATA"
 base_attribute:

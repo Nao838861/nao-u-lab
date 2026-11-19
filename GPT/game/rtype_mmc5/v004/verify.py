@@ -19,6 +19,13 @@ local frame=0
 local cells={}
 local tiles=assert(io.open(DIR..'/../stage_tiles.bin','rb')):read('*a')
 local meta=assert(io.open(DIR..'/../stage_meta.bin','rb')):read('*a')
+local mounts,visibleMounts={},{}
+for line in io.lines(DIR..'/../mount-cells.csv') do
+ local c,r,g,slot=line:match('(%d+),(%d+),(%d+),(%d+)')
+ c,r,g,slot=tonumber(c),tonumber(r),tonumber(g),tonumber(slot)
+ mounts[c*32+r]={g,slot}
+ if c<32 then visibleMounts[0x5c00+r*32+c]=true end
+end
 local cols=0
 local patchWrites=0
 local activeWrites=0
@@ -64,6 +71,14 @@ emu.addMemoryCallback(function(a,v)
   local row=math.floor((addr-0x2000)/32)
   local i=col*32+row+1
   local expected=(read(DARK_LABEL)~=0 and meta:byte(i)<128) and 0 or tiles:byte(i)
+  local mount=mounts[i-1]
+  local physical=0x5c00+row*32+col%32
+  visibleMounts[physical]=nil
+  if mount then
+   local shown=read(0x0420+row)==255
+   if shown then expected=mount[2];visibleMounts[physical]=true
+   elseif read(GUN_DEAD+mount[1])==0 then fail('live mount missing '..frame);return end
+  end
   if addr%32~=col%32 or expected~=v then fail('wrong column at '..frame);return end
   streamBytes=streamBytes+1
   if row==29 then cols=cols+1 end
@@ -90,6 +105,7 @@ emu.addMemoryCallback(function(a,v)
  if ((frame>=750 and frame<990) or (frame>=2200 and frame<2460) or (frame>=4100 and frame<4400)) and read(BLUE_LABEL)~=0 then
   trace:write(string.format('%d %d %d %d %d',read(BLUE_LABEL+3),read(BLUE_LABEL+1),read(BLUE_LABEL+2),read(STAGE_LABEL)*8+(read(SCROLL_LABEL)%8),read(BOSS_LABEL)~=0 and read(POSE_LABEL) or -1))
   for a,v in pairs(cells) do if v~=0 then trace:write(string.format(' %04x:%02x',a,v)) end end
+  for a in pairs(visibleMounts) do trace:write(string.format(' m%04x',a)) end
   trace:write('\n')
  end
 end,emu.callbackType.write,READY_LABEL)
@@ -141,7 +157,7 @@ end,emu.eventType.endFrame)
 '''.replace('DIR',json.dumps(out.as_posix())).replace('RECORD','true' if os.environ.get('RECORD_STAGE') else 'false')
 labels={name:int(address,16) for address,name in re.findall(r'al ([0-9A-Fa-f]+) \.(_\w+)',(root/'build/cart.lbl').read_text())}
 lua=lua.replace('BLUE_LABEL',str(labels['_blue'])).replace('SCROLL_LABEL',str(labels['_scroll_x'])).replace('STAGE_LABEL',str(labels['_stage_tile'])).replace('BACKDROP_LABEL',str(labels['_backdrop']))
-for key,label in [('READY_LABEL','_ready'),('TICK_LABEL','_tick'),('COLUMN_LABEL','_stage_col'),('BOSS_LABEL','_boss_active'),('POSE_LABEL','_boss_pose'),('DARK_LABEL','_dark_room')]:
+for key,label in [('GUN_DEAD','_gun_dead'),('READY_LABEL','_ready'),('TICK_LABEL','_tick'),('COLUMN_LABEL','_stage_col'),('BOSS_LABEL','_boss_active'),('POSE_LABEL','_boss_pose'),('DARK_LABEL','_dark_room')]:
     lua=lua.replace(key,str(labels[label]))
 (out/'check.lua').write_text(lua)
 for name in ['result.txt','error.txt']:

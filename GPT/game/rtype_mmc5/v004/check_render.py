@@ -104,6 +104,7 @@ def check_rays():
                             dx=-dx;nx=x;bounces+=1
                         x,y=nx,ny
                 path.append(steps)
+        mounts={int(w[1:],16) for w in cols[5:] if w.startswith("m")}
         advances=age-age//4
         visible={}
         for steps in path:
@@ -112,8 +113,9 @@ def check_rays():
                 if w==scroll//8 and scroll%8:continue
                 cell=y*len(ceilings)+w
                 if kinds[cell]==128 or (pose>=0 and (w,y) in tails[pose]):continue
-                visible.setdefault(0x5c00+32*y+w%32,set()).add(attrs[cell,bank])
-        actual={int(a,16):int(v,16) for a,v in (word.split(':') for word in cols[5:])}
+                address=0x5c00+32*y+w%32
+                if address not in mounts:visible.setdefault(address,set()).add(attrs[cell,bank])
+        actual={int(a,16):int(v,16) for a,v in (word.split(':') for word in cols[5:] if not word.startswith('m'))}
         assert actual.keys()==visible.keys(),(age,actual.keys()^visible.keys())
         for address,value in actual.items():
             assert value in visible[address],(age,origin,launch,scroll,hex(address),value,visible[address])

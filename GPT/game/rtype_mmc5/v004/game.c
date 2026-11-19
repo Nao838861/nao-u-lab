@@ -29,6 +29,7 @@ extern u8 stage_col,backdrop;
 #pragma zpsym ("backdrop")
 void prepare_column(void);
 void upload_column(void);
+void refresh_mounts(void);
 static void advance_camera(void){
     if(camera==STAGE_END) return;
     if(!step_mask){step_byte=camera_steps[step_index++];step_mask=1;}
@@ -65,7 +66,7 @@ static void setup(void){
     for(i=0;i<256;i+=4) OAM[i]=0xff;
     REG(0x2003)=0;REG(0x4014)=2;
     REG(0x2005)=0;REG(0x2005)=0;
-    REG(0x4015)=9;REG(0x4001)=0;REG(0x4000)=0x30;REG(0x400c)=0x30;
+    REG(0x4015)=11;REG(0x4004)=0x30;REG(0x4001)=0;REG(0x4000)=0x30;REG(0x400c)=0x30;
     if(boss_active){
         REG(0x5104)=2;
         for(i=1;i<=32;++i){stage_col=stage_tile+i;prepare_column();upload_column();}
@@ -144,6 +145,7 @@ void main(void){
         if(boss_active && ++boss_pose==157) boss_pose=0;
         stage_col=255;
         advance_camera();
+        refresh_mounts();
         if(sweep_col && stage_col==255){
             if(sweep_col<=stage_tile) sweep_col=0;
             else {stage_col=sweep_col--;prepare_column();}

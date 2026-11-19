@@ -18,6 +18,8 @@ def run(rom,labels,script,film=False):
     (OUT/'settings.json').write_text(json.dumps({'Debug':{'ScriptWindow':{'AllowIoOsAccess':True}},'Nes':{'Port1':{'Type':'NesController'}}}))
     symbols={n[1:]:int(a,16) for a,n in re.findall(r'al (\w+) \.(_\w+)',(ROOT/'build'/labels).read_text())}
     src=(ROOT/script).read_text('utf8').replace('DIR',json.dumps(OUT.as_posix())).replace('FILM','true' if film else 'false')
+    from turret_layout import TURRETS
+    src=src.replace('MOUNT_TOTAL',str(len(TURRETS)))
     terrain=(ROOT/'build/terrain.h').read_text()
     for name,tag in [('ceiling_px','TOP'),('floor_px','BOTTOM')]:
         raw=re.search(name+r'\[\]=\{([^}]*)',terrain).group(1)

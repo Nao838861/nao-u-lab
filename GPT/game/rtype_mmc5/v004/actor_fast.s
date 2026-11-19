@@ -449,6 +449,7 @@ _move_mobs:
 
 
 .include "build/sprite.inc"
+.include "build/mount-count.inc"
 .import _oam_index,_spr_x,_spr_y,_spr_id,_spr_pal
 .export _single_sprite,_draw_bullets
 _single_sprite:
@@ -506,17 +507,35 @@ victim: .res 1
 radius: .res 1
 .segment "ACTORS"
 ; Test the gun before the hull: its muzzle can project into a wall cell.
+bolt_ordinal: .byte 0,0,0,1,1,1,2,2,2,3
 _move_bolts:
  ldx #0
 @bolt:
  stx bolt_index
  lda _bolts+2,x
  jeq @next
+ cmp #5
+ beq @ordinary
+ cmp #2
+ bcc @ordinary
+ ldy bolt_ordinal,x
+ lda _bolt_travel,y
+ cmp #4
+ bcs :+
+ adc #1
+ sta _bolt_travel,y
+: lda _bolts,x
+ clc
+ adc #6
+ jmp @front
+@ordinary:
  lda _bolts,x
- cmp #249
- jcs @remove
  clc
  adc #4
+@front:
+ jcs @remove
+ cmp #252
+ jcs @remove
  sta cx
  sta _bolts,x
  jsr bolt_gun
@@ -738,25 +757,60 @@ emit_parts:
 
 .import gun_wlo,gun_whi,_gun_height,gun_upper,gun_lower
 .import _gun_screen,_gun_dead,_gun_live,_gun_timer,_gun_fire
+.import kill_mount
 .export _move_guns,_draw_guns
 .segment "ZEROPAGE"
 gun_i: .res 1
+gun_first: .res 1
+gun_end: .res 1
 .segment "ACTORS"
 _move_guns:
- ldx #14
-@loop:
+ ldx gun_first
+@retire:
+ cpx gun_end
+ bcs @admit
  lda gun_wlo,x
  sec
  sbc _camera
- sta _gun_screen,x
+ sta temp
  lda gun_whi,x
  sbc _camera+1
- jne @off
- lda _gun_screen,x
+ bmi @gone
+ lda temp
  cmp #4
- jcc @off
+ bcs @admit
+@gone:
+ lda #0
+ sta _gun_live,x
+ inx
+ stx gun_first
+ bne @retire
+@admit:
+ ldx gun_end
+ cpx #MOUNT_COUNT
+ bcs @visible
+ lda gun_wlo,x
+ sec
+ sbc _camera
+ sta temp
+ lda gun_whi,x
+ sbc _camera+1
+ bne @visible
+ lda temp
  cmp #253
- jcs @off
+ bcs @visible
+ inc gun_end
+ bne @admit
+@visible:
+ ldx gun_first
+@loop:
+ cpx gun_end
+ bcc :+
+ rts
+: lda gun_wlo,x
+ sec
+ sbc _camera
+ sta _gun_screen,x
  lda _gun_dead,x
  beq @active
  cmp #1
@@ -792,55 +846,13 @@ _move_guns:
 @shield:
  jsr touches_force
  bcc @next
- lda #12
- sta _gun_dead,x
- bne @next
-@off:
- lda #0
- sta _gun_live,x
+ jsr kill_mount
+ jmp @next
 @next:
- dex
- jpl @loop
- rts
-_draw_guns:
- ldx _oam_index
- ldy #14
-@loop:
- lda _gun_live,y
- beq @next
- lda _gun_dead,y
- cmp #1
- beq @next
- cpx #248
- bcs @full
- cmp #2
- bcc @mount
- lda #SPARK
- jmp @tile
-@mount: lda #GUN_TILE
-@tile:
- sta $201,x
- lda _gun_screen,y
- sec
- sbc #4
- sta $203,x
- lda _gun_height,y
- sec
- sbc #5
- sta $200,x
- cmp #100
- lda #1
- bcc :+
- ora #128
-: sta $202,x
  inx
- inx
- inx
- inx
-@next: dey
- bpl @loop
-@full: stx _oam_index
- rts
+ jmp @loop
+.include "mount_draw.inc"
+.segment "ACTORS"
 bolt_gun:
  lda _bolts+1,x
  cmp #80
@@ -890,8 +902,13 @@ bolt_gun:
  adc #1
 : cmp #7
  bcs @none
- lda #12
- sta _gun_dead,y
+ txa
+ pha
+ tya
+ tax
+ jsr kill_mount
+ pla
+ tax
  sec
  rts
 @none: clc
@@ -1338,3 +1355,5 @@ _collide_bubbles:
  dex
  bpl @bubble
  rts
+
+.include "cannon.inc"
