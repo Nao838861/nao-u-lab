@@ -87,7 +87,15 @@ def build_art():
         mask=bytes(2 if y==center[x] else int(abs(y-center[x])==1)
                    for y in range(8) for x in range(8))
         masks.append(mask)
-    descriptor=[{0xc1:128,0xfe:192,0xbf:160,0xff:224}.get(a,0) for a in attrs]
+    from tile_palette import world_descriptor, FITTING, SKIN, IRIS, METAL
+    descriptor=[world_descriptor(int(a)) for a in attrs]
+    decoding=bytearray(256)
+    for a in np.unique(attrs):decoding[world_descriptor(int(a))]=a
+    (OUT/'base-attributes.bin').write_bytes(decoding)
+    (OUT/'material-palettes.inc').write_text(
+        'boss_skin: .byte '+','.join(map(str,SKIN))+'\nBOSS_IRIS = '+str(IRIS[0])+'\n')
+    (OUT/'material-palettes.h').write_text('#define FITTING_COLORS '+','.join(map(str,FITTING))+'\n'
+                                          +'#define METAL_COLORS '+','.join(map(str,METAL))+'\n')
     def columns(name,data):
         a=np.array(data,'u1').reshape(30,width).T
         (OUT/name).write_bytes(np.pad(a,((0,0),(0,2))).tobytes())
@@ -135,7 +143,7 @@ def build_art():
         if col<32:first_tiles[row,col]=tile;first_attrs[row,col]=255
     (OUT/'art.h').write_text(f'#define BOSS_PHASE {boss_phase}\n#define STAGE_END {Image.open(ART/"stage.png").width-256}\n'+meta+array('camera_steps',motion)+array('phase_for_age',[t if t<32 else 20+(t-32)%12 for t in range(128)])+array('advance_for_age',[0 if t<32 else 6*(1+(t-32)//12) for t in range(128)])+array('wave_offsets',offsets)+array('nametable',list(first_tiles.flat))+array('attributes',list(first_attrs.flat))+array('ceilrow',tops).replace('static const','const')+array('floorrow',floors).replace('static const','const')+array('diagonal',range(first,first+3)).replace('static const','const'))
     # Band 1 has no overflow wall tiles, including both IRQ seam rows.
-    assert not np.any(attrs.reshape(30,width)[8:17]==0xfe)
+    assert not np.any(attrs.reshape(30,width)[8:17]%64==62)
     image=bytearray(chr_data)
     objbank=bytearray(spr)
     objbank[240*16:]=boss_banks[0][240*16:]
@@ -143,7 +151,7 @@ def build_art():
     # Band 1's wall atlas ends below tile 128. Its upper 2 KiB can
     # simultaneously supply the small and medium sprite pattern page.
     band=attrs.reshape(30,width)[8:17]
-    used=slots.reshape(30,width)[8:17][band==0xc1]
+    used=slots.reshape(30,width)[8:17][band%64==1]
     assert not len(used) or used.max()<128
     image[65*4096+2048:66*4096]=(OUT/'small-force.chr').read_bytes()
     from boss_attack_art import make_attack_page

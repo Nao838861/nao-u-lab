@@ -49,32 +49,40 @@ def pack_tail(chr_data,slots,attrs,width,planar):
         planes=np.unpackbits(np.frombuffer(data[pos:pos+16],'u1')).reshape(2,8,8)
         return planes[0]+2*planes[1]
 
+    # Quantize the original exposed pixels into the palette of the moving
+    # segment before compositing it. A color index can mean red on the
+    # body, green in the iris, or silver on a cable.
+    from tile_palette import colors, IRIS, LASER, SKIN, METAL
+    palettes=np.array([colors(0x0f,p) for p in (IRIS,LASER,SKIN,METAL)])
+    distance=((palettes[:,None,:,None,:]-palettes[None,:,None,:,:])**2).sum(4)
+    remap=distance.argmin(3).astype('u1')
     raw_frames=[];eye_frames=[];samples=defaultdict(list)
     for pose in poses:
         frame={}
-        for px,py in pose:
-            x,y=int(px)+1334-4,int(py)+16-5
-            for r in range(y//8,(y+9)//8+1):
-                for c in range(x//8,(x+8)//8+1):
-                    if (c,r) not in frame:frame[c,r]=base_pixels(c,r)
-                    tx,ty=max(0,x-8*c),max(0,y-8*r)
-                    sx,sy=max(0,8*c-x),max(0,8*r-y)
-                    w,h=min(8-tx,9-sx),min(8-ty,10-sy)
-                    ink=BEAD[sy:sy+h,sx:sx+w]
-                    np.copyto(frame[c,r][ty:ty+h,tx:tx+w],ink,where=ink!=0)
-        # The tip gets its own BG palette in the dark room. Its green eye
-        # remains visible even on scanlines occupied by all eight ship sprites.
         tip_x,tip_y=map(int,pose[-1])
         eye=[(1334+tip_x+dx,16+tip_y+dy) for dy in range(-2,2) for dx in range(-2,2)
              if dx*dx+dy*dy<=5]
         eyes={(x//8,y//8) for x,y in eye}
-        for cell in eyes:
-            frame[cell][frame[cell]==1]=0
+        for px,py in pose:
+            x,y=int(px)+1334-4,int(py)+16-5
+            for r in range(y//8,(y+9)//8+1):
+                for c in range(x//8,(x+8)//8+1):
+                    palette=0 if (c,r) in eyes else 2
+                    if (c,r) not in frame:
+                        frame[c,r]=remap[base(c,r)[1]>>6,palette][base_pixels(c,r)]
+                    tx,ty=max(0,x-8*c),max(0,y-8*r)
+                    sx,sy=max(0,8*c-x),max(0,8*r-y)
+                    w,h=min(8-tx,9-sx),min(8-ty,10-sy)
+                    ink=BEAD[sy:sy+h,sx:sx+w]
+                    np.copyto(frame[c,r][ty:ty+h,tx:tx+w],remap[2,palette][ink],where=ink!=0)
+        # The tip gets its own BG palette in the dark room. Its green eye
+        # remains visible even on scanlines occupied by all eight ship sprites.
         for x,y in eye:frame[x//8,y//8][y%8,x%8]=1
         eye_frames.append(eyes)
         raw={}
         for (c,r),tile in frame.items():
-            if np.array_equal(tile,base_pixels(c,r)):continue
+            dest=0 if (c,r) in eyes else 2
+            if np.array_equal(palettes[dest][tile],palettes[base(c,r)[1]>>6][base_pixels(c,r)]):continue
             raw[c,r]=tile.tobytes()
             samples[bands_for(r)].append(raw[c,r])
         raw_frames.append(raw)

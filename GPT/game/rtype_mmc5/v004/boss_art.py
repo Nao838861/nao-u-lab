@@ -1,6 +1,7 @@
 """ボスの固定BG、尻尾の節、録画の座標列をMMC5用に配置する。"""
 from pathlib import Path
 import numpy as np
+from tile_palette import colors, match, SKIN, IRIS, LASER, METAL
 from PIL import Image
 
 ART=Path(__file__).resolve().parent/'art'
@@ -18,18 +19,29 @@ def body_tiles(slots,attrs,width,sprite_bank,planar,walls):
     mask=padded.reshape(90,2,72,2).sum((1,3))>=2
     (ART.parent/'build/body-contact.bin').write_bytes(np.packbits(mask,axis=1,bitorder='little').tobytes())
     (ART.parent/'build/tail-contact.bin').write_bytes(tail_rom())
-    skin=np.array([(0,0,0),(108,6,0),(181,49,32),(254,204,197)])
-    metal=np.array([(0,0,0),(0,0,0),(173,173,173),(247,216,165)])
+    choices=[(palette,colors(0x0f,entries)) for palette,entries in
+             ((2,SKIN),(3,METAL),(0,IRIS),(1,LASER))]
+    glass_palette=(1,colors(0x0f,LASER))
+    caps=((119,28),(178,81),(178,122),(119,163))
+    terminal=np.zeros(rgb.shape[:2],bool)
+    for x,y in caps:terminal[16+y:32+y,1334+x:1350+x]=True
     cells={}
     for row in range(3,27):
         for col in range(181,width):
             tile=rgb[row*8:row*8+8,col*8:col*8+8].astype('int32')
             if np.count_nonzero(tile.max(2)>46)<2:continue
-            # Warm skin and the steel suspension wires can use separate palettes.
-            costs=[((tile[:,:,None,:]-pal)**2).sum(3) for pal in (skin,metal)]
-            use_metal=costs[1].min(2).sum()<costs[0].min(2).sum()
-            ids=costs[int(use_metal)].argmin(2).astype('u1')
-            cells[row,col]=(planar(ids.tobytes()),0xff if use_metal else 0x3f)
+            r,g,b=tile.transpose(2,0,1)
+            olive=(g>r+4)&(g>b+24)&(g>55)
+            blue=(b>r+12)&(b>g-8)&(b>65)
+            local=[p for p in choices if p[0]!=1 or blue.any()]
+            allowed={0:(1,(g>r*.85)&(g>b+14)),1:(2,(b>r)&(b>g*.9))}
+            palette,ids=match(tile,local,1+7*olive+4*blue,allowed)
+            glass=terminal[row*8:row*8+8,col*8:col*8+8] & blue
+            if glass.sum()>=3:
+                palette,ids=match(tile,[glass_palette],1)
+                ids[(ids==1)&(r-g<40)]=0
+                ids[glass]=np.where(g[glass]>123,3,2)
+            cells[row,col]=(planar(ids.tobytes()),(palette<<6)|63)
     # In the dark room the MMC5 uses window 3 below line 64. Sprites
     # always fetch from window 0, so the other sprite-bank slots are free.
     banks=[bytearray(sprite_bank) for i in range(4)]
@@ -43,7 +55,7 @@ def body_tiles(slots,attrs,width,sprite_bank,planar,walls):
             lookup[data]=next(i for i in available if i not in lookup.values())
         i=lookup[data]
         slots[r*width+c]=i
-        attrs[r*width+c]=0xbf if attr==0x3f else attr
+        attrs[r*width+c]=attr
         bands=({0,3,1} if r==8 else {r//8,3} if r>=8 else {0})
         if r in (16,24):bands.add(r//8-1)
         for b in bands:banks[b][16*i:16*i+16]=data
@@ -54,26 +66,29 @@ def body_tiles(slots,attrs,width,sprite_bank,planar,walls):
     for r in range(8,24):
         for c in range(141,width):
             i=r*width+c
-            if attrs[i] not in (0xc1,0xfe):continue
-            raw=planar(walls[r//8][int(slots[i])+(256 if attrs[i]==0xfe else 0)])
+            if (attrs[i]&63) not in (1,62):continue
+            raw=planar(walls[r//8][int(slots[i])+(256 if (attrs[i]&63)==62 else 0)])
             if raw not in high:
                 high[raw]=next(i for i in range(256) if i not in high.values())
             tile=high[raw]
-            attrs[i],slots[i]=0xff,tile
+            attrs[i],slots[i]=(attrs[i]&192)|63,tile
             for b in {r//8,3}:banks[b][16*tile:16*tile+16]=raw
     # The raised eye and the four cable terminals retain their green/blue
     # glints as transparent sprites; the underlying silhouette stays in BG.
     marks=[]
-    for x,y,w,h in [(155,32,16,24),(119,28,16,16),(178,81,16,16),
-                    (178,122,16,16),(119,163,16,16)]:
+    # Center an 8-pixel strip on the warm rim of each glass bulb. The
+    # larger blue glass surface is in BG even when its OAM glint is hidden.
+    for x,y,w,h in [(155,32,16,24),*((cx+5,cy,8,16) for cx,cy in caps)]:
         for dy in range(0,h,8):
             for dx in range(0,w,8):
                 tile=rgb[16+y+dy:24+y+dy,1334+x+dx:1342+x+dx].astype(int)
                 r,g,b=tile.transpose(2,0,1)
                 if x==155:
-                    ids=np.where((g>r*1.05)&(g>b*1.4)&(g>60),1,0)
+                    ids=np.where((g>r*1.05)&(g>b*1.4)&(g>110),1,0)
                 else:
-                    ids=np.where((b>r*1.12)&(b>g*.94)&(b>65),np.where(g>120,3,2),0)
+                    gold=(r>b+22)&(g>b+20)&(g>62)&(r<g*1.25)
+                    cool=(b>r*1.12)&(b>g*.94)&(b>65)
+                    ids=np.where(gold,1,np.where(cool,np.where(g>120,3,2),0))
                 if np.count_nonzero(ids)<3:continue
                 i=240+len(marks)
                 assert i<256 and i not in low.values()

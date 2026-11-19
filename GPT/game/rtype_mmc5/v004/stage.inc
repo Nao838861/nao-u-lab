@@ -107,21 +107,8 @@ _prepare_column:
 
 .segment "RODATA"
 base_attribute:
- .repeat 128
-  .byte 0
- .endrepeat
- .repeat 32
-  .byte $c1
- .endrepeat
- .repeat 32
-  .byte $bf
- .endrepeat
- .repeat 32
-  .byte $fe
- .endrepeat
- .repeat 32
-  .byte $ff
- .endrepeat
+ .incbin "build/base-attributes.bin"
+.include "build/material-palettes.inc"
 .segment "CODE"
 .export _upload_column
 _upload_column:
@@ -150,9 +137,6 @@ stream_column:
 @done: rts
 
 update_backdrop:
- ldx _backdrop
- cpx shown_backdrop
- beq @done
  stx shown_backdrop
  lda #$3f
  sta $2006
@@ -174,13 +158,21 @@ update_backdrop:
  sta $2006
  lda #1
  sta $2006
- lda #$2a
+ lda #BOSS_IRIS
  sta $2007
+ lda #$3f
+ sta $2006
+ lda #9
+ sta $2006
+ .repeat 3,I
+  lda boss_skin+I
+  sta $2007
+ .endrepeat
  lda #$3f
  sta $2006
  lda #$1d
  sta $2006
- lda #$2a
+ lda #$18
  sta $2007
 @reset:
  lda #0

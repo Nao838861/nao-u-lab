@@ -1,6 +1,7 @@
 """長いステージをMMC5の走査線区間別にタイル化する。"""
 from collections import Counter
 import numpy as np
+from tile_palette import colors, match, METAL, FITTING
 from PIL import Image
 
 def representatives(tiles, limit):
@@ -29,18 +30,25 @@ def make_map(path,indicator_dots):
     screen=np.zeros((240,8*width,3),'uint8')
     screen[16:224]=np.pad(rgb,((0,0),(0,8*width-rgb.shape[1]),(0,0)),mode='edge')
     lamps=indicator_dots(screen)
-    cells=[];flags=[]
+    cells=[];flags=[];palettes=[]
+    metal=(3,colors(0x2d,METAL))
+    fitting=(2,colors(0x2d,FITTING))
     for y in range(30):
         for x in range(width):
             sy=slice(y*8,y*8+8);sx=slice(x*8,x*8+8)
             t=screen[sy,sx].astype(float);r,g,b=t.transpose(2,0,1)
             wall=y<2 or y>=28 or np.count_nonzero((r>95)&(r>b*1.03))>=2
             if wall:
-                lum=.4*r+.45*g+.15*b
-                ids=np.select([lum>192,lum>112,lum<45],[3,2,1],default=0)
+                # The final chamber exchanges BG2 for the boss skin. All
+                # resident hull cells there use the permanent metal palette.
+                choices=(metal,fitting) if x*8+7<1130 and 2<=y<28 else (metal,)
+                palette,ids=match(t,choices,1+5*((r-g>33)&(r-b>45)))
+                # Outside the playfield the black border is always opaque.
+                if y<2 or y>=28:ids.fill(1)
             else:
+                palette=0
                 ids=np.where(lamps[sy,sx],lamps[sy,sx],t.mean(2)<48)
-            cells.append(ids.astype('u1').tobytes());flags.append(wall)
+            cells.append(ids.astype('u1').tobytes());flags.append(wall);palettes.append(palette)
     slots=np.zeros(len(cells),int);attrs=np.zeros(len(cells),int)
     windows=[[],[]]
     for wall,limit,seam_limit in [(False,256,45),(True,512,84)]:
@@ -70,5 +78,5 @@ def make_map(path,indicator_dots):
         windows[int(wall)]=patterns
     fields,walls=windows
     source=[windows[int(w)][i//(8*width)][slots[i]] for i,w in enumerate(flags)]
-    attrs=np.where(flags,np.where(slots<256,0xc1,0xfe),0)
+    attrs=np.where(flags,np.array(palettes)*64+np.where(slots<256,1,62),0)
     return width,fields,walls,source,slots%256,attrs

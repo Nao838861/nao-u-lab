@@ -22,7 +22,7 @@ def stage_map():
         return np.fromfile(ROOT/'build'/name,dtype='u1').reshape(-1,32)[:,:30].T
     slots=load('stage_tiles.bin')
     desc=load('stage_meta.bin')
-    attrs=np.choose(desc//32,[0,0,0,0,0xc1,0xbf,0xfe,0xff])
+    attrs=np.fromfile(ROOT/'build/base-attributes.bin',dtype='u1')[desc]
     return slots,attrs
 
 def check_background():
@@ -55,6 +55,31 @@ def check_background():
             assert np.array_equal(projected[free],overlay[free]),(cell,bank)
             checked+=1
     return checked
+
+def check_materials():
+    from PIL import Image
+    from tile_palette import colors, IRIS, LASER, SKIN, METAL, RGB
+    slots,attrs=stage_map()
+    tiles=chr_tiles()
+    room=np.zeros((240,256,3),dtype='u1')
+    palettes=[colors(0x0f,p) for p in (IRIS,LASER,SKIN,METAL)]
+    for row,col in np.ndindex(30,32):
+        world=166+col
+        attr=int(attrs[row,world])
+        if attr:
+            pattern=tiles[3 if row>=8 else 0,attr&63,slots[row,world]]
+            room[row*8:row*8+8,col*8:col*8+8]=palettes[attr>>6][pattern]
+    def pixels(image,ink):
+        return np.count_nonzero(np.all(image==RGB[ink],axis=2))
+    # Decode the ROM with sprites entirely absent. World column 166
+    # begins six pixels before the final camera origin.
+    assert pixels(room[48:74,161:179],IRIS[0])>70
+    for x,y in ((119,28),(178,81),(178,122),(119,163)):
+        glass=room[y+16:y+32,x+6:x+22]
+        assert pixels(glass,LASER[1])>=10 and pixels(glass,LASER[2])>=45
+    upper=np.asarray(Image.open(ROOT/'build/check/stage2520.png').convert('RGB'))[45:100,97:200]
+    for ink,minimum in ((0x16,80),(0x37,300),(0x30,300)):
+        assert pixels(upper,ink)>minimum
 
 def ray_attributes():
     tiles=chr_tiles()
@@ -130,15 +155,18 @@ def check_camera():
     slots,attrs=stage_map()
     tiles=chr_tiles()
     hull=np.zeros((240,slots.shape[1]*8),bool)
-    for y,x in zip(*np.nonzero(attrs>=192)):
-        hull[y*8:y*8+8,x*8:x*8+8]=tiles[y//8,attrs[y,x]&63,slots[y,x]]==3
+    for y,x in zip(*np.nonzero(attrs!=0)):
+        palette=attrs[y,x]>>6
+        if (attrs[y,x]&63)==63 and x>=181 and palette not in (0,3):continue
+        ids=tiles[y//8,attrs[y,x]&63,slots[y,x]]
+        hull[y*8:y*8+8,x*8:x*8+8]=(ids>=2 if palette==2 and x<141 else ids==3)
     reference=np.fromfile(ROOT/'art/camera.bin','<u2')/16
     poses=np.loadtxt(ROOT/'build/check/positions.txt',dtype=int,ndmin=2)
     errors=[]
     first=int((ROOT/'build/check/first-game-frame.txt').read_text())
     for tick,pos,_ in poses:
         img=np.array(Image.open(ROOT/f'build/check/stage{tick}.png').convert('RGB'))
-        cream=(img[:,:,0]==247)&(img[:,:,1]==216)
+        cream=((img[:,:,0]==247)&(img[:,:,1]==216)) | ((img[:,:,0]==255)&(img[:,:,1]==254))
         def mismatch(x):
             return np.mean(cream[:,8:]!=hull[:,x+8:x+256])
         best=min(range(max(0,pos-2),min(hull.shape[1]-255,pos+3)),key=mismatch)

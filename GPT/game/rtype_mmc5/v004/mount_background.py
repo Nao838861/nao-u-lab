@@ -28,6 +28,10 @@ def attach(data,slots,attrs,width,used,planar):
                 planes=np.unpackbits(raw).reshape(2,8,8)
                 ink=planes[0]+2*planes[1]
                 if not attr:ink=np.minimum(ink,1)
+                elif (attr>>6)==2:
+                    # Map the red mark to shadow and both enamel highlights
+                    # to cream under the steel gun mount.
+                    ink=np.take(np.array([0,1,3,3],dtype='u1'),ink)
                 tile_parts[c,r]=ink
             tile_parts[c,r][line%8,wx%8]=part[sy,sx]
         bounds.append((min(c for c,r in tile_parts),max(c for c,r in tile_parts)))

@@ -196,12 +196,11 @@ nmi:
 :
  lda #2
  sta $5104
- lda bubble_lists_live
+ lda z:remove_size
  beq :+
  lda #$a0
  sta $5115
  jsr $7000
- jsr main_bank
 :
  lda drawpage
  cmp #$60
@@ -209,7 +208,10 @@ nmi:
  lda early_dma
  bne :+
  jsr $6000
-: jsr stream_column
+: lda z:pending_column
+ beq :+
+ jsr stream_column
+:
  jsr restore_beads
  jsr $6200
  jmp @done
@@ -217,7 +219,10 @@ nmi:
  lda early_dma
  bne :+
  jsr $6200
-: jsr stream_column
+: lda z:pending_column
+ beq :+
+ jsr stream_column
+:
  jsr restore_beads
  jsr $6000
 @done:
@@ -228,9 +233,12 @@ nmi:
  jsr paint_beads
  lda bubble_lists_live
  beq @no_ink
+ lda z:add_size
+ beq @bubble_colors
  lda #$a0
  sta $5115
  jsr $7100
+@bubble_colors:
  lda bubble_frame
  cmp #2
  bcc :+
@@ -239,9 +247,14 @@ nmi:
  lda z:bubble_nmi_bank
  sta $5115
  jsr draw_bubble_attributes
-: jsr main_bank
+:
  ; Bubble writes use paired $2006 writes entirely within nametable zero.
-@no_ink: lda #1
+@no_ink:
+ ; All VBlank routines execute in fixed ROM, WRAM or the resident $8000
+ ; bank. Restore the switchable $a000 bank once after the final effect.
+ lda #$9d
+ sta $5115
+ lda #1
  sta $5104
  lda early_dma
  bne :+
@@ -249,7 +262,11 @@ nmi:
  sta $2003
  lda #2
  sta $4014
-: jsr update_backdrop
+: ldx z:_backdrop
+ cpx z:shown_backdrop
+ beq :+
+ jsr update_backdrop
+:
  lda _scroll_x
  sta $2005
  lda #0

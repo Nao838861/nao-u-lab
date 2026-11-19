@@ -19,6 +19,8 @@ local frame=0
 local cells={}
 local tiles=assert(io.open(DIR..'/../stage_tiles.bin','rb')):read('*a')
 local meta=assert(io.open(DIR..'/../stage_meta.bin','rb')):read('*a')
+local decoding=assert(io.open(DIR..'/../base-attributes.bin','rb')):read('*a')
+local expectAddress,expectColor
 local mounts,visibleMounts={},{}
 for line in io.lines(DIR..'/../mount-cells.csv') do
  local c,r,g,slot=line:match('(%d+),(%d+),(%d+),(%d+)')
@@ -55,6 +57,10 @@ end
 emu.addMemoryCallback(function(a,v)
  if frame>45 then
   if a<0x5c00 or a>=0x5fc0 then fail('wall write') end
+  if expectAddress then
+   if a~=expectAddress or v~=expectColor then fail('streamed color at '..frame);return end
+   expectAddress=nil
+  end
   cells[a]=(v>=66 and v<=125) and v or 0
  end
 end,emu.callbackType.write,0x5c00,0x5fff)
@@ -73,10 +79,12 @@ emu.addMemoryCallback(function(a,v)
   local expected=(read(DARK_LABEL)~=0 and meta:byte(i)<128) and 0 or tiles:byte(i)
   local mount=mounts[i-1]
   local physical=0x5c00+row*32+col%32
+  expectAddress=physical
+  expectColor=decoding:byte(meta:byte(i)+1)
   visibleMounts[physical]=nil
   if mount then
    local shown=read(0x0420+row)==255
-   if shown then expected=mount[2];visibleMounts[physical]=true
+   if shown then expected=mount[2];expectColor=255;visibleMounts[physical]=true
    elseif read(GUN_DEAD+mount[1])==0 then fail('live mount missing '..frame);return end
   end
   if addr%32~=col%32 or expected~=v then fail('wrong column at '..frame);return end
@@ -84,7 +92,8 @@ emu.addMemoryCallback(function(a,v)
   if row==29 then cols=cols+1 end
  elseif addr==0x3f00 or addr==0x3f02 or addr==0x3f03 then
   bright=bright+1
- elseif (addr==0x3f1d or addr==0x3f01) and v==0x2a then paletteWrites=paletteWrites+1
+ elseif ((addr==0x3f1d and v==0x18) or (addr==0x3f01 and v==0x19)) or
+        (addr==0x3f09 and v==0x07) or (addr==0x3f0a and v==0x16) or (addr==0x3f0b and v==0x26) then paletteWrites=paletteWrites+1
  elseif read(BOSS_LABEL)~=0 and increment==1 and addr>=0x2000 and addr<0x23c0 then
   patchWrites=patchWrites+1
   local line=emu.getState()['ppu.scanline']
@@ -148,7 +157,7 @@ emu.addEventCallback(function()
  if frame==4490 then
   trace:close()
   positions:close()
-  if missed[1]+missed[2]+missed[3]~=0 or count~=0 or ntWrites~=0 or paletteWrites~=2 or patchWrites<1000 or activeWrites~=0 or streamBytes~=cols*30 or bright~=21 or settled<40 or allMissed~=0 then fail('DMA / clear / PPUDATA '..transfers..' '..count..' '..ntWrites..' light='..bright..' colours='..paletteWrites..' visible writes='..activeWrites..' stop='..settled..' missed='..table.concat(missed,',')..' at '..table.concat(dropped,','));return end
+  if missed[1]+missed[2]+missed[3]~=0 or count~=0 or ntWrites~=0 or paletteWrites~=5 or patchWrites<1000 or activeWrites~=0 or streamBytes~=cols*30 or bright~=21 or settled<40 or allMissed~=0 then fail('DMA / clear / PPUDATA '..transfers..' '..count..' '..ntWrites..' light='..bright..' colours='..paletteWrites..' visible writes='..activeWrites..' stop='..settled..' missed='..table.concat(missed,',')..' at '..table.concat(dropped,','));return end
   local f=assert(io.open(DIR..'/result.txt','w'))
   f:write('frames='..frame..' DMA='..transfers..' peak_lit='..maxLit..' final_lit='..count..' columns='..cols..' camera='..lastCamera..' boss_tile_writes='..patchWrites..' visible_writes='..activeWrites..' other_PPUDATA_writes='..ntWrites..' missed idle/A/B='..table.concat(missed,','));f:close()
   emu.stop(0)
@@ -166,7 +175,8 @@ p=subprocess.run([str(out/src.name),'--testrunner','--timeout=65','--donotsavese
 if p.returncode or not (out/'result.txt').exists():
     raise RuntimeError((out/'error.txt').read_text() if (out/'error.txt').exists() else (p.stdout+p.stderr).decode(errors='replace'))
 print((out/'result.txt').read_text())
-from check_render import check_background,check_rays,check_camera
+from check_render import check_background,check_rays,check_camera,check_materials
+check_materials()
 checked=check_background()
 
 frames_checked,wrapped=check_rays()

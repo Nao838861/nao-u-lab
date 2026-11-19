@@ -16,10 +16,13 @@ def attribute_program(old,frame,base):
             # Restoration and painting have separate sorted runs, so a clipped
             # group skips to the next one instead of returning from both.
             chunk=bytearray()
+            previous=None
             for c,r in group:
                 value=128 if draw or base(c,r)[1] else 0
                 address=0x6400+r*32+c%32
-                chunk.extend((0xa9,value,0x8d,address&255,address>>8))
+                if value!=previous:chunk.extend((0xa9,value))
+                chunk.extend((0x8d,address&255,address>>8))
+                previous=value
             code.extend((0xe0,col,0x90,len(chunk)))
             code.extend(chunk)
     return code+b'\x60'
@@ -35,9 +38,21 @@ def transfer(cells,old):
             writes=((addr>>8,0x2006),(addr&255,0x2006),(slot,0x2007),(attr,addr+0x3c00))
             # Y holds the freshly streamed column. A stationary tile only
             # needs repainting when that column first appears on the right.
-            if old.get(key)==cells[key]:code.extend((0xc0,c,0xd0,20))
-            for value,dest in writes:
-                code.extend((0xa9,value,0x8d,dest&255,dest>>8))
+            previous=old.get(key)
+            def emit(part):
+                for value,dest in part:
+                    code.extend((0xa9,value,0x8d,dest&255,dest>>8))
+            if previous==cells[key]:
+                code.extend((0xc0,c,0xd0,20))
+                emit(writes)
+            elif previous and previous[0]==slot:
+                # ExRAM alone selects the new art unless the terrain streamer
+                # just replaced this column's nametable byte.
+                code.extend((0xc0,c,0xd0,15))
+                emit(writes[:3])
+                emit(writes[3:])
+            else:
+                emit(writes)
     return code+b'\x60'
 
 def programs(frames,base):
