@@ -158,9 +158,21 @@ def build_art():
     masks,ids=templates(neutral)
     color_masks,color_ids=templates(colored)
     first=2+len(masks)
+    centers=(tuple(range(8)),tuple(reversed(range(8))),(4,)*8)
+    for center in centers:
+        # 1 = rim and 2 = hot core. Corner pixels stay in the path's own tile.
+        mask=bytes(2 if y==center[x] else int(abs(y-center[x])==1)
+                   for y in range(8) for x in range(8))
+        masks.append(mask);color_masks.append(bytes(2 if v else 0 for v in mask))
+    # Each ray tile gets the richest palette that can represent every uncovered
+    # source pixel. Flat panels have a third ink for the lighter trailing rim.
+    def ray_style(tile,direction):
+        mask=masks[first-2+direction]
+        outside={p for p,v in zip(tile,mask) if not v}
+        if outside & {2,3}: return 0
+        return 2 if 1 in outside else 1
     for k in range(3):
-        d=bytes(int(y==(x if k==0 else 7-x if k==1 else 4)) for y in range(8) for x in range(8))
-        masks.append(d);color_masks.append(bytes(2*p for p in d))
+        (OUT/f'raypal{k}.bin').write_bytes(bytes(ray_style(t,k)<<6 for t in source))
     # Four bytes per lit cell. Empty cells cost no runtime loop iterations.
     commands=bytearray();starts=[]
     for phase in range(32):
@@ -179,16 +191,35 @@ def build_art():
     windows=[]
     for field,wall in zip(fields,walls):
         banks=[page(field),page(wall)]
-        for mask,cmask in zip(masks,color_masks):
-            banks.append(b''.join(composite(t,cmask if max(t)>1 else mask) for t in field))
+        for i,(mask,cmask) in enumerate(zip(masks,color_masks)):
+            if i<first-2:
+                banks.append(b''.join(composite(t,cmask if max(t)>1 else mask) for t in field))
+                continue
+            k=i-(first-2)
+            def ray_tile(t):
+                style=ray_style(t,k)
+                pixels=list(t)
+                for n,v in enumerate(mask):
+                    if not v: continue
+                    x,y=n%8,n//8
+                    center=centers[k][x]
+                    if v==2: pixels[n]=3
+                    elif style==0: continue
+                    elif style==1: pixels[n]=1 if y<center else 2
+                    else: pixels[n]=2
+                return planar(bytes(pixels))
+            banks.append(b''.join(ray_tile(t) for t in field))
         windows.append(b''.join(banks).ljust(63*4096,b'\0')+spr)
     def coverage(ms):
         return bytes(sum(1<<x for x in range(8) if m[y*8+x]) for m in [blank,blank]+ms for y in range(8))
-    (OUT/'coverage.bin').write_bytes(coverage(masks).ljust(512,b'\0')+coverage(color_masks).ljust(512,b'\0'))
+    # The glow is visual; collision uses the original one-pixel centerline.
+    ray_hits=[bytes(int(v==2) for v in mask) for mask in masks[-3:]]
+    (OUT/'coverage.bin').write_bytes(b''.join(coverage(group[:-3]+ray_hits).ljust(512,b'\0')
+                                              for group in (masks,color_masks)))
     (OUT/'waves.bin').write_bytes(commands)
     (OUT/'waveptr.inc').write_text('wlo: .byte '+','.join(f'<(wave_data+{n})' for n in starts)+'\nwhi: .byte '+','.join(f'>(wave_data+{n})' for n in starts))
     (OUT/'attrs.bin').write_bytes(bytes(attrs))
     (OUT/'kinds.bin').write_bytes(bytes(kinds))
-    (OUT/'sprite.inc').write_text('SPR_BANK = 63\n'+'\n'.join(line.replace('#define ','').replace(' ',' = ',1) for line in meta.splitlines() if line.startswith('#define ')))
+    (OUT/'sprite.inc').write_text(f'SPR_BANK = 63\nRAY_FIRST = {first}\n'+'\n'.join(line.replace('#define ','').replace(' ',' = ',1) for line in meta.splitlines() if line.startswith('#define ')))
     (OUT/'art.h').write_text(meta+array('phase_for_age',[t if t<32 else 20+(t-32)%12 for t in range(128)])+array('advance_for_age',[0 if t<32 else 6*(1+(t-32)//12) for t in range(128)])+array('wave_offsets',offsets)+array('nametable',slots)+array('attributes',attrs)+array('ceilrow',tops)+array('floorrow',floors)+array('diagonal',range(first,first+3)))
     return b''.join(windows)

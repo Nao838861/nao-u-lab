@@ -1,5 +1,5 @@
 .include "build/sprite.inc"
-.import _scroll_x
+.import _scroll_x,_ray_colors
 .import _main
 .importzp c_sp
 .export _ready,_ink,_begin_list,_end_list,_readpad
@@ -9,6 +9,7 @@ cursor: .res 2
 previous: .res 2
 drawpage: .res 1
 window: .res 1
+visible_colors: .res 1
 _ready: .res 1
 _ink: .res 1
 pad: .res 1
@@ -162,6 +163,31 @@ nmi:
  sta $2003
  lda #2
  sta $4014
+ ; Change weapon inks once on selection. Static field and wall palettes
+ ; remain resident; ray extension, reflection and erasure use only ExRAM.
+ lda _ray_colors
+ cmp visible_colors
+ beq @scroll
+ sta visible_colors
+ tax
+ lda #$3f
+ sta $2006
+ lda #$05
+ sta $2006
+ lda upper_rim,x
+ sta $2007
+ lda lower_rim,x
+ sta $2007
+ lda #$3f
+ sta $2006
+ lda #$0a
+ sta $2006
+ lda panel_rim,x
+ sta $2007
+ lda #0
+ sta $2006
+ sta $2006
+@scroll:
  lda _scroll_x
  sta $2005
  lda #0
@@ -192,6 +218,9 @@ irq:
 @return:
  pla
  rti
+upper_rim: .byte $0f,$02
+lower_rim: .byte $16,$22
+panel_rim: .byte $2c,$12
 .segment "VECTORS"
 .word nmi, reset, irq
 

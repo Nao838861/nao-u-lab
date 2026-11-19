@@ -17,6 +17,7 @@ mask: .res 1
 xpos: .res 1
 lamp_ink: .res 1
 hit_bank: .res 1
+ray_offset: .res 1
 cell_lo: .res 1
 column_hits: .res 32
 row_hits: .res 32
@@ -160,6 +161,23 @@ _light:
  ldy worldcol
  lda (addr),y
  bmi @out
+ ldx lamp_ink
+ cpx #RAY_FIRST
+ bcc @wave
+ ; The cell's base palette and ray style are baked from its uncovered pixels.
+ stx hit_bank
+ ldx _row
+ lda ray_palette_lo,x
+ sta addr
+ lda ray_palette_hi,x
+ clc
+ adc ray_offset
+ sta addr+1
+ lda (addr),y
+ ora lamp_ink
+ jmp @emit
+@wave:
+ cmp #0
  beq @neutral
  lda lamp_ink
  tax
@@ -424,8 +442,11 @@ _draw_ray:
  tay
  lda (spriteptr),y
  sta lamp_ink
- ora #$80
- sta _ink
+ sec
+ sbc #RAY_FIRST
+ asl
+ asl
+ sta ray_offset
  jsr _light
 @skip: ldy ray_i
  iny
@@ -530,3 +551,17 @@ effects_one:
  inx
  inx
 @done: rts
+
+.segment "RODATA"
+ray_palette:
+ .incbin "build/raypal0.bin"
+ .res 64
+ .incbin "build/raypal1.bin"
+ .res 64
+ .incbin "build/raypal2.bin"
+ray_palette_lo: .repeat 30,I
+ .byte <(ray_palette+I*32)
+.endrepeat
+ray_palette_hi: .repeat 30,I
+ .byte >(ray_palette+I*32)
+.endrepeat

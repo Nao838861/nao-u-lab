@@ -19,6 +19,11 @@ local frame=0
 local cells={}
 local walls=assert(io.open(DIR..'/../attrs.bin','rb')):read('*a')
 local ntWrites=0
+local addr=0
+local highNext=true
+local paletteWrites=0
+local allowedAddr={0x3f05,0x3f06,0x3f0a,0x3f05,0x3f06,0x3f0a}
+local allowedColor={0x02,0x22,0x12,0x0f,0x16,0x2c}
 local maxLit=0
 local transfers=0
 local trace=assert(io.open(DIR..'/rays.txt','w'))
@@ -35,7 +40,18 @@ emu.addMemoryCallback(function(a,v)
   cells[a]=(v==walls:byte(a-0x5c00+1)) and 0 or v
  end
 end,emu.callbackType.write,0x5c00,0x5fff)
-emu.addMemoryCallback(function() if frame>45 then ntWrites=ntWrites+1 end end,emu.callbackType.write,0x2007)
+emu.addMemoryCallback(function(a,v)
+ if frame<=45 then return end
+ if highNext then addr=v*256 else addr=addr+v end
+ highNext=not highNext
+end,emu.callbackType.write,0x2006)
+emu.addMemoryCallback(function(a,v)
+ if frame<=45 then return end
+ if addr==allowedAddr[paletteWrites+1] and v==allowedColor[paletteWrites+1] then
+  paletteWrites=paletteWrites+1
+ else ntWrites=ntWrites+1 end
+ addr=addr+1
+end,emu.callbackType.write,0x2007)
 emu.addMemoryCallback(function()
  transfers=transfers+1
  if frame>=750 and frame<990 and read(BLUE_LABEL)~=0 then
@@ -45,7 +61,7 @@ emu.addMemoryCallback(function()
  end
 end,emu.callbackType.write,0x4014)
 emu.addEventCallback(function()
- emu.setInput({a=(frame>=405 and frame<645),
+ emu.setInput({a=(frame>=405 and frame<645) or frame==1040,
  b=(frame>=750 and frame<990),
  up=false, right=false},0)
 end,emu.eventType.inputPolled)
@@ -67,11 +83,11 @@ emu.addEventCallback(function()
   if count==0 then fail('laser missing at '..frame);return end
   shot(frame==434 and 'wave' or 'reflection')
  end
- if frame==1100 then
+ if frame==1150 then
   trace:close()
-  if missed[1]+missed[2]+missed[3]~=0 or count~=0 or ntWrites~=0 then fail('DMA / clear / PPUDATA '..transfers..' '..count..' '..ntWrites);return end
+  if missed[1]+missed[2]+missed[3]~=0 or count~=0 or ntWrites~=0 or paletteWrites~=6 then fail('DMA / clear / PPUDATA '..transfers..' '..count..' '..ntWrites);return end
   local f=assert(io.open(DIR..'/result.txt','w'))
-  f:write('frames='..frame..' DMA='..transfers..' peak_lit='..maxLit..' final_lit='..count..' PPUDATA_writes='..ntWrites..' missed idle/A/B='..table.concat(missed,','));f:close()
+  f:write('frames='..frame..' DMA='..transfers..' peak_lit='..maxLit..' final_lit='..count..' palette_writes='..paletteWrites..' other_PPUDATA_writes='..ntWrites..' missed idle/A/B='..table.concat(missed,','));f:close()
   emu.stop(0)
  end
 end,emu.eventType.endFrame)
@@ -99,3 +115,6 @@ frames=[Image.open(out/f'opening{i}.png').convert('RGB').crop((0,83,164,158)).re
 frames[0].save(root/'launch-slow.gif',save_all=True,append_images=frames[1:],duration=100,loop=0)
 timeline=[Image.open(out/f'anim{i}.png').convert('RGB').resize((512,480),Image.Resampling.NEAREST) for i in range(36,201,3)]
 timeline[0].save(root/'preview.gif',save_all=True,append_images=timeline[1:],duration=50,loop=0)
+
+reflection=Image.open(out/'anim132.png').convert('RGB').crop((0,42,126,208))
+reflection.resize((504,664),Image.Resampling.NEAREST).save(root/'reflection-detail.png')

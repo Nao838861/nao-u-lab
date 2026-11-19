@@ -19,7 +19,7 @@ static const u8 palette[]={
 static u8 px,py,tick,scroll_delay;
 u8 scroll_x,scroll_tile;
 u8 oam_index;
-u8 hit_count;
+u8 hit_count, ray_colors;
 u8 enemy_x[3],enemy_y[3],explosion[3];
 static const u8 lanes[]={115,57,163,96,140,76};
 static u8 next_lane;
@@ -182,6 +182,8 @@ void main(void){
             else if(!red[1].active) {spawn(&red[1]);cooldown=25;}
         }
         if((pad&0x40) && !blue.active) launch_blue();
+        if(red[0].active || red[1].active) ray_colors=0;
+        else if(blue.active) ray_colors=1;
         begin_list();erase_lights();
         x_bias=scroll_tile;wave_shot(&red[0]);wave_shot(&red[1]);
         x_bias=launch_tile;reflect_shot();sprites();
