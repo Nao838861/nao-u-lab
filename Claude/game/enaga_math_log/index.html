@@ -943,7 +943,8 @@ function drawForest(now,dt){
     c.fillStyle='#f07a96';c.fillText(fMsg.text,w/2,210);c.globalAlpha=1;
   }
   c.font='17px "BIZ UDPGothic",Meiryo,sans-serif';c.fillStyle='#6c7f95';
-  c.fillText('クリアで れんぞく×2羽（さいだい800羽）・ゲームを またいでも つづく　　10羽で 大きな シマエナガ 1羽に',w/2,h-26);
+  const rewardHelp=kid?'クリアの ごほうびは さいだい40羽':'クリアで れんぞく×2羽（さいだい800羽）・ゲームを またいでも つづく';
+  c.fillText(rewardHelp+'　　10羽で 大きな シマエナガ 1羽に',w/2,h-26);
 }
 
 // ---------- ゲーム進行 ----------
@@ -1095,9 +1096,9 @@ function finish(){
   const td=today();st.days[td]=(st.days[td]||0)+1;st.cl[key]=(st.cl[key]||0)+1;
   if(!st.rk[key]||RO[rank]>RO[st.rk[key]])st.rk[key]=rank;
   if(st.bt[key]==null||total<st.bt[key])st.bt[key]=total;
-  // ゲームやブラウザをまたいだ連続正解で、ごほうびも育つ（1回最大800羽）。
+  // 通常はゲームをまたぐ連続正解で最大800羽。ようちえんは最大40羽。
   const baseGain=G.times.length*G.w+10+(G.miss===0?10:0);
-  const gain=Math.min(800,Math.max(baseGain,st.streakNow*2));st.enaga+=gain;
+  const gain=Math.min(kid?40:800,Math.max(baseGain,st.streakNow*2));st.enaga+=gain;
   const newT=checkTitles(st);saveDB();
   let up='';for(let p=4;p>=1;p--)if(Math.floor(st.enaga/10**p)>Math.floor(before/10**p)){up=`${PL[p].label}の 大きな シマエナガが きたよ！`;break;}
   $('#rgain').innerHTML='';

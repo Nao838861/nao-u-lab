@@ -1,4 +1,4 @@
-// 連続正解による森の報酬・保存・800羽上限を実ブラウザーで確認する。
+// 連続正解による森の報酬・保存・通常800羽／幼稚園40羽の上限を実ブラウザーで確認する。
 // 実行: node test_rewards.mjs
 import assert from 'node:assert/strict';
 import path from 'node:path';
@@ -116,6 +116,33 @@ try {
   assert.equal((await stats()).streakNow, 400);
   assert.equal((await stats()).enaga - beforeMul, 800);
   console.log('ok  かけ算★3は1問2問分のまま、800羽上限を適用');
+
+  await page.evaluate(() => window.__enaga.setKid(true));
+  for (let i = 0; i < 2; i++) {
+    await page.reload();
+    assert.equal(await page.evaluate(() => window.__enaga.kid), true);
+    const before = (await stats()).enaga;
+    await start(); await complete();
+    assert.ok((await stats()).streakNow > 400);
+    assert.equal((await stats()).enaga - before, 40);
+    assert.match(await page.locator('#rgain').innerText(), /\+40羽/);
+  }
+  console.log('ok  幼稚園モードは再起動・複数セッション・400連続超でも毎回40羽まで');
+
+  await page.reload();
+  const beforeKidMiss = (await stats()).enaga;
+  await start();
+  for (let i = 0; i < 19; i++) await answer();
+  await answer(true); await complete();
+  assert.equal((await stats()).enaga - beforeKidMiss, 30);
+  console.log('ok  幼稚園モードでもミス後の通常報酬30羽を維持');
+
+  await page.evaluate(() => window.__enaga.setKid(false));
+  await seedStreak(380);
+  const beforeNormal = (await stats()).enaga;
+  await start(); await complete();
+  assert.equal((await stats()).enaga - beforeNormal, 800);
+  console.log('ok  通常モードに戻すと800羽まで増える');
 
   await page.reload();
   const total = (await stats()).enaga;
