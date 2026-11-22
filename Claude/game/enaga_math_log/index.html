@@ -64,6 +64,11 @@ h1{margin:0 0 6px;font-size:min(7vw,52px);letter-spacing:.06em;color:#3b5f86;tex
 .star>span:first-child{text-align:left;}
 .star small{font-size:14px;color:var(--soft);display:block;}
 .star .bt{font-size:15px;color:var(--soft);}
+body.title h1{font-size:44px;}
+body.title #dango{height:90px;flex-shrink:0;}
+body.title .course{padding:10px 14px;}
+body.title .star{font-size:18px;padding:5px 12px;margin:4px 0;}
+body.title .keys{margin-top:6px;font-size:15px;line-height:1.6;}
 .keys{margin-top:10px;font-size:17px;color:var(--soft);text-align:center;line-height:1.7;}
 kbd{background:#fff;border:2px solid #c6d4e3;border-bottom-width:4px;border-radius:7px;padding:0 7px;font-family:inherit;}
 .toggle{font-family:inherit;font-size:18px;padding:5px 12px 5px 8px;border-radius:20px;border:3px solid #cfe0f2;background:#f7fbff;cursor:pointer;color:var(--soft);display:flex;align-items:center;gap:6px;margin-left:10px;}
@@ -176,7 +181,9 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
       <div class="courses">
         <div class="course">
           <h2 id="cName">たし算・ひき算</h2>
-          <button class="star" data-course="addsub" data-star="1"><span>★1<small id="cd1"></small></span><span class="bt" id="bt1">-</span></button>
+          <button class="star" data-course="add" data-star="1"><span>★1 足し算<small id="cdAdd"></small></span><span class="bt" id="btAdd">-</span></button>
+          <button class="star" data-course="sub" data-star="1"><span>★1 引き算<small id="cdSub"></small></span><span class="bt" id="btSub">-</span></button>
+          <button class="star" data-course="addsub" data-star="1"><span>★1 足し算と引き算<small id="cd1"></small></span><span class="bt" id="bt1">-</span></button>
           <button class="star" data-course="addsub" data-star="2"><span>★2<small id="cd2"></small></span><span class="bt" id="bt2">-</span></button>
           <button class="star" data-course="addsub" data-star="3"><span>★3<small id="cd3"></small></span><span class="bt" id="bt3">-</span></button>
         </div>
@@ -197,7 +204,7 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
           <button class="delbtn" id="delBtn">きろくを けす</button>
         </div>
       </div>
-      <div class="keys"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> たし算・ひき算　<span class="mulc"><kbd>4</kbd><kbd>5</kbd><kbd>6</kbd> かけ算　</span>でえらんで <kbd>Enter</kbd> でスタート（マウスで★をおしてもOK）<br>
+      <div class="keys"><kbd>7</kbd> ★1足し算　<kbd>8</kbd> ★1引き算　<kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 足し算と引き算　<span class="mulc"><kbd>4</kbd><kbd>5</kbd><kbd>6</kbd> かけ算　</span><kbd>Enter</kbd> でスタート（★をおしてもOK）<br>
         こたえは 数字キー か テンキー で入れて <kbd>Enter</kbd>　（まちがえたら <kbd>BackSpace</kbd>）</div>
     </div>
     <!-- forest / titles -->
@@ -309,11 +316,20 @@ const COURSES={
   m:{name:'かけ算',desc:['九九','□をさがす・40×6','2けた × 1けた'],th:{1:[22,26,31,37,44,52,62,90,110],2:[30,36,44,54,66,80,100,140,170],3:[30,38,48,60,75,93,115,160,190]}},
   k:{name:'たしざん・ひきざん',desc:['こたえ 5まで','こたえ 10まで','20までの かず'],th:{1:[27,32,38,45,54,64,76,95,115],2:[32,38,45,54,65,78,95,120,145],3:[38,45,54,65,78,94,112,140,170]}},
 };
+// 単独の★1も元の★1と同じタイム基準。記録と称号は別にする。
+COURSES.a={...COURSES.n,name:'足し算'};COURSES.s={...COURSES.n,name:'引き算'};
+COURSES.ka={...COURSES.k,name:'たしざん'};COURSES.ks={...COURSES.k,name:'ひきざん'};
 let kid=false;
-const modeKey=()=>kid?'k':course==='mul'?'m':'n';
+const modeFor=(c,k)=>k?(c==='add'?'ka':c==='sub'?'ks':'k'):(c==='add'?'a':c==='sub'?'s':c==='mul'?'m':'n');
+const modeKey=()=>modeFor(course,kid);
 function makeSet(star){
   const used=new Set(),out=[];
-  for(const [n,gen,ok] of (kid?RECIPES_K:course==='mul'?RECIPES_M:RECIPES)[star]){
+  let recipe=(kid?RECIPES_K:course==='mul'?RECIPES_M:RECIPES)[star];
+  if(star===1&&(course==='add'||course==='sub')){
+    const split=kid?1:2;
+    recipe=(course==='add'?recipe.slice(0,split):recipe.slice(split)).map(([n,gen,ok])=>[n*2,gen,ok]);
+  }
+  for(const [n,gen,ok] of recipe){
     let got=0,guard=0;
     while(got<n&&guard++<5000){
       const p=gen();
@@ -341,7 +357,12 @@ function loadDB(){
 const DB=loadDB();
 let player=DB.last&&DB.players.includes(DB.last)?DB.last:null;
 function saveDB(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
-const recKey=(star,c=course,k=kid)=>(k?'k_addsub':c)+'_'+star;
+const recKey=(star,c=course,k=kid)=>(k?'k_':'')+(k&&c==='mul'?'addsub':c)+'_'+star;
+function recordInfo(key){
+  const m=/^(k_)?(addsub|add|sub|mul)_([1-3])$/.exec(key);
+  if(!m||(m[1]&&m[2]==='mul')||((m[2]==='add'||m[2]==='sub')&&m[3]!=='1'))return null;
+  return {ck:modeFor(m[2],!!m[1]),star:+m[3]};
+}
 function recOf(name,star,c,k){const r=(DB.recs[name]||{})[recKey(star,c,k)];return r||{best:null,ghost:null,top:[]};}
 function getRec(star){return recOf(player,star);}
 function saveRec(star,rec){(DB.recs[player]=DB.recs[player]||{})[recKey(star)]=rec;saveDB();}
@@ -382,15 +403,15 @@ function statsOf(name){
 // v01で あそんだ ぶんを きろくから ひきつぐ（上位5回ぶん）
 function seedStats(name,s){
   for(const [k,r] of Object.entries(DB.recs[name]||{})){
-    const m=/^(k_)?addsub_(\d)$/.exec(k);if(!m||!r||!r.top)continue;
-    const key=(m[1]?'k':'n')+m[2];
+    const info=recordInfo(k);if(!info||!r||!r.top)continue;
+    const key=info.ck+info.star;
     for(const t of r.top){
       s.cl[key]=(s.cl[key]||0)+1;s.clears++;s.correct+=STEPS;s.enaga+=STEPS+10;
       if(t.miss===0){s.noMiss++;s.enaga+=10;}
       s.maxCombo=Math.max(s.maxCombo,t.combo||0);
       const dm=/(\d+)\/(\d+)\/(\d+)/.exec(t.d||'');
       if(dm){const dk=dm[1]+'-'+dm[2].padStart(2,'0')+'-'+dm[3].padStart(2,'0');s.days[dk]=(s.days[dk]||0)+1;}
-      const rk=rankOf(m[1]?'k':'n',+m[2],t.ms);if(!s.rk[key]||RO[rk]>RO[s.rk[key]])s.rk[key]=rk;
+      const rk=rankOf(info.ck,info.star,t.ms);if(!s.rk[key]||RO[rk]>RO[s.rk[key]])s.rk[key]=rk;
       const avg=t.ms/1000/STEPS;if(s.bestAvg==null||avg<s.bestAvg)s.bestAvg=avg;
     }
   }
@@ -402,9 +423,9 @@ function seedStats(name,s){
 function migrateRk(name,s){
   s.rk={};s.bt=s.bt||{};
   for(const [k,r] of Object.entries(DB.recs[name]||{})){
-    const m=/^(k_addsub|addsub|mul)_(\d)$/.exec(k);if(!m||!r||r.best==null)continue;
-    const ck=m[1]==='k_addsub'?'k':m[1]==='mul'?'m':'n',key=ck+m[2];
-    s.rk[key]=rankOf(ck,+m[2],r.best);if(s.bt[key]==null||r.best<s.bt[key])s.bt[key]=r.best;
+    const info=recordInfo(k);if(!info||!r||r.best==null)continue;
+    const key=info.ck+info.star;
+    s.rk[key]=rankOf(info.ck,info.star,r.best);if(s.bt[key]==null||r.best<s.bt[key])s.bt[key]=r.best;
   }
   s.rkV=2;checkTitles(s);saveDB();
 }
@@ -416,10 +437,16 @@ const dayCount=s=>Object.keys(s.days).length;
 const maxDay=s=>Math.max(0,...Object.values(s.days));
 function streak(s){let best=0,cur=0,prev=null;for(const d of Object.keys(s.days).sort()){const t=Date.parse(d);cur=(prev!=null&&t-prev===864e5)?cur+1:1;best=Math.max(best,cur);prev=t;}return best;}
 const N3=['n1','n2','n3'],K3=['k1','k2','k3'],M3=['m1','m2','m3'];
+const N5=['a1','s1',...N3],K5=['ka1','ks1',...K3];
+const TIME_LADDERS=[
+  {ck:'a',star:1,id:'LA1_',label:'足し算',prefix:'たし算の '},
+  {ck:'s',star:1,id:'LS1_',label:'引き算',prefix:'ひき算の '},
+  ...[1,2,3].map(star=>({ck:'n',star,id:`L${star}_`,label:'足し算と引き算',prefix:''})),
+];
 const TITLES=[
   // いちばん だいじ：たし算・ひき算の タイム（一番上に 出す）
-  ...[1,2,3].flatMap(star=>ladderOf(star).map(x=>[`たし算・ひき算 ★${star} タイム（${LADDER_THEME[star]}）`,`L${star}_${x.i}`,x.name,
-      `★${star}を ${x.sec}びょう いない`+(x.rank?`・${x.rank}ランク`:''),s=>s.bt&&s.bt['n'+star]!=null&&s.bt['n'+star]<=x.sec*1000])),
+  ...TIME_LADDERS.flatMap(({ck,star,id,label,prefix})=>ladderOf(star).map(x=>[`${label} ★${star} タイム（${LADDER_THEME[star]}）`,id+x.i,prefix+x.name,
+      `${label}★${star}を ${x.sec}びょう いない`+(x.rank?`・${x.rank}ランク`:''),s=>s.bt&&s.bt[ck+star]!=null&&s.bt[ck+star]<=x.sec*1000])),
   ['はじめて','c1','けいさん ぼうけんしゃ','1回 クリアする',s=>s.clears>=1],
   ['はじめて','c5','みならい エナガせんし','5回 クリアする',s=>s.clears>=5],
   ['はじめて','c20','エナガの きし','20回 クリアする',s=>s.clears>=20],
@@ -448,23 +475,34 @@ const TITLES=[
   ['たし算・ひき算','sn1','★1の チャンピオン','★1で Sランク（むかしの きじゅん）',s=>false,1],
   ['たし算・ひき算','sn2','★2の チャンピオン','★2で Sランク（むかしの きじゅん）',s=>false,1],
   ['たし算・ひき算','sn3','★3の チャンピオン','★3で Sランク（むかしの きじゅん）',s=>false,1],
-  ['たし算・ひき算','alln','コンプリート！','★1・★2・★3を ぜんぶ クリア',s=>N3.every(k=>s.cl[k])],
-  ['たし算・ひき算','allnA','ハイパー トリオ','★1・★2・★3 ぜんぶ Aランク いじょう',s=>N3.every(k=>rkAt(s,k,'A'))],
-  ['たし算・ひき算','allnS','ギガ トリオ','★1・★2・★3 ぜんぶ Sランク',s=>N3.every(k=>rkAt(s,k,'S'))],
-  ['たし算・ひき算','allnSSS','けいさんの ゴッド','★1・★2・★3 ぜんぶ SSSランク',s=>N3.every(k=>rkAt(s,k,'SSS'))],
+  ['たし算・ひき算','alln','コンプリート！（むかし）','足し算と引き算★1〜★3を ぜんぶ クリア（むかしの目標）',s=>false,1],
+  ['たし算・ひき算','allnA','ハイパー トリオ','足し算と引き算★1〜★3 ぜんぶ Aランク いじょう（むかしの目標）',s=>false,1],
+  ['たし算・ひき算','allnS','ギガ トリオ','足し算と引き算★1〜★3 ぜんぶ Sランク（むかしの目標）',s=>false,1],
+  ['たし算・ひき算','allnSSS','けいさんの ゴッド（むかし）','足し算と引き算★1〜★3 ぜんぶ SSSランク（むかしの目標）',s=>false,1],
+  ['たし算・ひき算','ac1','たし算 デビュー','足し算★1を クリア',s=>!!s.cl.a1],
+  ['たし算・ひき算','sc1','ひき算 デビュー','引き算★1を クリア',s=>!!s.cl.s1],
+  ['たし算・ひき算','alln5','コンプリート！','★1の3しゅるい・★2・★3を ぜんぶ クリア',s=>N5.every(k=>s.cl[k])],
+  ['たし算・ひき算','alln5A','ハイパー ファイブ','★1の3しゅるい・★2・★3 ぜんぶ Aランク いじょう',s=>N5.every(k=>rkAt(s,k,'A'))],
+  ['たし算・ひき算','alln5S','ギガ ファイブ','★1の3しゅるい・★2・★3 ぜんぶ Sランク',s=>N5.every(k=>rkAt(s,k,'S'))],
+  ['たし算・ひき算','alln5SSS','けいさんの ゴッド','★1の3しゅるい・★2・★3 ぜんぶ SSSランク',s=>N5.every(k=>rkAt(s,k,'SSS'))],
   ['かけ算','mc1','かけ算 デビュー','かけ算で クリア',s=>M3.some(k=>s.cl[k])],
   ['かけ算','ms1','九九 マスター','かけ算★1で Sランク',s=>rkAt(s,'m1','S')],
   ['かけ算','ms2','九九の まほうつかい','かけ算★2で Sランク',s=>rkAt(s,'m2','S')],
   ['かけ算','ms3','かけ算 ドラゴン','かけ算★3で Sランク',s=>rkAt(s,'m3','S')],
   ['かけ算','mc3','かけ算 コンプリート','かけ算★1〜★3を ぜんぶ クリア',s=>M3.every(k=>s.cl[k])],
   ['かけ算','mSSS','かけ算の ゴッド','かけ算★1〜★3 ぜんぶ SSSランク',s=>M3.every(k=>rkAt(s,k,'SSS'))],
-  ['かけ算','allstar','けいさん オールスター','たし算・ひき算も かけ算も ★1〜★3 ぜんぶ クリア',s=>N3.concat(M3).every(k=>s.cl[k])],
-  ['ようちえん','kc1','ちびっこ チャレンジャー','ようちえんモードで クリア',s=>K3.some(k=>s.cl[k])],
-  ['ようちえん','kc3','ようちえん コンプリート','ようちえん★1〜★3を クリア',s=>K3.every(k=>s.cl[k])],
-  ['ようちえん','ks1','ひよこ チャンピオン','ようちえん★1で Sランク',s=>rkAt(s,'k1','S')],
+  ['かけ算','allstar','けいさん オールスター（むかし）','足し算と引き算・かけ算★1〜★3を クリア（むかしの目標）',s=>false,1],
+  ['かけ算','allstar8','けいさん オールスター','足し算・引き算・足し算と引き算★1〜★3・かけ算★1〜★3を ぜんぶ クリア',s=>N5.concat(M3).every(k=>s.cl[k])],
+  ['ようちえん','kc1','ちびっこ チャレンジャー','ようちえんモードで クリア',s=>K5.some(k=>s.cl[k])],
+  ['ようちえん','kc3','ようちえん コンプリート（むかし）','ようちえんの足し算と引き算★1〜★3を クリア（むかしの目標）',s=>false,1],
+  ['ようちえん','kc5','ようちえん コンプリート','ようちえんの★1の3しゅるい・★2・★3を クリア',s=>K5.every(k=>s.cl[k])],
+  ['ようちえん','kas1','たしざん ひよこ チャンピオン','ようちえんの足し算★1で Sランク',s=>rkAt(s,'ka1','S')],
+  ['ようちえん','kss1','ひきざん ひよこ チャンピオン','ようちえんの引き算★1で Sランク',s=>rkAt(s,'ks1','S')],
+  ['ようちえん','ks1','ひよこ チャンピオン','ようちえんの足し算と引き算★1で Sランク',s=>rkAt(s,'k1','S')],
   ['ようちえん','ks2','こすずめ チャンピオン','ようちえん★2で Sランク',s=>rkAt(s,'k2','S')],
   ['ようちえん','ks3','こがら チャンピオン','ようちえん★3で Sランク',s=>rkAt(s,'k3','S')],
-  ['ようちえん','kS','ようちえんの おうさま','ようちえん★1〜★3 ぜんぶ Sランク',s=>K3.every(k=>rkAt(s,k,'S'))],
+  ['ようちえん','kS','ようちえんの おうさま（むかし）','ようちえんの足し算と引き算★1〜★3 ぜんぶ Sランク（むかしの目標）',s=>false,1],
+  ['ようちえん','kS5','ようちえんの おうさま','ようちえんの★1の3しゅるい・★2・★3 ぜんぶ Sランク',s=>K5.every(k=>rkAt(s,k,'S'))],
   ['はやさ','f1','はやわざ エナガ','1問を 1びょうより はやく 正かい',s=>s.fast>=1],
   ['はやさ','f50','いなずまの ゆび','1びょうより はやい 正かい 50回',s=>s.fast>=50],
   ['はやさ','f300','ひかりの ゆび','1びょうより はやい 正かい 300回',s=>s.fast>=300],
@@ -494,7 +532,7 @@ const gotCount=s=>TITLES.filter(t=>s.titles[t.id]).length;
 const newTitles=s=>TITLES.filter(t=>s.titles[t.id]&&!(s.tSeenIds||{})[t.id]);
 function checkTitles(s){const got=[];for(const t of TITLES)if(!s.titles[t.id]&&t.test(s)){s.titles[t.id]=today();got.push(t);}return got;}
 function setKid(v){
-  kid=!!v;if(kid)course='addsub';if(player){(DB.kid=DB.kid||{})[player]=kid;saveDB();}
+  kid=!!v;if(kid&&course==='mul')course='addsub';if(player){(DB.kid=DB.kid||{})[player]=kid;saveDB();}
   document.body.classList.toggle('kid',kid);refreshTitle();
 }
 function selectPlayer(name){
@@ -514,7 +552,7 @@ function renderPlayers(){
   }
 }
 function needName(){const w=$('#who');w.classList.remove('need');void w.offsetWidth;w.classList.add('need');$('#nameIn').focus();}
-function tryStart(star,c=course){if(!player){needName();return;}if(kid)c='addsub';course=c;startGame(star);}
+function tryStart(star,c=course){if(!player){needName();return;}course=kid&&c==='mul'?'addsub':c;startGame(star);}
 function openForest(t){if(!player){needName();return;}ac();state='forest';show('sForest');setTab(t);}
 const sec=ms=>(ms/1000).toFixed(1);
 
@@ -950,17 +988,20 @@ function drawForest(now,dt){
 // ---------- ゲーム進行 ----------
 let state='title',G=null,selStar=1,resultLock=0,runId=0;
 const screens=['sTitle','sCount','sPlay','sResult','sForest'];
-function show(id){screens.forEach(s=>$('#'+s).classList.toggle('on',s===id));document.body.classList.toggle('calm',id==='sTitle'||id==='sResult');document.body.classList.toggle('forest',id==='sForest');resize();}
+function show(id){screens.forEach(s=>$('#'+s).classList.toggle('on',s===id));document.body.classList.toggle('title',id==='sTitle');document.body.classList.toggle('calm',id==='sTitle'||id==='sResult');document.body.classList.toggle('forest',id==='sForest');resize();}
 function refreshTitle(){
   const bestText=(st,c,ck)=>{const r=recOf(player,st,c,kid);return r.best?`ベスト ${sec(r.best)}秒 ${rankOf(ck,st,r.best)}`:'まだ記録なし';};
   for(let st=1;st<=3;st++){
     $('#bt'+st).textContent=player?bestText(st,'addsub',kid?'k':'n'):'-';
     $('#mbt'+st).textContent=player?bestText(st,'mul','m'):'-';
   }
+  $('#btAdd').textContent=player?bestText(1,'add',modeFor('add',kid)):'-';
+  $('#btSub').textContent=player?bestText(1,'sub',modeFor('sub',kid)):'-';
   document.querySelectorAll('.star').forEach(b=>b.classList.toggle('sel',+b.dataset.star===selStar&&b.dataset.course===course));
   const C=COURSES[modeKey()],CA=COURSES[kid?'k':'n'];
   $('#cName').textContent=CA.name+(kid?'（ようちえん）':'');
   for(let i=1;i<=3;i++)$('#cd'+i).textContent=CA.desc[i-1];
+  $('#cdAdd').textContent=CA.desc[0];$('#cdSub').textContent=CA.desc[0];
   $('#kidBtn').classList.toggle('on',kid);
   $('#hCourse').textContent=(player?player+' ・ ':'')+(kid?'ようちえん ':'')+`${C.name} ★${selStar}`;
   if(player){
@@ -979,6 +1020,7 @@ function toTitle(){
 }
 function setHud(step,ms,miss,combo){$('#hSteps').textContent=G?G.steps:STEPS;$('#hStep').textContent=step;$('#hTime').textContent=sec(ms);$('#hMiss').textContent=miss;$('#hCombo').textContent=combo;}
 function startGame(star){
+  if(star!==1&&(course==='add'||course==='sub'))course='addsub';
   ac();selStar=star;refreshTitle();
   const rec=getRec(star);
   const st0=statsOf(player);
@@ -1067,11 +1109,11 @@ function finish(){
   const s=total/1000,rank=rankOf(modeKey(),G.star,total);
   $('#rank').textContent=rank;$('#rank').style.color=RANK_COL[rank];
   const left=x=>(Math.max(0.1,Math.ceil((s-x)*10-1e-6)/10)).toFixed(1);
-  if(modeKey()==='n'){
+  if(['n','a','s'].includes(modeKey())){
     // たし算・ひき算：ランクと タイムしょうごうを いっしょに
-    const L=ladderOf(G.star),ci=ladderIdx(G.star,total),nx=L[ci+1];
-    $('#rtitle').textContent=`しょうごう「${ci>=0?L[ci].name:RANK_TITLE.G}」`;
-    $('#rnext').textContent=nx?`つぎは「${nx.name}」（${nx.sec}秒${nx.rank?'・'+nx.rank+'ランク':''}）まで あと ${left(nx.sec)}秒`:'さいこうの しょうごう！ すごい！';
+    const L=ladderOf(G.star),ci=ladderIdx(G.star,total),nx=L[ci+1],prefix=TIME_LADDERS.find(t=>t.ck===modeKey()&&t.star===G.star).prefix;
+    $('#rtitle').textContent=`しょうごう「${prefix}${ci>=0?L[ci].name:RANK_TITLE.G}」`;
+    $('#rnext').textContent=nx?`つぎは「${prefix}${nx.name}」（${nx.sec}秒${nx.rank?'・'+nx.rank+'ランク':''}）まで あと ${left(nx.sec)}秒`:'さいこうの しょうごう！ すごい！';
   }else{
     $('#rtitle').textContent=`しょうごう「${RANK_TITLE[rank]}」`;
     const nx=nextRank(modeKey(),G.star,rank);
@@ -1188,6 +1230,7 @@ window.addEventListener('keydown',e=>{
     }
     if(d==='1'||d==='2'||d==='3'){course='addsub';selStar=+d;refreshTitle();e.preventDefault();}
     else if(!kid&&(d==='4'||d==='5'||d==='6')){course='mul';selStar=d-3;refreshTitle();e.preventDefault();}
+    else if(d==='7'||d==='8'){course=d==='7'?'add':'sub';selStar=1;refreshTitle();e.preventDefault();}
     else if(enter||c==='Space'){e.preventDefault();tryStart(selStar);}
   }else if(state==='result'){
     if(performance.now()<resultLock)return;
