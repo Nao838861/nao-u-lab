@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>家族で共有する記録の準備｜エナガの かんじの森</title>
+<style>
+body{margin:0;background:#eff6fd;color:#2b3a4a;font:17px/1.9 Meiryo,sans-serif}main{max-width:800px;margin:30px auto;padding:28px;background:white;border-radius:20px}h1{font-size:27px;color:#3b5f86}h2{font-size:21px;margin-top:30px}a{color:#21679f}li{margin:12px 0}textarea{width:100%;height:250px;box-sizing:border-box;border:2px solid #cfe0f2;border-radius:12px;font:13px/1.5 monospace;padding:12px}button{font:inherit;padding:8px 20px;border:2px solid #4a90d9;border-radius:12px;background:#e7f2ff;color:#294e70;cursor:pointer}code{overflow-wrap:anywhere;background:#eff6fd;padding:2px 5px}p.small{font-size:14px;color:#526d87}#message{min-height:30px}@media(max-width:600px){main{margin:0;border-radius:0;padding:20px}h1{font-size:23px}}
+</style>
+</head>
+<body><main>
+<h1>家族で共有する記録の準備</h1>
+<p>最初に1回だけ、GoogleのFirebaseに記録の保存場所を作ります。家族が遊ぶときは、同じリンクを開くだけ。家族それぞれのログインは不要です。</p>
+<h2>① 無料の保存場所を作る</h2>
+<ol>
+<li><a href="https://console.firebase.google.com/" target="_blank" rel="noopener">Firebaseコンソールを開く</a>。Googleでログインし、プロジェクトを作成します。<strong>無料のSparkプラン</strong>を使います。Google Analyticsは不要です。</li>
+<li>メニューの「構築」または「Databases &amp; Storage」から <strong>Realtime Database</strong> を選び、「データベースを作成」を押します。Cloud Firestoreではありません。</li>
+<li>保存場所を選び、<strong>ロックモード</strong>で作成します。</li>
+</ol>
+<h2>② 保存ルールを貼る</h2>
+<p>Realtime Databaseの「ルール」タブを開き、下の内容にすべて置き換えて「公開」を押してください。</p>
+<textarea id="rules" readonly aria-label="Firebaseに貼る保存ルール">読み込み中…</textarea>
+<button type="button" id="copy">保存ルールをコピー</button><p id="message" role="status"></p>
+<h2>③ 家族用リンクを作る</h2>
+<ol>
+<li>Firebaseの「データ」タブの上部にあるURLをコピーします。<code>https://○○-default-rtdb.firebaseio.com</code> などの形です。</li>
+<li><strong>今の記録があるPC・ブラウザ</strong>で<a href="./">漢字の森</a>を開き、左下の「この端末に保存」を押します。</li>
+<li>「保存先のURL」に貼り、「この端末で開いている記録をコピーする」をチェックしたまま「家族用リンクを作る」を押します。</li>
+<li>できたリンクを家族に渡し、PC・iPadで同じリンクをブックマークしてください。2台目では新しく作り直さず、同じリンクを開きます。</li>
+</ol>
+<p>「共有に保存済み」がオンラインへの保存完了です。通信が切れた場合は、未送信の記録を端末内に残します。同時更新があった場合も、古い記録で自動的に上書きしません。</p>
+<p class="small">家族用リンクを知っている人が、その記録を読み書きできます。普通のURLで開くと、元の端末だけの記録を使います。<a href="./cloud-save-setup.md">詳しい使い方</a> ／ <a href="https://firebase.google.com/pricing" target="_blank" rel="noopener">Firebaseの料金表</a></p>
+<p><a href="./">← 漢字の森に戻る</a></p>
+</main>
+<script type="module">
+const rules = document.querySelector('#rules'), message = document.querySelector('#message');
+try { const r = await fetch('./database.rules.json'); if (!r.ok) throw new Error(); rules.value = await r.text(); }
+catch { rules.value = '保存ルールを読み込めませんでした。ページを開き直してください。'; document.querySelector('#copy').disabled = true; }
+document.querySelector('#copy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(rules.value); message.textContent = 'コピーしました。Firebaseの「ルール」に貼り付けてください。'; }
+  catch { rules.focus(); rules.select(); message.textContent = '選択したルールをコピーしてください。'; }
+});
+</script>
+</body></html>

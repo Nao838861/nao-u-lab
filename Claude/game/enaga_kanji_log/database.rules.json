@@ -1,0 +1,18 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "enagaKanji": {
+      "$room": {
+        ".read": "$room.matches(/^[A-Za-z0-9_-]{24,128}$/)",
+        ".write": "$room.matches(/^[A-Za-z0-9_-]{24,128}$/) && newData.exists()",
+        ".validate": "newData.hasChildren(['v', 'revision', 'updatedAt', 'payload'])",
+        "v": { ".validate": "newData.val() === 1" },
+        "revision": { ".validate": "newData.isNumber() && newData.val() % 1 === 0 && ((!data.exists() && newData.val() === 1) || newData.val() === data.val() + 1)" },
+        "updatedAt": { ".validate": "newData.isNumber() && newData.val() === now" },
+        "payload": { ".validate": "newData.isString() && newData.val().length <= 2000000" },
+        "$other": { ".validate": false }
+      }
+    }
+  }
+}

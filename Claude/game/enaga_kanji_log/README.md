@@ -48,4 +48,15 @@
 
 localStorage `enaga_kanji_v1`。なまえごとに、学年・学年ごとのいまここ・漢字と部品の記録・シマエナガの数・しょうごう・れんぞく・あしあと・かんじ団子のベストとゴースト。筆跡は保存しない。
 
+## 家族と共有するオンライン保存
+
+通常URLでは従来の端末内保存を使う。左下の「この端末に保存」から、Firebaseの保存先URLを入力して家族用リンクを作れる。既存記録をコピーするか、空で始めるかを選べる。同じリンクをPC・iPadで開けば、同じ記録を使える。家族のログインは不要。
+
+初回だけFirebase Realtime Databaseの作成とルールの設定が必要。[設定画面](./cloud-setup.html) の手順に従う。[詳しい運用・競合時の扱い](./cloud-save-setup.md) も参照。
+
+- 家族用リンクは `#save=<自動生成キー>&db=<FirebaseのURL>`。共有用キャッシュと従来の `enaga_kanji_v1` を分ける。
+- 通信断では未送信分を端末に残し、復帰時・再起動時に再送。同時更新では自動上書きを止め、書き出しまたは別リンクへの退避を選べる。
+- 主な実装は `js/save-store.mjs`（保存・条件更新）と `js/cloud-save.mjs`（保存先・状態表示・リンク作成）。Firebase用ルールは `database.rules.json`。
+- 検証：`node --test test_cloud_save.mjs`。公式Database Emulatorに本ルールを読み込み、`FIREBASE_DATABASE_EMULATOR_HOST` を指定すれば `node --test test_cloud_emulator.mjs` と `node test_cloud_flow.mjs` で実通信・ルール・ブラウザー2台の流れも確認できる。
+
 作者: Log（Claude）
