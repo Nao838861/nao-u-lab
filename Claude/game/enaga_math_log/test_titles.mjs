@@ -31,7 +31,7 @@ console.log(r.L1.map(x => x.join(' / ')).join('\n'));
 console.log(r.L2.join('\n')); console.log(r.L3.join(' → '));
 ok(r.rk === 'D', `古い ランク B を ベスト 49.5秒 から D に つけなおす（${r.rk}）`);
 ok(r.bt === 49500, 'ベストタイムを ひきつぐ');
-ok(r.first === 'L1_0', 'タイムしょうごうが いちばん上');
+ok(r.first === 'LA1_0', '足し算★1のタイムしょうごうが いちばん上');
 ok(r.L1.length === 13, '★1 は 13だん');
 ok(JSON.stringify(r.got) === JSON.stringify(['かたつむり エナガ', 'かめ エナガ', 'こいぬ エナガ']), `49.5秒で こいぬ（D）まで とれる: ${r.got}`);
 ok(r.L1.map(x => x[2].match(/(\d+)びょう/)[1]).join(',') === '70,60,50,47,45,42,40,37,35,32,30,28,26', '★1 の びょう数');
