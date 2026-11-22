@@ -7,6 +7,7 @@ import {samplePath} from '../lib/handwriting.mjs';
 import {drawEnaga, drawBg, snowyBranch, blinkNow, burst, drawSparks} from './enaga.js';
 import {sfx, snd, ac, bgmStart, bgmStop} from './sound.js';
 import {TITLES, RO, RANK_TITLE} from './titles.js';
+import {openBrowserSave} from './cloud-save.mjs';
 
 const KEY = 'enaga_kanji_v1';
 const NUM = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩', '⑪', '⑫'];
@@ -19,12 +20,9 @@ const GRADE_N = {1: 80, 2: 160, 3: 200, 4: 202, 5: 193, 6: 191};
 
 // ---------- 記録 ----------
 // DB = {v, players:[最近つかった順], last, P:{なまえ: プレイヤー}, snd:{muted}}
-function loadDB() {
-  try { const d = JSON.parse(localStorage.getItem(KEY)); if (d && d.v === 1) return d; } catch {}
-  return {v: 1, players: [], last: null, P: {}, snd: {muted: false}};
-}
-const DB = loadDB();
-function saveDB() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch {} }
+const saveStore = await openBrowserSave({key: KEY});
+const DB = saveStore.data;
+function saveDB() { saveStore.save(); }
 function fresh() {
   return {grade: 0, pos: {}, mode: 'shape', kanji: {}, parts: {},
     s: {enaga: 0, seen: 0, streakNow: 0, streakBest: 0, titles: {}, tSeen: {}, days: {}, order: [], homeSeen: {}, pen: {},
@@ -1151,5 +1149,7 @@ $('#muteBtn').addEventListener('click', () => { snd.muted = !snd.muted; DB.snd =
   if (P) { checkTitles(true); }
   window.__app = {get S() { return S; }, get P() { return P; }, get GD() { return GD; }, get D() { return D; }, BY: () => BY, act, render, DB, TITLES, get homeAnim() { return homeAnim; }};
   render(); startHomeAnim();
+  saveStore.start({isIdle: () => ['title', 'home'].includes(S.screen) && !$('#modal').classList.contains('on') && $('#saveOverlay').hidden,
+    onRemote: () => location.reload()});
   requestAnimationFrame(frame);
 })();
