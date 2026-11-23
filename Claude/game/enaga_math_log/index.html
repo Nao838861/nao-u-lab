@@ -183,7 +183,7 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
           <h2 id="cName">たし算・ひき算</h2>
           <button class="star" data-course="add" data-star="1"><span>★1 足し算<small id="cdAdd"></small></span><span class="bt" id="btAdd">-</span></button>
           <button class="star" data-course="sub" data-star="1"><span>★1 引き算<small id="cdSub"></small></span><span class="bt" id="btSub">-</span></button>
-          <button class="star" data-course="addsub" data-star="1"><span>★1 足し算と引き算<small id="cd1"></small></span><span class="bt" id="bt1">-</span></button>
+          <button class="star" data-course="addsub" data-star="1"><span>★1 足し算+引き算<small id="cd1"></small></span><span class="bt" id="bt1">-</span></button>
           <button class="star" data-course="addsub" data-star="2"><span>★2<small id="cd2"></small></span><span class="bt" id="bt2">-</span></button>
           <button class="star" data-course="addsub" data-star="3"><span>★3<small id="cd3"></small></span><span class="bt" id="bt3">-</span></button>
         </div>
@@ -204,7 +204,7 @@ h3.tg{margin:8px 0 6px;font-size:18px;color:#3b5f86;}
           <button class="delbtn" id="delBtn">きろくを けす</button>
         </div>
       </div>
-      <div class="keys"><kbd>7</kbd> ★1足し算　<kbd>8</kbd> ★1引き算　<kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 足し算と引き算　<span class="mulc"><kbd>4</kbd><kbd>5</kbd><kbd>6</kbd> かけ算　</span><kbd>Enter</kbd> でスタート（★をおしてもOK）<br>
+      <div class="keys"><kbd>7</kbd> ★1足し算　<kbd>8</kbd> ★1引き算　<kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 足し算+引き算　<span class="mulc"><kbd>4</kbd><kbd>5</kbd><kbd>6</kbd> かけ算　</span><kbd>Enter</kbd> でスタート（★をおしてもOK）<br>
         こたえは 数字キー か テンキー で入れて <kbd>Enter</kbd>　（まちがえたら <kbd>BackSpace</kbd>）</div>
     </div>
     <!-- forest / titles -->
@@ -441,7 +441,7 @@ const N5=['a1','s1',...N3],K5=['ka1','ks1',...K3];
 const TIME_LADDERS=[
   {ck:'a',star:1,id:'LA1_',label:'足し算',prefix:'たし算の '},
   {ck:'s',star:1,id:'LS1_',label:'引き算',prefix:'ひき算の '},
-  ...[1,2,3].map(star=>({ck:'n',star,id:`L${star}_`,label:'足し算と引き算',prefix:''})),
+  ...[1,2,3].map(star=>({ck:'n',star,id:`L${star}_`,label:'足し算+引き算',prefix:''})),
 ];
 const TITLES=[
   // いちばん だいじ：たし算・ひき算の タイム（一番上に 出す）
@@ -475,10 +475,10 @@ const TITLES=[
   ['たし算・ひき算','sn1','★1の チャンピオン','★1で Sランク（むかしの きじゅん）',s=>false,1],
   ['たし算・ひき算','sn2','★2の チャンピオン','★2で Sランク（むかしの きじゅん）',s=>false,1],
   ['たし算・ひき算','sn3','★3の チャンピオン','★3で Sランク（むかしの きじゅん）',s=>false,1],
-  ['たし算・ひき算','alln','コンプリート！（むかし）','足し算と引き算★1〜★3を ぜんぶ クリア（むかしの目標）',s=>false,1],
-  ['たし算・ひき算','allnA','ハイパー トリオ','足し算と引き算★1〜★3 ぜんぶ Aランク いじょう（むかしの目標）',s=>false,1],
-  ['たし算・ひき算','allnS','ギガ トリオ','足し算と引き算★1〜★3 ぜんぶ Sランク（むかしの目標）',s=>false,1],
-  ['たし算・ひき算','allnSSS','けいさんの ゴッド（むかし）','足し算と引き算★1〜★3 ぜんぶ SSSランク（むかしの目標）',s=>false,1],
+  ['たし算・ひき算','alln','コンプリート！（むかし）','足し算+引き算★1〜★3を ぜんぶ クリア（むかしの目標）',s=>false,1],
+  ['たし算・ひき算','allnA','ハイパー トリオ','足し算+引き算★1〜★3 ぜんぶ Aランク いじょう（むかしの目標）',s=>false,1],
+  ['たし算・ひき算','allnS','ギガ トリオ','足し算+引き算★1〜★3 ぜんぶ Sランク（むかしの目標）',s=>false,1],
+  ['たし算・ひき算','allnSSS','けいさんの ゴッド（むかし）','足し算+引き算★1〜★3 ぜんぶ SSSランク（むかしの目標）',s=>false,1],
   ['たし算・ひき算','ac1','たし算 デビュー','足し算★1を クリア',s=>!!s.cl.a1],
   ['たし算・ひき算','sc1','ひき算 デビュー','引き算★1を クリア',s=>!!s.cl.s1],
   ['たし算・ひき算','alln5','コンプリート！','★1の3しゅるい・★2・★3を ぜんぶ クリア',s=>N5.every(k=>s.cl[k])],
@@ -491,17 +491,17 @@ const TITLES=[
   ['かけ算','ms3','かけ算 ドラゴン','かけ算★3で Sランク',s=>rkAt(s,'m3','S')],
   ['かけ算','mc3','かけ算 コンプリート','かけ算★1〜★3を ぜんぶ クリア',s=>M3.every(k=>s.cl[k])],
   ['かけ算','mSSS','かけ算の ゴッド','かけ算★1〜★3 ぜんぶ SSSランク',s=>M3.every(k=>rkAt(s,k,'SSS'))],
-  ['かけ算','allstar','けいさん オールスター（むかし）','足し算と引き算・かけ算★1〜★3を クリア（むかしの目標）',s=>false,1],
-  ['かけ算','allstar8','けいさん オールスター','足し算・引き算・足し算と引き算★1〜★3・かけ算★1〜★3を ぜんぶ クリア',s=>N5.concat(M3).every(k=>s.cl[k])],
+  ['かけ算','allstar','けいさん オールスター（むかし）','足し算+引き算・かけ算★1〜★3を クリア（むかしの目標）',s=>false,1],
+  ['かけ算','allstar8','けいさん オールスター','足し算・引き算・足し算+引き算★1〜★3・かけ算★1〜★3を ぜんぶ クリア',s=>N5.concat(M3).every(k=>s.cl[k])],
   ['ようちえん','kc1','ちびっこ チャレンジャー','ようちえんモードで クリア',s=>K5.some(k=>s.cl[k])],
-  ['ようちえん','kc3','ようちえん コンプリート（むかし）','ようちえんの足し算と引き算★1〜★3を クリア（むかしの目標）',s=>false,1],
+  ['ようちえん','kc3','ようちえん コンプリート（むかし）','ようちえんの足し算+引き算★1〜★3を クリア（むかしの目標）',s=>false,1],
   ['ようちえん','kc5','ようちえん コンプリート','ようちえんの★1の3しゅるい・★2・★3を クリア',s=>K5.every(k=>s.cl[k])],
   ['ようちえん','kas1','たしざん ひよこ チャンピオン','ようちえんの足し算★1で Sランク',s=>rkAt(s,'ka1','S')],
   ['ようちえん','kss1','ひきざん ひよこ チャンピオン','ようちえんの引き算★1で Sランク',s=>rkAt(s,'ks1','S')],
-  ['ようちえん','ks1','ひよこ チャンピオン','ようちえんの足し算と引き算★1で Sランク',s=>rkAt(s,'k1','S')],
+  ['ようちえん','ks1','ひよこ チャンピオン','ようちえんの足し算+引き算★1で Sランク',s=>rkAt(s,'k1','S')],
   ['ようちえん','ks2','こすずめ チャンピオン','ようちえん★2で Sランク',s=>rkAt(s,'k2','S')],
   ['ようちえん','ks3','こがら チャンピオン','ようちえん★3で Sランク',s=>rkAt(s,'k3','S')],
-  ['ようちえん','kS','ようちえんの おうさま（むかし）','ようちえんの足し算と引き算★1〜★3 ぜんぶ Sランク（むかしの目標）',s=>false,1],
+  ['ようちえん','kS','ようちえんの おうさま（むかし）','ようちえんの足し算+引き算★1〜★3 ぜんぶ Sランク（むかしの目標）',s=>false,1],
   ['ようちえん','kS5','ようちえんの おうさま','ようちえんの★1の3しゅるい・★2・★3 ぜんぶ Sランク',s=>K5.every(k=>rkAt(s,k,'S'))],
   ['はやさ','f1','はやわざ エナガ','1問を 1びょうより はやく 正かい',s=>s.fast>=1],
   ['はやさ','f50','いなずまの ゆび','1びょうより はやい 正かい 50回',s=>s.fast>=50],
