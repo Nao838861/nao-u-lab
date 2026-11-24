@@ -20,7 +20,7 @@ FPGAカートリッジに SuperFX 相当と Mode7 相当の回路を入れた、
 数値の出典は開発記録の `conversation/2026-11-08〜11.md` と README の測定表。
 
 ## 素材
-- 実機映像 `public/video/hw.mp4`：仮素材（`D:\Temp\2026年11月24日.mp4` を再エンコード）。高画質版を撮り直したら差し替えて `src/clips.json` の `hwOpen` / `hwEnd` を見直す。
+- 実機映像 `public/video/hw.mp4`：`D:\temp\スペハリfc fx_モアレ軽減_音声付き.mp4` を再エンコード。差し替えるときは `src/clips.json` の `hwOpen` / `hwEnd` を見直す。
 - 白黒ファミコン版 `mono.mp4`：`D:\HomeBrew\Mesen\Avi\game_CSCD.mp4`
 - SFC 2bppカラー版 `sfc_color.mp4`：`D:\HomeBrew\Mesen\Avi\MonoSHFX2_v001_color2_1080p.mp4`
 - FX Racing 3D 実機 `fxracing_hw.mp4`：`../fxracing3d/public/video/hw.mp4`

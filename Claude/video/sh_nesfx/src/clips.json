@@ -1,4 +1,4 @@
 {
  "opening": 600, "layers": 1200, "ground": 900, "vertical": 1500, "horizon": 3000, "trees": 2400, "sound": 4000,
- "pal81": 3000, "thumb": 3000, "hwOpen": 0, "hwEnd": 1500
+ "pal81": 3000, "thumb": 3000, "hwOpen": 1500, "hwEnd": 3000
 }
