@@ -1,0 +1,23 @@
+{
+  "type": "module",
+  "name": "sh-nesfx-explainer",
+  "private": true,
+  "version": "0.2.0",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "stills": "node tools/stills.mjs",
+    "render": "node tools/render.mjs"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.512",
+    "@remotion/cli": "4.0.512",
+    "@remotion/renderer": "4.0.512",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "remotion": "4.0.512"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "5.9.3"
+  }
+}
