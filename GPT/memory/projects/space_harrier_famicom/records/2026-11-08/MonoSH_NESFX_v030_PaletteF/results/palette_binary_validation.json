@@ -1,0 +1,10 @@
+{
+  "rom_sha256": "54e22d94fde21a237b5d9b769ebca94efb8f17c72ad3769d5fa099453d1f1ac4",
+  "baseline": "v029 PaletteD",
+  "baseline_sha256": "651d032e085cc2149aecb5368c6bdc2b0be6739df65570a2427f2f95c243fde0",
+  "palette_changed_bytes_only": 14,
+  "all_other_rom_bytes_identical": true,
+  "native_sprite_nontransparent_colors_identical": true,
+  "runtime_dll_identical": true,
+  "capture_script_identical_except_paths": true
+}

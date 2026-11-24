@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "music_frames": 29973,
+  "full_loops": 2,
+  "channels": 6,
+  "event_match": "Every duration, control, both pitch bytes and bank-chain boundary",
+  "bank_restore": true,
+  "sfx": [
+    {
+      "id": 1,
+      "muted_player_event": true,
+      "retained_unused_source_frames": 5
+    },
+    {
+      "id": 2,
+      "frames": 35,
+      "contour_matches": true
+    },
+    {
+      "id": 3,
+      "frames": 5,
+      "contour_matches": true
+    },
+    {
+      "id": 4,
+      "frames": 10,
+      "contour_matches": true
+    },
+    {
+      "id": 5,
+      "frames": 42,
+      "contour_matches": true
+    },
+    {
+      "id": 6,
+      "frames": 35,
+      "contour_matches": true
+    },
+    {
+      "id": 7,
+      "frames": 45,
+      "contour_matches": true
+    }
+  ],
+  "locked_priority": true,
+  "tick_cycles": {
+    "min": 218,
+    "mean": 388.4479496308017,
+    "max": 1710,
+    "p99": 1135
+  },
+  "ntsc_frame_cycles": 29780.5,
+  "max_cpu_percent": 5.742012390658316,
+  "memory": {
+    "bss_start": 25426,
+    "bss_end": 25482,
+    "bytes": 57
+  },
+  "hardware": "not tested",
+  "silent_shot": {
+    "event_opcode": "RTS",
+    "continuous_fire_frames": 1800,
+    "bgm_apu_mmc5_writes_identical_to_no_fire": true,
+    "registers_flags_banks_audio_state_preserved": true,
+    "all_other_effects_unaffected_during_fire": true,
+    "source_sfx_data_retained": true
+  },
+  "intro_fill_in_rom": {
+    "port": "$400E",
+    "mode_bit": 7,
+    "changed_frame_range": [
+      1428,
+      1498
+    ],
+    "frames_per_loop": 71,
+    "two_loops_verified": true,
+    "outside_fill_mode_unchanged": true
+  },
+  "rom": "[REDACTED_WIN_PATH]",
+  "rom_sha256": "e7bc65bedfa505a7a7cd3459af38dcebe9fd7a8a8b55c670cdfd68715ecdbd43"
+}

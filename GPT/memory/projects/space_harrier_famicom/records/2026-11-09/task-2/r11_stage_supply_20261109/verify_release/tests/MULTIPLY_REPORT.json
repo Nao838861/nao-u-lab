@@ -1,0 +1,288 @@
+{
+  "scope": "Independent display-only bank76 multiplier optimization. Dedicated Mesen only; no hardware/SD/USB/RBF or regular deliverables touched.",
+  "manifest": {
+    "input_sha256": "8588a0e496c8cc12d18336a15d509134610663a69b16c377e2846476cf11ce49",
+    "output_sha256": "c7df08690273c66a528dbd127d80e4a7a2e9e815c86db4e6d38d3da00b361ef5",
+    "output": "[REDACTED_WIN_PATH]",
+    "helper_address": "$8700",
+    "helper_bytes": 73,
+    "entry_address": "$828B",
+    "entry_patch_bytes": 3,
+    "bank": 76,
+    "changed_bytes": 75,
+    "fixed_yield_gate_unchanged": true,
+    "gsu_audio_assets_native_logic_unchanged": true,
+    "V_flag": "Dead at all 3 local call sites; intentionally unspecified",
+    "dll_sha256": "423f2f9be8fbfc42e13e885221e9cf74bc0a0de1908136e3b69547b476d69171"
+  },
+  "unit": {
+    "passed": true,
+    "cases_completed": 99328,
+    "cases_expected": 99328,
+    "fixed_edge_cases": 256,
+    "exhaustive_8bit_pairs": 65536,
+    "random_full_16bit_pairs": 32768,
+    "ram_inputs": "ffffffff010040db",
+    "reference_registers": "0000db77",
+    "candidate_registers": "0000db37",
+    "reference_zp": "0100ffff01000000",
+    "cpu_clock": 141238763,
+    "wall_seconds": 78.875,
+    "checks": [
+      "Python exact product",
+      "original6502 implementation",
+      "P00/P02/P05/P06",
+      "A/X/Y",
+      "N/Z/C/I/D flags, V deliberately dead/unspecified"
+    ],
+    "mapper": "Actual dedicated Mesen $5205/$5206 registers; no RAM editing by host",
+    "rom_sha256": "42b3b272cc9428ca13be3efd1c4f17e0992f953ddd265cf8796db2b872f2172c"
+  },
+  "timing": {
+    "passed": true,
+    "mode": "timing",
+    "cases": 256,
+    "unique_pairs": 256,
+    "nmi_interrupted_cases": 0,
+    "helper_cycles_excluding_JSR": [
+      74,
+      89,
+      96,
+      111
+    ],
+    "original_cycles_excluding_JSR": {
+      "min": 487,
+      "max": 791,
+      "mean": 598.625
+    },
+    "saved_mean_cycles": 506.125,
+    "first_ppu": 1,
+    "last_ppu": 13
+  },
+  "real_inputs": {
+    "passed": true,
+    "mode": "real",
+    "cases": 3000,
+    "unique_pairs": 1565,
+    "nmi_interrupted_cases": 0,
+    "helper_cycles_excluding_JSR": [
+      74,
+      89
+    ],
+    "original_cycles_excluding_JSR": {
+      "min": 506,
+      "max": 601,
+      "mean": 551.125
+    },
+    "saved_mean_cycles": 475.56,
+    "first_ppu": 23,
+    "last_ppu": 971
+  },
+  "fullsource": {
+    "passed": true,
+    "full_modified_source": "[REDACTED_WIN_PATH]",
+    "assembled_relinked_bank76_matches_candidate_byte_for_byte": true,
+    "original_bank76_matches_current_yieldgate_byte_for_byte": true,
+    "original_bank76_sha256": "9430099f9677549d8fb9c95ea2422ac81eabdac55b07c0c8498acec577b60431",
+    "candidate_bank76_sha256": "5f679c19444d52c63bb65d5568f06b89aaa5305c2fb28e1e5e8527edf660ff22",
+    "all_other_relinked_original_banks_unchanged": [
+      "bank0.bin",
+      "bank1.bin",
+      "bank100.bin",
+      "bank101.bin",
+      "bank102.bin",
+      "bank103.bin",
+      "bank104.bin",
+      "bank105.bin",
+      "bank106.bin",
+      "bank107.bin",
+      "bank108.bin",
+      "bank109.bin",
+      "bank110.bin",
+      "bank111.bin",
+      "bank112.bin",
+      "bank113.bin",
+      "bank114.bin",
+      "bank115.bin",
+      "bank116.bin",
+      "bank117.bin",
+      "bank118.bin",
+      "bank119.bin",
+      "bank120.bin",
+      "bank121.bin",
+      "bank122.bin",
+      "bank123.bin",
+      "bank124.bin",
+      "bank125.bin",
+      "bank2.bin",
+      "bank21.bin",
+      "bank29.bin",
+      "bank30.bin",
+      "bank37.bin",
+      "bank59.bin",
+      "bank75.bin",
+      "bank80.bin",
+      "bank81.bin",
+      "bank82.bin",
+      "bank84.bin",
+      "bank85.bin",
+      "bank86.bin",
+      "bank87.bin",
+      "bank88.bin",
+      "bank89.bin",
+      "bank90.bin",
+      "bank91.bin",
+      "bank92.bin",
+      "bank93.bin",
+      "bank94.bin",
+      "bank95.bin",
+      "bank96.bin",
+      "bank97.bin",
+      "bank98.bin",
+      "bank99.bin"
+    ],
+    "source_base": "[REDACTED_WIN_PATH]",
+    "scope": "Full modified draw_bgobj_all source reassembled and linked with original full-source objects. This validates bank76 only; current r11 ROM also contains separately retained later patch layers."
+  },
+  "comparisons": {
+    "stage": {
+      "identity": {
+        "boundaries": 1501,
+        "field_count": 151,
+        "state_bytes": 850,
+        "state_boundary_differences": 52,
+        "field_difference_counts": {
+          "_frame_counter": 52
+        },
+        "first_field_difference": {
+          "_frame_counter": {
+            "boundary": 633,
+            "baseline": "ff",
+            "candidate": "fe"
+          }
+        },
+        "other_difference_counts": {
+          "oam": 0,
+          "joy": 0
+        },
+        "passed_except_live_NMI_counter": true
+      },
+      "packets": {
+        "boundaries": 200,
+        "field_count": 151,
+        "state_bytes": 850,
+        "state_boundary_differences": 43,
+        "field_difference_counts": {
+          "_frame_counter": 43
+        },
+        "first_field_difference": {
+          "_frame_counter": {
+            "boundary": 83,
+            "baseline": "b2",
+            "candidate": "b1"
+          }
+        },
+        "other_difference_counts": {
+          "oam": 0,
+          "joy": 0,
+          "generation_camera": 0,
+          "generation_oam": 0
+        },
+        "passed_except_live_NMI_counter": true
+      },
+      "performance_before": {
+        "logic_tick": 1500,
+        "draw_count": 1500,
+        "present_count": 2991,
+        "late_fields": 165,
+        "deadline_misses": 0,
+        "queue_starvations": 9,
+        "queue_drops": 8
+      },
+      "performance_after": {
+        "logic_tick": 1500,
+        "draw_count": 1500,
+        "present_count": 2999,
+        "late_fields": 41,
+        "deadline_misses": 0,
+        "queue_starvations": 1,
+        "queue_drops": 0
+      }
+    },
+    "boss": {
+      "identity": {
+        "boundaries": 1501,
+        "field_count": 151,
+        "state_bytes": 850,
+        "state_boundary_differences": 0,
+        "field_difference_counts": {},
+        "first_field_difference": {},
+        "other_difference_counts": {
+          "oam": 0,
+          "joy": 0
+        },
+        "passed_except_live_NMI_counter": true
+      },
+      "packets": {
+        "boundaries": 200,
+        "field_count": 151,
+        "state_bytes": 850,
+        "state_boundary_differences": 0,
+        "field_difference_counts": {},
+        "first_field_difference": {},
+        "other_difference_counts": {
+          "oam": 0,
+          "joy": 0,
+          "generation_camera": 0,
+          "generation_oam": 0
+        },
+        "passed_except_live_NMI_counter": true
+      },
+      "performance_before": {
+        "logic_tick": 1500,
+        "draw_count": 1500,
+        "present_count": 3000,
+        "late_fields": 0,
+        "deadline_misses": 0,
+        "queue_starvations": 0,
+        "queue_drops": 0
+      },
+      "performance_after": {
+        "logic_tick": 1500,
+        "draw_count": 1500,
+        "present_count": 3000,
+        "late_fields": 0,
+        "deadline_misses": 0,
+        "queue_starvations": 0,
+        "queue_drops": 0
+      }
+    }
+  },
+  "abi": {
+    "preserved": "P00=P05=low16 product; P02 unchanged; P06=0; A=product high; X=0; Y unchanged; C=input P00.bit0; N/Z=product high; D/I preserved.",
+    "V": "Intentionally unspecified, unlike the original final-add V. All three local call sites were inspected; none consumes V. No BVS/BVC in draw_bgobj_all.",
+    "multiplier_operands": "Clobbered by design. The sole other native source user is bom_inverse_x.s; it initializes both operands before reading. NMI/audio/IRQ and their called helpers do not use $5205/$5206. No IRQ/NMI masking added."
+  },
+  "timing_notes": [
+    "Old function exact CPU cycles excluding JSR: 487 + 19*popcount(P02).",
+    "New function including entry JMP, excluding JSR: 74 + 15*(P02hi != 0) + 22*(P00hi != 0).",
+    "All four 74/89/96/111 cycle paths were measured in Mesen for256 boundary pairs.",
+    "3000 real Stage calls (1565 unique pairs) passed arithmetic/ABI checks, actual74/89 cycles and average475.56 saved cycles per call. No NMI interruption occurred inside those sampled calls.",
+    "NMI counter differences are expected when sampling earlier after a faster function. Other150 fields849bytes, JOY and nativeOAM matched at all1501 boundaries in both scenes.",
+    "Screenshots at equal presentation fields need not be pixel-identical after missed fields are removed. Stage/boss screenshots were inspected; no geometry/clipping corruption found. Camera/OAM packets were compared per generation."
+  ],
+  "heavy_window_component_max_ms": {
+    "logic": 6.526525989608738,
+    "producer": 28.84052893858607,
+    "draw": 13.32403606490879,
+    "midpoint": 12.513877458202801,
+    "oam": 4.373180285991576,
+    "camera": 0.29165709841415643
+  },
+  "source_audit": {
+    "original_full_source": "[REDACTED_WIN_PATH]",
+    "multiplier_other_user": "generated/nes_core/src/bom_inverse_x.s:67-81",
+    "nmi": "src/cpu.s:nmi, irq; audio/driver.s and source helpers",
+    "full_modified_source": "[REDACTED_WIN_PATH]"
+  }
+}

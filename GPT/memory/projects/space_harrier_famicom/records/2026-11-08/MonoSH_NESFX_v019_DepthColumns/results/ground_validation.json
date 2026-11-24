@@ -1,0 +1,34 @@
+{
+  "result": "PASS",
+  "unit_output": "PASS rows=6336 max_column_width_error_px=0.200916 max_boundary_error_px=0.360569 max_lateral_Q7_rounding=0.8",
+  "texture_pixels_verified": 409600,
+  "ground_palette_nes": [
+    "09",
+    "19",
+    "29"
+  ],
+  "depth_column_pairs_nes": [
+    [
+      "29",
+      "09"
+    ],
+    [
+      "29",
+      "19"
+    ]
+  ],
+  "sky_nes": "14",
+  "ppu_sprite_chr": "original byte-identical",
+  "gameplay_reference_sources": "v017 byte-identical",
+  "core_dll": "v017 byte-identical",
+  "physical_horizon_origin": [
+    104,
+    168
+  ],
+  "near_grid_width_at_ppu204": "51px within0.2px at every altitude",
+  "limits": [
+    "Depth bands use physical regular rows rather than the SFC nonlinear animation curve.",
+    "Horizon rule matches source projection; finite map bounds and far clipping still affect the first visible ground pixels.",
+    "Object projection remains original NES and is not proven pixel-aligned to SFC terrain."
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "status": "PLAYABLE_60HZ_TARGET_WITH_SLOWDOWN",
+  "rom_sha256": "69b7c9362980554c1378e77f528e8020ceb92e1ebee1fa53748e5ffa89984860",
+  "reports": {
+    "final_stage": {
+      "fields": 600,
+      "deltas": {
+        "logic_tick": 565,
+        "draw_count": 564,
+        "present_count": 564,
+        "late_fields": 35,
+        "deadline_misses": 0,
+        "queue_starvations": 36,
+        "queue_drops": 0
+      },
+      "target_hz": 60.0988,
+      "observed_logic_hz": 56.59303666666666,
+      "observed_present_hz": 56.49287199999999,
+      "gsu_ms_mean": 1.6925429399585923,
+      "gsu_ms_max": 5.29732,
+      "player_state_transitions": [],
+      "status_errors": 0,
+      "em1_pose_conflicts": 0,
+      "unintended_resets": 0
+    },
+    "final_boss": {
+      "fields": 600,
+      "deltas": {
+        "logic_tick": 553,
+        "draw_count": 552,
+        "present_count": 552,
+        "late_fields": 47,
+        "deadline_misses": 0,
+        "queue_starvations": 48,
+        "queue_drops": 1
+      },
+      "target_hz": 60.0988,
+      "observed_logic_hz": 55.39106066666666,
+      "observed_present_hz": 55.290896,
+      "gsu_ms_mean": 4.194752515856236,
+      "gsu_ms_max": 11.61656,
+      "player_state_transitions": [],
+      "status_errors": 0,
+      "em1_pose_conflicts": 0,
+      "unintended_resets": 0
+    },
+    "mortal_boss": {
+      "fields": 900,
+      "deltas": {
+        "logic_tick": 859,
+        "draw_count": 859,
+        "present_count": 859,
+        "late_fields": 41,
+        "deadline_misses": 0,
+        "queue_starvations": 41,
+        "queue_drops": 0
+      },
+      "target_hz": 60.0988,
+      "observed_logic_hz": 57.36096577777777,
+      "observed_present_hz": 57.36096577777777,
+      "gsu_ms_mean": 7.0779280414012735,
+      "gsu_ms_max": 11.63108,
+      "player_state_transitions": [
+        [
+          57,
+          1,
+          2
+        ],
+        [
+          165,
+          2,
+          0
+        ],
+        [
+          203,
+          0,
+          1
+        ],
+        [
+          269,
+          1,
+          2
+        ],
+        [
+          377,
+          2,
+          0
+        ],
+        [
+          869,
+          0,
+          1
+        ]
+      ],
+      "status_errors": 0,
+      "em1_pose_conflicts": 0,
+      "unintended_resets": 0
+    }
+  },
+  "start_switch": "results/reset_switch_final/RESULT.json (Stage/Boss four switches, counters monotone)",
+  "unit_tests": [
+    "enemy/build/enemy60_cpu_test.json",
+    "boss/boss60_test_result.json",
+    "results/cpu6502_smoke.json"
+  ],
+  "limits": [
+    "Dedicated functional emulator only, no physical hardware evidence.",
+    "ShortStage/Boss tests only; no fullgame-clear or longstress claim.",
+    "Original real-time AI/lifetime cadence preserved; geometry/collision use halfsteps eachprocessed field.",
+    "Some scripted intro/death/stumble motion and discrete sprite changes retain original30Hz steps.",
+    "CPU overload skips fields, causing measured55-57Hz average in these shortscenes.",
+    "Original hitbox shapes remain;111Zvisual geometry changes are not fully retuned."
+  ]
+}

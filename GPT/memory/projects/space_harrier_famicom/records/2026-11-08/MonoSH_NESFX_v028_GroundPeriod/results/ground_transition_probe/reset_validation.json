@@ -1,0 +1,11 @@
+{
+  "mode": "reset",
+  "ticks": 180,
+  "resets": 2,
+  "frozen_phase_transitions": 0,
+  "death_states": [
+    0
+  ],
+  "reset_requests": 2,
+  "reset_from_lifted_phase7": 2
+}

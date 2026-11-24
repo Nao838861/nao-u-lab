@@ -1,0 +1,23 @@
+MSH5 v019 実機試験結果（2026-11-08 UTC）
+
+結果: 初期表示と安全なメニュー復帰は成功。連続プレイは未成功。
+ユーザーが実機をリセットした後、新しいメニュー映像を確認し、開始通知後に一度だけ起動した。
+格子床、紫色の空、人物、HUDを表示したが、録画5.12〜10.27秒の約5.15秒でほぼ静止し、約10.8秒でEverDriveメニューに自動復帰した。想定1400 NMI（約23秒）の連続プレイには至らない。
+5秒間描画進捗なしの安全停止と強く整合するが、停止理由レジスタは未測定で、原因は未確定。
+録画を確認した後の公式メニュー確認2A74→6Bは一度で成功した。追加起動、実機memrd、強制リセットは行っていない。
+
+候補RBF: work-no-profiler/output_files/probe.rbf
+SHA256 5ab287f3a3bd0ac965903d474a8fd7871bb89c6fed6ef00d88065d74a2b18e82
+有限診断ROM: rom-trial/MonoSH_MSH5_v019_FINITE1400_20261108.nes
+SHA256 21c9e7116f648afc9382aa24627a2e27d245ddfe7d20f9e534a09e1aa8f7092a
+基準RBF 30a7615d…と元v019の469ファイルは変更なし。SDには一意名の診断用ディレクトリのみ追加した。
+
+実機動画: hardware-trial/SpaceHarrier_v019_Hardware_FirstTrial_20261108.mp4
+全39.18秒、1280×720。元のcapture.mp4を保持した全編圧縮版で、カット、速度変更、フレーム補間はない。全編デコード0エラー。
+音声端点はmute=trueを返したが、録画AACは非ゼロ。OS設定は変更していない。最大0dBのため音質は合格判定していない。
+
+対象は山・森追加前のv019のみ。v020のscenery ABIは未対応。映像が60fpsで記録されていることはゲーム60fps動作の証明ではない。
+
+オフライン検証: Fit 6231/6272LE。STA最小setup+0.582ns、hold+0.093ns。厳格PPU、HUD全アドレス、native sprite全位相、RTL lifecycle、合成netlist音声/停止検証は合格済み。ただし実機連続動作の不成立を優先する。
+詳細な実機結果: hardware-trial/HARDWARE_RESULT.json
+時系列・停止経路分析: rom-trial/postrun-analysis/ANALYSIS.json

@@ -1,0 +1,137 @@
+{
+  "candidate_sha256": "cffc58d0acaa7392c2c0257c898c5451f8c728da7f91a94f4ac8d62a5df0d0d7",
+  "performance": {
+    "baseline_v021": {
+      "scenes": 900,
+      "ppu_span": 1799,
+      "suppressed_scenes": 1,
+      "present": 1796,
+      "drop": 2,
+      "starve": 3,
+      "late": 40
+    },
+    "v024_hermite": {
+      "scenes": 900,
+      "ppu_span": 1799,
+      "suppressed_scenes": 2,
+      "present": 1795,
+      "drop": 4,
+      "starve": 4,
+      "late": 71
+    }
+  },
+  "dimension_tables": {
+    "Tree0": {
+      "old": {
+        "unique_dimensions": 16,
+        "longest_identical_run": 7,
+        "max_width_step": 12,
+        "max_height_step": 30
+      },
+      "new": {
+        "unique_dimensions": 49,
+        "longest_identical_run": 2,
+        "max_width_step": 5,
+        "max_height_step": 11
+      }
+    },
+    "Bom0": {
+      "old": {
+        "unique_dimensions": 16,
+        "longest_identical_run": 7,
+        "max_width_step": 20,
+        "max_height_step": 14
+      },
+      "new": {
+        "unique_dimensions": 45,
+        "longest_identical_run": 3,
+        "max_width_step": 7,
+        "max_height_step": 5
+      }
+    },
+    "Bush0": {
+      "old": {
+        "unique_dimensions": 16,
+        "longest_identical_run": 7,
+        "max_width_step": 20,
+        "max_height_step": 12
+      },
+      "new": {
+        "unique_dimensions": 47,
+        "longest_identical_run": 3,
+        "max_width_step": 8,
+        "max_height_step": 5
+      }
+    },
+    "Bush1": {
+      "old": {
+        "unique_dimensions": 16,
+        "longest_identical_run": 7,
+        "max_width_step": 28,
+        "max_height_step": 12
+      },
+      "new": {
+        "unique_dimensions": 47,
+        "longest_identical_run": 2,
+        "max_width_step": 10,
+        "max_height_step": 5
+      }
+    },
+    "FlyStone": {
+      "old": {
+        "unique_dimensions": 15,
+        "longest_identical_run": 13,
+        "max_width_step": 16,
+        "max_height_step": 12
+      },
+      "new": {
+        "unique_dimensions": 41,
+        "longest_identical_run": 6,
+        "max_width_step": 5,
+        "max_height_step": 5
+      }
+    },
+    "Em0": {
+      "old": {
+        "unique_dimensions": 16,
+        "longest_identical_run": 7,
+        "max_width_step": 20,
+        "max_height_step": 12
+      },
+      "new": {
+        "unique_dimensions": 49,
+        "longest_identical_run": 3,
+        "max_width_step": 8,
+        "max_height_step": 4
+      }
+    }
+  },
+  "actual_geometry_table_check": {
+    "checked": 6057,
+    "errors": []
+  },
+  "core_test": {
+    "boundaries": 1201,
+    "different_fields": {
+      "_frame_counter": 19
+    },
+    "input_difference_boundaries": [
+      862,
+      864,
+      878,
+      880,
+      882,
+      996,
+      998,
+      1000
+    ],
+    "original_oam_identical": true
+  },
+  "limits": [
+    "Experimental, not release accepted: input/NMI phase differences remain.",
+    "Only six ordinary dimension families changed; EM1 poses, projectiles, boss are unchanged.",
+    "Original position quantization and tree top rounding interaction remain.",
+    "SFC technique adapted to NES depth range; no claim MSX fix has been independently verified.",
+    "No hardware, full-stage or all-input validation."
+  ]
+}

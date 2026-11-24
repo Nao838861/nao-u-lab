@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "zip": "[REDACTED_WIN_PATH]",
+  "size_bytes": 45024355,
+  "sha256": "3c855ce9fac9fa05b8e8015197d8897ddff3c92ce5e03b7626fe0d9cf738928e",
+  "rom_sha256": "b50cae9be15b95767a53536258b9a90b34a248517252c29d62b6dc4544e2b423",
+  "core_sha256": "4c49df2fb0c557ba99126dbb9c6208bfd6c833af87c2f57e622ea96c445f682f",
+  "launcher_sha256": "6a4bdd669658546f3e520bc2b15548e5446a1600c4862612e9fb0f67baaf1f2f",
+  "launcher_expected_rom": "rom/MonoSH_r11_BS2_DualScroll_MESEN.nes",
+  "launcher_hashes_embedded": true,
+  "portable_rebuild_exact": true,
+  "zip_crc_all_passed": true,
+  "all_archived_hashes_verified": true,
+  "file_count": 176,
+  "visible_UI_launched": false
+}

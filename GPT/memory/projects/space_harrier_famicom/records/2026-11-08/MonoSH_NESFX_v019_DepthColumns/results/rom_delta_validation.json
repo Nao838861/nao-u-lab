@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "only_changes": "Two ground texture copies and one HUD version digit; all gameplay code and other ROM bytes identical to v018.",
+  "outside_texture_diffs": [
+    {
+      "offset": 4064,
+      "old": 56,
+      "new": 57
+    }
+  ],
+  "old_sha256": "8fe9c5e6424cfc76f62c5c25258d4c4496fe40f7119cd72684821c913da1fb53",
+  "new_sha256": "8fa05e2315b594ea9d40008b0e6154603b5b340331cc241be203dc3c41d03fb2",
+  "dll_identical": true
+}

@@ -1,0 +1,467 @@
+{
+  "rom_sha256": "064805f8cab02ee127731cea55ba4878f59adca4e07492bac22d304bd7854224",
+  "dll_sha256": "65f2c97f544e804f1ff64e66ab8a04e2c4fea3e1cbe030d37359008c4150af80",
+  "draw_generations": 900,
+  "suppressed_generations": 1,
+  "raw_rectangles": 6630,
+  "current_command_mismatch_generations": [],
+  "midpoint_oracle_checked_generations": 882,
+  "midpoint_command_mismatch_generations": [],
+  "lifetime_fence_scenes_not_claimed_by_simple_midpoint_oracle": [
+    172,
+    367,
+    434,
+    448,
+    464,
+    505,
+    526,
+    568,
+    575,
+    583,
+    587,
+    591,
+    613,
+    672,
+    828,
+    832,
+    836
+  ],
+  "physical_avi_pixel_test": {
+    "frames": 500,
+    "tested_pixels": 1414727,
+    "mismatched_pixels": 0,
+    "fixed_alignment": "mid AVI frame = 2*generation - 9; current = 2*generation - 8, derived from recording start and sequential presentation counters. Producer completion may cross PPU frame boundaries and is NOT used as a fixed-latency timestamp. Physical PPU Y = raw Y + 31. No best-match search used.",
+    "limits": "Nontransparent FX pixels only; positions whose actual pixel is not a shared FX color are excluded as native OAM occlusion. 250 consecutive generations (500 frames), not the entire 900-generation run."
+  },
+  "existing_final_video": {
+    "fields": 1800,
+    "duplicate_fields": [
+      1244,
+      1263,
+      1272
+    ],
+    "generation_skips": [
+      {
+        "field": 1309,
+        "from": 657,
+        "to": 659
+      }
+    ]
+  },
+  "by_kind_quantization_stats": {
+    "24": {
+      "transitions": 2134,
+      "width_unchanged": 1581,
+      "full_rectangle_unchanged": 424,
+      "width_delta_at_least_4px": 553
+    },
+    "16": {
+      "transitions": 72,
+      "width_unchanged": 40,
+      "full_rectangle_unchanged": 3,
+      "width_delta_at_least_4px": 32
+    },
+    "40": {
+      "transitions": 1108,
+      "width_unchanged": 849,
+      "full_rectangle_unchanged": 211,
+      "width_delta_at_least_4px": 259
+    },
+    "32": {
+      "transitions": 536,
+      "width_unchanged": 396,
+      "full_rectangle_unchanged": 108,
+      "width_delta_at_least_4px": 140
+    },
+    "48": {
+      "transitions": 2018,
+      "width_unchanged": 1792,
+      "full_rectangle_unchanged": 133,
+      "width_delta_at_least_4px": 226
+    },
+    "64": {
+      "transitions": 103,
+      "width_unchanged": 72,
+      "full_rectangle_unchanged": 0,
+      "width_delta_at_least_4px": 31
+    },
+    "80": {
+      "transitions": 104,
+      "width_unchanged": 73,
+      "full_rectangle_unchanged": 0,
+      "width_delta_at_least_4px": 31
+    },
+    "72": {
+      "transitions": 88,
+      "width_unchanged": 63,
+      "full_rectangle_unchanged": 0,
+      "width_delta_at_least_4px": 25
+    },
+    "56": {
+      "transitions": 42,
+      "width_unchanged": 36,
+      "full_rectangle_unchanged": 12,
+      "width_delta_at_least_4px": 6
+    },
+    "57": {
+      "transitions": 18,
+      "width_unchanged": 18,
+      "full_rectangle_unchanged": 18,
+      "width_delta_at_least_4px": 0
+    },
+    "58": {
+      "transitions": 18,
+      "width_unchanged": 18,
+      "full_rectangle_unchanged": 18,
+      "width_delta_at_least_4px": 0
+    },
+    "59": {
+      "transitions": 18,
+      "width_unchanged": 18,
+      "full_rectangle_unchanged": 18,
+      "width_delta_at_least_4px": 0
+    },
+    "60": {
+      "transitions": 12,
+      "width_unchanged": 12,
+      "full_rectangle_unchanged": 12,
+      "width_delta_at_least_4px": 0
+    },
+    "61": {
+      "transitions": 105,
+      "width_unchanged": 105,
+      "full_rectangle_unchanged": 105,
+      "width_delta_at_least_4px": 0
+    },
+    "8": {
+      "transitions": 38,
+      "width_unchanged": 35,
+      "full_rectangle_unchanged": 12,
+      "width_delta_at_least_4px": 3
+    }
+  },
+  "flystone_fixed_world_example": [
+    {
+      "producer_index": 85,
+      "generation": 91,
+      "z": 46,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        340,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        126,
+        114,
+        4,
+        4
+      ],
+      "bottom": 118
+    },
+    {
+      "producer_index": 86,
+      "generation": 92,
+      "z": 45,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        -11,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        126,
+        114,
+        4,
+        4
+      ],
+      "bottom": 118
+    },
+    {
+      "producer_index": 87,
+      "generation": 93,
+      "z": 44,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        48,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        126,
+        112,
+        4,
+        4
+      ],
+      "bottom": 116
+    },
+    {
+      "producer_index": 88,
+      "generation": 94,
+      "z": 43,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        106,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        126,
+        112,
+        4,
+        4
+      ],
+      "bottom": 116
+    },
+    {
+      "producer_index": 89,
+      "generation": 95,
+      "z": 42,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        165,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        124,
+        108,
+        8,
+        8
+      ],
+      "bottom": 116
+    },
+    {
+      "producer_index": 90,
+      "generation": 96,
+      "z": 41,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        223,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        124,
+        108,
+        8,
+        8
+      ],
+      "bottom": 116
+    },
+    {
+      "producer_index": 91,
+      "generation": 97,
+      "z": 40,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        282,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        124,
+        110,
+        8,
+        8
+      ],
+      "bottom": 118
+    },
+    {
+      "producer_index": 92,
+      "generation": 98,
+      "z": 39,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        340,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        124,
+        110,
+        8,
+        8
+      ],
+      "bottom": 118
+    },
+    {
+      "producer_index": 93,
+      "generation": 99,
+      "z": 38,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        -11,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        124,
+        108,
+        8,
+        8
+      ],
+      "bottom": 116
+    },
+    {
+      "producer_index": 94,
+      "generation": 100,
+      "z": 37,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        48,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        124,
+        108,
+        8,
+        8
+      ],
+      "bottom": 116
+    },
+    {
+      "producer_index": 95,
+      "generation": 101,
+      "z": 36,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        106,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        124,
+        106,
+        8,
+        8
+      ],
+      "bottom": 114
+    },
+    {
+      "producer_index": 96,
+      "generation": 102,
+      "z": 35,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        165,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        124,
+        104,
+        12,
+        10
+      ],
+      "bottom": 114
+    },
+    {
+      "producer_index": 97,
+      "generation": 103,
+      "z": 34,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        223,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        124,
+        104,
+        12,
+        10
+      ],
+      "bottom": 114
+    },
+    {
+      "producer_index": 98,
+      "generation": 104,
+      "z": 33,
+      "wx": 10,
+      "wy": 36,
+      "camera": [
+        0,
+        282,
+        289,
+        256,
+        0,
+        256,
+        -10
+      ],
+      "rectangle": [
+        124,
+        102,
+        12,
+        10
+      ],
+      "bottom": 112
+    }
+  ]
+}

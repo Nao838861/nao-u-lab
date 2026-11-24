@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "frames": 29923,
+  "full_song_loops": 2,
+  "max_tick_cycles": 591,
+  "linked_bytes": 6614,
+  "se_ids_tested": 7,
+  "pcm_writes": 0,
+  "hardware_audition": "not performed",
+  "check": "event timing and low period bytes match converter across every note and two loops; SE expiry and mute; no PCM"
+}

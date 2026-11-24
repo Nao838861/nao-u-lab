@@ -1,0 +1,12 @@
+[
+  {
+    "tool": "quartus_map",
+    "returncode": 0,
+    "seconds": 49.063000000081956
+  },
+  {
+    "tool": "quartus_fit",
+    "returncode": 3,
+    "seconds": 18.29700000025332
+  }
+]

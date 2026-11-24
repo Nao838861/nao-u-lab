@@ -1,0 +1,90 @@
+{
+  "rom_sha256": "d41753d838470c9a31214a5d9305015df95479bde131a1ccf46dc1cc4ca43e76",
+  "dll_sha256": "7492983ad92de13fbf590d3f9baca2f575ad113b17c4e1ac92461b0595dd576b",
+  "ground_pixels_verified": 409600,
+  "low_contrast_columns": "solid NES $19; no $29 bright pixels",
+  "other_columns": "unchanged NES $09/$29 checker",
+  "palette_32bytes_unchanged": true,
+  "original_nes_gameplay_sources_audio_ppu_chr_unchanged": true,
+  "v020_rom_dll_preserved": true,
+  "enemy_bullet_rotation_phases_in_actual_capture": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "compositor": {
+    "result": "PASS",
+    "output": "Mountain original-source shadow/highlight pixels 896/1808\nPASS 368640 foreground/sky palette cases, 65*192 ground-regression rows; palettes 368640,0,0\n",
+    "scope": "Pure compositor foreground colour/sky invariance and ground-row regression; not complete console verification"
+  },
+  "gsu_pixel_comparison_cases": 168,
+  "gsu_pixel_comparison_identical": true,
+  "boundary_comparison": {
+    "boundaries": 1201,
+    "gameplay_fields_excluding_field_counter_identical": 150,
+    "bytes_excluding_field_counter_identical": 849,
+    "original_oam_identical": true,
+    "field_counter_different_boundaries": 10,
+    "input_edge_flag_different_boundaries": 6,
+    "full_identity_test_passed": false
+  },
+  "capture": {
+    "rom_sha256": "d41753d838470c9a31214a5d9305015df95479bde131a1ccf46dc1cc4ca43e76",
+    "dll_sha256": "7492983ad92de13fbf590d3f9baca2f575ad113b17c4e1ac92461b0595dd576b",
+    "fields": 1800,
+    "fps": 60.0988118623484,
+    "seconds": 29.95067529991705,
+    "deaths": 0,
+    "invincible_all_samples": true,
+    "default_normal_verified": true,
+    "player_x_range": [
+      -112,
+      112
+    ],
+    "ground_offset_range": [
+      0,
+      32
+    ],
+    "boss_states": [
+      0
+    ],
+    "audio_stream": true,
+    "audio_non_silent": true,
+    "video": "[REDACTED_WIN_PATH]",
+    "wall_seconds": 35.03099999995902,
+    "limits": [
+      "Dedicated Mesen only; no actual FPGA or NES hardware validation.",
+      "Same normal ROM. Original SELECT control enables invincibility only for capture; no RAM writes.",
+      "SFC mountains use shared gray/dark green; low-contrast depth columns use solid middle green; ordinary enemy bullets use16-phase SFC rotation. Fixed sky/ground palettes retained.",
+      "Ground projection matched; objects remain original NES geometry. No full-game completion or60fps performance claim."
+    ]
+  },
+  "final_counters": {
+    "logic_tick": 905,
+    "draw_count": 905,
+    "present_count": 1803,
+    "late_fields": 59,
+    "queue_drops": 4,
+    "queue_starvations": 5
+  },
+  "limitations": [
+    "Dedicated custom Mesen only. No FPGA RTL, synthesis, timing, RBF or physical NES validation.",
+    "Rendering cost changes NMI/input-edge timing at some boundaries; not full original timing identity.",
+    "Original rounded NES enemy/rock geometry remains. This build does not fix the separately investigated motion jitter.",
+    "SFC source frames are quantized to shared3colors and nearest-neighbor32px canvases. Not pixel-identical full-color SNES artwork.",
+    "Expanded boss-bullet cache is reused for rotation frames. Boss bullet retains packed source12 and may cost more GSU cycles. No full boss-stage throughput validation."
+  ]
+}

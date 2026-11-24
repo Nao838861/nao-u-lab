@@ -1,0 +1,76 @@
+{
+  "rom_sha256": "ec0684db4b20c928a5bb73fc026e3b44e112ec997ff6dbe74ba7f9a2134467c1",
+  "rom_bytes": 1179664,
+  "gsu_code_bytes": 459,
+  "gsu_work_ram_bytes": 8192,
+  "startup_atlas_transfer_bytes": 7168,
+  "texture_encoded_bytes": 7093,
+  "row_cache_bytes": 64,
+  "gsu_spare_bytes": 11,
+  "extra_cpu_animation_bytes": 32,
+  "fixed_original_game_code_changes": "Only two verified call-address low-byte relocations atF30E/F3AC after display-age compaction hook; no semantic gameplay edits",
+  "original_sources_equal": true,
+  "all_chr_and_native_ppu_equal": true,
+  "destination_geometry_equal": true,
+  "v031_cpu_palette_scenery_runtime_equal": true,
+  "pixel_oracle_cases": 215,
+  "pixel_oracle_failed": 0,
+  "core_boundaries": 1201,
+  "gameplay_150_fields_equal": true,
+  "native_oam_inputs_equal": true,
+  "wallclock_only_differences": 7,
+  "strict_timing_identity": false,
+  "controller_only_recordings": true,
+  "hardware_verified": false,
+  "performance": {
+    "stage_MonoSH_NESFX_v031_ForestShade": {
+      "scenes": 900,
+      "seconds": 29.92953296311879,
+      "presentations": 1796,
+      "ppu_fields": 1799,
+      "fps": 60.00761863585221,
+      "drops": 2,
+      "starvations": 3,
+      "gsu_mean_ms": 3.2822880775623267,
+      "gsu_p95_ms": 7.75126,
+      "gsu_max_ms": 9.34978
+    },
+    "stage_MonoSH_NESFX_v032_AllDetail": {
+      "scenes": 900,
+      "seconds": 29.9295474901007,
+      "presentations": 1795,
+      "ppu_fields": 1799,
+      "fps": 59.974177711631036,
+      "drops": 4,
+      "starvations": 4,
+      "gsu_mean_ms": 4.348182971910113,
+      "gsu_p95_ms": 10.46782,
+      "gsu_max_ms": 14.46106
+    },
+    "boss_MonoSH_NESFX_v031_ForestShade": {
+      "scenes": 600,
+      "seconds": 19.94437506879364,
+      "presentations": 1170,
+      "ppu_fields": 1199,
+      "fps": 58.66315670279705,
+      "drops": 28,
+      "starvations": 4,
+      "gsu_mean_ms": 4.675415306980656,
+      "gsu_p95_ms": 11.43664,
+      "gsu_max_ms": 15.09298
+    },
+    "boss_MonoSH_NESFX_v032_AllDetail": {
+      "scenes": 600,
+      "seconds": 19.94423035770458,
+      "presentations": 1079,
+      "ppu_fields": 1199,
+      "fps": 54.10085927849182,
+      "drops": 120,
+      "starvations": 3,
+      "gsu_mean_ms": 7.409901463878327,
+      "gsu_p95_ms": 16.6876,
+      "gsu_max_ms": 24.04998
+    }
+  }
+}
+VIDEO [REDACTED_WIN_PATH] 11448207

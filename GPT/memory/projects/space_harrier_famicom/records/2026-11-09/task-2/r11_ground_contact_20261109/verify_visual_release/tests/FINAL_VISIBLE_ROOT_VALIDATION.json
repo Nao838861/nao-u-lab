@@ -1,0 +1,29 @@
+{
+  "Tree0": {
+    "full_and_depth_mid_samples": 3663,
+    "visible_root_gaps": {
+      "0": 3663
+    },
+    "visible_root_opposite_steps": 0,
+    "nearest_sampled_silhouette_tip_opposite_steps": 0,
+    "max_tip_alias_pixels": 0
+  },
+  "Bush0": {
+    "full_and_depth_mid_samples": 3663,
+    "visible_root_gaps": {
+      "0": 3663
+    },
+    "visible_root_opposite_steps": 0,
+    "nearest_sampled_silhouette_tip_opposite_steps": 195,
+    "max_tip_alias_pixels": 1
+  },
+  "Bush1": {
+    "full_and_depth_mid_samples": 3663,
+    "visible_root_gaps": {
+      "0": 3663
+    },
+    "visible_root_opposite_steps": 0,
+    "nearest_sampled_silhouette_tip_opposite_steps": 84,
+    "max_tip_alias_pixels": 1
+  }
+}

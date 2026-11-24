@@ -1,0 +1,201 @@
+{
+  "status": "MATCHED_HARDWARE_BUILT_TIMING_PASSED_SD_COPY_READBACK_VERIFIED",
+  "rom_mesen_sha256": "ad97006d309f00ebb786819f13291ae20780f591f7432b547d7e2cf6a1aa956a",
+  "rom_hardware_sha256": "130433b7ee967154d7a684be0475886adc4e677f6af4d1747964ef3aba250312",
+  "core_sha256": "f8768b8e0c993cec44bab510274f90632b40bd556110d73896344714651360dc",
+  "gsu_sha256": "f86e41f2e81185bb9c2c61b4cddb8528b434750e167f393ada34c67549fd9b8e",
+  "gsu_used_bytes": 508,
+  "atlas_sha256": "b127c2de4574fe05cb66c935c83a5688d6abef31c521f29e4dacfb60d12345a8",
+  "atlas_bytes": 7424,
+  "atlas_spare_before_dynamic_bytes": 82,
+  "extra_framebuffer_or_metadata_ram_bits": 0,
+  "cpu_command_stride": 18,
+  "gsu_command_stride": 14,
+  "command_capacity_preserved": 56,
+  "common_background_color0": "3A",
+  "palette_dark_index2": [
+    "1A",
+    "09",
+    "09",
+    "09"
+  ],
+  "sprite_nonzero_colors_preserved": true,
+  "source_zero_transparency_before_index_swap": true,
+  "checks": {
+    "gsu_instruction_cases": 224,
+    "gsu_framebuffer_byte_comparisons": 3670016,
+    "gsu_alpha_byte_comparisons": 1835008,
+    "cpu_selector_cases": 7296,
+    "palette_8x1_cases": 400000,
+    "strict_rtl_suites": [
+      {
+        "name": "compile",
+        "passed": true,
+        "returncode": 0,
+        "wall_seconds": 0.10899999970570207
+      },
+      {
+        "name": "hud",
+        "passed": true,
+        "returncode": 0,
+        "wall_seconds": 0.0940000000409782
+      },
+      {
+        "name": "native",
+        "passed": true,
+        "returncode": 0,
+        "wall_seconds": 4.234000000171363
+      },
+      {
+        "name": "phase0",
+        "passed": true,
+        "returncode": 0,
+        "wall_seconds": 29.82799999974668
+      },
+      {
+        "name": "phase19",
+        "passed": true,
+        "returncode": 0,
+        "wall_seconds": 28.20300000021234
+      },
+      {
+        "name": "phase39",
+        "passed": true,
+        "returncode": 0,
+        "wall_seconds": 26.92199999978766
+      },
+      {
+        "name": "stop",
+        "passed": true,
+        "returncode": 0,
+        "wall_seconds": 28.657000000122935
+      }
+    ]
+  },
+  "longrun": {
+    "fields": 6000,
+    "seconds": 99.83612446941595,
+    "present_fps": 59.89815842492893,
+    "counters": {
+      "logic_tick": 5981,
+      "draw_count": 5981,
+      "present_count": 5980,
+      "late_fields": 17,
+      "deadline_misses": 0,
+      "queue_starvations": 20,
+      "queue_drops": 1
+    },
+    "boss_states": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "no_dpad": true,
+    "audio_stream": true,
+    "audio_non_silent": true,
+    "all_gameplay_samples_match_baseline": true,
+    "total_value_comparisons": 210000,
+    "timing_sample_mismatches": [
+      {
+        "field": 2706,
+        "key": "draw_count",
+        "baseline": 3072,
+        "candidate": 3071
+      }
+    ]
+  },
+  "limitations": [
+    "Functional model is not physical hardware throughput.",
+    "Ground timing model covers arithmetic schedule; scenery shortcut and real bus contention are not fully cycle modeled.",
+    "Optional renderer GSU profile only supports the audited508byte program; future programs require opcode audit.",
+    "GSU synthetic56command worstcases can exceed16.7ms; no constant60fps claim.",
+    "Strict externalmemory simulation is not electrical signoff.",
+    "ROM and matched mapper copied toEverDrive and bothreadback hashesverified; nohardwaregame launch/reset/firmwareupdate.",
+    "Physical output,electrical operation and realhardwarefps remain unverified.",
+    "Current-game camera profile accepts cs256/sn0/pc256 only; other axes are explicitly rejected.",
+    "Functionalmodel can represent additional cameras, but that doesnot establish support for those cameras in this specialized mapper."
+  ],
+  "physical_hardware_verified": false,
+  "constant60fps": false,
+  "strict_source_snapshot": "tests_axis_final",
+  "source_hashes": {
+    "rtl/clock_mailbox.vhd": "765ca7f9d60c34ee2fe74871371c4c5e9f1e0f9fed728885b43e5211178270b2",
+    "rtl/deadline_guard.vhd": "c115f8ba6a56f143282d447ba024048a45ff1a7fb31cd4bb9c0895d6aef1b1df",
+    "rtl/dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "rtl/GSU.vhd": "a3f8c3cab9d7a43e757781172d2ac1f08fa100238d1817e88a62d70bc4b0beff",
+    "rtl/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "rtl/mmc5_audio.vhd": "d4a1c84e3d01d3d7d54e52f1bc818857bd183e1484e8746039fa5591b99cacc3",
+    "rtl/mmc5_audio_dac.vhd": "575c1713b9a276d21ba1a4231b77bb2ad294611b79e5948b0dc479026f43cc0e",
+    "rtl/mode7_dsp.vhd": "60c973f6ca282e4661ab2d1bd67d84516f036e4df0a81d3620ba4d673d2c60e9",
+    "rtl/prg_early_byte.vhd": "5f4bf8d5707e2bec03c81551773cb00f1f00cc72b308ea35874579dfb3c185e6",
+    "rtl/racing_display.vhd": "2a8c46dadc4adbd261acd46692c9ba2242df46a10a14b79325308f9c7435366e",
+    "rtl/racing_gsu.vhd": "90ea9004ab4242ab95b82196cc60cf8d7c57ef8063866cd43982b00633121560",
+    "rtl/racing_hud_route.vhd": "d04f75917613709475ea777d514265cf3209e560b3ebad682f1f32606a240ad8",
+    "rtl/racing_top.vhd": "976222f347f615abb35f8ecded27de9d5f4bb17d7b1c965b22ed31a00d6f6e56",
+    "rtl/serial_math.vhd": "346f06db550472f5907541d482edad73612b4293b5789a4019dd26d431ff1aaf",
+    "base_sv/base_io.sv": "9b9135a47fd3587d3ff2ee11a312b4ca5a8f591c494ecbbb5737ba9cd3bbec83",
+    "base_sv/defs.sv": "35a25d2e2138081d922653ae0dee41eb4159888f4d8b59e8ed24ddf0449d3a0d",
+    "base_sv/map_255.sv": "04ffff677a501d0d972c14898fc39466a22dc91cce56f5e68a81ed8594421b96",
+    "base_sv/pi.sv": "fa14d02b6ccf09dd344e8f6367a09493e63fd5602cd2c35f120cbba3f87c300f",
+    "base_sv/structs.sv": "eaacc90832d25c8b7a9869c7de490d2a83afccb396143842e62e740897079596",
+    "base_sv/sys_cfg.sv": "be6c6a5e7cbd2e3e666c27ab4420d30d724e47e0d86e213546b4830d3034b593",
+    "base_sv/top.sv": "2a10734ebb1e277832e75acafeaec46364f1a517af1d1e7ed245ddd63a4a5d60"
+  },
+  "fpga": {
+    "device": "EP4CE6F17C8",
+    "logic_elements_used": 6240,
+    "logic_elements_total": 6272,
+    "embedded_multiplier9bit_used": 14,
+    "memory_bits": 222464,
+    "internal_timing_pass": true,
+    "internal_timing_checks": 48,
+    "minimum_setup_ns": 0.56,
+    "minimum_hold_ns": 0.141,
+    "rbf_sha256": "54f0eb426820abcb73aed36e5e9a6cf92f8399f602c32b4ad1b27ceee879777c",
+    "rbf_bytes": 169878
+  },
+  "current_game_axis_profile": {
+    "enabled": true,
+    "cs": 256,
+    "sn": 0,
+    "pc": 256,
+    "dynamic_parameters": [
+      "x",
+      "z",
+      "height",
+      "pitch_sin"
+    ],
+    "other_axes": "Explicit error/rejection",
+    "current_ROM_33_heights_preserved": true
+  },
+  "transfer": {
+    "status": "ROM_AND_MATCHING_MAPPER_COPY_READBACK_VERIFIED_NO_LAUNCH",
+    "started_utc": "2026-11-10T17:25:15.7626143Z",
+    "destination_folder": "sd:/usb-games/MSH5_R11_PAL3A_HW_130433b7_f7b567aba55a.nes.fpgrom",
+    "rom_filename": "MSH5_R11_PAL3A_HW_130433b7_f7b567aba55a.nes",
+    "rom_sha256": "130433b7ee967154d7a684be0475886adc4e677f6af4d1747964ef3aba250312",
+    "mapper_sha256": "54f0eb426820abcb73aed36e5e9a6cf92f8399f602c32b4ad1b27ceee879777c",
+    "commands_attempted": 4,
+    "completed": 4,
+    "readback_hashes_matched": true,
+    "hardware_launches": 0,
+    "reset_commands": 0,
+    "firmware_updates": 0,
+    "automatic_retries": 0,
+    "pretransfer_menu": "Visually confirmed from current menu-2.jpg",
+    "physical_display_verified": false,
+    "error": null,
+    "readback_rom_sha256": "130433b7ee967154d7a684be0475886adc4e677f6af4d1747964ef3aba250312",
+    "readback_mapper_sha256": "54f0eb426820abcb73aed36e5e9a6cf92f8399f602c32b4ad1b27ceee879777c",
+    "completed_utc": "2026-11-10T17:25:22.0470211Z"
+  },
+  "moving900": {
+    "fields": 900,
+    "status_errors": 0,
+    "pose_conflicts": 0,
+    "late_fields": 2,
+    "queue_drops": 0
+  }
+}

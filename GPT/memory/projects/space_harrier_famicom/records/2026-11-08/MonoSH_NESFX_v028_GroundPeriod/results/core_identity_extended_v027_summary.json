@@ -1,0 +1,763 @@
+{
+  "complete": true,
+  "boundaries": 3601,
+  "game_state_fields": 151,
+  "game_state_bytes": 850,
+  "game_state_identical": false,
+  "state_differences": [
+    {
+      "boundary": 604,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 1219,
+          "clock": 36272161,
+          "frame_count": 1211,
+          "logic_tick": 604,
+          "draw_count": 605,
+          "present_count": 1208,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 1218,
+          "clock": 36268271,
+          "frame_count": 1210,
+          "logic_tick": 604,
+          "draw_count": 605,
+          "present_count": 1207,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "bb",
+          "v026": "ba"
+        }
+      }
+    },
+    {
+      "boundary": 613,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 1237,
+          "clock": 36811542,
+          "frame_count": 1229,
+          "logic_tick": 613,
+          "draw_count": 614,
+          "present_count": 1225,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 1236,
+          "clock": 36804135,
+          "frame_count": 1228,
+          "logic_tick": 613,
+          "draw_count": 614,
+          "present_count": 1224,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "cd",
+          "v026": "cc"
+        }
+      }
+    },
+    {
+      "boundary": 1085,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 2180,
+          "clock": 64918036,
+          "frame_count": 2172,
+          "logic_tick": 1085,
+          "draw_count": 1086,
+          "present_count": 2168,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 2181,
+          "clock": 64923570,
+          "frame_count": 2173,
+          "logic_tick": 1085,
+          "draw_count": 1086,
+          "present_count": 2169,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "7c",
+          "v026": "7d"
+        }
+      }
+    },
+    {
+      "boundary": 1086,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 2182,
+          "clock": 64977965,
+          "frame_count": 2174,
+          "logic_tick": 1086,
+          "draw_count": 1087,
+          "present_count": 2170,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 2183,
+          "clock": 64983652,
+          "frame_count": 2175,
+          "logic_tick": 1086,
+          "draw_count": 1087,
+          "present_count": 2171,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "7e",
+          "v026": "7f"
+        }
+      }
+    },
+    {
+      "boundary": 1095,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 2202,
+          "clock": 65571623,
+          "frame_count": 2194,
+          "logic_tick": 1095,
+          "draw_count": 1096,
+          "present_count": 2189,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 2203,
+          "clock": 65577659,
+          "frame_count": 2195,
+          "logic_tick": 1095,
+          "draw_count": 1096,
+          "present_count": 2190,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "92",
+          "v026": "93"
+        }
+      }
+    },
+    {
+      "boundary": 1104,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 2221,
+          "clock": 66132883,
+          "frame_count": 2213,
+          "logic_tick": 1104,
+          "draw_count": 1105,
+          "present_count": 2207,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 2222,
+          "clock": 66141586,
+          "frame_count": 2214,
+          "logic_tick": 1104,
+          "draw_count": 1105,
+          "present_count": 2208,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "a5",
+          "v026": "a6"
+        }
+      }
+    },
+    {
+      "boundary": 1108,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 2229,
+          "clock": 66376266,
+          "frame_count": 2221,
+          "logic_tick": 1108,
+          "draw_count": 1109,
+          "present_count": 2215,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 2230,
+          "clock": 66384441,
+          "frame_count": 2222,
+          "logic_tick": 1108,
+          "draw_count": 1109,
+          "present_count": 2215,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "ad",
+          "v026": "ae"
+        }
+      }
+    },
+    {
+      "boundary": 1109,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 2231,
+          "clock": 66437065,
+          "frame_count": 2223,
+          "logic_tick": 1109,
+          "draw_count": 1110,
+          "present_count": 2217,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 2232,
+          "clock": 66447421,
+          "frame_count": 2224,
+          "logic_tick": 1109,
+          "draw_count": 1110,
+          "present_count": 2217,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "af",
+          "v026": "b0"
+        }
+      }
+    },
+    {
+      "boundary": 1112,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 2236,
+          "clock": 66585546,
+          "frame_count": 2228,
+          "logic_tick": 1112,
+          "draw_count": 1113,
+          "present_count": 2222,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 2237,
+          "clock": 66596762,
+          "frame_count": 2229,
+          "logic_tick": 1112,
+          "draw_count": 1113,
+          "present_count": 2222,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "b4",
+          "v026": "b5"
+        }
+      }
+    },
+    {
+      "boundary": 1115,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 2241,
+          "clock": 66722602,
+          "frame_count": 2233,
+          "logic_tick": 1115,
+          "draw_count": 1116,
+          "present_count": 2227,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 2240,
+          "clock": 66703796,
+          "frame_count": 2232,
+          "logic_tick": 1115,
+          "draw_count": 1116,
+          "present_count": 2225,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "b9",
+          "v026": "b8"
+        }
+      }
+    },
+    {
+      "boundary": 1328,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 2667,
+          "clock": 79399019,
+          "frame_count": 2659,
+          "logic_tick": 1328,
+          "draw_count": 1329,
+          "present_count": 2653,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 2666,
+          "clock": 79391234,
+          "frame_count": 2658,
+          "logic_tick": 1328,
+          "draw_count": 1329,
+          "present_count": 2650,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "63",
+          "v026": "62"
+        }
+      }
+    },
+    {
+      "boundary": 1330,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 2671,
+          "clock": 79516673,
+          "frame_count": 2663,
+          "logic_tick": 1330,
+          "draw_count": 1331,
+          "present_count": 2657,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 2670,
+          "clock": 79509664,
+          "frame_count": 2662,
+          "logic_tick": 1330,
+          "draw_count": 1331,
+          "present_count": 2654,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "67",
+          "v026": "66"
+        }
+      }
+    }
+  ],
+  "original_256byte_oam_identical": true,
+  "oam_different_boundaries": [],
+  "latched_inputs_identical": false,
+  "input_differences": [
+    {
+      "boundary": 614,
+      "v021": {
+        "JOY1_HELD": 1,
+        "JOY1_PRESSED": 0,
+        "JOY1_RELEASED": 128
+      },
+      "v026": {
+        "JOY1_HELD": 1,
+        "JOY1_PRESSED": 0,
+        "JOY1_RELEASED": 0
+      }
+    },
+    {
+      "boundary": 1086,
+      "v021": {
+        "JOY1_HELD": 1,
+        "JOY1_PRESSED": 0,
+        "JOY1_RELEASED": 0
+      },
+      "v026": {
+        "JOY1_HELD": 1,
+        "JOY1_PRESSED": 0,
+        "JOY1_RELEASED": 128
+      }
+    },
+    {
+      "boundary": 1097,
+      "v021": {
+        "JOY1_HELD": 129,
+        "JOY1_PRESSED": 0,
+        "JOY1_RELEASED": 0
+      },
+      "v026": {
+        "JOY1_HELD": 129,
+        "JOY1_PRESSED": 128,
+        "JOY1_RELEASED": 0
+      }
+    },
+    {
+      "boundary": 1111,
+      "v021": {
+        "JOY1_HELD": 1,
+        "JOY1_PRESSED": 0,
+        "JOY1_RELEASED": 128
+      },
+      "v026": {
+        "JOY1_HELD": 129,
+        "JOY1_PRESSED": 0,
+        "JOY1_RELEASED": 0
+      }
+    },
+    {
+      "boundary": 1116,
+      "v021": {
+        "JOY1_HELD": 129,
+        "JOY1_PRESSED": 128,
+        "JOY1_RELEASED": 0
+      },
+      "v026": {
+        "JOY1_HELD": 129,
+        "JOY1_PRESSED": 0,
+        "JOY1_RELEASED": 0
+      }
+    }
+  ],
+  "boundary_timing_identical": false,
+  "timing_differences": [
+    {
+      "boundary": 604,
+      "v021": {
+        "pc": 62019,
+        "ppu": 1219,
+        "clock": 36272161,
+        "frame_count": 1211,
+        "logic_tick": 604,
+        "draw_count": 605,
+        "present_count": 1208,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 1218,
+        "clock": 36268271,
+        "frame_count": 1210,
+        "logic_tick": 604,
+        "draw_count": 605,
+        "present_count": 1207,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 613,
+      "v021": {
+        "pc": 62019,
+        "ppu": 1237,
+        "clock": 36811542,
+        "frame_count": 1229,
+        "logic_tick": 613,
+        "draw_count": 614,
+        "present_count": 1225,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 1236,
+        "clock": 36804135,
+        "frame_count": 1228,
+        "logic_tick": 613,
+        "draw_count": 614,
+        "present_count": 1224,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 1085,
+      "v021": {
+        "pc": 62019,
+        "ppu": 2180,
+        "clock": 64918036,
+        "frame_count": 2172,
+        "logic_tick": 1085,
+        "draw_count": 1086,
+        "present_count": 2168,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 2181,
+        "clock": 64923570,
+        "frame_count": 2173,
+        "logic_tick": 1085,
+        "draw_count": 1086,
+        "present_count": 2169,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 1086,
+      "v021": {
+        "pc": 62019,
+        "ppu": 2182,
+        "clock": 64977965,
+        "frame_count": 2174,
+        "logic_tick": 1086,
+        "draw_count": 1087,
+        "present_count": 2170,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 2183,
+        "clock": 64983652,
+        "frame_count": 2175,
+        "logic_tick": 1086,
+        "draw_count": 1087,
+        "present_count": 2171,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 1095,
+      "v021": {
+        "pc": 62019,
+        "ppu": 2202,
+        "clock": 65571623,
+        "frame_count": 2194,
+        "logic_tick": 1095,
+        "draw_count": 1096,
+        "present_count": 2189,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 2203,
+        "clock": 65577659,
+        "frame_count": 2195,
+        "logic_tick": 1095,
+        "draw_count": 1096,
+        "present_count": 2190,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 1104,
+      "v021": {
+        "pc": 62019,
+        "ppu": 2221,
+        "clock": 66132883,
+        "frame_count": 2213,
+        "logic_tick": 1104,
+        "draw_count": 1105,
+        "present_count": 2207,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 2222,
+        "clock": 66141586,
+        "frame_count": 2214,
+        "logic_tick": 1104,
+        "draw_count": 1105,
+        "present_count": 2208,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 1108,
+      "v021": {
+        "pc": 62019,
+        "ppu": 2229,
+        "clock": 66376266,
+        "frame_count": 2221,
+        "logic_tick": 1108,
+        "draw_count": 1109,
+        "present_count": 2215,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 2230,
+        "clock": 66384441,
+        "frame_count": 2222,
+        "logic_tick": 1108,
+        "draw_count": 1109,
+        "present_count": 2215,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 1109,
+      "v021": {
+        "pc": 62019,
+        "ppu": 2231,
+        "clock": 66437065,
+        "frame_count": 2223,
+        "logic_tick": 1109,
+        "draw_count": 1110,
+        "present_count": 2217,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 2232,
+        "clock": 66447421,
+        "frame_count": 2224,
+        "logic_tick": 1109,
+        "draw_count": 1110,
+        "present_count": 2217,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 1112,
+      "v021": {
+        "pc": 62019,
+        "ppu": 2236,
+        "clock": 66585546,
+        "frame_count": 2228,
+        "logic_tick": 1112,
+        "draw_count": 1113,
+        "present_count": 2222,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 2237,
+        "clock": 66596762,
+        "frame_count": 2229,
+        "logic_tick": 1112,
+        "draw_count": 1113,
+        "present_count": 2222,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 1115,
+      "v021": {
+        "pc": 62019,
+        "ppu": 2241,
+        "clock": 66722602,
+        "frame_count": 2233,
+        "logic_tick": 1115,
+        "draw_count": 1116,
+        "present_count": 2227,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 2240,
+        "clock": 66703796,
+        "frame_count": 2232,
+        "logic_tick": 1115,
+        "draw_count": 1116,
+        "present_count": 2225,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 1328,
+      "v021": {
+        "pc": 62019,
+        "ppu": 2667,
+        "clock": 79399019,
+        "frame_count": 2659,
+        "logic_tick": 1328,
+        "draw_count": 1329,
+        "present_count": 2653,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 2666,
+        "clock": 79391234,
+        "frame_count": 2658,
+        "logic_tick": 1328,
+        "draw_count": 1329,
+        "present_count": 2650,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 1330,
+      "v021": {
+        "pc": 62019,
+        "ppu": 2671,
+        "clock": 79516673,
+        "frame_count": 2663,
+        "logic_tick": 1330,
+        "draw_count": 1331,
+        "present_count": 2657,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 2670,
+        "clock": 79509664,
+        "frame_count": 2662,
+        "logic_tick": 1330,
+        "draw_count": 1331,
+        "present_count": 2654,
+        "c_sp": 32767
+      }
+    }
+  ],
+  "rom_sha256": {
+    "v021": "d41753d838470c9a31214a5d9305015df95479bde131a1ccf46dc1cc4ca43e76",
+    "v026": "ac17d93dac2e5f65e1bed32d6472f3eecec5cb54910d3b22212d5b23c5a64afb"
+  },
+  "dll_sha256": "c39bca0f76b04a7f0d37b4de1e385b74e1b90ca743a0105f2b290733fe3fb79d",
+  "input": "For boundary index i: A=((i//2)%2==0); Select only at i=1 (original invincibility toggle); Start only at i=1500 and3100 (original Boss/Stage reset controls); movement phase=(i//60)%4, Left=phase0 and i>60, Right=phase2, Down=phase1, Up=phase3; remaining buttons off. Set P1 override before resuming toward each pre_core_tick breakpoint.",
+  "limits": [
+    "Fixed3601 pre-tick boundaries, not full-stage/all-input proof.",
+    "Controller override is applied immediately before running toward each indexed breakpoint; original NMI/edge/input-accumulation pipeline is intact.",
+    "Compares original gameplay state and original OAM, not interpolated display OAM or rendered pixels. No emulator RAM writes and no clock changes."
+  ],
+  "coverage": {
+    "v021": {
+      "boss_states": [
+        "00",
+        "01",
+        "02"
+      ],
+      "player_states": [
+        "00"
+      ]
+    },
+    "candidate": {
+      "boss_states": [
+        "00",
+        "01",
+        "02"
+      ],
+      "player_states": [
+        "00"
+      ]
+    }
+  }
+}

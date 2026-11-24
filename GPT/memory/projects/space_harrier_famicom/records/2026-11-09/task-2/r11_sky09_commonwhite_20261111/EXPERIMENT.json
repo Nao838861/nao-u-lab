@@ -1,0 +1,173 @@
+{
+  "request": "Use common white$10 backdrop to free per-palette dark: skyP1=$09, groundP0 and adaptive objectP2/P3=$19.",
+  "scope": "Real ROM palettes plus mapper final bitplane index permutation, standard NES PPU lookup. No display-only color override. Matching RTL candidate, not deployed or physically tested.",
+  "base": "[REDACTED_WIN_PATH]",
+  "palettes_before": [
+    [
+      25,
+      16,
+      42,
+      57
+    ],
+    [
+      25,
+      16,
+      42,
+      35
+    ],
+    [
+      25,
+      16,
+      42,
+      22
+    ],
+    [
+      25,
+      16,
+      42,
+      15
+    ]
+  ],
+  "palettes_after": [
+    [
+      16,
+      25,
+      42,
+      57
+    ],
+    [
+      16,
+      9,
+      42,
+      35
+    ],
+    [
+      16,
+      25,
+      42,
+      22
+    ],
+    [
+      16,
+      25,
+      42,
+      15
+    ]
+  ],
+  "changes": [
+    "ROM offset$d30-d3f: old0/1 color positions exchanged and only P1 dark changed19->09.",
+    "C++ CompositeAdaptive final low=low xor not high, high unchanged. Internal transparency and alpha composition before this final encoding unchanged.",
+    "RTL state10 line_d same final encoding permutation.",
+    "ROM sprite-side transparent palette bytes$d40/$d44/$d48/$d4c also set$10, because native $3F10/14/18/1C writes mirror BG color0. All nonzero sprite colors unchanged."
+  ],
+  "limitations": [
+    "Eight-pixel palette selection remains: P2/P3 blocks anywhere retain19, including exposed sky dark in those blocks.",
+    "A background object emitted inP1 shares09 there. No new object/sky palette independently selectable.",
+    "Changing hardware BG index0/1 swaps which background pixels count transparent for native sprite priority/sprite0-hit; capture and explicit analysis must verify current game impact.",
+    "Emulator audio excludes unsupported MMC5 expansion audio."
+  ],
+  "hardware_transfer_performed": false,
+  "physical_hardware_started": false,
+  "physical_display_verified": false,
+  "rom_sha256": {
+    "candidate_MESEN.nes": "50effeaa06522844cb95867db61dc9f2b719e902a6245bb821d523f945a3bd22",
+    "candidate_HARDWARE_UNTESTED.nes": "67b651e8e71477dbd216efbc730cfdc033be7df5371071ad123a76664f212511"
+  },
+  "hardware_fit": "FAILED: Fitter requires393LABs; EP4CE6 device contains392. Both direct8bitXOR and factored equivalent attempted. No RBF assembled or deployed.",
+  "final_rtl": "Factored low-plane permutation before blending; 1000000 randomized8pixelblocks exactly equivalent to final0/1swap.",
+  "video_validation": {
+    "passed": true,
+    "compared_frames": 6000,
+    "telemetry_exact_match": true,
+    "decoded_audio_exact_match": true,
+    "audio_pcm_sha256": "868ead863a751bc24ac4628195d1f27a538b0f06d9aa77df1e602c5ce590f45c",
+    "changed_pixels": 1616139,
+    "only_color_change": "$19 RGB56,135,0 to $09 RGB11,72,0",
+    "changed_pixels_at_or_below_conservative_ground_boundary": 0,
+    "ground_pixels_and_all_other_colors_exact_match": true,
+    "old19_pixels_total": 40782422,
+    "old19_pixels_above_conservative_boundary": 6582533,
+    "old19_pixels_above_boundary_retaining19": 4966394,
+    "max_changed_y": 165,
+    "limitations": [
+      "P1 only changes; adaptive P2/P3 blocks retain19 above horizon too. Thus not all sky-region dark becomes09.",
+      "Objects encoded into P1 share its09 dark; separate object recoloring was not introduced.",
+      "Standard PPU lookup, no display override. Hardware source matching subject to separate fit/timing; physical hardware never touched."
+    ],
+    "video": "[REDACTED_WIN_PATH]",
+    "video_bytes": 14348332,
+    "video_sha256": "3ead95c5c5adee2adf2407d4c2fbe343102d097c504a257901701a7bf41fff2e",
+    "rom_sha256": "50effeaa06522844cb95867db61dc9f2b719e902a6245bb821d523f945a3bd22",
+    "dll_sha256": "918b676cc88428059b931f2e68193a2fef3f80e9e7b175c07c3491e8098c3b2d"
+  },
+  "video_library_identity": {
+    "operation": "create_library_file",
+    "status": "succeeded",
+    "path": "/SpaceHarrier_r11_Sky09_CommonWhite_NaturalPlay.mp4",
+    "file_id": "[REDACTED_LIBRARY_REF]",
+    "library_file_id": "[REDACTED_LIBRARY_REF]",
+    "file_name": "SpaceHarrier_r11_Sky09_CommonWhite_NaturalPlay.mp4",
+    "current_version_number": 0,
+    "restored_from_version_number": null,
+    "xattrs": [
+      {
+        "name": "user.library-file-version",
+        "value": "0"
+      }
+    ],
+    "directory_id": "personal-root:v1",
+    "mime_type": "video/mp4",
+    "library_artifact_type": "other",
+    "file_size_bytes": 14348332,
+    "external_connectors_accessed": false
+  },
+  "final_source_sha256": {
+    "rtl\\racing_display.vhd": "22139194ca7cbc5841e5b920f1ed8f392dc9f68a882dc879e3a99ee5ea6f8697",
+    "core\\Core\\NES\\Mappers\\Homebrew\\NesFx\\Mode7Ground.hpp": "af5055e4c7cfb69a565a165ceccc0d5016fd5d66950d270207642e7ffdf4da5f"
+  },
+  "final_strict_rtl_results": [
+    {
+      "name": "compile",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 0.09299999987706542
+    },
+    {
+      "name": "hud",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 0.0940000000409782
+    },
+    {
+      "name": "native",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 3.734999999869615
+    },
+    {
+      "name": "phase0",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 28.265000000130385
+    },
+    {
+      "name": "phase19",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 28.32799999974668
+    },
+    {
+      "name": "phase39",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 32.25
+    },
+    {
+      "name": "stop",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 30.407000000122935
+    }
+  ],
+  "strict_rtl_summary": "ALL PASSED: compile,65536HUD address cases,327960nativeCHRphase checks,110nsSRAM phase offsets0/19/39ns and stop/abort-white replay."
+}

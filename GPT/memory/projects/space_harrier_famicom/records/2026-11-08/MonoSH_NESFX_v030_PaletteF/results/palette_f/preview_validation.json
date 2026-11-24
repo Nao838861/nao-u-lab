@@ -1,0 +1,12 @@
+{
+  "video": "[REDACTED_WIN_PATH]",
+  "bytes": 4201151,
+  "sha256": "01763f9e47a9dd20e26007dae1c25d74feefcf716d693af8e350cb7bd8de59c8",
+  "scenes": 600,
+  "phase_checks_pass": true,
+  "input_only_capture": true,
+  "original_select_invincibility": true,
+  "renderer_suppressed_scenes": 0,
+  "duration_seconds": 19.950481540396815,
+  "not_hardware_test": true
+}

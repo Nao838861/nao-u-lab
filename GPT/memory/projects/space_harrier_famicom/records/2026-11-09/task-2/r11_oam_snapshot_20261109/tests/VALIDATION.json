@@ -1,0 +1,472 @@
+{
+  "status": "EMULATOR_VERIFIED_RECOMMENDED_CANDIDATE_NO_HARDWARE",
+  "unit": {
+    "cases": 36,
+    "oracle_passed_both": true,
+    "cycles_saved_each": [
+      513,
+      513,
+      519,
+      515,
+      464,
+      519,
+      519,
+      519,
+      519,
+      519,
+      519,
+      519,
+      464,
+      506,
+      503,
+      516,
+      504,
+      499,
+      515,
+      508,
+      503,
+      514,
+      504,
+      464,
+      512,
+      506,
+      509,
+      516,
+      507,
+      502,
+      511,
+      504,
+      503,
+      511,
+      464,
+      500
+    ],
+    "min_cycles_saved": 464,
+    "max_cycles_saved": 519,
+    "mean_cycles_saved": 505.6111111111111,
+    "microseconds_saved_at_1789773Hz": [
+      259.2507541459168,
+      289.9809081933854
+    ],
+    "scope": "Exact assembled6502 code, fixed+seeded midpoint fixtures, current-packet identity, other-pair canaries, original reflected-shot timers unchanged."
+  },
+  "settings": {
+    "RamPowerOnState": 1,
+    "meaning": "AllZeros",
+    "randomize_mapper_power_on_state": false,
+    "randomize_cpu_ppu_alignment": false,
+    "correction": "Prior test config value0 means Random, not zero initialization. Earlier results remain historical; canonical comparisons here use1. lateral_phase was uninitialized at boot in existing ROM; no such ROM initialization patch is mixed into this optimization."
+  },
+  "profiles": {
+    "boss": {
+      "baseline": {
+        "variant": "baseline",
+        "scene": "boss",
+        "rom_sha256": "36da9d1d67ff563ec87eb60ff829b027ed7e76484962f237bcd30eb44e91b926",
+        "initial": {
+          "field": 0,
+          "clock": 774307,
+          "ppu": 27,
+          "rate": 1789773,
+          "frame_count": 19,
+          "logic_tick": 9,
+          "draw_count": 9,
+          "present_count": 16,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0,
+          "presented_sim_generation": 8,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "lateral_phase": 0,
+          "_boss_state": 2,
+          "_boss_hp": 16,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "final": {
+          "field": 3000,
+          "clock": 90116307,
+          "ppu": 3027,
+          "rate": 1789773,
+          "frame_count": 3019,
+          "logic_tick": 1509,
+          "draw_count": 1509,
+          "present_count": 3015,
+          "late_fields": 111,
+          "deadline_misses": 0,
+          "queue_starvations": 1,
+          "queue_drops": 0,
+          "presented_sim_generation": 1508,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "lateral_phase": 0,
+          "_boss_state": 2,
+          "_boss_hp": 16,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 0,
+          "em1_loaded_pose": 0
+        },
+        "gsu_jobs": 2999,
+        "gsu_ms": {
+          "mean": 4.53937999333111,
+          "p95": 8.95254,
+          "max": 11.74114
+        },
+        "deltas": {
+          "logic_tick": 1500,
+          "draw_count": 1500,
+          "present_count": 2999,
+          "late_fields": 111,
+          "deadline_misses": 0,
+          "queue_starvations": 1,
+          "queue_drops": 0
+        },
+        "ram_power_on_state": 1,
+        "ram_power_on_meaning": "AllZeros (source enum verified)",
+        "scope": "3000fields fixed input, SELECT invincibility, original START skip for boss. Functional dedicated Mesen only, no hardware or60fps/fullgame claim.",
+        "relative_generation_age_fields": {
+          "mean": 2.8473282442748094,
+          "p95": 3,
+          "max": 3
+        },
+        "sampled_logic_lag_ticks": {
+          "mean": 0.19292158223455932,
+          "max": 1
+        }
+      },
+      "candidate": {
+        "variant": "candidate",
+        "scene": "boss",
+        "rom_sha256": "6c0afe9aa11fbb0d039f2bb4049053e2fc720847408fb087f67d382e7580284e",
+        "initial": {
+          "field": 0,
+          "clock": 774307,
+          "ppu": 27,
+          "rate": 1789773,
+          "frame_count": 19,
+          "logic_tick": 9,
+          "draw_count": 9,
+          "present_count": 16,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0,
+          "presented_sim_generation": 8,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "lateral_phase": 0,
+          "_boss_state": 2,
+          "_boss_hp": 16,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "final": {
+          "field": 3000,
+          "clock": 90116307,
+          "ppu": 3027,
+          "rate": 1789773,
+          "frame_count": 3019,
+          "logic_tick": 1509,
+          "draw_count": 1509,
+          "present_count": 3016,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0,
+          "presented_sim_generation": 1508,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "lateral_phase": 0,
+          "_boss_state": 2,
+          "_boss_hp": 16,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "gsu_jobs": 3000,
+        "gsu_ms": {
+          "mean": 4.539670046666667,
+          "p95": 8.95254,
+          "max": 11.74116
+        },
+        "deltas": {
+          "logic_tick": 1500,
+          "draw_count": 1500,
+          "present_count": 3000,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0
+        },
+        "ram_power_on_state": 1,
+        "ram_power_on_meaning": "AllZeros (source enum verified)",
+        "scope": "3000fields fixed input, SELECT invincibility, original START skip for boss. Functional dedicated Mesen only, no hardware or60fps/fullgame claim.",
+        "relative_generation_age_fields": {
+          "mean": 2,
+          "p95": 2,
+          "max": 2
+        },
+        "sampled_logic_lag_ticks": {
+          "mean": 0.04510756419153366,
+          "max": 1
+        }
+      }
+    },
+    "stage": {
+      "baseline": {
+        "variant": "baseline",
+        "scene": "stage",
+        "rom_sha256": "36da9d1d67ff563ec87eb60ff829b027ed7e76484962f237bcd30eb44e91b926",
+        "initial": {
+          "field": 0,
+          "clock": 536061,
+          "ppu": 19,
+          "rate": 1789773,
+          "frame_count": 11,
+          "logic_tick": 5,
+          "draw_count": 5,
+          "present_count": 8,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0,
+          "presented_sim_generation": 4,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "lateral_phase": 0,
+          "_boss_state": 0,
+          "_boss_hp": 0,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 201,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "final": {
+          "field": 3000,
+          "clock": 89878061,
+          "ppu": 3019,
+          "rate": 1789773,
+          "frame_count": 3011,
+          "logic_tick": 1505,
+          "draw_count": 1505,
+          "present_count": 2996,
+          "late_fields": 217,
+          "deadline_misses": 0,
+          "queue_starvations": 12,
+          "queue_drops": 12,
+          "presented_sim_generation": 1504,
+          "em1_uploads": 28,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "lateral_phase": 0,
+          "_boss_state": 0,
+          "_boss_hp": 0,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 1,
+          "em1_loaded_pose": 4
+        },
+        "gsu_jobs": 2988,
+        "gsu_ms": {
+          "mean": 2.9188401807228916,
+          "p95": 5.76386,
+          "max": 8.9084
+        },
+        "deltas": {
+          "logic_tick": 1500,
+          "draw_count": 1500,
+          "present_count": 2988,
+          "late_fields": 217,
+          "deadline_misses": 0,
+          "queue_starvations": 12,
+          "queue_drops": 12
+        },
+        "ram_power_on_state": 1,
+        "ram_power_on_meaning": "AllZeros (source enum verified)",
+        "scope": "3000fields fixed input, SELECT invincibility, original START skip for boss. Functional dedicated Mesen only, no hardware or60fps/fullgame claim.",
+        "relative_generation_age_fields": {
+          "mean": 2.206800832755031,
+          "p95": 3,
+          "max": 7
+        },
+        "sampled_logic_lag_ticks": {
+          "mean": 0.18598195697432338,
+          "max": 4
+        }
+      },
+      "candidate": {
+        "variant": "candidate",
+        "scene": "stage",
+        "rom_sha256": "6c0afe9aa11fbb0d039f2bb4049053e2fc720847408fb087f67d382e7580284e",
+        "initial": {
+          "field": 0,
+          "clock": 536061,
+          "ppu": 19,
+          "rate": 1789773,
+          "frame_count": 11,
+          "logic_tick": 5,
+          "draw_count": 5,
+          "present_count": 8,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0,
+          "presented_sim_generation": 4,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "lateral_phase": 0,
+          "_boss_state": 0,
+          "_boss_hp": 0,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 201,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "final": {
+          "field": 3000,
+          "clock": 89878061,
+          "ppu": 3019,
+          "rate": 1789773,
+          "frame_count": 3011,
+          "logic_tick": 1505,
+          "draw_count": 1505,
+          "present_count": 2996,
+          "late_fields": 182,
+          "deadline_misses": 0,
+          "queue_starvations": 12,
+          "queue_drops": 12,
+          "presented_sim_generation": 1504,
+          "em1_uploads": 28,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "lateral_phase": 0,
+          "_boss_state": 0,
+          "_boss_hp": 0,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 1,
+          "em1_loaded_pose": 4
+        },
+        "gsu_jobs": 2988,
+        "gsu_ms": {
+          "mean": 2.9152491633199467,
+          "p95": 5.7337,
+          "max": 8.90838
+        },
+        "deltas": {
+          "logic_tick": 1500,
+          "draw_count": 1500,
+          "present_count": 2988,
+          "late_fields": 182,
+          "deadline_misses": 0,
+          "queue_starvations": 12,
+          "queue_drops": 12
+        },
+        "ram_power_on_state": 1,
+        "ram_power_on_meaning": "AllZeros (source enum verified)",
+        "scope": "3000fields fixed input, SELECT invincibility, original START skip for boss. Functional dedicated Mesen only, no hardware or60fps/fullgame claim.",
+        "relative_generation_age_fields": {
+          "mean": 2.2151283830673143,
+          "p95": 3,
+          "max": 6
+        },
+        "sampled_logic_lag_ticks": {
+          "mean": 0.1568355308813324,
+          "max": 4
+        }
+      }
+    }
+  },
+  "identity": {
+    "boss": {
+      "boundaries": 1501,
+      "state_fields": 151,
+      "state_bytes": 850,
+      "different_fields": {
+        "_frame_counter": 150
+      },
+      "full_state_mismatch_boundaries": 150,
+      "joy_mismatches": 0,
+      "native_oam_mismatches": 0,
+      "gameplay849B_excluding_real_nmi_counter_mismatch_boundaries": 0,
+      "pass_except_real_nmi_counter": true,
+      "scope": "Fixed per-NMI shooting+movement schedule; original SELECT invincibility; optional original START boss selection. Not all inputs or full game."
+    },
+    "stage": {
+      "boundaries": 1501,
+      "state_fields": 151,
+      "state_bytes": 850,
+      "different_fields": {
+        "_frame_counter": 55
+      },
+      "full_state_mismatch_boundaries": 55,
+      "joy_mismatches": 0,
+      "native_oam_mismatches": 0,
+      "gameplay849B_excluding_real_nmi_counter_mismatch_boundaries": 0,
+      "pass_except_real_nmi_counter": true,
+      "scope": "Fixed per-NMI shooting+movement schedule; original SELECT invincibility; optional original START boss selection. Not all inputs or full game."
+    }
+  },
+  "display_packets": {
+    "boss": {
+      "generations": 200,
+      "camera38B_mismatches": 0,
+      "oam232B_mismatches": 0,
+      "suppressed_generations": 0
+    },
+    "stage": {
+      "generations": 200,
+      "camera38B_mismatches": 0,
+      "oam232B_mismatches": 0,
+      "suppressed_generations": 0
+    }
+  },
+  "visual": {
+    "boss": {
+      "field242_all_pixels_identical": true,
+      "baseline": "results\\gameplay_zero_boss_baseline\\frame_0242.png",
+      "candidate": "results\\gameplay_zero_boss_candidate\\frame_0242.png",
+      "scope": "One common presentation phase; different presentation timing elsewhere is not asserted pixel-identical."
+    },
+    "stage": {
+      "field242_all_pixels_identical": true,
+      "baseline": "results\\gameplay_zero_stage_baseline\\frame_0242.png",
+      "candidate": "results\\gameplay_zero_stage_candidate\\frame_0242.png",
+      "scope": "One common presentation phase; different presentation timing elsewhere is not asserted pixel-identical."
+    }
+  },
+  "no_hardware_actions": true,
+  "limitations": [
+    "Matching dedicated r11 Mesen only. DLL copy remains fixed2.948977ms; real RTL dirty-copy timing differs and hardware performance untested.",
+    "Boss full3000/3000 result is one fixed no-shot, invincible3000-field case, not universal60fps or input-latency proof.",
+    "No ROM/RBF normal path or active equipment test was changed.",
+    "Relative generation age is a queue proxy, not physical input-to-photon latency."
+  ],
+  "extra_yield_variant": {
+    "status": "NOT_ADOPTED_NO_USEFUL_BENEFIT",
+    "sha256": "16139322625d36a542ed248b8a3ea26cfc0d242865496edb841b97826e19a565",
+    "measurements_setting": "Historical value0=Random, not canonical AllZeros. No positive benefit: same boss3000 and Stage2988 presentations/12starvations; Stage late183 vs plain182. No retest needed to reject unnecessary added call."
+  }
+}

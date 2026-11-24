@@ -1,0 +1,121 @@
+{
+  "passed": true,
+  "independent_per_texel_address_walk": true,
+  "texels": 27782,
+  "proof": [
+    {
+      "slot": 1,
+      "texels": 2340,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 2,
+      "texels": 1792,
+      "passed": true,
+      "check": "selected_materials"
+    },
+    {
+      "slot": 5,
+      "texels": 2352,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 6,
+      "texels": 2752,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 7,
+      "texels": 1680,
+      "passed": true,
+      "check": "selected_materials"
+    },
+    {
+      "slot": 8,
+      "texels": 1920,
+      "passed": true,
+      "check": "selected_materials"
+    },
+    {
+      "slot": 9,
+      "texels": 910,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 10,
+      "texels": 1650,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 11,
+      "texels": 210,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 14,
+      "texels": 2352,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 15,
+      "texels": 2352,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 16,
+      "texels": 2352,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 12,
+      "texels": 1024,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 24,
+      "texels": 1024,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 25,
+      "texels": 1024,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 26,
+      "texels": 1024,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    },
+    {
+      "slot": 27,
+      "texels": 1024,
+      "passed": true,
+      "check": "unchanged_original_codes"
+    }
+  ],
+  "selected_material_texels": 5392,
+  "descriptor_cpu_tables_checked": 56,
+  "min_row_pointer": "0x91e5",
+  "max_row_pointer": "0x9c46",
+  "max_static_read": "0x9c4c",
+  "no_static_reads_into_dynamic_reserve": true,
+  "command_region_56_times_14_ends_exclusively_at_payload_start": true,
+  "shared_upload_prefix32_zero": true,
+  "dynamic_and_cache_exactly_preserved": true,
+  "relocated_original_gsu_exactly_preserved": true,
+  "hardware_tested": false,
+  "requires_parent_compact_command_abi_and_boot_and_gsu_patches": true
+}

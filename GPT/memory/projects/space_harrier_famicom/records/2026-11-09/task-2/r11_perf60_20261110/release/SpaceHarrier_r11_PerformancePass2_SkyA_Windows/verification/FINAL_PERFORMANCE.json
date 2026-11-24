@@ -1,0 +1,427 @@
+{
+  "scope": "Dedicated functional Mesen only; not physical NES/FPGA. Same6000 real NTSC fields, stationary Select-invincible neutralDpad and7fieldA-autofire. Higherthroughput changes progress/scenemix; fixedfieldsubwindows are notgenerationmatchedbenchmarks.",
+  "variant": "candidate_round9",
+  "rom_sha256": "670a4e10a046cf1367c857554ada60f9cbf723c2fb183b84227dbbaab8627eae",
+  "core_sha256": "4c49df2fb0c557ba99126dbb9c6208bfd6c833af87c2f57e622ea96c445f682f",
+  "gsu_clock_hz": 50000000,
+  "total_fields": 6000,
+  "ntsc_fps": 60.0988118623484,
+  "overall": {
+    "accepted": {
+      "logic_tick": 5794,
+      "present_count": 5785,
+      "late_fields": 205,
+      "queue_starvations": 215,
+      "queue_drops": 9,
+      "deadline_misses": 0,
+      "presentation_fps": 57.945271103947576
+    },
+    "candidate_hotspots2": {
+      "logic_tick": 5868,
+      "present_count": 5863,
+      "late_fields": 131,
+      "queue_starvations": 137,
+      "queue_drops": 5,
+      "deadline_misses": 0,
+      "presentation_fps": 58.726555658158105
+    },
+    "candidate_round5": {
+      "logic_tick": 5927,
+      "present_count": 5927,
+      "late_fields": 72,
+      "queue_starvations": 73,
+      "queue_drops": 0,
+      "deadline_misses": 0,
+      "presentation_fps": 59.367609651356496
+    },
+    "candidate_round9": {
+      "logic_tick": 5964,
+      "present_count": 5963,
+      "late_fields": 35,
+      "queue_starvations": 37,
+      "queue_drops": 1,
+      "deadline_misses": 0,
+      "presentation_fps": 59.72820252253059
+    }
+  },
+  "windows": [
+    {
+      "first_field": 1,
+      "last_field": 300,
+      "accepted": {
+        "present_count": 291,
+        "late_fields": 9,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 58.29584750647795
+      },
+      "candidate_round9": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 301,
+      "last_field": 600,
+      "accepted": {
+        "present_count": 299,
+        "late_fields": 1,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 59.898482489473906
+      },
+      "candidate_round9": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 601,
+      "last_field": 900,
+      "accepted": {
+        "present_count": 297,
+        "late_fields": 3,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 59.497823743724915
+      },
+      "candidate_round9": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 901,
+      "last_field": 1200,
+      "accepted": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      },
+      "candidate_round9": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 1201,
+      "last_field": 1500,
+      "accepted": {
+        "present_count": 293,
+        "late_fields": 7,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 58.69650625222694
+      },
+      "candidate_round9": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 1501,
+      "last_field": 1800,
+      "accepted": {
+        "present_count": 286,
+        "late_fields": 14,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 57.29420064210547
+      },
+      "candidate_round9": {
+        "present_count": 295,
+        "late_fields": 4,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 59.09716499797592
+      }
+    },
+    {
+      "first_field": 1801,
+      "last_field": 2100,
+      "accepted": {
+        "present_count": 255,
+        "late_fields": 45,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 51.08399008299614
+      },
+      "candidate_round9": {
+        "present_count": 289,
+        "late_fields": 11,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 57.895188760728956
+      }
+    },
+    {
+      "first_field": 2101,
+      "last_field": 2400,
+      "accepted": {
+        "present_count": 284,
+        "late_fields": 15,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 56.89354189635648
+      },
+      "candidate_round9": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 2401,
+      "last_field": 2700,
+      "accepted": {
+        "present_count": 300,
+        "late_fields": 1,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      },
+      "candidate_round9": {
+        "present_count": 298,
+        "late_fields": 2,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 59.69815311659941
+      }
+    },
+    {
+      "first_field": 2701,
+      "last_field": 3000,
+      "accepted": {
+        "present_count": 268,
+        "late_fields": 33,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 53.68827193036457
+      },
+      "candidate_round9": {
+        "present_count": 295,
+        "late_fields": 5,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 59.09716499797592
+      }
+    },
+    {
+      "first_field": 3001,
+      "last_field": 3300,
+      "accepted": {
+        "present_count": 297,
+        "late_fields": 2,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 59.497823743724915
+      },
+      "candidate_round9": {
+        "present_count": 299,
+        "late_fields": 1,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 59.898482489473906
+      }
+    },
+    {
+      "first_field": 3301,
+      "last_field": 3600,
+      "accepted": {
+        "present_count": 284,
+        "late_fields": 11,
+        "queue_drops": 4,
+        "deadline_misses": 0,
+        "presentation_fps": 56.89354189635648
+      },
+      "candidate_round9": {
+        "present_count": 299,
+        "late_fields": 0,
+        "queue_drops": 1,
+        "deadline_misses": 0,
+        "presentation_fps": 59.898482489473906
+      }
+    },
+    {
+      "first_field": 3601,
+      "last_field": 3900,
+      "accepted": {
+        "present_count": 288,
+        "late_fields": 12,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 57.69485938785446
+      },
+      "candidate_round9": {
+        "present_count": 296,
+        "late_fields": 4,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 59.29749437085042
+      }
+    },
+    {
+      "first_field": 3901,
+      "last_field": 4200,
+      "accepted": {
+        "present_count": 290,
+        "late_fields": 8,
+        "queue_drops": 2,
+        "deadline_misses": 0,
+        "presentation_fps": 58.095518133603456
+      },
+      "candidate_round9": {
+        "present_count": 300,
+        "late_fields": 1,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 4201,
+      "last_field": 4500,
+      "accepted": {
+        "present_count": 277,
+        "late_fields": 20,
+        "queue_drops": 3,
+        "deadline_misses": 0,
+        "presentation_fps": 55.49123628623502
+      },
+      "candidate_round9": {
+        "present_count": 296,
+        "late_fields": 3,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 59.29749437085042
+      }
+    },
+    {
+      "first_field": 4501,
+      "last_field": 4800,
+      "accepted": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      },
+      "candidate_round9": {
+        "present_count": 296,
+        "late_fields": 4,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 59.29749437085042
+      }
+    },
+    {
+      "first_field": 4801,
+      "last_field": 5100,
+      "accepted": {
+        "present_count": 286,
+        "late_fields": 14,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 57.29420064210547
+      },
+      "candidate_round9": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 5101,
+      "last_field": 5400,
+      "accepted": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      },
+      "candidate_round9": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 5401,
+      "last_field": 5700,
+      "accepted": {
+        "present_count": 293,
+        "late_fields": 7,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 58.69650625222694
+      },
+      "candidate_round9": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 5701,
+      "last_field": 6000,
+      "accepted": {
+        "present_count": 297,
+        "late_fields": 3,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 59.497823743724915
+      },
+      "candidate_round9": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "deadline_misses": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    }
+  ],
+  "moving900": {
+    "logic_tick": 896,
+    "present_count": 896,
+    "late_fields": 4,
+    "queue_drops": 0,
+    "presentation_fps": 59.83170603184907,
+    "zero_errors_and_pose_conflicts": true
+  },
+  "sky": {
+    "nes_color": "0x23",
+    "ppu_address": "0x3F07",
+    "rgb": "#C676FF",
+    "ground_palette_unchanged": true
+  },
+  "constant60fps": false,
+  "hardware_verified": false,
+  "visible_launcher_test": false,
+  "old_savestates_supported": false
+}

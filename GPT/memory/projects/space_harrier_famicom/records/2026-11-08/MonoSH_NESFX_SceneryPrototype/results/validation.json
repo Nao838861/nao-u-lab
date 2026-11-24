@@ -1,0 +1,43 @@
+{
+  "status": "PASS independent model; NOT ROM/FPGA integrated",
+  "source_hashes": {
+    "game\\v001\\frame.s": "f33e290e1bcc2f13a5da3bbc939779382b4c84bdc35881e71afc1f2a847bfc37",
+    "game\\v001\\ground.s": "d34dd501562e66b455af3ff11b59457cf9fbc448c557e3c9eec9af6ca46b11d6",
+    "game\\v001\\assets\\ppu.bin": "a4e0d80541f86eda38099adb84766ceba2f1f7a7655a5cb986cf6881238024be",
+    "game\\v001\\assets\\scenery_palette.bin": "fbec700f55a7cd77a211b7ffff74d0adba98839ba8c4d1317c414f9dab89c6c5",
+    "game\\v001\\assets\\recorded_effects\\far.png": "bad778cd344f28b8a8a7d9945e5658b2d364d16051d7f637c92a66ae556c0a9a",
+    "game\\v001\\assets\\recorded_effects\\near.png": "a8520dea73dee4b10a761b1c89e522bf568b9610b78403c75f1ad891650b2d70"
+  },
+  "original_v019_sha256": "8fa05e2315b594ea9d40008b0e6154603b5b340331cc241be203dc3c41d03fb2",
+  "original_v019_unchanged": true,
+  "asset_bytes": {
+    "tiles": 3248,
+    "maps": 512,
+    "palettes": 128,
+    "payload": 3888,
+    "header": 32,
+    "blob": 3920
+  },
+  "proposed_chr_span": [
+    "0x1B010",
+    "0x1BF60 exclusive"
+  ],
+  "bytes_remaining_before_sprite_chr": 160,
+  "blob_sha256": "a852325fb9a3b53f4231cf849abd52eff8ba4ab4b7dbe1a34db1e5fccd73f9dc",
+  "validation": {
+    "sfc_full_map_pixels_alpha_rgb": 262144,
+    "compact_cpp_pixels": 16384,
+    "interpolation_wrap_cases": 14745600,
+    "all_65_camera_horizons": true,
+    "generation_commit_guards": true,
+    "compiler": "[REDACTED_WIN_PATH]",
+    "cpp_output": "PASS 14745600 wrap/interpolation cases, palette/tile decoder, horizon and commit latch"
+  },
+  "limitations": [
+    "Source colours are SFC reference. NES requires per-8x1 palette conversion and cannot keep all source RGB colours.",
+    "No ROM, installed DLL, SD card or RBF was changed.",
+    "No FPGA synthesis, fit, timing, bus-load or console test performed.",
+    "Ground in GIF and PNG is a flat boundary placeholder, not gameplay capture.",
+    "Prototype clock is synthetic60Hz. Original NES logic stays NTSC/2 and must supply immutable snapshots."
+  ]
+}

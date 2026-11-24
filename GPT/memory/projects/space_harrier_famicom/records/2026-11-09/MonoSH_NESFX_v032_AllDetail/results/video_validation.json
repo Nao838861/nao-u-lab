@@ -1,0 +1,9 @@
+{
+  "file": "[REDACTED_WIN_PATH]",
+  "bytes": 11448207,
+  "sha256": "b78774471eee9c77116409fdf9953a365567bffcea9a6180328690d16363340d",
+  "decode_ok": true,
+  "audio_ok": true,
+  "actual_recordings": true,
+  "approx_seconds": 28
+}

@@ -1,0 +1,91 @@
+{
+  "status": "LOCAL_CHECKS_PASSED_AWAITING_INDEPENDENT_REVIEW_AND_PARENT_NOTICE",
+  "utc": "2026-11-09T03:12:47.708833+00:00",
+  "rom_sha256": "ae57d1e0cb5d6d11ce14cfc03ee3b3b697979b8e54d4e6e6dceaae5a10cd7467",
+  "rbf_sha256": "33ecfd3db7eefa1159ab24ac5d2e0f9da9a6363d80c45e5b75a503fb775e694a",
+  "dll_sha256": "20aadedee3c5c596ebaddd57ed3a6d57252c54ebea9042f31739fc2f8bbe4d84",
+  "protocol_cases": 9,
+  "input_cases": 16800,
+  "nested_nmi_cases": 186,
+  "exact_finite_mesen_pass": true,
+  "exit_nmi": 1400,
+  "expected_mcu_unemulated_terminal": "E4",
+  "ram_handoff_reached": true,
+  "final_mesen_counters": {
+    "ppu_frame": 1487,
+    "clock": 44254080,
+    "pc": 619,
+    "frame_count": 1400,
+    "marker": 228,
+    "stop_reason": 1,
+    "input": 132,
+    "invincible": true,
+    "player_state": 0,
+    "player_x": 112,
+    "player_y": 56,
+    "ground_offset": 0,
+    "status": 0,
+    "present_count": 1386,
+    "logic_tick": 699,
+    "boss_state": 0,
+    "late_fields": 57,
+    "queue_drops": 10,
+    "deadline_misses": 0,
+    "queue_starvations": 10
+  },
+  "strict_ppu": [
+    {
+      "name": "compile",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 0.07800000021234155
+    },
+    {
+      "name": "hud",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 0.10999999986961484
+    },
+    {
+      "name": "native",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 3.6089999999385327
+    },
+    {
+      "name": "phase0",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 31.266000000061467
+    },
+    {
+      "name": "phase19",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 36.65599999995902
+    },
+    {
+      "name": "phase39",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 31.04700000002049
+    },
+    {
+      "name": "stop",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 35.34400000004098
+    }
+  ],
+  "compositor_hide_vectors": 3387144,
+  "compositor_hide_pixel_checks": 27097152,
+  "video_decode_exit": 0,
+  "video_sha256": "19f470af2b2f23a23c7063fdd6ba95590cd04d31dc134b950cda2c6a3344fe8c",
+  "original_inputs_unchanged": {
+    "[REDACTED_WIN_PATH]": true,
+    "[REDACTED_WIN_PATH]": true,
+    "[REDACTED_WIN_PATH]": true
+  },
+  "hardware_launches": 0,
+  "scope": "No mountain/forest; r7 red eyes/local black and ground only, inherited audio not CleanMixv003. Functional and internal timing checks do not close external electrical timing."
+}

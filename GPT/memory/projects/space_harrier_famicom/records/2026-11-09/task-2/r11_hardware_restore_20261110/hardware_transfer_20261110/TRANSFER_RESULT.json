@@ -1,0 +1,21 @@
+{
+    "status":  "ROM_AND_MATCHING_MAPPER_COPY_READBACK_VERIFIED_NO_LAUNCH",
+    "started_utc":  "2026-11-10T17:25:15.7626143Z",
+    "destination_folder":  "sd:/usb-games/MSH5_R11_PAL3A_HW_130433b7_f7b567aba55a.nes.fpgrom",
+    "rom_filename":  "MSH5_R11_PAL3A_HW_130433b7_f7b567aba55a.nes",
+    "rom_sha256":  "130433b7ee967154d7a684be0475886adc4e677f6af4d1747964ef3aba250312",
+    "mapper_sha256":  "54f0eb426820abcb73aed36e5e9a6cf92f8399f602c32b4ad1b27ceee879777c",
+    "commands_attempted":  4,
+    "completed":  4,
+    "readback_hashes_matched":  true,
+    "hardware_launches":  0,
+    "reset_commands":  0,
+    "firmware_updates":  0,
+    "automatic_retries":  0,
+    "pretransfer_menu":  "Visually confirmed from current menu-2.jpg",
+    "physical_display_verified":  false,
+    "error":  null,
+    "readback_rom_sha256":  "130433b7ee967154d7a684be0475886adc4e677f6af4d1747964ef3aba250312",
+    "readback_mapper_sha256":  "54f0eb426820abcb73aed36e5e9a6cf92f8399f602c32b4ad1b27ceee879777c",
+    "completed_utc":  "2026-11-10T17:25:22.0470211Z"
+}

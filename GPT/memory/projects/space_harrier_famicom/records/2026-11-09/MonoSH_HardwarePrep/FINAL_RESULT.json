@@ -1,0 +1,28 @@
+{
+  "status": "OFFLINE_PREPARATION_COMPLETE_NOT_INTEGRATED",
+  "report": "[REDACTED_WIN_PATH]",
+  "baseline_rbf_sha256": "408935e73db7e7fb9c0cd279b6579da90fcab92f4c720a8ac2fa3d605af7c6bb",
+  "baseline_LE": 6218,
+  "device_LE": 6272,
+  "baseline_M9K": 30,
+  "device_M9K": 30,
+  "component_LE": 83,
+  "component_M9K": 0,
+  "component_DSP": 0,
+  "payload_bytes": 3840,
+  "packing": "PASS",
+  "direct_compositor": "PASS",
+  "rtl": "PASS",
+  "standalone_map_fit_sta": "PASS",
+  "integrated_mapper_fit": "NOT_RUN_NO_COMPLETE_INTEGRATION",
+  "hardware": "NOT_RUN",
+  "tracked_inputs_unchanged": true,
+  "existing_ROM_RBF_SD_writes": 0,
+  "hardware_operations": 0,
+  "artifact_hashes": {
+    "scenery_quantized_15rows.bin": "e9e7e138ab0bb46704b4c34f54735a26fa7dec5b1b4e0afc1fe920fd185fff8f",
+    "scenery_fetch.vhd": "404fd133e642dc6e75e116f18221d8428ba88a232993120dfa2f7543fbb21d2a",
+    "tb_scenery.vhd": "d67f1806f72e0a90ce4891570dd493e1181419a7e6fcbde8bf75df862d3061cc",
+    "REPORT.md": "bdeb68b0d2a7bca5702af32dfe0f83ef2cdbe028e8e136591b4a41757f988dcd"
+  }
+}

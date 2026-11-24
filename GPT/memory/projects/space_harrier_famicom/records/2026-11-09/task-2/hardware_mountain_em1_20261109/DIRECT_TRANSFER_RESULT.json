@@ -1,0 +1,21 @@
+{
+    "status":  "COPY_COMMANDS_SUCCEEDED_NO_LAUNCH",
+    "mode":  "USER_REQUESTED_DIRECT_COPY_ONLY_NO_LAUNCH",
+    "started_utc":  "2026-11-09T07:15:31.4267722Z",
+    "destination_folder":  "sd:/usb-games/MSH5_R10_ME_PLAY_e814bb9c_cecdb5d1866f425693ba871fc350a695.nes.fpgrom",
+    "rom_filename":  "MSH5_R10_ME_PLAY_e814bb9c_cecdb5d1866f425693ba871fc350a695.nes",
+    "rom_sha256":  "e814bb9c4725252f936dd65db281a2d6e79bacaabca562d074fb82a8d53c9dac",
+    "mapper_filename":  "mapper.rbf",
+    "mapper_sha256":  "d344be0ba48399f212933526c9d4a2b1ae3ae2566be81006199fd7d87c192974",
+    "commands_attempted":  2,
+    "copy_commands_completed":  2,
+    "hardware_launches":  0,
+    "finite_trials":  0,
+    "memory_reads":  0,
+    "reset_commands":  0,
+    "readback_performed":  false,
+    "pretransfer_menu_visually_confirmed":  true,
+    "pretransfer_menu_photo":  "direct-transfer-state/menu-2.jpg",
+    "error":  null,
+    "completed_utc":  "2026-11-09T07:15:34.9111855Z"
+}

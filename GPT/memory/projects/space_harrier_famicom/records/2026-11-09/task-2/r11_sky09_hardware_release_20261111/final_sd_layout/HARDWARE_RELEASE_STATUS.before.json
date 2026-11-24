@@ -1,0 +1,178 @@
+{
+  "status": "PHYSICAL_BOOT_AND_30_SECOND_GAMEPLAY_VERIFIED",
+  "created_utc": "2026-11-11T08:37:24.274252+00:00",
+  "selected_video_library_file_id": "[REDACTED_LIBRARY_REF]",
+  "selected_video_color_and_ROM_preserved": true,
+  "hardware_rom_sha256": "67b651e8e71477dbd216efbc730cfdc033be7df5371071ad123a76664f212511",
+  "mapper_sha256": "a815d020706a5729d2eeed270c95fc8f1eb4bb8b2a7bc31fc52142409c66799c",
+  "mapper_bytes": 169122,
+  "logic_elements": 6229,
+  "logic_capacity": 6272,
+  "timing": {
+    "internal_timing_pass": true,
+    "checks": 48,
+    "negative_slacks": [],
+    "minimum_setup_ns": 0.53,
+    "minimum_hold_ns": 0.126,
+    "qsf_sha256": "c63548372e49ef2d16945828a504360ecac392786b2a3316ca8717e931cd171a",
+    "sdc_sha256": "12f272275e963026bf10c50ec4dbc8152254de5eb701b87944b3f20e36a71af5",
+    "limits": [
+      "Tool exit0 alone does not establish timing success.",
+      "Internal timing only. External I/O timing/electrical hardware validation is not covered.",
+      "No hardware, SD or USB action is performed."
+    ],
+    "source_hashes": {
+      "rtl/clock_mailbox.vhd": "765ca7f9d60c34ee2fe74871371c4c5e9f1e0f9fed728885b43e5211178270b2",
+      "rtl/deadline_guard.vhd": "c115f8ba6a56f143282d447ba024048a45ff1a7fb31cd4bb9c0895d6aef1b1df",
+      "rtl/dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "rtl/GSU.vhd": "a3f8c3cab9d7a43e757781172d2ac1f08fa100238d1817e88a62d70bc4b0beff",
+      "rtl/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "rtl/mmc5_audio.vhd": "d4a1c84e3d01d3d7d54e52f1bc818857bd183e1484e8746039fa5591b99cacc3",
+      "rtl/mmc5_audio_dac.vhd": "575c1713b9a276d21ba1a4231b77bb2ad294611b79e5948b0dc479026f43cc0e",
+      "rtl/mode7_dsp.vhd": "60c973f6ca282e4661ab2d1bd67d84516f036e4df0a81d3620ba4d673d2c60e9",
+      "rtl/prg_early_byte.vhd": "5f4bf8d5707e2bec03c81551773cb00f1f00cc72b308ea35874579dfb3c185e6",
+      "rtl/racing_display.vhd": "e843717e5a16b693ff4adea6fd9f48e92b4769a4869058d6b41bdf1ff2d7235b",
+      "rtl/racing_gsu.vhd": "90ea9004ab4242ab95b82196cc60cf8d7c57ef8063866cd43982b00633121560",
+      "rtl/racing_hud_route.vhd": "d04f75917613709475ea777d514265cf3209e560b3ebad682f1f32606a240ad8",
+      "rtl/racing_top.vhd": "976222f347f615abb35f8ecded27de9d5f4bb17d7b1c965b22ed31a00d6f6e56",
+      "rtl/serial_math.vhd": "346f06db550472f5907541d482edad73612b4293b5789a4019dd26d431ff1aaf",
+      "base_sv/base_io.sv": "9b9135a47fd3587d3ff2ee11a312b4ca5a8f591c494ecbbb5737ba9cd3bbec83",
+      "base_sv/defs.sv": "35a25d2e2138081d922653ae0dee41eb4159888f4d8b59e8ed24ddf0449d3a0d",
+      "base_sv/map_255.sv": "04ffff677a501d0d972c14898fc39466a22dc91cce56f5e68a81ed8594421b96",
+      "base_sv/pi.sv": "fa14d02b6ccf09dd344e8f6367a09493e63fd5602cd2c35f120cbba3f87c300f",
+      "base_sv/structs.sv": "eaacc90832d25c8b7a9869c7de490d2a83afccb396143842e62e740897079596",
+      "base_sv/sys_cfg.sv": "be6c6a5e7cbd2e3e666c27ab4420d30d724e47e0d86e213546b4830d3034b593",
+      "base_sv/top.sv": "2a10734ebb1e277832e75acafeaec46364f1a517af1d1e7ed245ddd63a4a5d60"
+    },
+    "status": "INTERNAL_TIMING_PASSED"
+  },
+  "strict_tests": [
+    {
+      "name": "compile",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 0.15700000012293458
+    },
+    {
+      "name": "hud",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 0.125
+    },
+    {
+      "name": "native",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 4.436999999918044
+    },
+    {
+      "name": "phase0",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 41.40599999995902
+    },
+    {
+      "name": "phase19",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 43.42199999978766
+    },
+    {
+      "name": "phase39",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 35.688000000081956
+    },
+    {
+      "name": "stop",
+      "passed": true,
+      "returncode": 0,
+      "wall_seconds": 31.561999999918044
+    }
+  ],
+  "exhaustive_ground_half5": {
+    "passed": true,
+    "exhaustive_upper16_cases": 65536,
+    "mismatches": 0,
+    "identity": "t=s+9",
+    "old_function": " function ground_half5(q:signed(31 downto 0)) return std_logic is\n   variable s:integer range -9 to 13;\n begin\n   s:=to_integer(unsigned(q(18 downto 17)))-to_integer(unsigned(q(20 downto 19)))\n     +to_integer(unsigned(q(22 downto 21)))-to_integer(unsigned(q(24 downto 23)))\n     +to_integer(unsigned(q(26 downto 25)))-to_integer(unsigned(q(28 downto 27)))\n     +to_integer(unsigned(q(30 downto 29)))+btoi(q(31));\n   case s is\n     when -7|-6|-2|-1|3|4|8|9|13 => return '1';\n     when -8|-3|2|7|12 => return q(16);\n     when others => return '0';\n   end case;\n end;\n",
+    "new_function": " -- Balanced unsigned sum; t=s+9 exactly for every input. Same U/5 parity.\n function ground_half5(q:signed(31 downto 0)) return std_logic is\n   variable a,b,c,d:unsigned(2 downto 0);\n   variable ab,cd:unsigned(3 downto 0);\n   variable t:unsigned(4 downto 0);\n begin\n   a:=resize(unsigned(q(18 downto 17)),3)+resize(not unsigned(q(20 downto 19)),3);\n   b:=resize(unsigned(q(22 downto 21)),3)+resize(not unsigned(q(24 downto 23)),3);\n   c:=resize(unsigned(q(26 downto 25)),3)+resize(not unsigned(q(28 downto 27)),3);\n   d:=resize(unsigned(q(30 downto 29)),3)+to_unsigned(btoi(q(31)),3);\n   ab:=resize(a,4)+resize(b,4);cd:=resize(c,4)+resize(d,4);\n   t:=resize(ab,5)+resize(cd,5);\n   case to_integer(t) is\n     when 2|3|7|8|12|13|17|18|22 => return '1';\n     when 1|6|11|16|21 => return q(16);\n     when others => return '0';\n   end case;\n end;\n",
+    "scope": "Combinational refactoring only; no state, cycle, memory, palette or camera behavior changes."
+  },
+  "hardware_transfer_performed": true,
+  "physical_boot_verified": true,
+  "physical_display_verified": true,
+  "preflight": "After user physically reset the console, fresh native video confirmed EverDrive menu. One launch from that menu succeeded and30seconds of physical gameplay were captured.",
+  "external_IO_electrical_signoff": false,
+  "folder": "MSH5_R11_SKY09_WHITE10_67b651e8_a815d020.nes.fpgrom",
+  "sd_destination_folder": "sd:/usb-games/MSH5_R11_SKY09_W10_67b651e8_1e6b72450111.nes.fpgrom",
+  "physical_test": {
+    "status": "PHYSICAL_BOOT_AND_30_SECOND_GAMEPLAY_VERIFIED",
+    "rom_sha256": "67b651e8e71477dbd216efbc730cfdc033be7df5371071ad123a76664f212511",
+    "mapper_sha256": "a815d020706a5729d2eeed270c95fc8f1eb4bb8b2a7bc31fc52142409c66799c",
+    "destination_folder": "sd:/usb-games/MSH5_R11_SKY09_W10_67b651e8_1e6b72450111.nes.fpgrom",
+    "rom_filename": "MSH5_R11_SKY09_W10_67b651e8_1e6b72450111.nes",
+    "readback_hashes_matched": true,
+    "source_identity_verified": true,
+    "strict_tests_passed": 7,
+    "timing_checks_passed": 48,
+    "launch_attempts_total": 2,
+    "launch_attempts_from_fresh_menu": 1,
+    "launch_exit_code": 0,
+    "launch_log_success": true,
+    "launch_stderr": "",
+    "launch_command": "edlink run --file sd:/usb-games/MSH5_R11_SKY09_W10_67b651e8_1e6b72450111.nes.fpgrom/MSH5_R11_SKY09_W10_67b651e8_1e6b72450111.nes",
+    "launch_completed_utc": "2026-11-11T14:12:04.9614949Z",
+    "device": "COM3 protocol0x06 device0x17 EverDrive-N8 PRO",
+    "physical_boot_verified": true,
+    "physical_gameplay_verified": true,
+    "startup_transition_captured": true,
+    "observations": [
+      "Fresh prelaunch recording shows EverDrive file browser, after user physically reset the console.",
+      "Recording captures transition from menu to SpaceHarrier, then 30 seconds of ongoing game display. Player running, airborne and falling/recovering poses, moving enemies, trees and scrolling checkerboard ground are visible.",
+      "Capture shows purple sky and bright/pale/dark green ground. No broad corruption observed in sampled native-video frames. Exact NES color codes cannot be certified from physical converted-video colors."
+    ],
+    "video": "after-user-reset-gameplay.mp4",
+    "contact_sheet": "after-user-reset-gameplay.jpg",
+    "prelaunch_video": "after-user-reset-menu.mp4",
+    "prelaunch_contact_sheet": "after-user-reset-menu.jpg",
+    "capture_caveat": "Fresh native720x480 YUY2/60 capture session; encoded720x480 H264. Analog capture and encoding do not establish exact game update fps or palette codes. Audio not captured. No controller inputs sent.",
+    "measured_game_fps": null,
+    "previous_failure_evidence": "HARDWARE_TEST_BEFORE_USER_RESET.json and original launch/reset logs and videos preserved. First launch and one supported soft reset failed with ERROR: mcmd: no response from menu. User subsequently physically reset to menu.",
+    "reset_commands_total": 1,
+    "reset_commands_this_followup": 0,
+    "firmware_updates": 0,
+    "recopy_this_followup": false,
+    "automatic_retry_loops": 0,
+    "older_sd_folders_preserved": true,
+    "unrelated_processes_untouched": true,
+    "game_left_running": true,
+    "capture_disposed": true,
+    "completed_utc": "2026-11-11T14:13:17.6053351Z"
+  },
+  "package_library_identity": {
+    "operation": "replace_library_file",
+    "status": "succeeded",
+    "path": "/SpaceHarrier_r11_Sky09_CommonWhite_Hardware_20261111.zip",
+    "file_id": "[REDACTED_LIBRARY_REF]",
+    "library_file_id": "[REDACTED_LIBRARY_REF]",
+    "file_name": "SpaceHarrier_r11_Sky09_CommonWhite_Hardware_20261111.zip",
+    "current_version_number": 1,
+    "restored_from_version_number": null,
+    "xattrs": [
+      {
+        "name": "user.library-file-version",
+        "value": "1"
+      }
+    ],
+    "directory_id": "personal-root:v1",
+    "mime_type": "application/zip",
+    "library_artifact_type": "other",
+    "file_size_bytes": 217588,
+    "warnings": [
+      "The file was replaced, but this chat could not retain access. Reattach the file before reading it. Do not repeat the replacement."
+    ],
+    "external_connectors_accessed": false
+  },
+  "physical_gameplay_verified": true
+}

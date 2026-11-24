@@ -1,0 +1,55 @@
+{
+  "status": "PHYSICAL_BOOT_AND_30_SECOND_GAMEPLAY_VERIFIED",
+  "hardware_rom_sha256": "67b651e8e71477dbd216efbc730cfdc033be7df5371071ad123a76664f212511",
+  "mapper_sha256": "a815d020706a5729d2eeed270c95fc8f1eb4bb8b2a7bc31fc52142409c66799c",
+  "logic_elements": 6229,
+  "logic_capacity": 6272,
+  "internal_timing_checks_passed": 48,
+  "minimum_setup_ns": 0.53,
+  "minimum_hold_ns": 0.126,
+  "strict_tests_passed": 7,
+  "hardware_transfer_and_readback_hash_verified": true,
+  "physical_boot_verified": true,
+  "physical_gameplay_verified": true,
+  "startup_transition_captured": true,
+  "physical_verification_seconds": 30,
+  "verified_utc": "2026-11-11T14:13:17.6053351Z",
+  "observations": [
+    "Fresh prelaunch recording shows EverDrive file browser, after user physically reset the console.",
+    "Recording captures transition from menu to SpaceHarrier, then 30 seconds of ongoing game display. Player running, airborne and falling/recovering poses, moving enemies, trees and scrolling checkerboard ground are visible.",
+    "Capture shows purple sky and bright/pale/dark green ground. No broad corruption observed in sampled native-video frames. Exact NES color codes cannot be certified from physical converted-video colors."
+  ],
+  "capture_caveat": "Fresh native720x480 YUY2/60 capture session; encoded720x480 H264. Analog capture and encoding do not establish exact game update fps or palette codes. Audio not captured. No controller inputs sent.",
+  "measured_game_fps": null,
+  "audio_physically_verified": false,
+  "external_IO_electrical_signoff": false,
+  "sd_folder": "sd:/usb-games/MSH5_R11_SKY09_W10_67b651e8_1e6b72450111.nes.fpgrom",
+  "game_left_running": true,
+  "palette": {
+    "common0": "10",
+    "P0": [
+      "10",
+      "19",
+      "2A",
+      "39"
+    ],
+    "P1": [
+      "10",
+      "09",
+      "2A",
+      "23"
+    ],
+    "P2": [
+      "10",
+      "19",
+      "2A",
+      "16"
+    ],
+    "P3": [
+      "10",
+      "19",
+      "2A",
+      "0F"
+    ]
+  }
+}

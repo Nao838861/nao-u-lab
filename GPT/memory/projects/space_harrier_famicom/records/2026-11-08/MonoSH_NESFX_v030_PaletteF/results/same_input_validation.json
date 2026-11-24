@@ -1,0 +1,7 @@
+{
+  "same_input_script": true,
+  "same_recorded_scene_count": 600,
+  "all_trace_fields_identical": true,
+  "mismatches": [],
+  "original_F_image_verified_by_author": "12-option board F tile exactly equals variant_F.png; 1A/2A/3A RGB and pixel counts verified"
+}

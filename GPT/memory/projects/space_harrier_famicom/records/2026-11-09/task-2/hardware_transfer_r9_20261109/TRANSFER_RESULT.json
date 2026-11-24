@@ -1,0 +1,34 @@
+{
+    "status":  "PLAYABLE_ROM_AND_MATCHED_MAPPER_INSTALLED_READBACK_VERIFIED_MENU_RETAINED",
+    "completed_utc":  "2026-11-09T04:48:09.7602780Z",
+    "destination_folder":  "sd:/usb-games/MSH5_R9_PLAY_6e49336d_6fc8f8ecb2634d71ae65587f86a68046.nes.fpgrom",
+    "rom_filename":  "MSH5_R9_PLAY_6e49336d_6fc8f8ecb2634d71ae65587f86a68046.nes",
+    "rom_sha256":  "6e49336d4ff126c5e6c1140b21f3b6ab7b22d8b9e9cdddafdb8c094cdc9b7666",
+    "mapper_filename":  "mapper.rbf",
+    "mapper_sha256":  "0d41347ee80cdafac9dd839c43d1baf5f327198228a3ab0f833182f52ad9e6b3",
+    "sd_readback_both_exact":  true,
+    "cartridge_commands":  5,
+    "hardware_launches":  1,
+    "copy_commands":  4,
+    "normal_playable_launches":  0,
+    "reset_commands":  0,
+    "memrd_commands":  0,
+    "automatic_retries":  0,
+    "final_console_state":  "EverDrive menu visually confirmed after copy",
+    "final_menu_photo":  "[REDACTED_WIN_PATH]",
+    "final_menu_photo_sha256":  "694b782f7437685091881fe2dee6722a7cc5311392e2a1cfe91ddbc41505cde7",
+    "original_files_preserved":  {
+                                     "[REDACTED_WIN_PATH]":  true,
+                                     "[REDACTED_WIN_PATH]":  true,
+                                     "[REDACTED_WIN_PATH]":  true
+                                 },
+    "physical_test":  "Finite1400 diagnostic~23.1s gameplay + automatic menu return, exact normalROM only installed/readback verified",
+    "limits":  [
+                   "No full-game, boss or human-controller hardware validation",
+                   "External CPU/PPU/PSRAM timing remains unproven",
+                   "No mountains/forest far scenery",
+                   "Intro-endtom beyond finite window, not physically heard",
+                   "UGREEN captured audio reaches0dBFS, subjective quality not reviewed"
+               ],
+    "remaining_hardware_actions":  "None. No further USB, launch or reset scheduled."
+}

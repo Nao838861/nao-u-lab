@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "file": "[REDACTED_WIN_PATH]",
+  "bytes": 46606727,
+  "sha256": "1877bad5db1150129952a3fcdf6e7491cebc73d3a0bcd2f42fcb77044ad8827a",
+  "rom_sha256": "590877f33b346cdb19ac5856e0e24cbeead916b2fb2b510aad1147bcc043d613",
+  "core_sha256": "4c49df2fb0c557ba99126dbb9c6208bfd6c833af87c2f57e622ea96c445f682f",
+  "files_verified": 395,
+  "reproduction_byte_exact": true,
+  "launcher_compiled_and_hash_pinned": true,
+  "constant60fps": false,
+  "physical_hardware_verified": false
+}

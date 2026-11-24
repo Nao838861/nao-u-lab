@@ -1,0 +1,21 @@
+{
+    "status":  "BOTH_COPIES_SUCCEEDED_NO_READBACK_NO_LAUNCH",
+    "started_utc":  "2026-11-10T19:18:11.1223544Z",
+    "rom_filename":  "MSH5_R11_D19_B39_SCROLL_bf68cc2b_5673efd2.nes",
+    "rom_sha256":  "bf68cc2b6ee726614a1d4245e7b5ecd3e967f844128aa5fd70c141dd4d777f4c",
+    "mapper_sha256":  "2ceeed758f3883472ed7d47b8c2d37791542e9ec9ff107336a6ff4e61362c49c",
+    "destination_folder":  "sd:/usb-games/MSH5_R11_D19_B39_SCROLL_bf68cc2b_5673efd2.nes.fpgrom",
+    "dark":  "19",
+    "shared":  "2A",
+    "ground_bright":  "39",
+    "commands_attempted":  2,
+    "completed":  2,
+    "hardware_launches":  0,
+    "reset_commands":  0,
+    "firmware_updates":  0,
+    "readback_performed":  false,
+    "physical_render_verified":  false,
+    "automatic_retries":  0,
+    "error":  null,
+    "completed_utc":  "2026-11-10T19:18:15.0693609Z"
+}

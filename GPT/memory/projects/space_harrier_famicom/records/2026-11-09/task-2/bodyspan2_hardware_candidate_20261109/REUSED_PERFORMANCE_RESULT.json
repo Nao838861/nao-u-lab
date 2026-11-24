@@ -1,0 +1,5705 @@
+{
+  "passed": true,
+  "rom_sha256": "de8ca70ac6679a2d342a554d2ef561fb32ad002e0bd23cb550376f834aadf3af",
+  "original_rom_sha256": "de4c4e19d02712a6d2786f12e2551957590b0b8a8a85c4cf5dca9e8fa011d686",
+  "code_bytes": 507,
+  "allocated_code_bytes": 512,
+  "code_sha256": "e8ef3114d9001874607e11a39f0594e28950b4d6bd32c1090f1e67c3b4d437ed",
+  "extra_ram_bytes": 0,
+  "extra_cpu_upload_bytes": 0,
+  "atlas_changes": 0,
+  "rom_changed_bytes": 401,
+  "all_changes_inside_original_gsu_program_region": true,
+  "cpu_gameplay_audio_assets_mapper_bytes_identical": true,
+  "framebuffer_identity_cases": 255,
+  "maximum56_command_batch_identity": true,
+  "maximum_batch_original_ms": 155.85164,
+  "maximum_batch_new_ms": 100.358,
+  "warm_red_opacity_test": {
+    "passed": true,
+    "cases": 256,
+    "alpha_bytes_per_case": 6144,
+    "engine_source_sha256": "d088c9213ed343264e234206444b02e6c48010365d4ebf0e3a20fcb492152da6",
+    "scope": "Same pinned GSU engine; all assembled original/new programs preserve warm/red/opacity side plane. Native model raw framebuffers cross-checked against dedicated-Mesen output for all 256 cases. Not hardware validation.",
+    "results": [
+      {
+        "case": 0,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 1,
+        "alpha_sha256": "e939974596ff040d01d8756d5ecbfbf4ff5ea75a5bc372f9f91a8bcbf700c376",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 2,
+        "alpha_sha256": "5317d4f50f346a02c984ced31859c645d9f8d52727d8f6aaa75b3bbe35d1395b",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 3,
+        "alpha_sha256": "741abe8e62220f8d847338e852ee59fd4f413d05bdc1fd5be57b386f6dd14248",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 4,
+        "alpha_sha256": "0c1f0b26a78e94cca65b822e05c3aa47e9d555b9bf3f6bd7bc30678db4291411",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 5,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 6,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 7,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 8,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 9,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 10,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 11,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 12,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 13,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 14,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 15,
+        "alpha_sha256": "4ca226923ea23151d0000f0bf76dc81d6c0d9d5344cf212986cd998e69ab604c",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 16,
+        "alpha_sha256": "5a40b024900707e797c7b53f975f9a21692662ed543702c22804945405717134",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 17,
+        "alpha_sha256": "7fab1cbc76c481f394813c5a3feb31835378250e277a76027792abd04dee2b20",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 18,
+        "alpha_sha256": "dfc22e0cc5874780e66af35a34d88f9d8aa9a97178125b0eab50ffd72cf4f482",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 19,
+        "alpha_sha256": "52fc77212099b6102d5f2ecaa6671f45bf6d5552b0d0bfa77ddaa36715ec91cd",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 20,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 21,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 22,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 23,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 24,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 25,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 26,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 27,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 28,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 29,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 30,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 31,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 32,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 33,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 34,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 35,
+        "alpha_sha256": "b80a017d5d0d44b7199c948edc64499a65f2591278133d12f6a2e57ed50e6d98",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 36,
+        "alpha_sha256": "42bced43e7bb428e3c0a8095f3176710cbaa2a674c48c41dc3d4aa8d2feda9ca",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 37,
+        "alpha_sha256": "5e9182a8bcf7fde018756951235c57e711c21ca47e00e5f5e7f4e2677b657c23",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 38,
+        "alpha_sha256": "503b328033c9e5057b32694597992f20b61f202d13e0329e1c20b971812c69a5",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 39,
+        "alpha_sha256": "3981b3ecade0f721040b7bef491af84eefca2f8f45229bf56930d598cb532ef4",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 40,
+        "alpha_sha256": "0d085a63b51f13212a48adb7054bafa901390f9fb6cb81db3bc91bf6ad90f4c6",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 41,
+        "alpha_sha256": "6fe1b5f564c1f89d101778d4f5c723a91dfc70959673ff8a82bb2aa35709ca23",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 42,
+        "alpha_sha256": "6c1cd33fb6365d3ec81b1553e96b095d7e408b699ed104c78bf3409dc862062a",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 43,
+        "alpha_sha256": "7ffc1d0e882782bce2eacb9350d5504fd6095f908727b83a671004453ce74385",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 44,
+        "alpha_sha256": "1aaf538266d59ba7c1f85b0a49dbb08539522bb80033417ee82172c35fbd07c4",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 45,
+        "alpha_sha256": "3994f03b453d02c5a0bde2278655d6aae0a99208f11e15da8b36eaef4306b0a5",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 46,
+        "alpha_sha256": "b6ed91ff7ed1adc10f00af3265cf1b366b9e5320dbbe9a8ec8390fefdf97e0d3",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 47,
+        "alpha_sha256": "78d1c3a9e1443f63ac0f5586c1c51ab78c82d4305c6d170779e2f2b113518ceb",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 48,
+        "alpha_sha256": "408674327f3d07c54d83d5abf31168692f23b5e646a384c3caea7c2a1c493da1",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 49,
+        "alpha_sha256": "559fea634bee832a3ecb7b3c2b46383cdeead605ce2d771f637ff4076d70688a",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 50,
+        "alpha_sha256": "f0868315db51f4a16d9707fe6b9971b5745984fc3b7ed5b06f022db976808a89",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 51,
+        "alpha_sha256": "34872bba710b280a9697ea575fc55f09c9565a33dfbcec04baf17bfb67b84098",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 52,
+        "alpha_sha256": "dbc4ddb7928fdc1ee5d5bd9c990c6b2fdb072ce6df455c2c618a5abbee6b8d47",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 53,
+        "alpha_sha256": "de3773c858b6b1f2d36f06d6f9cd10050a98baefba08b591cf0a2f064796b903",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 54,
+        "alpha_sha256": "170b81a4078cde1c4b9836feb057756a4599ad8cbfdad825b247e2aea8afdc01",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 55,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 56,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 57,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 58,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 59,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 60,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 61,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 62,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 63,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 64,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 65,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 66,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 67,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 68,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 69,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 70,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 71,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 72,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 73,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 74,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 75,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 76,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 77,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 78,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 79,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 80,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 81,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 82,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 83,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 84,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 85,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 86,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 87,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 88,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 89,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 90,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 91,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 92,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 93,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 94,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 95,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 96,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 97,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 98,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 99,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 100,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 101,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 102,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 103,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 104,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 105,
+        "alpha_sha256": "660208e8a11862b2b9873b4acb15a840d5c8cd6d3d540739df8e058531b5ea3b",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 106,
+        "alpha_sha256": "ab611676d74bd942daf67a4078653b0eaad8540b2971673ac36ebd950a8370c1",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 107,
+        "alpha_sha256": "d421938ff647ab7bce9aba6eed2bac7401025c6d1444d92894311e068b77ccef",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 108,
+        "alpha_sha256": "a8c9d2ee0e27920655188445c9feae696cfd20af2cb26188542e6d5f121050d7",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 109,
+        "alpha_sha256": "0e4112ad90b493ccadd78d45d92d9c6da4f6be4ae7467a10907653303c610151",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 110,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 111,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 112,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 113,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 114,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 115,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 116,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 117,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 118,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 119,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 120,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 121,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 122,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 123,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 124,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 125,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 126,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 127,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 128,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 129,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 130,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 131,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 132,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 133,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 134,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 135,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 136,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 137,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 138,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 139,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 140,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 141,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 142,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 143,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 144,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 145,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 146,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 147,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 148,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 149,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 150,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 151,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 152,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 153,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 154,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 155,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 156,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 157,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 158,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 159,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 160,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 161,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 162,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 163,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 164,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 165,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 166,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 167,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 168,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 169,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 170,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 171,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 172,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 173,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 174,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 175,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 176,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 177,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 178,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 179,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 180,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 181,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 182,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 183,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 184,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 185,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 186,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 187,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 188,
+        "alpha_sha256": "c6a594cd3e6d3b0370fc9e97e44e71c9b5e2a710d513ce9f4c53273b27d289b7",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 189,
+        "alpha_sha256": "c6a594cd3e6d3b0370fc9e97e44e71c9b5e2a710d513ce9f4c53273b27d289b7",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 190,
+        "alpha_sha256": "c6a594cd3e6d3b0370fc9e97e44e71c9b5e2a710d513ce9f4c53273b27d289b7",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 191,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 192,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 193,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 194,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 195,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 196,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 197,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 198,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 199,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 200,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 201,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 202,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 203,
+        "alpha_sha256": "1c42f617ec2cbb51096cc839e063399641284305b979bdada6a81911122ffaaa",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 204,
+        "alpha_sha256": "1c42f617ec2cbb51096cc839e063399641284305b979bdada6a81911122ffaaa",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 205,
+        "alpha_sha256": "1c42f617ec2cbb51096cc839e063399641284305b979bdada6a81911122ffaaa",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 206,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 207,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 208,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 209,
+        "alpha_sha256": "f42de4bac24ece403d5c188d3299a81f4df40160bd1b136435f43b93aa9b3d4d",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 210,
+        "alpha_sha256": "f42de4bac24ece403d5c188d3299a81f4df40160bd1b136435f43b93aa9b3d4d",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 211,
+        "alpha_sha256": "f42de4bac24ece403d5c188d3299a81f4df40160bd1b136435f43b93aa9b3d4d",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 212,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 213,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 214,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 215,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 216,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 217,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 218,
+        "alpha_sha256": "f4c487426338b51f96ab76ed90f0334ba1d1cc1ad7c697a8f22d0146af2c529c",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 219,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 220,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 221,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 222,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 223,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 224,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 225,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 226,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 227,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 228,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 229,
+        "alpha_sha256": "75a18cfeeffb6c4257a0271a6ebef87cbd24837ec905e43774bd78c3faadf2a3",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 230,
+        "alpha_sha256": "21cbf6fe45dcacc1aa70893116da9518fb8ff6a1fa833268bafdd5fc41ec7129",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 231,
+        "alpha_sha256": "3cdc5c8214e5a61238c2941d825fab63e35e2e2aef9f177d4dca82d568cf5eac",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 232,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 233,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 234,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 235,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 236,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 237,
+        "alpha_sha256": "ad49c2b618008a89debc63027d53f56ed5ad133468a8c0ee33fc4fef4b159723",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 238,
+        "alpha_sha256": "092ab6ddf183e60aa669bcce27acd5992058137c5c73f51e15706b6b81c56f9e",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 239,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 240,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 241,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 242,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 243,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 244,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 245,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 246,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 247,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 248,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 249,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 250,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 251,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 252,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 253,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 254,
+        "alpha_sha256": "fd9243e1ba57263ed469c3bdbd7ade6ec5254e7ed924a9f5737fa44749933cc0",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      },
+      {
+        "case": 255,
+        "alpha_sha256": "ed9ea1ee1802cd663517b86deba6a1a473f068a2b36f2f27a78ca9f656063f42",
+        "alpha_matches": true,
+        "model_framebuffer_matches_actual_dll": true
+      }
+    ]
+  },
+  "object_timings": [
+    {
+      "case": 0,
+      "description": [
+        0,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.095,
+      "first_495byte_ms": 0.09388,
+      "body_507byte_ms": 0.09332,
+      "saved_percent_vs_original": 1.7684210526315747,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 1,
+      "description": [
+        0,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.5403,
+      "first_495byte_ms": 0.5347,
+      "body_507byte_ms": 0.53024,
+      "saved_percent_vs_original": 1.8619285582084033,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 2,
+      "description": [
+        0,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.91352,
+      "first_495byte_ms": 0.9057,
+      "body_507byte_ms": 0.899,
+      "saved_percent_vs_original": 1.5894561695419918,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 3,
+      "description": [
+        0,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 3.27472,
+      "first_495byte_ms": 3.06352,
+      "body_507byte_ms": 3.0652,
+      "saved_percent_vs_original": 6.398104265402848,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 4,
+      "description": [
+        0,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 5.40794,
+      "first_495byte_ms": 5.08948,
+      "body_507byte_ms": 5.09114,
+      "saved_percent_vs_original": 5.858053158873799,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 5,
+      "description": [
+        1,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.03352,
+      "first_495byte_ms": 0.03632,
+      "body_507byte_ms": 0.07096,
+      "saved_percent_vs_original": -111.69451073985681,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 6,
+      "description": [
+        1,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.4129,
+      "first_495byte_ms": 0.42854,
+      "body_507byte_ms": 0.41738,
+      "saved_percent_vs_original": -1.0850084766287127,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 7,
+      "description": [
+        1,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 1.02974,
+      "first_495byte_ms": 0.75818,
+      "body_507byte_ms": 0.73752,
+      "saved_percent_vs_original": 28.37803717443238,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 8,
+      "description": [
+        1,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 3.287,
+      "first_495byte_ms": 2.39806,
+      "body_507byte_ms": 2.38632,
+      "saved_percent_vs_original": 27.401277760876177,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 9,
+      "description": [
+        1,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 5.81024,
+      "first_495byte_ms": 4.16534,
+      "body_507byte_ms": 4.1536,
+      "saved_percent_vs_original": 28.51241945255274,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 10,
+      "description": [
+        2,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.03408,
+      "first_495byte_ms": 0.03742,
+      "body_507byte_ms": 0.05698,
+      "saved_percent_vs_original": -67.19483568075117,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 11,
+      "description": [
+        2,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.42686,
+      "first_495byte_ms": 0.37156,
+      "body_507byte_ms": 0.35646,
+      "saved_percent_vs_original": 16.49252682378297,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 12,
+      "description": [
+        2,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.90402,
+      "first_495byte_ms": 0.70734,
+      "body_507byte_ms": 0.7012,
+      "saved_percent_vs_original": 22.4353443507887,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 13,
+      "description": [
+        2,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 2.6847,
+      "first_495byte_ms": 2.06116,
+      "body_507byte_ms": 2.04886,
+      "saved_percent_vs_original": 23.683838045219208,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 14,
+      "description": [
+        2,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 4.95594,
+      "first_495byte_ms": 3.78596,
+      "body_507byte_ms": 3.7731,
+      "saved_percent_vs_original": 23.8671170353152,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 15,
+      "description": [
+        5,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.09666,
+      "first_495byte_ms": 0.09556,
+      "body_507byte_ms": 0.09498,
+      "saved_percent_vs_original": 1.7380509000620714,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 16,
+      "description": [
+        5,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.52968,
+      "first_495byte_ms": 0.52408,
+      "body_507byte_ms": 0.51962,
+      "saved_percent_vs_original": 1.8992599305240887,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 17,
+      "description": [
+        5,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.90794,
+      "first_495byte_ms": 0.90012,
+      "body_507byte_ms": 0.8934,
+      "saved_percent_vs_original": 1.6014274070973888,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 18,
+      "description": [
+        5,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 2.9797,
+      "first_495byte_ms": 2.76738,
+      "body_507byte_ms": 2.76852,
+      "saved_percent_vs_original": 7.087290666845658,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 19,
+      "description": [
+        5,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 5.01852,
+      "first_495byte_ms": 4.69948,
+      "body_507byte_ms": 4.7006,
+      "saved_percent_vs_original": 6.334935399281061,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 20,
+      "description": [
+        6,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.10392,
+      "first_495byte_ms": 0.1028,
+      "body_507byte_ms": 0.10224,
+      "saved_percent_vs_original": 1.61662817551963,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 21,
+      "description": [
+        6,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.58554,
+      "first_495byte_ms": 0.5794,
+      "body_507byte_ms": 0.57492,
+      "saved_percent_vs_original": 1.8137104211497057,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 22,
+      "description": [
+        6,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.97832,
+      "first_495byte_ms": 0.96884,
+      "body_507byte_ms": 0.96268,
+      "saved_percent_vs_original": 1.5986589255049477,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 23,
+      "description": [
+        6,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 2.65956,
+      "first_495byte_ms": 2.6361,
+      "body_507byte_ms": 1.955,
+      "saved_percent_vs_original": 26.491600114304624,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 24,
+      "description": [
+        6,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 5.43644,
+      "first_495byte_ms": 5.08668,
+      "body_507byte_ms": 3.82228,
+      "saved_percent_vs_original": 29.69148928342813,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 25,
+      "description": [
+        9,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.06872,
+      "first_495byte_ms": 0.06762,
+      "body_507byte_ms": 0.06704,
+      "saved_percent_vs_original": 2.4447031431897526,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 26,
+      "description": [
+        9,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.41738,
+      "first_495byte_ms": 0.41346,
+      "body_507byte_ms": 0.40844,
+      "saved_percent_vs_original": 2.1419330106857037,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 27,
+      "description": [
+        9,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.67886,
+      "first_495byte_ms": 0.67214,
+      "body_507byte_ms": 0.66544,
+      "saved_percent_vs_original": 1.9768435318033184,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 28,
+      "description": [
+        9,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 2.08966,
+      "first_495byte_ms": 1.94606,
+      "body_507byte_ms": 1.9466,
+      "saved_percent_vs_original": 6.8460897945120225,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 29,
+      "description": [
+        9,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 3.88094,
+      "first_495byte_ms": 3.6636,
+      "body_507byte_ms": 3.66414,
+      "saved_percent_vs_original": 5.586275489958615,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 30,
+      "description": [
+        11,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.0352,
+      "first_495byte_ms": 0.03856,
+      "body_507byte_ms": 0.04302,
+      "saved_percent_vs_original": -22.215909090909093,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 31,
+      "description": [
+        11,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.35872,
+      "first_495byte_ms": 0.2749,
+      "body_507byte_ms": 0.2721,
+      "saved_percent_vs_original": 24.14696699375558,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 32,
+      "description": [
+        11,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.5727,
+      "first_495byte_ms": 0.42574,
+      "body_507byte_ms": 0.42352,
+      "saved_percent_vs_original": 26.048541994063214,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 33,
+      "description": [
+        11,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 1.83878,
+      "first_495byte_ms": 1.36106,
+      "body_507byte_ms": 1.35826,
+      "saved_percent_vs_original": 26.132544404442072,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 34,
+      "description": [
+        11,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 3.68706,
+      "first_495byte_ms": 2.93334,
+      "body_507byte_ms": 2.93054,
+      "saved_percent_vs_original": 20.518244888881654,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 35,
+      "description": [
+        12,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.02962,
+      "first_495byte_ms": 0.03296,
+      "body_507byte_ms": 0.0609,
+      "saved_percent_vs_original": -105.60432140445646,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 36,
+      "description": [
+        12,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.42128,
+      "first_495byte_ms": 0.38664,
+      "body_507byte_ms": 0.37212,
+      "saved_percent_vs_original": 11.66919863273832,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 37,
+      "description": [
+        12,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 1.04204,
+      "first_495byte_ms": 0.6917,
+      "body_507byte_ms": 0.67104,
+      "saved_percent_vs_original": 35.60323979885609,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 38,
+      "description": [
+        12,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 2.93668,
+      "first_495byte_ms": 1.9416,
+      "body_507byte_ms": 1.93544,
+      "saved_percent_vs_original": 34.09428334037076,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 39,
+      "description": [
+        12,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 5.31632,
+      "first_495byte_ms": 3.69264,
+      "body_507byte_ms": 3.6865,
+      "saved_percent_vs_original": 30.65692057663948,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 40,
+      "description": [
+        14,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.03186,
+      "first_495byte_ms": 0.0352,
+      "body_507byte_ms": 0.08828,
+      "saved_percent_vs_original": -177.08725674827372,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 41,
+      "description": [
+        14,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.42128,
+      "first_495byte_ms": 0.43638,
+      "body_507byte_ms": 0.49896,
+      "saved_percent_vs_original": -18.43904291682492,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 42,
+      "description": [
+        14,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 1.03868,
+      "first_495byte_ms": 0.87384,
+      "body_507byte_ms": 0.85318,
+      "saved_percent_vs_original": 17.85920591520006,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 43,
+      "description": [
+        14,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 4.34972,
+      "first_495byte_ms": 2.75956,
+      "body_507byte_ms": 2.75174,
+      "saved_percent_vs_original": 36.73753712882668,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 44,
+      "description": [
+        14,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 7.4328,
+      "first_495byte_ms": 4.75088,
+      "body_507byte_ms": 4.74306,
+      "saved_percent_vs_original": 36.18743945753955,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 45,
+      "description": [
+        15,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.09666,
+      "first_495byte_ms": 0.095,
+      "body_507byte_ms": 0.09444,
+      "saved_percent_vs_original": 2.2967101179391713,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 46,
+      "description": [
+        15,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.53582,
+      "first_495byte_ms": 0.53024,
+      "body_507byte_ms": 0.52576,
+      "saved_percent_vs_original": 1.8774961740883112,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 47,
+      "description": [
+        15,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.90792,
+      "first_495byte_ms": 0.89956,
+      "body_507byte_ms": 0.89342,
+      "saved_percent_vs_original": 1.5970570094281489,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 48,
+      "description": [
+        15,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 2.98922,
+      "first_495byte_ms": 2.77746,
+      "body_507byte_ms": 2.77856,
+      "saved_percent_vs_original": 7.047323382019388,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 49,
+      "description": [
+        15,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 5.05372,
+      "first_495byte_ms": 4.73412,
+      "body_507byte_ms": 4.73524,
+      "saved_percent_vs_original": 6.301892467330994,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 50,
+      "description": [
+        16,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.03298,
+      "first_495byte_ms": 0.03576,
+      "body_507byte_ms": 0.0894,
+      "saved_percent_vs_original": -171.07337780473014,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 51,
+      "description": [
+        16,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.41568,
+      "first_495byte_ms": 0.43078,
+      "body_507byte_ms": 0.49336,
+      "saved_percent_vs_original": -18.6874518860662,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 52,
+      "description": [
+        16,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 1.04146,
+      "first_495byte_ms": 0.8761,
+      "body_507byte_ms": 0.85542,
+      "saved_percent_vs_original": 17.863384095404534,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 53,
+      "description": [
+        16,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 4.30892,
+      "first_495byte_ms": 2.71878,
+      "body_507byte_ms": 2.71096,
+      "saved_percent_vs_original": 37.084930794723505,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 54,
+      "description": [
+        16,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 7.39926,
+      "first_495byte_ms": 4.71736,
+      "body_507byte_ms": 4.70898,
+      "saved_percent_vs_original": 36.35877101223636,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 55,
+      "description": [
+        24,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.06816,
+      "first_495byte_ms": 0.06704,
+      "body_507byte_ms": 0.0665,
+      "saved_percent_vs_original": 2.4354460093896746,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 56,
+      "description": [
+        24,
+        4,
+        5,
+        3
+      ],
+      "original_ms": 0.06816,
+      "first_495byte_ms": 0.06706,
+      "body_507byte_ms": 0.06648,
+      "saved_percent_vs_original": 2.464788732394363,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 57,
+      "description": [
+        24,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.40062,
+      "first_495byte_ms": 0.39614,
+      "body_507byte_ms": 0.39166,
+      "saved_percent_vs_original": 2.236533373271432,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 58,
+      "description": [
+        24,
+        17,
+        23,
+        3
+      ],
+      "original_ms": 0.4006,
+      "first_495byte_ms": 0.39614,
+      "body_507byte_ms": 0.39166,
+      "saved_percent_vs_original": 2.231652521218175,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 59,
+      "description": [
+        24,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.7107,
+      "first_495byte_ms": 0.7051,
+      "body_507byte_ms": 0.69842,
+      "saved_percent_vs_original": 1.7278739271141097,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 60,
+      "description": [
+        24,
+        32,
+        32,
+        3
+      ],
+      "original_ms": 0.71182,
+      "first_495byte_ms": 0.70624,
+      "body_507byte_ms": 0.69954,
+      "saved_percent_vs_original": 1.7251552358742428,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 61,
+      "description": [
+        24,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 2.02762,
+      "first_495byte_ms": 1.89354,
+      "body_507byte_ms": 1.89466,
+      "saved_percent_vs_original": 6.557441729712665,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 62,
+      "description": [
+        24,
+        64,
+        80,
+        3
+      ],
+      "original_ms": 2.16898,
+      "first_495byte_ms": 2.14888,
+      "body_507byte_ms": 2.13044,
+      "saved_percent_vs_original": 1.7768720781196734,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 63,
+      "description": [
+        24,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 3.71332,
+      "first_495byte_ms": 3.52056,
+      "body_507byte_ms": 3.52168,
+      "saved_percent_vs_original": 5.160880290413972,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 64,
+      "description": [
+        24,
+        112,
+        120,
+        3
+      ],
+      "original_ms": 4.97214,
+      "first_495byte_ms": 4.93972,
+      "body_507byte_ms": 4.91236,
+      "saved_percent_vs_original": 1.202299211204838,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 65,
+      "description": [
+        25,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.02962,
+      "first_495byte_ms": 0.03296,
+      "body_507byte_ms": 0.0609,
+      "saved_percent_vs_original": -105.60432140445646,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 66,
+      "description": [
+        25,
+        4,
+        5,
+        3
+      ],
+      "original_ms": 0.03688,
+      "first_495byte_ms": 0.04024,
+      "body_507byte_ms": 0.0609,
+      "saved_percent_vs_original": -65.13015184381779,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 67,
+      "description": [
+        25,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.41512,
+      "first_495byte_ms": 0.38106,
+      "body_507byte_ms": 0.36598,
+      "saved_percent_vs_original": 11.837540952013882,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 68,
+      "description": [
+        25,
+        17,
+        23,
+        3
+      ],
+      "original_ms": 0.42462,
+      "first_495byte_ms": 0.38216,
+      "body_507byte_ms": 0.36708,
+      "saved_percent_vs_original": 13.550939663699314,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 69,
+      "description": [
+        25,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 1.03476,
+      "first_495byte_ms": 0.69282,
+      "body_507byte_ms": 0.67214,
+      "saved_percent_vs_original": 35.04387490819128,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 70,
+      "description": [
+        25,
+        32,
+        32,
+        3
+      ],
+      "original_ms": 1.0331,
+      "first_495byte_ms": 0.69114,
+      "body_507byte_ms": 0.67048,
+      "saved_percent_vs_original": 35.10018391249638,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 71,
+      "description": [
+        25,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 2.86518,
+      "first_495byte_ms": 1.87902,
+      "body_507byte_ms": 1.87288,
+      "saved_percent_vs_original": 34.6330771539659,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 72,
+      "description": [
+        25,
+        64,
+        80,
+        3
+      ],
+      "original_ms": 3.37306,
+      "first_495byte_ms": 2.14552,
+      "body_507byte_ms": 2.11312,
+      "saved_percent_vs_original": 37.353026628639874,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 73,
+      "description": [
+        25,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 5.11852,
+      "first_495byte_ms": 3.50324,
+      "body_507byte_ms": 3.49708,
+      "saved_percent_vs_original": 31.677906894961826,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 74,
+      "description": [
+        25,
+        112,
+        120,
+        3
+      ],
+      "original_ms": 6.8031,
+      "first_495byte_ms": 4.93582,
+      "body_507byte_ms": 4.89392,
+      "saved_percent_vs_original": 28.06338286957416,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 75,
+      "description": [
+        26,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.06536,
+      "first_495byte_ms": 0.06482,
+      "body_507byte_ms": 0.0637,
+      "saved_percent_vs_original": 2.539779681762544,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 76,
+      "description": [
+        26,
+        4,
+        5,
+        3
+      ],
+      "original_ms": 0.06536,
+      "first_495byte_ms": 0.06482,
+      "body_507byte_ms": 0.0637,
+      "saved_percent_vs_original": 2.539779681762544,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 77,
+      "description": [
+        26,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.3956,
+      "first_495byte_ms": 0.39166,
+      "body_507byte_ms": 0.38664,
+      "saved_percent_vs_original": 2.2649140546006086,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 78,
+      "description": [
+        26,
+        17,
+        23,
+        3
+      ],
+      "original_ms": 0.39558,
+      "first_495byte_ms": 0.39166,
+      "body_507byte_ms": 0.3872,
+      "saved_percent_vs_original": 2.1184084129632463,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 79,
+      "description": [
+        26,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.70288,
+      "first_495byte_ms": 0.6973,
+      "body_507byte_ms": 0.69116,
+      "saved_percent_vs_original": 1.6674254495788743,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 80,
+      "description": [
+        26,
+        32,
+        32,
+        3
+      ],
+      "original_ms": 0.70624,
+      "first_495byte_ms": 0.70122,
+      "body_507byte_ms": 0.6945,
+      "saved_percent_vs_original": 1.6623244222927047,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 81,
+      "description": [
+        26,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 2.0377,
+      "first_495byte_ms": 1.90472,
+      "body_507byte_ms": 1.90582,
+      "saved_percent_vs_original": 6.472002748196493,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 82,
+      "description": [
+        26,
+        64,
+        80,
+        3
+      ],
+      "original_ms": 2.17962,
+      "first_495byte_ms": 2.1595,
+      "body_507byte_ms": 2.1416,
+      "saved_percent_vs_original": 1.744340756645657,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 83,
+      "description": [
+        26,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 3.75468,
+      "first_495byte_ms": 3.56246,
+      "body_507byte_ms": 3.56302,
+      "saved_percent_vs_original": 5.104562838910375,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 84,
+      "description": [
+        26,
+        112,
+        120,
+        3
+      ],
+      "original_ms": 5.01572,
+      "first_495byte_ms": 4.98386,
+      "body_507byte_ms": 4.95648,
+      "saved_percent_vs_original": 1.1810866635298622,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 85,
+      "description": [
+        27,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.06202,
+      "first_495byte_ms": 0.06146,
+      "body_507byte_ms": 0.06092,
+      "saved_percent_vs_original": 1.7736214124476013,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 86,
+      "description": [
+        27,
+        4,
+        5,
+        3
+      ],
+      "original_ms": 0.062,
+      "first_495byte_ms": 0.06146,
+      "body_507byte_ms": 0.0609,
+      "saved_percent_vs_original": 1.774193548387093,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 87,
+      "description": [
+        27,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.37268,
+      "first_495byte_ms": 0.36988,
+      "body_507byte_ms": 0.36542,
+      "saved_percent_vs_original": 1.9480519480519431,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 88,
+      "description": [
+        27,
+        17,
+        23,
+        3
+      ],
+      "original_ms": 0.3738,
+      "first_495byte_ms": 0.371,
+      "body_507byte_ms": 0.36652,
+      "saved_percent_vs_original": 1.9475655430711614,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 89,
+      "description": [
+        27,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.67048,
+      "first_495byte_ms": 0.66656,
+      "body_507byte_ms": 0.65986,
+      "saved_percent_vs_original": 1.5839398639780455,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 90,
+      "description": [
+        27,
+        32,
+        32,
+        3
+      ],
+      "original_ms": 0.67216,
+      "first_495byte_ms": 0.66768,
+      "body_507byte_ms": 0.66098,
+      "saved_percent_vs_original": 1.6632944537015026,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 91,
+      "description": [
+        27,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 1.96394,
+      "first_495byte_ms": 1.83152,
+      "body_507byte_ms": 1.83262,
+      "saved_percent_vs_original": 6.68655865250466,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 92,
+      "description": [
+        27,
+        64,
+        80,
+        3
+      ],
+      "original_ms": 2.11032,
+      "first_495byte_ms": 2.09132,
+      "body_507byte_ms": 2.07344,
+      "saved_percent_vs_original": 1.7476022593729823,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 93,
+      "description": [
+        27,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 3.63678,
+      "first_495byte_ms": 3.44514,
+      "body_507byte_ms": 3.44624,
+      "saved_percent_vs_original": 5.23925010586288,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 94,
+      "description": [
+        27,
+        112,
+        120,
+        3
+      ],
+      "original_ms": 4.89112,
+      "first_495byte_ms": 4.8604,
+      "body_507byte_ms": 4.833,
+      "saved_percent_vs_original": 1.1882758959093187,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 95,
+      "description": [
+        7,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.03184,
+      "first_495byte_ms": 0.0352,
+      "body_507byte_ms": 0.08828,
+      "saved_percent_vs_original": -177.26130653266333,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 96,
+      "description": [
+        7,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.42352,
+      "first_495byte_ms": 0.4386,
+      "body_507byte_ms": 0.50118,
+      "saved_percent_vs_original": -18.33679637325274,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 97,
+      "description": [
+        7,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 1.04148,
+      "first_495byte_ms": 0.8476,
+      "body_507byte_ms": 0.82748,
+      "saved_percent_vs_original": 20.547682144640323,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 98,
+      "description": [
+        7,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 4.30948,
+      "first_495byte_ms": 2.55004,
+      "body_507byte_ms": 2.54446,
+      "saved_percent_vs_original": 40.956681548585905,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 99,
+      "description": [
+        7,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 7.37804,
+      "first_495byte_ms": 4.52628,
+      "body_507byte_ms": 4.52068,
+      "saved_percent_vs_original": 38.72790063485695,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 100,
+      "description": [
+        8,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.0296,
+      "first_495byte_ms": 0.03296,
+      "body_507byte_ms": 0.09776,
+      "saved_percent_vs_original": -230.27027027027026,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 101,
+      "description": [
+        8,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.42464,
+      "first_495byte_ms": 0.43972,
+      "body_507byte_ms": 0.54476,
+      "saved_percent_vs_original": -28.287490580256215,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 102,
+      "description": [
+        8,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.97944,
+      "first_495byte_ms": 1.00068,
+      "body_507byte_ms": 0.88222,
+      "saved_percent_vs_original": 9.926080209099075,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 103,
+      "description": [
+        8,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 5.00734,
+      "first_495byte_ms": 2.39582,
+      "body_507byte_ms": 2.36454,
+      "saved_percent_vs_original": 52.77852113097972,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 104,
+      "description": [
+        8,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 8.14684,
+      "first_495byte_ms": 4.89224,
+      "body_507byte_ms": 4.8861,
+      "saved_percent_vs_original": 40.02459849463105,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 105,
+      "description": [
+        10,
+        4,
+        5,
+        0
+      ],
+      "original_ms": 0.09444,
+      "first_495byte_ms": 0.09332,
+      "body_507byte_ms": 0.09274,
+      "saved_percent_vs_original": 1.800084709868699,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 106,
+      "description": [
+        10,
+        17,
+        23,
+        0
+      ],
+      "original_ms": 0.53024,
+      "first_495byte_ms": 0.52408,
+      "body_507byte_ms": 0.51962,
+      "saved_percent_vs_original": 2.0028666264333084,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 107,
+      "description": [
+        10,
+        32,
+        32,
+        0
+      ],
+      "original_ms": 0.86436,
+      "first_495byte_ms": 0.85596,
+      "body_507byte_ms": 0.84928,
+      "saved_percent_vs_original": 1.7446434356055307,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 108,
+      "description": [
+        10,
+        64,
+        80,
+        0
+      ],
+      "original_ms": 2.70538,
+      "first_495byte_ms": 2.49528,
+      "body_507byte_ms": 2.4964,
+      "saved_percent_vs_original": 7.724608003311917,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 109,
+      "description": [
+        10,
+        112,
+        120,
+        0
+      ],
+      "original_ms": 4.65254,
+      "first_495byte_ms": 4.34692,
+      "body_507byte_ms": 4.34748,
+      "saved_percent_vs_original": 6.556848517154068,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 110,
+      "description": [
+        6,
+        80,
+        54,
+        "boss"
+      ],
+      "original_ms": 2.57296,
+      "first_495byte_ms": 2.41372,
+      "body_507byte_ms": 1.43706,
+      "saved_percent_vs_original": 44.14759654250358,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 111,
+      "description": [
+        6,
+        72,
+        49,
+        "boss"
+      ],
+      "original_ms": 2.35168,
+      "first_495byte_ms": 2.20754,
+      "body_507byte_ms": 1.25322,
+      "saved_percent_vs_original": 46.70958633827732,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 112,
+      "description": [
+        6,
+        64,
+        44,
+        "boss"
+      ],
+      "original_ms": 1.78458,
+      "first_495byte_ms": 1.77172,
+      "body_507byte_ms": 1.075,
+      "saved_percent_vs_original": 39.761736655123336,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 113,
+      "description": [
+        6,
+        60,
+        41,
+        "boss"
+      ],
+      "original_ms": 1.64546,
+      "first_495byte_ms": 1.63372,
+      "body_507byte_ms": 1.62534,
+      "saved_percent_vs_original": 1.2227583775965334,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 114,
+      "description": [
+        6,
+        56,
+        38,
+        "boss"
+      ],
+      "original_ms": 1.47506,
+      "first_495byte_ms": 1.46388,
+      "body_507byte_ms": 1.45606,
+      "saved_percent_vs_original": 1.2880831966157302,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 115,
+      "description": [
+        6,
+        54,
+        36,
+        "boss"
+      ],
+      "original_ms": 1.36554,
+      "first_495byte_ms": 1.35548,
+      "body_507byte_ms": 1.34766,
+      "saved_percent_vs_original": 1.3093721165253314,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 116,
+      "description": [
+        6,
+        52,
+        34,
+        "boss"
+      ],
+      "original_ms": 1.2739,
+      "first_495byte_ms": 1.26442,
+      "body_507byte_ms": 1.25714,
+      "saved_percent_vs_original": 1.3156448700839984,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 117,
+      "description": [
+        6,
+        48,
+        32,
+        "boss"
+      ],
+      "original_ms": 1.15154,
+      "first_495byte_ms": 1.1426,
+      "body_507byte_ms": 1.13644,
+      "saved_percent_vs_original": 1.311287493269886,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 118,
+      "description": [
+        6,
+        44,
+        30,
+        "boss"
+      ],
+      "original_ms": 1.03756,
+      "first_495byte_ms": 1.02862,
+      "body_507byte_ms": 1.02302,
+      "saved_percent_vs_original": 1.4013647403523621,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 119,
+      "description": [
+        6,
+        42,
+        29,
+        "boss"
+      ],
+      "original_ms": 0.98392,
+      "first_495byte_ms": 0.97554,
+      "body_507byte_ms": 0.96996,
+      "saved_percent_vs_original": 1.418814537767299,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 120,
+      "description": [
+        6,
+        40,
+        28,
+        "boss"
+      ],
+      "original_ms": 0.93364,
+      "first_495byte_ms": 0.9258,
+      "body_507byte_ms": 0.92022,
+      "saved_percent_vs_original": 1.4373848592605265,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 121,
+      "description": [
+        6,
+        38,
+        26,
+        "boss"
+      ],
+      "original_ms": 0.8448,
+      "first_495byte_ms": 0.83754,
+      "body_507byte_ms": 0.8325,
+      "saved_percent_vs_original": 1.455965909090906,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 122,
+      "description": [
+        6,
+        36,
+        24,
+        "boss"
+      ],
+      "original_ms": 0.76324,
+      "first_495byte_ms": 0.75652,
+      "body_507byte_ms": 0.7515,
+      "saved_percent_vs_original": 1.5381793407054145,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 123,
+      "description": [
+        6,
+        34,
+        22,
+        "boss"
+      ],
+      "original_ms": 0.69226,
+      "first_495byte_ms": 0.68556,
+      "body_507byte_ms": 0.68166,
+      "saved_percent_vs_original": 1.531216594920981,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 124,
+      "description": [
+        6,
+        32,
+        20,
+        "boss"
+      ],
+      "original_ms": 0.61628,
+      "first_495byte_ms": 0.61012,
+      "body_507byte_ms": 0.60678,
+      "saved_percent_vs_original": 1.5415071071590791,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 125,
+      "description": [
+        6,
+        30,
+        19,
+        "boss"
+      ],
+      "original_ms": 0.57214,
+      "first_495byte_ms": 0.56656,
+      "body_507byte_ms": 0.5632,
+      "saved_percent_vs_original": 1.5625546194987239,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 126,
+      "description": [
+        6,
+        28,
+        18,
+        "boss"
+      ],
+      "original_ms": 0.52966,
+      "first_495byte_ms": 0.52408,
+      "body_507byte_ms": 0.52072,
+      "saved_percent_vs_original": 1.68787524072046,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 127,
+      "description": [
+        6,
+        26,
+        17,
+        "boss"
+      ],
+      "original_ms": 0.48776,
+      "first_495byte_ms": 0.48274,
+      "body_507byte_ms": 0.4794,
+      "saved_percent_vs_original": 1.713957684106937,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 128,
+      "description": [
+        6,
+        24,
+        16,
+        "boss"
+      ],
+      "original_ms": 0.4481,
+      "first_495byte_ms": 0.44362,
+      "body_507byte_ms": 0.44084,
+      "saved_percent_vs_original": 1.620174068288327,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 129,
+      "description": [
+        6,
+        22,
+        15,
+        "boss"
+      ],
+      "original_ms": 0.40844,
+      "first_495byte_ms": 0.40452,
+      "body_507byte_ms": 0.40174,
+      "saved_percent_vs_original": 1.6403878170600295,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 130,
+      "description": [
+        6,
+        20,
+        14,
+        "boss"
+      ],
+      "original_ms": 0.3777,
+      "first_495byte_ms": 0.37324,
+      "body_507byte_ms": 0.371,
+      "saved_percent_vs_original": 1.7738946253640475,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 131,
+      "description": [
+        6,
+        18,
+        12,
+        "boss"
+      ],
+      "original_ms": 0.314,
+      "first_495byte_ms": 0.3101,
+      "body_507byte_ms": 0.30842,
+      "saved_percent_vs_original": 1.7770700636942638,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 132,
+      "description": [
+        6,
+        16,
+        10,
+        "boss"
+      ],
+      "original_ms": 0.25368,
+      "first_495byte_ms": 0.25088,
+      "body_507byte_ms": 0.2492,
+      "saved_percent_vs_original": 1.7660044150110354,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 133,
+      "description": [
+        6,
+        14,
+        9,
+        "boss"
+      ],
+      "original_ms": 0.22462,
+      "first_495byte_ms": 0.22238,
+      "body_507byte_ms": 0.2207,
+      "saved_percent_vs_original": 1.7451696198023336,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 134,
+      "description": [
+        6,
+        12,
+        8,
+        "boss"
+      ],
+      "original_ms": 0.19164,
+      "first_495byte_ms": 0.18942,
+      "body_507byte_ms": 0.1883,
+      "saved_percent_vs_original": 1.7428511792945134,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 135,
+      "description": [
+        6,
+        10,
+        7,
+        "boss"
+      ],
+      "original_ms": 0.16428,
+      "first_495byte_ms": 0.16202,
+      "body_507byte_ms": 0.16148,
+      "saved_percent_vs_original": 1.7044071098125113,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 136,
+      "description": [
+        6,
+        8,
+        6,
+        "boss"
+      ],
+      "original_ms": 0.13744,
+      "first_495byte_ms": 0.13578,
+      "body_507byte_ms": 0.13464,
+      "saved_percent_vs_original": 2.037252619324792,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 137,
+      "description": [
+        6,
+        6,
+        5,
+        "boss"
+      ],
+      "original_ms": 0.10728,
+      "first_495byte_ms": 0.10616,
+      "body_507byte_ms": 0.1056,
+      "saved_percent_vs_original": 1.5659955257270708,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 138,
+      "description": [
+        6,
+        4,
+        4,
+        "boss"
+      ],
+      "original_ms": 0.08772,
+      "first_495byte_ms": 0.0866,
+      "body_507byte_ms": 0.08604,
+      "saved_percent_vs_original": 1.9151846785225746,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 139,
+      "description": [
+        6,
+        4,
+        3,
+        "boss"
+      ],
+      "original_ms": 0.06424,
+      "first_495byte_ms": 0.0637,
+      "body_507byte_ms": 0.0637,
+      "saved_percent_vs_original": 0.8405977584059809,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 140,
+      "description": [
+        6,
+        4,
+        2,
+        "boss"
+      ],
+      "original_ms": 0.04524,
+      "first_495byte_ms": 0.0447,
+      "body_507byte_ms": 0.0447,
+      "saved_percent_vs_original": 1.1936339522546469,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 141,
+      "description": [
+        6,
+        42,
+        59,
+        "boss"
+      ],
+      "original_ms": 1.72758,
+      "first_495byte_ms": 1.71026,
+      "body_507byte_ms": 1.69798,
+      "saved_percent_vs_original": 1.7133794093471821,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 142,
+      "description": [
+        1,
+        80,
+        116,
+        "boss"
+      ],
+      "original_ms": 5.06824,
+      "first_495byte_ms": 3.49932,
+      "body_507byte_ms": 3.4876,
+      "saved_percent_vs_original": 31.187157672091292,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 143,
+      "description": [
+        1,
+        72,
+        105,
+        "boss"
+      ],
+      "original_ms": 4.46034,
+      "first_495byte_ms": 3.09928,
+      "body_507byte_ms": 3.08754,
+      "saved_percent_vs_original": 30.777922759251542,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 144,
+      "description": [
+        1,
+        64,
+        94,
+        "boss"
+      ],
+      "original_ms": 3.86864,
+      "first_495byte_ms": 2.7143,
+      "body_507byte_ms": 2.70256,
+      "saved_percent_vs_original": 30.14185863766078,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 145,
+      "description": [
+        1,
+        60,
+        88,
+        "boss"
+      ],
+      "original_ms": 3.57532,
+      "first_495byte_ms": 2.53608,
+      "body_507byte_ms": 2.52434,
+      "saved_percent_vs_original": 29.395410760435425,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 146,
+      "description": [
+        1,
+        56,
+        82,
+        "boss"
+      ],
+      "original_ms": 3.2736,
+      "first_495byte_ms": 2.34834,
+      "body_507byte_ms": 2.33662,
+      "saved_percent_vs_original": 28.62231182795699,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 147,
+      "description": [
+        1,
+        54,
+        78,
+        "boss"
+      ],
+      "original_ms": 3.08866,
+      "first_495byte_ms": 2.22878,
+      "body_507byte_ms": 2.2176,
+      "saved_percent_vs_original": 28.201873951810818,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 148,
+      "description": [
+        1,
+        52,
+        74,
+        "boss"
+      ],
+      "original_ms": 2.91544,
+      "first_495byte_ms": 2.1405,
+      "body_507byte_ms": 2.12878,
+      "saved_percent_vs_original": 26.9825480887962,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 149,
+      "description": [
+        1,
+        48,
+        70,
+        "boss"
+      ],
+      "original_ms": 2.70984,
+      "first_495byte_ms": 2.01032,
+      "body_507byte_ms": 1.99858,
+      "saved_percent_vs_original": 26.247306114014112,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 150,
+      "description": [
+        1,
+        44,
+        66,
+        "boss"
+      ],
+      "original_ms": 2.45842,
+      "first_495byte_ms": 1.86002,
+      "body_507byte_ms": 1.84884,
+      "saved_percent_vs_original": 24.795600426290054,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 151,
+      "description": [
+        1,
+        42,
+        62,
+        "boss"
+      ],
+      "original_ms": 2.29638,
+      "first_495byte_ms": 1.77172,
+      "body_507byte_ms": 1.76,
+      "saved_percent_vs_original": 23.357632447591424,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 152,
+      "description": [
+        1,
+        40,
+        58,
+        "boss"
+      ],
+      "original_ms": 2.13436,
+      "first_495byte_ms": 1.67284,
+      "body_507byte_ms": 1.66166,
+      "saved_percent_vs_original": 22.14715418204989,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 153,
+      "description": [
+        1,
+        38,
+        55,
+        "boss"
+      ],
+      "original_ms": 2.07122,
+      "first_495byte_ms": 1.40018,
+      "body_507byte_ms": 1.36442,
+      "saved_percent_vs_original": 34.12481532623285,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 154,
+      "description": [
+        1,
+        36,
+        52,
+        "boss"
+      ],
+      "original_ms": 1.86896,
+      "first_495byte_ms": 1.29738,
+      "body_507byte_ms": 1.2633,
+      "saved_percent_vs_original": 32.40625802585395,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 155,
+      "description": [
+        1,
+        34,
+        48,
+        "boss"
+      ],
+      "original_ms": 1.60076,
+      "first_495byte_ms": 1.16496,
+      "body_507byte_ms": 1.13366,
+      "saved_percent_vs_original": 29.17988955246258,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 156,
+      "description": [
+        1,
+        32,
+        44,
+        "boss"
+      ],
+      "original_ms": 1.41694,
+      "first_495byte_ms": 1.0437,
+      "body_507byte_ms": 1.01522,
+      "saved_percent_vs_original": 28.351235761570702,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 157,
+      "description": [
+        1,
+        30,
+        42,
+        "boss"
+      ],
+      "original_ms": 1.28396,
+      "first_495byte_ms": 0.95822,
+      "body_507byte_ms": 0.93086,
+      "saved_percent_vs_original": 27.500856724508548,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 158,
+      "description": [
+        1,
+        28,
+        40,
+        "boss"
+      ],
+      "original_ms": 1.13646,
+      "first_495byte_ms": 0.88838,
+      "body_507byte_ms": 0.86268,
+      "saved_percent_vs_original": 24.090597117364442,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 159,
+      "description": [
+        1,
+        26,
+        37,
+        "boss"
+      ],
+      "original_ms": 0.9856,
+      "first_495byte_ms": 0.80066,
+      "body_507byte_ms": 0.77664,
+      "saved_percent_vs_original": 21.201298701298697,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 160,
+      "description": [
+        1,
+        24,
+        34,
+        "boss"
+      ],
+      "original_ms": 0.84928,
+      "first_495byte_ms": 0.71964,
+      "body_507byte_ms": 0.69786,
+      "saved_percent_vs_original": 17.829220045214768,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 161,
+      "description": [
+        1,
+        22,
+        31,
+        "boss"
+      ],
+      "original_ms": 0.72132,
+      "first_495byte_ms": 0.62634,
+      "body_507byte_ms": 0.60622,
+      "saved_percent_vs_original": 15.956856873509672,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 162,
+      "description": [
+        1,
+        20,
+        28,
+        "boss"
+      ],
+      "original_ms": 0.62354,
+      "first_495byte_ms": 0.64198,
+      "body_507byte_ms": 0.53582,
+      "saved_percent_vs_original": 14.068062995156684,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 163,
+      "description": [
+        1,
+        18,
+        26,
+        "boss"
+      ],
+      "original_ms": 0.49224,
+      "first_495byte_ms": 0.509,
+      "body_507byte_ms": 0.47938,
+      "saved_percent_vs_original": 2.6125467251747136,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 164,
+      "description": [
+        1,
+        16,
+        24,
+        "boss"
+      ],
+      "original_ms": 0.41456,
+      "first_495byte_ms": 0.43024,
+      "body_507byte_ms": 0.42574,
+      "saved_percent_vs_original": -2.6968351987649575,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 165,
+      "description": [
+        1,
+        14,
+        21,
+        "boss"
+      ],
+      "original_ms": 0.31904,
+      "first_495byte_ms": 0.333,
+      "body_507byte_ms": 0.352,
+      "saved_percent_vs_original": -10.330992978936804,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 166,
+      "description": [
+        1,
+        12,
+        18,
+        "boss"
+      ],
+      "original_ms": 0.25256,
+      "first_495byte_ms": 0.26428,
+      "body_507byte_ms": 0.2978,
+      "saved_percent_vs_original": -17.912575229648397,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 167,
+      "description": [
+        1,
+        10,
+        16,
+        "boss"
+      ],
+      "original_ms": 0.2179,
+      "first_495byte_ms": 0.22796,
+      "body_507byte_ms": 0.25422,
+      "saved_percent_vs_original": -16.66819642037631,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 168,
+      "description": [
+        1,
+        8,
+        14,
+        "boss"
+      ],
+      "original_ms": 0.14136,
+      "first_495byte_ms": 0.1503,
+      "body_507byte_ms": 0.21568,
+      "saved_percent_vs_original": -52.57498585172608,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 169,
+      "description": [
+        1,
+        6,
+        11,
+        "boss"
+      ],
+      "original_ms": 0.08604,
+      "first_495byte_ms": 0.0933,
+      "body_507byte_ms": 0.15478,
+      "saved_percent_vs_original": -79.8930729893073,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 170,
+      "description": [
+        1,
+        4,
+        8,
+        "boss"
+      ],
+      "original_ms": 0.0503,
+      "first_495byte_ms": 0.05532,
+      "body_507byte_ms": 0.11006,
+      "saved_percent_vs_original": -118.80715705765405,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 171,
+      "description": [
+        1,
+        4,
+        7,
+        "boss"
+      ],
+      "original_ms": 0.0447,
+      "first_495byte_ms": 0.04918,
+      "body_507byte_ms": 0.09666,
+      "saved_percent_vs_original": -116.24161073825503,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 172,
+      "description": [
+        1,
+        4,
+        6,
+        "boss"
+      ],
+      "original_ms": 0.03912,
+      "first_495byte_ms": 0.04302,
+      "body_507byte_ms": 0.0838,
+      "saved_percent_vs_original": -114.21267893660531,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 173,
+      "description": [
+        1,
+        4,
+        6,
+        "boss"
+      ],
+      "original_ms": 0.03912,
+      "first_495byte_ms": 0.04302,
+      "body_507byte_ms": 0.08382,
+      "saved_percent_vs_original": -114.2638036809816,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 174,
+      "description": [
+        7,
+        37,
+        43,
+        "fractional"
+      ],
+      "original_ms": 0.27544,
+      "first_495byte_ms": 0.28608,
+      "body_507byte_ms": 0.2844,
+      "saved_percent_vs_original": -3.2529770548939796,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 175,
+      "description": [
+        8,
+        37,
+        43,
+        "fractional"
+      ],
+      "original_ms": 0.27042,
+      "first_495byte_ms": 0.29948,
+      "body_507byte_ms": 0.2978,
+      "saved_percent_vs_original": -10.124990755121654,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 176,
+      "description": [
+        10,
+        37,
+        43,
+        "fractional"
+      ],
+      "original_ms": 0.31456,
+      "first_495byte_ms": 0.29724,
+      "body_507byte_ms": 0.2978,
+      "saved_percent_vs_original": 5.328077314343849,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 177,
+      "description": [
+        24,
+        37,
+        43,
+        "fractional"
+      ],
+      "original_ms": 0.26764,
+      "first_495byte_ms": 0.25198,
+      "body_507byte_ms": 0.25198,
+      "saved_percent_vs_original": 5.851143326856967,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 178,
+      "description": [
+        0,
+        37,
+        43,
+        "fractional"
+      ],
+      "original_ms": 0.3157,
+      "first_495byte_ms": 0.29892,
+      "body_507byte_ms": 0.29948,
+      "saved_percent_vs_original": 5.1377890402280695,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 179,
+      "description": [
+        0,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.73752,
+      "first_495byte_ms": 0.70288,
+      "body_507byte_ms": 0.704,
+      "saved_percent_vs_original": 4.544961492569688,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 180,
+      "description": [
+        0,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.6593,
+      "first_495byte_ms": 0.6526,
+      "body_507byte_ms": 0.64756,
+      "saved_percent_vs_original": 1.780676475049292,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 181,
+      "description": [
+        0,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.6593,
+      "first_495byte_ms": 0.6526,
+      "body_507byte_ms": 0.64756,
+      "saved_percent_vs_original": 1.780676475049292,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 182,
+      "description": [
+        1,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.62522,
+      "first_495byte_ms": 0.58052,
+      "body_507byte_ms": 0.57606,
+      "saved_percent_vs_original": 7.8628322830363695,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 183,
+      "description": [
+        1,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.64756,
+      "first_495byte_ms": 0.53582,
+      "body_507byte_ms": 0.52018,
+      "saved_percent_vs_original": 19.67076409907962,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 184,
+      "description": [
+        1,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.64756,
+      "first_495byte_ms": 0.53582,
+      "body_507byte_ms": 0.52018,
+      "saved_percent_vs_original": 19.67076409907962,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 185,
+      "description": [
+        2,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.6297,
+      "first_495byte_ms": 0.51626,
+      "body_507byte_ms": 0.51122,
+      "saved_percent_vs_original": 18.81530887724313,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 186,
+      "description": [
+        2,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.65204,
+      "first_495byte_ms": 0.47156,
+      "body_507byte_ms": 0.45536,
+      "saved_percent_vs_original": 30.163793632292503,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 187,
+      "description": [
+        2,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.65204,
+      "first_495byte_ms": 0.47158,
+      "body_507byte_ms": 0.45536,
+      "saved_percent_vs_original": 30.163793632292503,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 188,
+      "description": [
+        5,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.73362,
+      "first_495byte_ms": 0.6984,
+      "body_507byte_ms": 0.69954,
+      "saved_percent_vs_original": 4.645456775987567,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 189,
+      "description": [
+        5,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.65484,
+      "first_495byte_ms": 0.64812,
+      "body_507byte_ms": 0.6431,
+      "saved_percent_vs_original": 1.792804349153987,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 190,
+      "description": [
+        5,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.65484,
+      "first_495byte_ms": 0.64814,
+      "body_507byte_ms": 0.6431,
+      "saved_percent_vs_original": 1.792804349153987,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 191,
+      "description": [
+        6,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.78782,
+      "first_495byte_ms": 0.75204,
+      "body_507byte_ms": 0.75262,
+      "saved_percent_vs_original": 4.468025691147726,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 192,
+      "description": [
+        6,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.70902,
+      "first_495byte_ms": 0.70122,
+      "body_507byte_ms": 0.69618,
+      "saved_percent_vs_original": 1.8109503258018078,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 193,
+      "description": [
+        6,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.70902,
+      "first_495byte_ms": 0.70122,
+      "body_507byte_ms": 0.69672,
+      "saved_percent_vs_original": 1.734788863501735,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 194,
+      "description": [
+        7,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.62858,
+      "first_495byte_ms": 0.67606,
+      "body_507byte_ms": 0.67104,
+      "saved_percent_vs_original": -6.754907887619721,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 195,
+      "description": [
+        7,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.65092,
+      "first_495byte_ms": 0.66712,
+      "body_507byte_ms": 0.61516,
+      "saved_percent_vs_original": 5.493762674368585,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 196,
+      "description": [
+        7,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.65092,
+      "first_495byte_ms": 0.66714,
+      "body_507byte_ms": 0.61516,
+      "saved_percent_vs_original": 5.493762674368585,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 197,
+      "description": [
+        8,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.6185,
+      "first_495byte_ms": 0.71238,
+      "body_507byte_ms": 0.7079,
+      "saved_percent_vs_original": -14.454324979789824,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 198,
+      "description": [
+        8,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.64088,
+      "first_495byte_ms": 0.65762,
+      "body_507byte_ms": 0.65148,
+      "saved_percent_vs_original": -1.6539757832979562,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 199,
+      "description": [
+        8,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.64086,
+      "first_495byte_ms": 0.65762,
+      "body_507byte_ms": 0.65148,
+      "saved_percent_vs_original": -1.6571482070967036,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 200,
+      "description": [
+        9,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.6023,
+      "first_495byte_ms": 0.56934,
+      "body_507byte_ms": 0.57048,
+      "saved_percent_vs_original": 5.283081520836797,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 201,
+      "description": [
+        9,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.52352,
+      "first_495byte_ms": 0.51906,
+      "body_507byte_ms": 0.51404,
+      "saved_percent_vs_original": 1.8108190709046457,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 202,
+      "description": [
+        9,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.52352,
+      "first_495byte_ms": 0.51906,
+      "body_507byte_ms": 0.51404,
+      "saved_percent_vs_original": 1.8108190709046457,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 203,
+      "description": [
+        10,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.73698,
+      "first_495byte_ms": 0.7012,
+      "body_507byte_ms": 0.70178,
+      "saved_percent_vs_original": 4.776249016255529,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 204,
+      "description": [
+        10,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.65818,
+      "first_495byte_ms": 0.65092,
+      "body_507byte_ms": 0.64588,
+      "saved_percent_vs_original": 1.8687896927892078,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 205,
+      "description": [
+        10,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.65818,
+      "first_495byte_ms": 0.65092,
+      "body_507byte_ms": 0.64588,
+      "saved_percent_vs_original": 1.8687896927892078,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 206,
+      "description": [
+        11,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.2017,
+      "first_495byte_ms": 0.18048,
+      "body_507byte_ms": 0.17768,
+      "saved_percent_vs_original": 11.908775409023297,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 207,
+      "description": [
+        11,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.20786,
+      "first_495byte_ms": 0.16874,
+      "body_507byte_ms": 0.1598,
+      "saved_percent_vs_original": 23.12133166554412,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 208,
+      "description": [
+        11,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.20784,
+      "first_495byte_ms": 0.16874,
+      "body_507byte_ms": 0.1598,
+      "saved_percent_vs_original": 23.113933795227094,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 209,
+      "description": [
+        12,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.63584,
+      "first_495byte_ms": 0.54532,
+      "body_507byte_ms": 0.54086,
+      "saved_percent_vs_original": 14.93772018117765,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 210,
+      "description": [
+        12,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.65818,
+      "first_495byte_ms": 0.50064,
+      "body_507byte_ms": 0.48498,
+      "saved_percent_vs_original": 26.31498982041387,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 211,
+      "description": [
+        12,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.65818,
+      "first_495byte_ms": 0.50062,
+      "body_507byte_ms": 0.48498,
+      "saved_percent_vs_original": 26.31498982041387,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 212,
+      "description": [
+        24,
+        255,
+        "transition/page"
+      ],
+      "original_ms": 0.5822,
+      "first_495byte_ms": 0.54922,
+      "body_507byte_ms": 0.55034,
+      "saved_percent_vs_original": 5.472346272758499,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 213,
+      "description": [
+        24,
+        256,
+        "transition/page"
+      ],
+      "original_ms": 0.50398,
+      "first_495byte_ms": 0.49894,
+      "body_507byte_ms": 0.49392,
+      "saved_percent_vs_original": 1.996110956784003,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 214,
+      "description": [
+        24,
+        257,
+        "transition/page"
+      ],
+      "original_ms": 0.50398,
+      "first_495byte_ms": 0.49896,
+      "body_507byte_ms": 0.49392,
+      "saved_percent_vs_original": 1.996110956784003,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 215,
+      "description": [
+        1,
+        80,
+        116,
+        "actual_nearest"
+      ],
+      "original_ms": 5.09004,
+      "first_495byte_ms": 3.52056,
+      "body_507byte_ms": 3.50884,
+      "saved_percent_vs_original": 31.064588883387945,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 216,
+      "description": [
+        6,
+        80,
+        54,
+        "actual_nearest"
+      ],
+      "original_ms": 2.57688,
+      "first_495byte_ms": 2.4182,
+      "body_507byte_ms": 1.44152,
+      "saved_percent_vs_original": 44.05948278538388,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 217,
+      "description": [
+        2,
+        68,
+        160,
+        "actual_nearest"
+      ],
+      "original_ms": 5.47276,
+      "first_495byte_ms": 3.75132,
+      "body_507byte_ms": 3.73846,
+      "saved_percent_vs_original": 31.68967760325686,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 218,
+      "description": [
+        12,
+        64,
+        62,
+        "actual_nearest"
+      ],
+      "original_ms": 2.25838,
+      "first_495byte_ms": 1.54712,
+      "body_507byte_ms": 1.54098,
+      "saved_percent_vs_original": 31.766133245955064,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 219,
+      "description": [
+        24,
+        60,
+        62,
+        "actual_nearest"
+      ],
+      "original_ms": 1.58122,
+      "first_495byte_ms": 1.48344,
+      "body_507byte_ms": 1.484,
+      "saved_percent_vs_original": 6.148417045066468,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 220,
+      "description": [
+        25,
+        60,
+        62,
+        "actual_nearest"
+      ],
+      "original_ms": 2.17738,
+      "first_495byte_ms": 1.47672,
+      "body_507byte_ms": 1.47058,
+      "saved_percent_vs_original": 32.46103114752592,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 221,
+      "description": [
+        26,
+        60,
+        62,
+        "actual_nearest"
+      ],
+      "original_ms": 1.58904,
+      "first_495byte_ms": 1.49126,
+      "body_507byte_ms": 1.49236,
+      "saved_percent_vs_original": 6.08417660977697,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 222,
+      "description": [
+        27,
+        60,
+        62,
+        "actual_nearest"
+      ],
+      "original_ms": 1.5393,
+      "first_495byte_ms": 1.4432,
+      "body_507byte_ms": 1.44432,
+      "saved_percent_vs_original": 6.1703371662443995,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 223,
+      "description": [
+        1,
+        1,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.08884,
+      "first_495byte_ms": 0.11064,
+      "body_507byte_ms": 0.28496,
+      "saved_percent_vs_original": -220.75641602881583,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 224,
+      "description": [
+        1,
+        3,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.13354,
+      "first_495byte_ms": 0.16258,
+      "body_507byte_ms": 0.30954,
+      "saved_percent_vs_original": -131.79571663920925,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 225,
+      "description": [
+        1,
+        7,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.22406,
+      "first_495byte_ms": 0.26764,
+      "body_507byte_ms": 0.3643,
+      "saved_percent_vs_original": -62.59037757743462,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 226,
+      "description": [
+        2,
+        1,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.11118,
+      "first_495byte_ms": 0.13298,
+      "body_507byte_ms": 0.2464,
+      "saved_percent_vs_original": -121.62259399172513,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 227,
+      "description": [
+        2,
+        3,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.1531,
+      "first_495byte_ms": 0.18216,
+      "body_507byte_ms": 0.2682,
+      "saved_percent_vs_original": -75.17962116263878,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 228,
+      "description": [
+        2,
+        7,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.22628,
+      "first_495byte_ms": 0.26986,
+      "body_507byte_ms": 0.3062,
+      "saved_percent_vs_original": -35.31907371398268,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 229,
+      "description": [
+        12,
+        1,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.1151,
+      "first_495byte_ms": 0.1369,
+      "body_507byte_ms": 0.27042,
+      "saved_percent_vs_original": -134.9435273675065,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 230,
+      "description": [
+        12,
+        3,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.15366,
+      "first_495byte_ms": 0.18272,
+      "body_507byte_ms": 0.28942,
+      "saved_percent_vs_original": -88.35090459455941,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 231,
+      "description": [
+        12,
+        7,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.22628,
+      "first_495byte_ms": 0.26986,
+      "body_507byte_ms": 0.32628,
+      "saved_percent_vs_original": -44.193035177656,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 232,
+      "description": [
+        25,
+        1,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.10168,
+      "first_495byte_ms": 0.12348,
+      "body_507byte_ms": 0.257,
+      "saved_percent_vs_original": -152.7537372147915,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 233,
+      "description": [
+        25,
+        3,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.14358,
+      "first_495byte_ms": 0.17208,
+      "body_507byte_ms": 0.2788,
+      "saved_percent_vs_original": -94.17746204206713,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 234,
+      "description": [
+        25,
+        7,
+        37,
+        "partial_clip_fast"
+      ],
+      "original_ms": 0.22014,
+      "first_495byte_ms": 0.26374,
+      "body_507byte_ms": 0.31958,
+      "saved_percent_vs_original": -45.17125465612792,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 235,
+      "description": [
+        1,
+        2,
+        "overlap_warm_and_cache_reset"
+      ],
+      "original_ms": 5.98178,
+      "first_495byte_ms": 4.46928,
+      "body_507byte_ms": 4.44468,
+      "saved_percent_vs_original": 25.696364627251423,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 236,
+      "description": [
+        2,
+        1,
+        "overlap_warm_and_cache_reset"
+      ],
+      "original_ms": 5.98176,
+      "first_495byte_ms": 4.46874,
+      "body_507byte_ms": 4.4447,
+      "saved_percent_vs_original": 25.695781843470822,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 237,
+      "description": [
+        12,
+        25,
+        "overlap_warm_and_cache_reset"
+      ],
+      "original_ms": 5.74766,
+      "first_495byte_ms": 3.7664,
+      "body_507byte_ms": 3.7541,
+      "saved_percent_vs_original": 34.68472387023589,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 238,
+      "description": [
+        25,
+        12,
+        "overlap_warm_and_cache_reset"
+      ],
+      "original_ms": 5.74766,
+      "first_495byte_ms": 3.7664,
+      "body_507byte_ms": 3.7541,
+      "saved_percent_vs_original": 34.68472387023589,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 239,
+      "description": [
+        6,
+        1,
+        "overlap_warm_and_cache_reset"
+      ],
+      "original_ms": 5.96166,
+      "first_495byte_ms": 5.04868,
+      "body_507byte_ms": 4.35642,
+      "saved_percent_vs_original": 26.926057507472756,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 240,
+      "description": [
+        1,
+        6,
+        "overlap_warm_and_cache_reset"
+      ],
+      "original_ms": 5.96164,
+      "first_495byte_ms": 5.04868,
+      "body_507byte_ms": 4.35642,
+      "saved_percent_vs_original": 26.925812360357217,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 241,
+      "description": [
+        6,
+        64,
+        30,
+        1,
+        256,
+        0,
+        0,
+        "run_boundary"
+      ],
+      "original_ms": 0.8124,
+      "first_495byte_ms": 0.80066,
+      "body_507byte_ms": 0.26596,
+      "saved_percent_vs_original": 67.26243229935992,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 242,
+      "description": [
+        6,
+        112,
+        120,
+        17,
+        91,
+        0,
+        77,
+        "run_boundary"
+      ],
+      "original_ms": 3.0881,
+      "first_495byte_ms": 3.00708,
+      "body_507byte_ms": 2.16452,
+      "saved_percent_vs_original": 29.90771024254396,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 243,
+      "description": [
+        6,
+        64,
+        120,
+        255,
+        91,
+        0,
+        0,
+        "run_boundary"
+      ],
+      "original_ms": 4.49944,
+      "first_495byte_ms": 4.14466,
+      "body_507byte_ms": 2.89254,
+      "saved_percent_vs_original": 35.713333214800066,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 244,
+      "description": [
+        6,
+        64,
+        120,
+        256,
+        91,
+        0,
+        0,
+        "run_boundary"
+      ],
+      "original_ms": 3.6038,
+      "first_495byte_ms": 3.5686,
+      "body_507byte_ms": 2.92104,
+      "saved_percent_vs_original": 18.945557467118046,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 245,
+      "description": [
+        6,
+        63,
+        54,
+        257,
+        203,
+        0,
+        0,
+        "run_boundary"
+      ],
+      "original_ms": 2.01758,
+      "first_495byte_ms": 2.00194,
+      "body_507byte_ms": 1.9902,
+      "saved_percent_vs_original": 1.3570713428959436,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 246,
+      "description": [
+        6,
+        80,
+        54,
+        204,
+        -203,
+        0,
+        11007,
+        "run_boundary"
+      ],
+      "original_ms": 2.57128,
+      "first_495byte_ms": 2.4126,
+      "body_507byte_ms": 1.43762,
+      "saved_percent_vs_original": 44.089325161009306,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 247,
+      "description": [
+        6,
+        128,
+        43,
+        128,
+        256,
+        0,
+        0,
+        "run_boundary"
+      ],
+      "original_ms": 2.52434,
+      "first_495byte_ms": 2.39584,
+      "body_507byte_ms": 1.46442,
+      "saved_percent_vs_original": 41.98800478540926,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 248,
+      "description": [
+        6,
+        255,
+        43,
+        64,
+        256,
+        0,
+        0,
+        "run_boundary"
+      ],
+      "original_ms": 3.3451,
+      "first_495byte_ms": 3.21996,
+      "body_507byte_ms": 2.28744,
+      "saved_percent_vs_original": 31.618187797076324,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 249,
+      "description": [
+        6,
+        1,
+        1,
+        256,
+        256,
+        0,
+        0,
+        "run_boundary"
+      ],
+      "original_ms": 0.02124,
+      "first_495byte_ms": 0.02124,
+      "body_507byte_ms": 0.00672,
+      "saved_percent_vs_original": 68.36158192090396,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 250,
+      "description": [
+        6,
+        64,
+        43,
+        256,
+        256,
+        0,
+        0,
+        "run_boundary"
+      ],
+      "original_ms": 1.7734,
+      "first_495byte_ms": 1.76056,
+      "body_507byte_ms": 1.04928,
+      "saved_percent_vs_original": 40.83229953761137,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 251,
+      "description": [
+        6,
+        64,
+        43,
+        255,
+        255,
+        0,
+        0,
+        "run_boundary"
+      ],
+      "original_ms": 2.0768,
+      "first_495byte_ms": 1.94996,
+      "body_507byte_ms": 1.03646,
+      "saved_percent_vs_original": 50.09341294298921,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 252,
+      "description": [
+        6,
+        64,
+        43,
+        256,
+        -256,
+        0,
+        10752,
+        "run_boundary"
+      ],
+      "original_ms": 1.77342,
+      "first_495byte_ms": 1.76056,
+      "body_507byte_ms": 1.04928,
+      "saved_percent_vs_original": 40.832966809892746,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 253,
+      "description": [
+        6,
+        64,
+        80,
+        256,
+        128,
+        0,
+        0,
+        "run_boundary"
+      ],
+      "original_ms": 2.6087,
+      "first_495byte_ms": 2.58524,
+      "body_507byte_ms": 1.95724,
+      "saved_percent_vs_original": 24.972591712347146,
+      "identical_framebuffer": true
+    },
+    {
+      "case": 254,
+      "description": [
+        6,
+        127,
+        80,
+        128,
+        128,
+        113,
+        77,
+        "run_boundary"
+      ],
+      "original_ms": 4.00498,
+      "first_495byte_ms": 3.772,
+      "body_507byte_ms": 3.7731,
+      "saved_percent_vs_original": 5.789791709321889,
+      "identical_framebuffer": true
+    }
+  ],
+  "worst_absolute_regression": {
+    "case": 223,
+    "description": [
+      1,
+      1,
+      37,
+      "partial_clip_fast"
+    ],
+    "original_ms": 0.08884,
+    "first_495byte_ms": 0.11064,
+    "body_507byte_ms": 0.28496,
+    "saved_percent_vs_original": -220.75641602881583,
+    "identical_framebuffer": true
+  },
+  "gameplay": {
+    "boss": {
+      "baseline": {
+        "variant": "baseline",
+        "scene": "boss",
+        "rom_sha256": "de4c4e19d02712a6d2786f12e2551957590b0b8a8a85c4cf5dca9e8fa011d686",
+        "initial": {
+          "field": 0,
+          "clock": 774307,
+          "ppu": 27,
+          "rate": 1789773,
+          "frame_count": 19,
+          "logic_tick": 9,
+          "draw_count": 9,
+          "present_count": 16,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0,
+          "presented_sim_generation": 8,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 2,
+          "_boss_hp": 16,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "final": {
+          "field": 3000,
+          "clock": 90116307,
+          "ppu": 3027,
+          "rate": 1789773,
+          "frame_count": 3019,
+          "logic_tick": 1509,
+          "draw_count": 1509,
+          "present_count": 2612,
+          "late_fields": 317,
+          "deadline_misses": 382,
+          "queue_starvations": 22,
+          "queue_drops": 402,
+          "presented_sim_generation": 1504,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 2,
+          "_boss_hp": 16,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "gsu_jobs": 2596,
+        "gsu_ms": {
+          "mean": 7.94128249614792,
+          "p95": 15.36788,
+          "max": 19.37564
+        },
+        "deltas": {
+          "logic_tick": 1500,
+          "draw_count": 1500,
+          "present_count": 2596,
+          "late_fields": 317,
+          "deadline_misses": 382,
+          "queue_starvations": 22,
+          "queue_drops": 402
+        },
+        "scope": "3000fields fixed input, SELECT invincibility, original START skip for boss. Functional dedicated Mesen only, no hardware or60fps/fullgame claim."
+      },
+      "final": {
+        "variant": "final",
+        "scene": "boss",
+        "rom_sha256": "49b9237775c22974c9e2e9f7646c3d54a301f6db10fb87b80ad96df7db9fd147",
+        "initial": {
+          "field": 0,
+          "clock": 774307,
+          "ppu": 27,
+          "rate": 1789773,
+          "frame_count": 19,
+          "logic_tick": 9,
+          "draw_count": 9,
+          "present_count": 16,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0,
+          "presented_sim_generation": 8,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 2,
+          "_boss_hp": 16,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "final": {
+          "field": 3000,
+          "clock": 90116307,
+          "ppu": 3027,
+          "rate": 1789773,
+          "frame_count": 3019,
+          "logic_tick": 1509,
+          "draw_count": 1509,
+          "present_count": 2767,
+          "late_fields": 392,
+          "deadline_misses": 233,
+          "queue_starvations": 16,
+          "queue_drops": 248,
+          "presented_sim_generation": 1508,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 2,
+          "_boss_hp": 16,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 0,
+          "em1_loaded_pose": 0
+        },
+        "gsu_jobs": 2751,
+        "gsu_ms": {
+          "mean": 7.465077288258815,
+          "p95": 13.81012,
+          "max": 18.0023
+        },
+        "deltas": {
+          "logic_tick": 1500,
+          "draw_count": 1500,
+          "present_count": 2751,
+          "late_fields": 392,
+          "deadline_misses": 233,
+          "queue_starvations": 16,
+          "queue_drops": 248
+        },
+        "scope": "3000fields fixed input, SELECT invincibility, original START skip for boss. Functional dedicated Mesen only, no hardware or60fps/fullgame claim."
+      },
+      "span2": {
+        "variant": "span2",
+        "scene": "boss",
+        "rom_sha256": "de8ca70ac6679a2d342a554d2ef561fb32ad002e0bd23cb550376f834aadf3af",
+        "initial": {
+          "field": 0,
+          "clock": 774307,
+          "ppu": 27,
+          "rate": 1789773,
+          "frame_count": 19,
+          "logic_tick": 9,
+          "draw_count": 9,
+          "present_count": 16,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0,
+          "presented_sim_generation": 8,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 2,
+          "_boss_hp": 16,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "final": {
+          "field": 3000,
+          "clock": 90116307,
+          "ppu": 3027,
+          "rate": 1789773,
+          "frame_count": 3019,
+          "logic_tick": 1509,
+          "draw_count": 1509,
+          "present_count": 2899,
+          "late_fields": 376,
+          "deadline_misses": 95,
+          "queue_starvations": 22,
+          "queue_drops": 116,
+          "presented_sim_generation": 1508,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 2,
+          "_boss_hp": 16,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 0,
+          "em1_loaded_pose": 0
+        },
+        "gsu_jobs": 2883,
+        "gsu_ms": {
+          "mean": 7.226583302115851,
+          "p95": 12.29038,
+          "max": 15.53606
+        },
+        "deltas": {
+          "logic_tick": 1500,
+          "draw_count": 1500,
+          "present_count": 2883,
+          "late_fields": 376,
+          "deadline_misses": 95,
+          "queue_starvations": 22,
+          "queue_drops": 116
+        },
+        "scope": "3000fields fixed input, SELECT invincibility, original START skip for boss. Functional dedicated Mesen only, no hardware or60fps/fullgame claim."
+      }
+    },
+    "stage": {
+      "baseline": {
+        "variant": "baseline",
+        "scene": "stage",
+        "rom_sha256": "de4c4e19d02712a6d2786f12e2551957590b0b8a8a85c4cf5dca9e8fa011d686",
+        "initial": {
+          "field": 0,
+          "clock": 536061,
+          "ppu": 19,
+          "rate": 1789773,
+          "frame_count": 11,
+          "logic_tick": 5,
+          "draw_count": 5,
+          "present_count": 8,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0,
+          "presented_sim_generation": 4,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 0,
+          "_boss_hp": 0,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 201,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "final": {
+          "field": 3000,
+          "clock": 89878061,
+          "ppu": 3019,
+          "rate": 1789773,
+          "frame_count": 3011,
+          "logic_tick": 1505,
+          "draw_count": 1505,
+          "present_count": 2985,
+          "late_fields": 260,
+          "deadline_misses": 4,
+          "queue_starvations": 19,
+          "queue_drops": 22,
+          "presented_sim_generation": 1504,
+          "em1_uploads": 28,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 0,
+          "_boss_hp": 0,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 0,
+          "em1_loaded_pose": 4
+        },
+        "gsu_jobs": 2977,
+        "gsu_ms": {
+          "mean": 4.81163516963386,
+          "p95": 9.6733,
+          "max": 14.30686
+        },
+        "deltas": {
+          "logic_tick": 1500,
+          "draw_count": 1500,
+          "present_count": 2977,
+          "late_fields": 260,
+          "deadline_misses": 4,
+          "queue_starvations": 19,
+          "queue_drops": 22
+        },
+        "scope": "3000fields fixed input, SELECT invincibility, original START skip for boss. Functional dedicated Mesen only, no hardware or60fps/fullgame claim."
+      },
+      "final": {
+        "variant": "final",
+        "scene": "stage",
+        "rom_sha256": "49b9237775c22974c9e2e9f7646c3d54a301f6db10fb87b80ad96df7db9fd147",
+        "initial": {
+          "field": 0,
+          "clock": 536061,
+          "ppu": 19,
+          "rate": 1789773,
+          "frame_count": 11,
+          "logic_tick": 5,
+          "draw_count": 5,
+          "present_count": 8,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0,
+          "presented_sim_generation": 4,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 0,
+          "_boss_hp": 0,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 201,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "final": {
+          "field": 3000,
+          "clock": 89878061,
+          "ppu": 3019,
+          "rate": 1789773,
+          "frame_count": 3011,
+          "logic_tick": 1505,
+          "draw_count": 1505,
+          "present_count": 2994,
+          "late_fields": 264,
+          "deadline_misses": 0,
+          "queue_starvations": 14,
+          "queue_drops": 14,
+          "presented_sim_generation": 1504,
+          "em1_uploads": 28,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 0,
+          "_boss_hp": 0,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 1,
+          "em1_loaded_pose": 4
+        },
+        "gsu_jobs": 2986,
+        "gsu_ms": {
+          "mean": 4.090162880107167,
+          "p95": 8.40162,
+          "max": 12.16748
+        },
+        "deltas": {
+          "logic_tick": 1500,
+          "draw_count": 1500,
+          "present_count": 2986,
+          "late_fields": 264,
+          "deadline_misses": 0,
+          "queue_starvations": 14,
+          "queue_drops": 14
+        },
+        "scope": "3000fields fixed input, SELECT invincibility, original START skip for boss. Functional dedicated Mesen only, no hardware or60fps/fullgame claim."
+      },
+      "span2": {
+        "variant": "span2",
+        "scene": "stage",
+        "rom_sha256": "de8ca70ac6679a2d342a554d2ef561fb32ad002e0bd23cb550376f834aadf3af",
+        "initial": {
+          "field": 0,
+          "clock": 536061,
+          "ppu": 19,
+          "rate": 1789773,
+          "frame_count": 11,
+          "logic_tick": 5,
+          "draw_count": 5,
+          "present_count": 8,
+          "late_fields": 0,
+          "deadline_misses": 0,
+          "queue_starvations": 0,
+          "queue_drops": 0,
+          "presented_sim_generation": 4,
+          "em1_uploads": 0,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 0,
+          "_boss_hp": 0,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 201,
+          "presented_phase": 1,
+          "em1_loaded_pose": 0
+        },
+        "final": {
+          "field": 3000,
+          "clock": 89878061,
+          "ppu": 3019,
+          "rate": 1789773,
+          "frame_count": 3011,
+          "logic_tick": 1505,
+          "draw_count": 1505,
+          "present_count": 2994,
+          "late_fields": 264,
+          "deadline_misses": 0,
+          "queue_starvations": 14,
+          "queue_drops": 14,
+          "presented_sim_generation": 1504,
+          "em1_uploads": 28,
+          "em1_pose_conflicts": 0,
+          "status": 0,
+          "_boss_state": 0,
+          "_boss_hp": 0,
+          "_player_state": 0,
+          "_player_x": 0,
+          "_player_y": 120,
+          "presented_phase": 1,
+          "em1_loaded_pose": 4
+        },
+        "gsu_jobs": 2986,
+        "gsu_ms": {
+          "mean": 4.121428251841929,
+          "p95": 8.38934,
+          "max": 12.16524
+        },
+        "deltas": {
+          "logic_tick": 1500,
+          "draw_count": 1500,
+          "present_count": 2986,
+          "late_fields": 264,
+          "deadline_misses": 0,
+          "queue_starvations": 14,
+          "queue_drops": 14
+        },
+        "scope": "3000fields fixed input, SELECT invincibility, original START skip for boss. Functional dedicated Mesen only, no hardware or60fps/fullgame claim."
+      }
+    }
+  },
+  "latency_proxies": {
+    "boss": {
+      "baseline": {
+        "relative_display_generation_age_fields": {
+          "mean": 4.088133240804996,
+          "p50": 3,
+          "p95": 9,
+          "max": 10
+        },
+        "logic_tick_lag": {
+          "mean": 0.1825121443442054,
+          "p50": 0,
+          "p95": 1,
+          "max": 1
+        },
+        "logic_lag_positive_sample_fraction": 0.1825121443442054,
+        "samples": 1441
+      },
+      "final": {
+        "relative_display_generation_age_fields": {
+          "mean": 3.275503122831367,
+          "p50": 3,
+          "p95": 8,
+          "max": 10
+        },
+        "logic_tick_lag": {
+          "mean": 0.21374045801526717,
+          "p50": 0,
+          "p95": 1,
+          "max": 1
+        },
+        "logic_lag_positive_sample_fraction": 0.21374045801526717,
+        "samples": 1441
+      },
+      "span2": {
+        "relative_display_generation_age_fields": {
+          "mean": 2.8223455933379595,
+          "p50": 3,
+          "p95": 6,
+          "max": 10
+        },
+        "logic_tick_lag": {
+          "mean": 0.2081887578070784,
+          "p50": 0,
+          "p95": 1,
+          "max": 1
+        },
+        "logic_lag_positive_sample_fraction": 0.2081887578070784,
+        "samples": 1441
+      }
+    },
+    "stage": {
+      "baseline": {
+        "relative_display_generation_age_fields": {
+          "mean": 2.428174878556558,
+          "p50": 2,
+          "p95": 3,
+          "max": 9
+        },
+        "logic_tick_lag": {
+          "mean": 0.23039555863983344,
+          "p50": 0,
+          "p95": 2,
+          "max": 5
+        },
+        "logic_lag_positive_sample_fraction": 0.10756419153365718,
+        "samples": 1441
+      },
+      "final": {
+        "relative_display_generation_age_fields": {
+          "mean": 2.3636363636363638,
+          "p50": 2,
+          "p95": 3,
+          "max": 8
+        },
+        "logic_tick_lag": {
+          "mean": 0.23733518390006939,
+          "p50": 0,
+          "p95": 2,
+          "max": 5
+        },
+        "logic_lag_positive_sample_fraction": 0.11450381679389313,
+        "samples": 1441
+      },
+      "span2": {
+        "relative_display_generation_age_fields": {
+          "mean": 2.3636363636363638,
+          "p50": 2,
+          "p95": 3,
+          "max": 8
+        },
+        "logic_tick_lag": {
+          "mean": 0.238029146426093,
+          "p50": 0,
+          "p95": 2,
+          "max": 5
+        },
+        "logic_lag_positive_sample_fraction": 0.11450381679389313,
+        "samples": 1441
+      }
+    }
+  },
+  "latency_scope": "Relative generated-to-presented simulation age sampled every 2 fields after field 120. Not input-to-photon or physical controller measurement.",
+  "limits": [
+    "Dedicated functional Mesen only; no cartridge, SD, USB, FPGA configuration or hardware verification.",
+    "Not a 60fps/full-game-clear claim: GSU worst 15.53606ms excludes fixed framebuffer copy and CPU overhead.",
+    "Some tiny or narrow-clipped packed draws are slower. Worst measured synthetic increase 0.19612ms.",
+    "CPU late_fields is a field-service lag counter; it is worse than original despite improved display deadlines.",
+    "Fixed original controller-only benchmark; original CPU code is byte-identical, but this does not prove timing equivalence for every possible input."
+  ]
+}

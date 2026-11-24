@@ -1,0 +1,17 @@
+{
+  "delivery": "[REDACTED_WIN_PATH]",
+  "bytes": 12109728,
+  "sha256": "515f8b47bb6c3ec5f96a94169e8e773e255502a5f921e13e891cccd149c56f68",
+  "raw_sha256": "e158e6e7b8ec868541ab70f4e7462d9c6f59b1d492c139ba5913f4a4b5dbccd1",
+  "frames": 3614,
+  "all_video_presentation_timestamps_identical": true,
+  "audio_packet_hash_identical": true,
+  "timebase": "1/60000",
+  "first_PTS": 0,
+  "last_PTS": 3615196,
+  "decode_errors": 0,
+  "cuts": false,
+  "speed_changes": false,
+  "interpolation": false,
+  "content_warning": "Boss not yet positively identified; preserve pre-user-reset gameplay and reset/menu aftermath separately in report"
+}

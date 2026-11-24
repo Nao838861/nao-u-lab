@@ -1,0 +1,381 @@
+{
+  "scope": "Dedicated functional Mesen only, not physical NES/FPGA. Same6000 real NTSC fields, stationary Select-invincible D-pad-neutral A-autofire. Improved throughput changes progress and scene mix; fixed-field subwindows are not generation-matched scene benchmarks.",
+  "rom_sha256": "3a5af3836b47b2aaac13c141e9703b2c049d1a66e64d40291e56155867b48be6",
+  "core_sha256": "4c49df2fb0c557ba99126dbb9c6208bfd6c833af87c2f57e622ea96c445f682f",
+  "gsu_clock_hz": 50000000,
+  "total_fields": 6000,
+  "ntsc_fps": 60.0988118623484,
+  "overall": {
+    "accepted": {
+      "logic_tick": 5794,
+      "present_count": 5785,
+      "late_fields": 205,
+      "queue_starvations": 215,
+      "queue_drops": 9,
+      "presentation_fps": 57.945271103947576
+    },
+    "candidate_hotspots": {
+      "logic_tick": 5814,
+      "present_count": 5807,
+      "late_fields": 185,
+      "queue_starvations": 193,
+      "queue_drops": 7,
+      "presentation_fps": 58.16563341410952
+    },
+    "candidate_hotspots2": {
+      "logic_tick": 5868,
+      "present_count": 5863,
+      "late_fields": 131,
+      "queue_starvations": 137,
+      "queue_drops": 5,
+      "presentation_fps": 58.726555658158105
+    }
+  },
+  "windows": [
+    {
+      "first_field": 1,
+      "last_field": 300,
+      "accepted": {
+        "present_count": 291,
+        "late_fields": 9,
+        "queue_drops": 0,
+        "presentation_fps": 58.29584750647795
+      },
+      "candidate_hotspots2": {
+        "present_count": 297,
+        "late_fields": 3,
+        "queue_drops": 0,
+        "presentation_fps": 59.497823743724915
+      }
+    },
+    {
+      "first_field": 301,
+      "last_field": 600,
+      "accepted": {
+        "present_count": 299,
+        "late_fields": 1,
+        "queue_drops": 0,
+        "presentation_fps": 59.898482489473906
+      },
+      "candidate_hotspots2": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 601,
+      "last_field": 900,
+      "accepted": {
+        "present_count": 297,
+        "late_fields": 3,
+        "queue_drops": 0,
+        "presentation_fps": 59.497823743724915
+      },
+      "candidate_hotspots2": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 901,
+      "last_field": 1200,
+      "accepted": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "presentation_fps": 60.0988118623484
+      },
+      "candidate_hotspots2": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 1201,
+      "last_field": 1500,
+      "accepted": {
+        "present_count": 293,
+        "late_fields": 7,
+        "queue_drops": 0,
+        "presentation_fps": 58.69650625222694
+      },
+      "candidate_hotspots2": {
+        "present_count": 296,
+        "late_fields": 4,
+        "queue_drops": 0,
+        "presentation_fps": 59.29749437085042
+      }
+    },
+    {
+      "first_field": 1501,
+      "last_field": 1800,
+      "accepted": {
+        "present_count": 286,
+        "late_fields": 14,
+        "queue_drops": 0,
+        "presentation_fps": 57.29420064210547
+      },
+      "candidate_hotspots2": {
+        "present_count": 289,
+        "late_fields": 11,
+        "queue_drops": 0,
+        "presentation_fps": 57.895188760728956
+      }
+    },
+    {
+      "first_field": 1801,
+      "last_field": 2100,
+      "accepted": {
+        "present_count": 255,
+        "late_fields": 45,
+        "queue_drops": 0,
+        "presentation_fps": 51.08399008299614
+      },
+      "candidate_hotspots2": {
+        "present_count": 272,
+        "late_fields": 28,
+        "queue_drops": 0,
+        "presentation_fps": 54.48958942186255
+      }
+    },
+    {
+      "first_field": 2101,
+      "last_field": 2400,
+      "accepted": {
+        "present_count": 284,
+        "late_fields": 15,
+        "queue_drops": 0,
+        "presentation_fps": 56.89354189635648
+      },
+      "candidate_hotspots2": {
+        "present_count": 289,
+        "late_fields": 11,
+        "queue_drops": 0,
+        "presentation_fps": 57.895188760728956
+      }
+    },
+    {
+      "first_field": 2401,
+      "last_field": 2700,
+      "accepted": {
+        "present_count": 300,
+        "late_fields": 1,
+        "queue_drops": 0,
+        "presentation_fps": 60.0988118623484
+      },
+      "candidate_hotspots2": {
+        "present_count": 299,
+        "late_fields": 1,
+        "queue_drops": 0,
+        "presentation_fps": 59.898482489473906
+      }
+    },
+    {
+      "first_field": 2701,
+      "last_field": 3000,
+      "accepted": {
+        "present_count": 268,
+        "late_fields": 33,
+        "queue_drops": 0,
+        "presentation_fps": 53.68827193036457
+      },
+      "candidate_hotspots2": {
+        "present_count": 279,
+        "late_fields": 21,
+        "queue_drops": 0,
+        "presentation_fps": 55.89189503198401
+      }
+    },
+    {
+      "first_field": 3001,
+      "last_field": 3300,
+      "accepted": {
+        "present_count": 297,
+        "late_fields": 2,
+        "queue_drops": 0,
+        "presentation_fps": 59.497823743724915
+      },
+      "candidate_hotspots2": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 3301,
+      "last_field": 3600,
+      "accepted": {
+        "present_count": 284,
+        "late_fields": 11,
+        "queue_drops": 4,
+        "presentation_fps": 56.89354189635648
+      },
+      "candidate_hotspots2": {
+        "present_count": 287,
+        "late_fields": 11,
+        "queue_drops": 1,
+        "presentation_fps": 57.494530014979965
+      }
+    },
+    {
+      "first_field": 3601,
+      "last_field": 3900,
+      "accepted": {
+        "present_count": 288,
+        "late_fields": 12,
+        "queue_drops": 0,
+        "presentation_fps": 57.69485938785446
+      },
+      "candidate_hotspots2": {
+        "present_count": 285,
+        "late_fields": 15,
+        "queue_drops": 0,
+        "presentation_fps": 57.093871269230974
+      }
+    },
+    {
+      "first_field": 3901,
+      "last_field": 4200,
+      "accepted": {
+        "present_count": 290,
+        "late_fields": 8,
+        "queue_drops": 2,
+        "presentation_fps": 58.095518133603456
+      },
+      "candidate_hotspots2": {
+        "present_count": 295,
+        "late_fields": 4,
+        "queue_drops": 1,
+        "presentation_fps": 59.09716499797592
+      }
+    },
+    {
+      "first_field": 4201,
+      "last_field": 4500,
+      "accepted": {
+        "present_count": 277,
+        "late_fields": 20,
+        "queue_drops": 3,
+        "presentation_fps": 55.49123628623502
+      },
+      "candidate_hotspots2": {
+        "present_count": 278,
+        "late_fields": 19,
+        "queue_drops": 3,
+        "presentation_fps": 55.691565659109514
+      }
+    },
+    {
+      "first_field": 4501,
+      "last_field": 4800,
+      "accepted": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "presentation_fps": 60.0988118623484
+      },
+      "candidate_hotspots2": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 4801,
+      "last_field": 5100,
+      "accepted": {
+        "present_count": 286,
+        "late_fields": 14,
+        "queue_drops": 0,
+        "presentation_fps": 57.29420064210547
+      },
+      "candidate_hotspots2": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    },
+    {
+      "first_field": 5101,
+      "last_field": 5400,
+      "accepted": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "presentation_fps": 60.0988118623484
+      },
+      "candidate_hotspots2": {
+        "present_count": 298,
+        "late_fields": 2,
+        "queue_drops": 0,
+        "presentation_fps": 59.69815311659941
+      }
+    },
+    {
+      "first_field": 5401,
+      "last_field": 5700,
+      "accepted": {
+        "present_count": 293,
+        "late_fields": 7,
+        "queue_drops": 0,
+        "presentation_fps": 58.69650625222694
+      },
+      "candidate_hotspots2": {
+        "present_count": 299,
+        "late_fields": 1,
+        "queue_drops": 0,
+        "presentation_fps": 59.898482489473906
+      }
+    },
+    {
+      "first_field": 5701,
+      "last_field": 6000,
+      "accepted": {
+        "present_count": 297,
+        "late_fields": 3,
+        "queue_drops": 0,
+        "presentation_fps": 59.497823743724915
+      },
+      "candidate_hotspots2": {
+        "present_count": 300,
+        "late_fields": 0,
+        "queue_drops": 0,
+        "presentation_fps": 60.0988118623484
+      }
+    }
+  ],
+  "moving_900": {
+    "accepted": {
+      "logic_tick": 882,
+      "present_count": 883,
+      "late_fields": 17,
+      "queue_drops": 0,
+      "presentation_fps": 58.963612082726264,
+      "zero_errors_and_pose_conflicts": true
+    },
+    "candidate_hotspots2": {
+      "logic_tick": 888,
+      "present_count": 888,
+      "late_fields": 12,
+      "queue_drops": 0,
+      "presentation_fps": 59.29749437085042,
+      "zero_errors_and_pose_conflicts": true
+    }
+  },
+  "improvement": {
+    "late_field_reduction_percent": 36.09756097560975,
+    "presentation_fps_gain": 0.7812845542105293
+  },
+  "constant60fps": false,
+  "hardware_verified": false,
+  "visible_launcher_test": false
+}

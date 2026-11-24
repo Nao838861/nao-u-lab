@@ -1,0 +1,2 @@
+現行ROMの再生成はrebuild.pyです。baseline_AirborneSmooth.nesに検証済みパッチを適用しSHA256を照合します。
+その他のビルド・計測スクリプトは開発環境の絶対パスを含む実験資料です。

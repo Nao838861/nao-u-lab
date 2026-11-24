@@ -1,0 +1,51 @@
+{
+  "video": "[REDACTED_WIN_PATH]",
+  "video_sha256": "86aadfd5334016b8caaee90b1a70f37640d283e5e99c8d80068765139ba51787",
+  "decoded_fields": 1800,
+  "audio_non_silent": true,
+  "audio_max_db": "-21.1 dB",
+  "texture_whole_horizontal_rows": {
+    "solid_middle_green_rows": 320,
+    "remaining_checker_rows": 320,
+    "prg_chr_identical": true
+  },
+  "horizon": {
+    "altitudes": 33,
+    "depths": 56,
+    "far_anchor_matches_ground_first_row": true,
+    "maximum_display_shift_px": 19,
+    "nearest_shift_px": 0
+  },
+  "source_gameplay_audio_files_unchanged": 73,
+  "state_validation": {
+    "boundaries": 1201,
+    "game_state_fields": 151,
+    "differences_by_field": {
+      "_frame_counter": 11
+    },
+    "all_other_150_fields_identical": true,
+    "original_256byte_oam_identical": true,
+    "input_edge_differences": 5,
+    "timing_differences": 11
+  },
+  "video_counters_end": {
+    "logic_tick": 905,
+    "present_count": 1802,
+    "queue_drops": 6,
+    "queue_starvations": 6,
+    "deadline_misses": 0,
+    "late_fields": 69
+  },
+  "visual_qa": [
+    "actual output frames100/390/630/1270/1790 inspected",
+    "whole width middle-green horizontal bands alternate with checker bands",
+    "far root raised19px, nearest geometry retained"
+  ],
+  "status": "Visual preview validated; timing regression remains and overall acceptance NOT passed",
+  "limits": [
+    "Custom Mesen only, not real hardware or FPGA timing.",
+    "No all-stage proof; recorded sequence does not reach boss.",
+    "Five input-edge timing differences and eleven frame-counter differences need scheduler/performance work.",
+    "Coarse source-size motion remains; separate SFC-style lookup-table trial in progress."
+  ]
+}

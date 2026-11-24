@@ -1,0 +1,18 @@
+{
+  "delivery": "[REDACTED_WIN_PATH]",
+  "bytes": 50727377,
+  "sha256": "e5a98b32c33a09926cd7b743c880ebefbb018072a6503ebe9e2994e334cf0afc",
+  "raw_sha256": "5add24980ef7e611392c6343dc75af7515674357e3ea4e03229c1de42ca82cd7",
+  "frames": 5682,
+  "all_video_presentation_timestamps_identical": true,
+  "audio_packet_hash_identical": true,
+  "timebase": "1/60000",
+  "first_PTS": 0,
+  "last_PTS": 5681748,
+  "decode_errors": 0,
+  "cuts": false,
+  "speed_changes": false,
+  "interpolation": false,
+  "test_fixture_extra_cpu_cycles_per_NMI": 25,
+  "normal_ROM_performance_equivalence_certified": false
+}

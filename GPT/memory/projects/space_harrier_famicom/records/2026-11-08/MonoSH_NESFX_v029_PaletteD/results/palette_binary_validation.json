@@ -1,0 +1,20 @@
+{
+  "rom_sha256": "651d032e085cc2149aecb5368c6bdc2b0be6739df65570a2427f2f95c243fde0",
+  "base_sha256": "b63798cac9c7ba22a4169ea10aa4f8215480ffdccdb318d7b6b49583f5cce6db",
+  "byte_differences": 14,
+  "changed_bytes_only_palette": true,
+  "palette_address": "0xedfe",
+  "native_sprite_nontransparent_colors_identical": true,
+  "all_other_rom_bytes_identical": true,
+  "runtime_dll_identical": true,
+  "ground_display_colors": {
+    "shadow": "$19",
+    "band": "$29",
+    "highlight": "$39"
+  },
+  "source_to_display_indices": {
+    "shadow": "texture3 -> palette0",
+    "band": "texture0 -> palette3",
+    "highlight": "texture2 -> palette2"
+  }
+}

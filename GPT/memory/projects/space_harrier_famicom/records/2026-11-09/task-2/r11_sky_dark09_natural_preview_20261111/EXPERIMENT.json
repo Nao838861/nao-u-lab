@@ -1,0 +1,21 @@
+{
+  "request": "Sky/scenery dark shared BG color0 $19 to $09 only above displayed moving horizon; preserve ground $19 and all else.",
+  "scope": "Emulator-only final palette lookup display preview. Not physical NES raster writes or a hardware-compatible implementation.",
+  "base": "[REDACTED_WIN_PATH]",
+  "rom_sha256": "09444cd4b5d0c9d04ccc202eba7272180280d6a233ebd406d3c4046df5657f5e",
+  "changes": [
+    "DefaultNesPpu final color lookup only: shared background transparent/dark color0, source $19, scanline above horizon -> $09. Native sprite pixels and all nonzero BG colors remain unchanged.",
+    "Read horizon from _sceneryState[_ground.front].camera, same 106+camera physical boundary as Mode7Ground::Fetch.",
+    "Diagnostic export retains last-completed output horizon."
+  ],
+  "limitation": "Spatial band changes all shared color0 pixels above horizon, including GSU vegetation/object darks emitted as BG color0 there. It is not a separate hardware sky palette.",
+  "unchanged": [
+    "Original ROM",
+    "Mapper compositing and assets",
+    "PPU CPU GSU timing",
+    "Natural play controller input sequence",
+    "Ground and every pixel at/below actual horizon",
+    "MMC5 expansion-audio limitation"
+  ],
+  "hardware_transfer_performed": false
+}

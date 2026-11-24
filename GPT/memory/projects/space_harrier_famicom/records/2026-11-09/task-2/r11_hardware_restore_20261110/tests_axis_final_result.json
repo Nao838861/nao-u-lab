@@ -1,0 +1,44 @@
+[
+  {
+    "name": "compile",
+    "passed": true,
+    "returncode": 0,
+    "wall_seconds": 0.10899999970570207
+  },
+  {
+    "name": "hud",
+    "passed": true,
+    "returncode": 0,
+    "wall_seconds": 0.0940000000409782
+  },
+  {
+    "name": "native",
+    "passed": true,
+    "returncode": 0,
+    "wall_seconds": 4.234000000171363
+  },
+  {
+    "name": "phase0",
+    "passed": true,
+    "returncode": 0,
+    "wall_seconds": 29.82799999974668
+  },
+  {
+    "name": "phase19",
+    "passed": true,
+    "returncode": 0,
+    "wall_seconds": 28.20300000021234
+  },
+  {
+    "name": "phase39",
+    "passed": true,
+    "returncode": 0,
+    "wall_seconds": 26.92199999978766
+  },
+  {
+    "name": "stop",
+    "passed": true,
+    "returncode": 0,
+    "wall_seconds": 28.657000000122935
+  }
+]

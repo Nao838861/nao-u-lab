@@ -1,0 +1,404 @@
+{
+  "passed": true,
+  "date": "2026-11-09",
+  "source_tests": {
+    "passed": true,
+    "exit_code": 0,
+    "output": "DIRECT_COMPOSITOR_PASS blocks=5160960\nVECTOR_PASS blocks=19584\nINDEPENDENT_FOREGROUND_PASS blocks=500000\nWRAP_MIDPOINT_PASS pairs=720896\nPACKING_PASS pixels=15360 layer_pairs=3932160 camera_clipping=10321920\n",
+    "reference_headers": {
+      "[REDACTED_WIN_PATH]": "6bec31dae1e926d2283b65f6e21ea2680c521b1dda8c8e1f58b9f4c68a27777d",
+      "[REDACTED_WIN_PATH]": "4ec5a77bcf0702877f3ab29870b95ac23ab681cc2cb5ee9fb62a165466adb2af",
+      "[REDACTED_WIN_PATH]": "84550a74d64e1d9febb8f6f4f1f345fdf6f1104d02341b8a866ffbf80955251b"
+    },
+    "limits": [
+      "Pure independent source/packing/camera/foreground tests only, not integrated RTL timing or hardware signoff.",
+      "No live ROM, RBF, USB, SD or console changed."
+    ]
+  },
+  "source_coverage": {
+    "passed": true,
+    "direct_original_sfc_pixels": 262144,
+    "all_opaque_source_pixels_within_15_rows": true,
+    "occupied_rows": {
+      "near": {
+        "118": 30,
+        "119": 66,
+        "120": 106,
+        "121": 208,
+        "122": 258,
+        "123": 368,
+        "124": 440,
+        "125": 488,
+        "126": 500
+      },
+      "far": {
+        "113": 60,
+        "114": 96,
+        "115": 176,
+        "116": 226,
+        "117": 278,
+        "118": 314,
+        "119": 362,
+        "120": 512,
+        "121": 512,
+        "122": 512,
+        "123": 512,
+        "124": 512,
+        "125": 512,
+        "126": 512
+      }
+    },
+    "unchanged_inputs": {
+      "[REDACTED_WIN_PATH]": "a852325fb9a3b53f4231cf849abd52eff8ba4ab4b7dbe1a34db1e5fccd73f9dc",
+      "[REDACTED_WIN_PATH]": "a4e0d80541f86eda38099adb84766ceba2f1f7a7655a5cb986cf6881238024be",
+      "[REDACTED_WIN_PATH]": "fbec700f55a7cd77a211b7ffff74d0adba98839ba8c4d1317c414f9dab89c6c5",
+      "[REDACTED_WIN_PATH]": "d34dd501562e66b455af3ff11b59457cf9fbc448c557e3c9eec9af6ca46b11d6",
+      "[REDACTED_WIN_PATH]": "f33e290e1bcc2f13a5da3bbc939779382b4c84bdc35881e71afc1f2a847bfc37",
+      "[REDACTED_WIN_PATH]": "6f97f751b39d19f8db194e88bd484a2d145559207fbe66076090e7c9ba00591f",
+      "[REDACTED_WIN_PATH]": "816b1f76cf028a31246bfaf4a80e06befdebf81e10a96155b7e43e0d2d6fda50",
+      "[REDACTED_WIN_PATH]": "123f93114a7aa1525ba20828a46be8278e037524b504e5132755c5767ee24415",
+      "[REDACTED_WIN_PATH]": "d344be0ba48399f212933526c9d4a2b1ae3ae2566be81006199fd7d87c192974"
+    },
+    "actual_played_r10_embedded_header": "MSHS version0, disabled",
+    "actual_played_r10_near_map_nonzero_bytes": 0,
+    "operations": "read originals and protected candidates only; wrote only new oracle folder; no hardware"
+  },
+  "parallax": {
+    "passed": true,
+    "parallax_passed": true,
+    "fields": 960,
+    "rom_sha256": "71311f9f0055940ad43b677d507ce82291035b674c4b9a72444b7cfcdcc35d5d",
+    "dll_sha256": "423f2f9be8fbfc42e13e885221e9cf74bc0a0de1908136e3b69547b476d69171",
+    "queue_state_matches": 960,
+    "generation_matches": 960,
+    "phases": {
+      "0": 480,
+      "1": 480
+    },
+    "counter_deltas": {
+      "present_count": 960,
+      "logic_tick": 480,
+      "late_fields": 0,
+      "queue_drops": 0,
+      "deadline_misses": 0,
+      "queue_starvations": 0
+    },
+    "accumulator_ratio_all_fields": "near ==2*far modulo65536",
+    "unique_far_near_pixel_positions": [
+      422,
+      444
+    ],
+    "unique_relative_pixel_offsets": 423,
+    "wraps_far_near": [
+      4,
+      4
+    ],
+    "signed_far_delta_range": [
+      -224,
+      224
+    ],
+    "signed_near_delta_range": [
+      -448,
+      448
+    ],
+    "video_telemetry_alignment": "AVI frame n matches telemetry n-1, initial for frame0",
+    "source_texture_comparison": {
+      "pixels": 3456000,
+      "correct_two_layer_matches": 3264908,
+      "wrong_shared_scroll_matches": 2464433,
+      "wrong_far_only_matches": 2440163,
+      "distinct_scroll_pixels": 872492,
+      "distinct_correct_matches": 816151,
+      "distinct_shared_matches": 15676,
+      "far_top5_pixels": 1152000,
+      "far_top5_correct": 1103684,
+      "far_top5_wrong_near_rate": 657653
+    },
+    "bottom_rows": [
+      223,
+      239
+    ],
+    "bottom_actual_colors": {
+      "(11, 72, 0)": 1044960,
+      "(136, 216, 0)": 1040928,
+      "(56, 135, 0)": 2092032
+    },
+    "bottom_unexpected_ground_colors": {},
+    "bottom_changed_frame_pairs": 678,
+    "reference_top223_exact_frames": 960,
+    "reference_top223_pixel_mismatches": 0,
+    "limits": [
+      "Input-only dedicated Mesen proof, not RTL timing or physical hardware.",
+      "Texture comparisons include real foreground occlusion; they are not an all-pixel compositor equivalence claim.",
+      "Wrong shared-scroll and missing-near alternatives are compared on the same actual frames; no generated video used."
+    ]
+  },
+  "visible_camera_alignment": {
+    "passed": true,
+    "fields": 960,
+    "display_generation_phase_scenery_and_ground_camera_equal": true,
+    "camera_digest": "66a5d9b866b8f8f9e4942a910e3f71cef175940e7344f11c495787e06a2cbd1a",
+    "ram_initialization": "AllZeros=1, verified by readback"
+  },
+  "bottom_pixels": {
+    "passed": true,
+    "fields": 960,
+    "checked_pixels": 4177920,
+    "mismatched_pixels": 0,
+    "mismatched_frames": 0,
+    "first_mismatch_frames": [],
+    "row_range": [
+      192,
+      208
+    ],
+    "physical_y": [
+      223,
+      239
+    ],
+    "camera_source": "Read-only queued camera history keyed by displayed simulation generation and midpoint/current phase, not live staged camera",
+    "reference": "Independent D10Mode7Row::Make + original ROM CHR texture, no foreground source below192",
+    "limits": [
+      "Dedicated Mesen output only, not hardware proof."
+    ]
+  },
+  "em1": {
+    "passed": true,
+    "rom_sha256": "71311f9f0055940ad43b677d507ce82291035b674c4b9a72444b7cfcdcc35d5d",
+    "dll_sha256": "423f2f9be8fbfc42e13e885221e9cf74bc0a0de1908136e3b69547b476d69171",
+    "ram_power_on_state": "AllZeros=1 verified by readback",
+    "fields": 2504,
+    "all_fifteen_depth_pose_combinations_seen": true,
+    "pose_conflicts": 0,
+    "animation_uploads": 24,
+    "counter_deltas": {
+      "present_count": 2492,
+      "logic_tick": 1252,
+      "late_fields": 228,
+      "queue_drops": 12,
+      "deadline_misses": 0,
+      "queue_starvations": 12
+    },
+    "first_confirmed_fields": {
+      "stage0_pose1": 1760,
+      "stage0_pose2": 1754,
+      "stage0_pose3": 1748,
+      "stage0_pose4": 1742,
+      "stage0_pose5": 1701,
+      "stage1_pose1": 1781,
+      "stage1_pose2": 1790,
+      "stage1_pose3": 1796,
+      "stage1_pose4": 1802,
+      "stage1_pose5": 1808,
+      "stage2_pose1": 1909,
+      "stage2_pose2": 1918,
+      "stage2_pose3": 1924,
+      "stage2_pose4": 1930,
+      "stage2_pose5": 1936
+    },
+    "limits": [
+      "Input-only SELECT invincibility, no RAM or state writes.",
+      "Dedicated Mesen only; no physical or RTL timing signoff.",
+      "Existing source geometry and latest BodySpan2 program are preserved; dense-scene waits are reported rather than claiming continuous60fps."
+    ]
+  },
+  "protected_unchanged": {
+    "[REDACTED_WIN_PATH]": "123f93114a7aa1525ba20828a46be8278e037524b504e5132755c5767ee24415",
+    "[REDACTED_WIN_PATH]": "d344be0ba48399f212933526c9d4a2b1ae3ae2566be81006199fd7d87c192974"
+  },
+  "deliverables": {
+    "mesen_final_zero_960/DualScroll_actual_gameplay.mp4": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "d7ba97ee04428c9162c91c395cfa56d420e9ff5d202498bda593b36e3aecd6aa",
+      "bytes": 4261251
+    },
+    "mesen_final_zero_em1_2504/EM1_all15_poses_actual.mp4": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "07acd9cebe21b21de15493b62d415e29c9e4cfd16f0cf20ed016319ff583e56a",
+      "bytes": 3790924
+    },
+    "mesen_final_zero_960/field_0650.png": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "c7b0c0baf5a8a0e2389bc7b286d340b5655fa4fa891eff090e151bcf7cc8a637",
+      "bytes": 4747
+    },
+    "mesen_final_zero_960/field_0950.png": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "7300d6b68a104a878a742ac9ecde4c9f69f1c264b155022caa5daab5262cc89b",
+      "bytes": 5332
+    },
+    "mesen_final_zero_em1_2504/near_pose1.png": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "ccc467e484d927b61addcf1e003b7dff918dfde93863f484d5c951d8a1740a52",
+      "bytes": 5929
+    },
+    "mesen_final_zero_em1_2504/near_pose2.png": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "93ffe2e5a9f684182c4fa1c363b1313b829cae586bff665da33e02c47703d8d2",
+      "bytes": 5936
+    },
+    "mesen_final_zero_em1_2504/near_pose3.png": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "84e7139de8d7d8a3dd22fb3313d35dc9c64df3ee166185d7dc71567223bfc317",
+      "bytes": 6160
+    },
+    "mesen_final_zero_em1_2504/near_pose4.png": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "07cc26d04871f9e7a228348a520ee3f638a159f747ad5c89b1e2012340344e66",
+      "bytes": 5917
+    },
+    "mesen_final_zero_em1_2504/near_pose5.png": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "f2900d76eb6fadad15c2acbe73664d2aa6b4defc1bd076487c1f7116a9d27c7d",
+      "bytes": 6321
+    },
+    "mesen_final_zero_boss_1600/BossStage_actual_gameplay.mp4": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "4ef9855c8c61e1fdb50cfad8e1a4d5a23d06df76acfcfd615c3b83309a0ed28f",
+      "bytes": 5583043
+    },
+    "mesen_final_zero_boss_1600/boss_close.png": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "7090968f2ad8dd6d2c77aa4a17e8d5bb4677b5e6913085878291e3348c15fba3",
+      "bytes": 5594
+    },
+    "mesen_final_zero_boss_1600/boss_coil.png": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "d667d8e3c9cdfb814a1286b1476bb1eeeffd6592fddcf4c6a0c482bf8cb093f5",
+      "bytes": 6235
+    },
+    "mesen_final_zero_boss_1600/stage_returned.png": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "7fb4eac1f5fa0fb4a4097672729f92e824aa1792eacd3f8f771408e7ad0270b4",
+      "bytes": 4756
+    },
+    "mesen_final_zero_boss_1600/stage_resumed.png": {
+      "path": "[REDACTED_WIN_PATH]",
+      "sha256": "fadce1329ce2d4aae014592df6c0a8d8597dc07839acbc716a53c7388a52bac8",
+      "bytes": 5877
+    }
+  },
+  "limits": [
+    "Dedicated Mesen functional proof, not physical hardware or integrated RTL timing signoff.",
+    "All final comparisons use AllZeros=1 power-on RAM verified by readback. Prior Random=0 cross-run equality results are superseded.",
+    "2504-field EM1 capture has 228 late fields, 12 queue drops and 12 starvations. Do not claim continuous 60 fps.",
+    "No ROM, DLL, live source, RBF, USB, SD or physical console changes were performed by this verification task.",
+    "Boss smoke uses START to select and leave the boss. It is not a boss defeat or full stage completion. Its 82 late fields, 26 queue drops, 24 deadline misses and 2 starvations match the protected baseline in every field."
+  ],
+  "boss_smoke": {
+    "passed": true,
+    "fields": 1600,
+    "rom_sha256": "71311f9f0055940ad43b677d507ce82291035b674c4b9a72444b7cfcdcc35d5d",
+    "dll_sha256": "423f2f9be8fbfc42e13e885221e9cf74bc0a0de1908136e3b69547b476d69171",
+    "baseline_rom_sha256": "123f93114a7aa1525ba20828a46be8278e037524b504e5132755c5767ee24415",
+    "baseline_dll_sha256": "344a1cf465444bdd13192da5236c99e92a215641157f242722fdc65e0949bb93",
+    "ram_power_on_state": "AllZeros=1 verified by readback",
+    "input": "SELECT startup; START300..303 and1100..1103, otherwise neutral. No RAM writes.",
+    "transitions": [
+      {
+        "field": 0,
+        "boss_state": 0,
+        "boss_hp": 0,
+        "boss_age": 0
+      },
+      {
+        "field": 301,
+        "boss_state": 1,
+        "boss_hp": 0,
+        "boss_age": 0
+      },
+      {
+        "field": 303,
+        "boss_state": 2,
+        "boss_hp": 16,
+        "boss_age": 0
+      },
+      {
+        "field": 1101,
+        "boss_state": 0,
+        "boss_hp": 16,
+        "boss_age": 255
+      }
+    ],
+    "nine_boss_parts_active": true,
+    "status_nonzero_fields": 0,
+    "counter_deltas_final": {
+      "present_count": 1574,
+      "logic_tick": 800,
+      "late_fields": 82,
+      "queue_drops": 26,
+      "deadline_misses": 24,
+      "queue_starvations": 2
+    },
+    "counter_deltas_baseline": {
+      "present_count": 1574,
+      "logic_tick": 800,
+      "late_fields": 82,
+      "queue_drops": 26,
+      "deadline_misses": 24,
+      "queue_starvations": 2
+    },
+    "per_field_telemetry_mismatches": {
+      "boss_state": 0,
+      "boss_parts": 0,
+      "boss_hp": 0,
+      "boss_age": 0,
+      "bgobj_types": 0,
+      "bgobj_count": 0,
+      "player_x": 0,
+      "player_y": 0,
+      "player_state": 0,
+      "status": 0,
+      "ground_offset": 0,
+      "phase": 0,
+      "presented_sim_generation": 0,
+      "visible_scenery": 0,
+      "present_count": 0,
+      "logic_tick": 0,
+      "late_fields": 0,
+      "queue_drops": 0,
+      "deadline_misses": 0,
+      "queue_starvations": 0
+    },
+    "baseline_image_comparison": {
+      "scope": "physical0..222 except the15-row restored scenery band; includes native boss/player colors and positions outside the band",
+      "checked_pixels": 85196800,
+      "mismatched_pixels": 0,
+      "exact_frames": 1600
+    },
+    "bottom": {
+      "passed": true,
+      "fields": 1600,
+      "checked_pixels": 6963200,
+      "mismatched_pixels": 0,
+      "mismatched_frames": 0,
+      "first_mismatch_frames": [],
+      "row_range": [
+        192,
+        208
+      ],
+      "physical_y": [
+        223,
+        239
+      ],
+      "camera_source": "Read-only queued camera history keyed by displayed simulation generation and midpoint/current phase, not live staged camera",
+      "stable_history": true,
+      "camera_selection": "unique repeated record before first display, frozen against later queue-slot overwrites",
+      "reference": "Independent D10Mode7Row::Make + original ROM CHR texture, no foreground source below192",
+      "limits": [
+        "Dedicated Mesen output only, not hardware proof."
+      ]
+    },
+    "bottom_colors": {
+      "(11, 72, 0)": 1734534,
+      "(136, 216, 0)": 1734778,
+      "(56, 135, 0)": 3493888
+    },
+    "video": "[REDACTED_WIN_PATH]",
+    "limits": [
+      "Input-only emulator smoke, not a boss defeat or naturally completed stage; START selects boss and returns to stage.",
+      "Identical reported stalls to protected BS2 baseline; no uninterrupted60fps claim.",
+      "No physical hardware or integrated RTL timing signoff.",
+      "Image equality excludes restored scenery band; boss geometry telemetry agrees in all fields including this band."
+    ]
+  }
+}

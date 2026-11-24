@@ -1,0 +1,13 @@
+{
+  "mode": "freeze",
+  "ticks": 700,
+  "resets": 0,
+  "frozen_phase_transitions": 231,
+  "death_states": [
+    0,
+    1,
+    2
+  ],
+  "reset_requests": 0,
+  "reset_from_lifted_phase7": 0
+}

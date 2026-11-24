@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "all_static_texels_preserved": 27782,
+  "all_5_em1_poses_preserved": true,
+  "atlas_bytes": 7168,
+  "dynamic_address": "0x9c9f",
+  "dynamic_reserve": 801,
+  "row_cache_bytes": 64,
+  "row_pool_address": "0x92c5",
+  "row_pool_bytes": 2470,
+  "static_end": "0x9c6b",
+  "static_spare_bytes": 52,
+  "gsu_extra_ram_bytes": 0,
+  "em1_stored_bytes": [
+    640,
+    715,
+    763,
+    751,
+    770
+  ],
+  "requires_matching_compressed_pointer_gsu": true,
+  "requires_em1_pose_upload_regeneration": true
+}

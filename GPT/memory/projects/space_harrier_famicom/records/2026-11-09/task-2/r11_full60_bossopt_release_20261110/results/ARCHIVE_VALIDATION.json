@@ -1,0 +1,11 @@
+{
+  "zip": "[REDACTED_WIN_PATH]",
+  "bytes": 45029259,
+  "zip_sha256": "5ea33dd7edaa4745b595d7bd553606933d7337f032d85088910e0e68f8bbc73d",
+  "file_count": 160,
+  "archive_crc": "PASS",
+  "all_file_hashes": "PASS",
+  "readme_utf8": "PASS",
+  "rom_sha256": "bf51ed4106fea3ac446b6160c1eb6a5dc48ccdd15081420e67c4aebc2a85b5c0",
+  "launcher": "NOT RUN: native computer API unavailable in packaging worker; rebuilt launcher uses previously tested logic with final ROM hash"
+}

@@ -1,0 +1,21 @@
+{
+    "status":  "ROM_AND_MATCHED_R11_MAPPER_COPY_SUCCEEDED_NO_LAUNCH",
+    "mode":  "COPY_ONLY_NO_LAUNCH",
+    "started_utc":  "2026-11-09T19:34:59.1943356Z",
+    "destination_folder":  "sd:/usb-games/MSH5_R11_VFIX_c4b531dc_f8c64dc0ff0e4b69922c5d4d5117eded.nes.fpgrom",
+    "rom_filename":  "MSH5_R11_VFIX_c4b531dc_f8c64dc0ff0e4b69922c5d4d5117eded.nes",
+    "rom_sha256":  "c4b531dc532c9dc32ed5df51b30a4f4bb5a66e128251e0d82164385443f83e20",
+    "mapper_filename":  "mapper.rbf",
+    "mapper_sha256":  "08775918b001b9d2f9e27032d24d6b2e8f6dbbe052c98134c4d797f644c920e5",
+    "commands_attempted":  2,
+    "copy_commands_completed":  2,
+    "hardware_launches":  0,
+    "reset_commands":  0,
+    "memory_reads":  0,
+    "automatic_retries":  0,
+    "readback_performed":  false,
+    "pretransfer_state":  "EverDrive menu visually confirmed",
+    "pretransfer_state_utc":  "2026-11-09T19:34:01.4973309Z",
+    "error":  null,
+    "completed_utc":  "2026-11-09T19:35:03.0299346Z"
+}

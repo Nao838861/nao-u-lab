@@ -1,0 +1,481 @@
+{
+  "decision": "REJECTED_PROTOTYPE_DO_NOT_REPLACE_V021",
+  "reason": "Q8.8 geometry arithmetic passes but CPU budget and original gameplay/input timing equivalence fail.",
+  "rom_sha256": "48c7bb329e698f23436c6c34a9d077272918354d21ffcf2bf982d27507d5c640",
+  "dll_sha256": "7492983ad92de13fbf590d3f9baca2f575ad113b17c4e1ac92461b0595dd576b",
+  "video_sha256": "40d3053a8374a9d06aa22da5dab8059e1f8071472bde039ae628eb213dcc7a92",
+  "v021_untouched": true,
+  "preserved_files": {
+    "assets": {
+      "files": 112,
+      "differences": []
+    },
+    "audio": {
+      "files": 12,
+      "differences": []
+    },
+    "reference": {
+      "files": 100,
+      "differences": []
+    },
+    "core": {
+      "files": 11,
+      "differences": []
+    }
+  },
+  "geometry_validation": {
+    "scenes": 900,
+    "raw_geometry_checked": 6469,
+    "geometry_errors": [],
+    "geometry_error_count": 0,
+    "current_commands_checked": 6339,
+    "current_error_count": 0,
+    "current_errors": [],
+    "mid_commands_checked": 6198,
+    "mid_error_count": 0,
+    "mid_errors": [],
+    "lifecycle_fence_scenes_excluded": [
+      172,
+      434,
+      448,
+      464,
+      505,
+      526,
+      568,
+      575,
+      583,
+      587,
+      591,
+      613,
+      828,
+      832,
+      836
+    ],
+    "suppressed_scenes": [
+      235,
+      306,
+      308,
+      310,
+      312,
+      314,
+      506,
+      509,
+      664,
+      667,
+      669,
+      671,
+      673,
+      675,
+      677,
+      679,
+      681,
+      683,
+      719,
+      721,
+      724,
+      726,
+      728,
+      730,
+      732
+    ],
+    "mul8_cases": 65536,
+    "mul8_error_count": 0,
+    "mul16_scale_error_count": 0,
+    "last": {
+      "i": 899,
+      "ppu": 1818,
+      "frame": 1810,
+      "gen": 905,
+      "logic": 904,
+      "present": 1756,
+      "late": 588,
+      "drop": 50,
+      "starve": 51
+    },
+    "limits": [
+      "Independent equation-to-assembled raw and command trace check; not yet physical pixels.",
+      "Midpoint oracle excludes scenes with actual lifetime fences; does not assume draw-order identity.",
+      "Runtime host and FPGA/hardware not equivalent."
+    ]
+  },
+  "motion_comparison": {
+    "geometry_delta_pixels": {
+      "left": {
+        "count": 3923,
+        "min": -5,
+        "max": 6,
+        "mean_abs": 1.2594952842212592
+      },
+      "top": {
+        "count": 3923,
+        "min": -6,
+        "max": 5,
+        "mean_abs": 1.1251593168493499
+      },
+      "width": {
+        "count": 3923,
+        "min": -7,
+        "max": 7,
+        "mean_abs": 1.2531226102472597
+      },
+      "height": {
+        "count": 3923,
+        "min": -3,
+        "max": 4,
+        "mean_abs": 0.7914861075707367
+      },
+      "center_x": {
+        "count": 3923,
+        "min": -3.5,
+        "max": 4.0,
+        "mean_abs": 1.2273770073923018
+      },
+      "bottom": {
+        "count": 3923,
+        "min": -3,
+        "max": 2,
+        "mean_abs": 0.5855212847310731
+      }
+    },
+    "z_decrement_width_stats": {
+      "24": {
+        "transitions": 2042,
+        "old_width_unchanged": 1525,
+        "new_width_unchanged": 384,
+        "old_width_step_ge4": 517,
+        "new_width_step_ge4": 222
+      },
+      "16": {
+        "transitions": 78,
+        "old_width_unchanged": 43,
+        "new_width_unchanged": 0,
+        "old_width_step_ge4": 35,
+        "new_width_step_ge4": 48
+      },
+      "40": {
+        "transitions": 1034,
+        "old_width_unchanged": 794,
+        "new_width_unchanged": 285,
+        "old_width_step_ge4": 240,
+        "new_width_step_ge4": 50
+      },
+      "32": {
+        "transitions": 457,
+        "old_width_unchanged": 347,
+        "new_width_unchanged": 58,
+        "old_width_step_ge4": 110,
+        "new_width_step_ge4": 56
+      },
+      "8": {
+        "transitions": 38,
+        "old_width_unchanged": 35,
+        "new_width_unchanged": 28,
+        "old_width_step_ge4": 3,
+        "new_width_step_ge4": 0
+      }
+    },
+    "fixed_world_flystone_z46_to36": [
+      {
+        "z": 46,
+        "old_bottom": 118,
+        "precise_bottom": 115.4375,
+        "new_rounded_bottom": 115
+      },
+      {
+        "z": 45,
+        "old_bottom": 118,
+        "precise_bottom": 115.8359375,
+        "new_rounded_bottom": 116
+      },
+      {
+        "z": 44,
+        "old_bottom": 116,
+        "precise_bottom": 115.67578125,
+        "new_rounded_bottom": 116
+      },
+      {
+        "z": 43,
+        "old_bottom": 116,
+        "precise_bottom": 115.7265625,
+        "new_rounded_bottom": 116
+      },
+      {
+        "z": 42,
+        "old_bottom": 116,
+        "precise_bottom": 115.7109375,
+        "new_rounded_bottom": 116
+      },
+      {
+        "z": 41,
+        "old_bottom": 116,
+        "precise_bottom": 115.69921875,
+        "new_rounded_bottom": 116
+      },
+      {
+        "z": 40,
+        "old_bottom": 118,
+        "precise_bottom": 115.40234375,
+        "new_rounded_bottom": 115
+      },
+      {
+        "z": 39,
+        "old_bottom": 118,
+        "precise_bottom": 115.38671875,
+        "new_rounded_bottom": 115
+      },
+      {
+        "z": 38,
+        "old_bottom": 116,
+        "precise_bottom": 115.08984375,
+        "new_rounded_bottom": 115
+      },
+      {
+        "z": 37,
+        "old_bottom": 116,
+        "precise_bottom": 114.234375,
+        "new_rounded_bottom": 114
+      },
+      {
+        "z": 36,
+        "old_bottom": 114,
+        "precise_bottom": 113.9375,
+        "new_rounded_bottom": 114
+      }
+    ],
+    "same_900_scene_schedule": {
+      "v021": {
+        "scenes": 900,
+        "ppu_span": 1799,
+        "present_count_delta": 1796,
+        "queue_drop_delta": 2,
+        "starvation_delta": 3,
+        "late_fields_delta": 40,
+        "suppressed_scenes": 1
+      },
+      "v022": {
+        "scenes": 900,
+        "ppu_span": 1799,
+        "present_count_delta": 1748,
+        "queue_drop_delta": 50,
+        "starvation_delta": 51,
+        "late_fields_delta": 588,
+        "suppressed_scenes": 25
+      }
+    },
+    "limits": [
+      "Continuous dimensions and ground reconstruct quantization plateaus, not missing original floats. Size and visual/hitbox correspondence change; collisions remain original.",
+      "Geometry statistics describe submitted/source geometry, not a claim of physically delivered60fps.",
+      "Scene index controls are identical, but extra CPU cost changes NMI/input sampling phase; gameplay equivalence failed.",
+      "No all-stage, all-boss, EM1 improvement or FPGA throughput validation."
+    ]
+  },
+  "boundary_identity": {
+    "complete": true,
+    "boundaries": 1201,
+    "verdict": "FAIL: original state/OAM/input identity not established",
+    "counts": {
+      "state_differences": 941,
+      "oam_different_boundaries": 779,
+      "input_differences": 284,
+      "timing_differences": 1201
+    },
+    "different_boundaries_excluding_frame_counter": 933,
+    "per_field_different_boundaries": {
+      "_frame_counter": 389,
+      "_trig_accum": 161,
+      "_bullet_sx": 237,
+      "_bullet_wz": 694,
+      "_bullet_timer": 783,
+      "_bullet_count": 145,
+      "_player_y": 68,
+      "_player_pose": 181,
+      "_player_pose_drawn": 182,
+      "_player_run_phase": 144,
+      "_player_fy": 68,
+      "_bullet_sy": 62,
+      "_ground_offset": 82,
+      "_ground_offset_target": 65,
+      "_enemy_bot": 274,
+      "_bgobj_z2gy_ptr": 82,
+      "_player_state": 12,
+      "_player_death_vy": 41,
+      "_bgobj_type": 253,
+      "_player_death_timer": 94,
+      "_ground_scroll": 94,
+      "_bgfard_scroll_acc": 897,
+      "_bgfaru_scroll_acc": 897,
+      "_bgobj_wx": 410,
+      "_bgobj_wz": 192,
+      "_bgobj_zbucket": 137,
+      "_bgobj_col_zbucket": 145,
+      "_bgobj_znext": 274,
+      "_bgobj_col_znext": 144,
+      "_enemy_timer": 94,
+      "_enemy_cx": 94,
+      "_enemy_wz": 93,
+      "_enemy_spawn_wait": 94,
+      "_spawn_frame": 94,
+      "_bgobj_wy": 100,
+      "_bgobj_count": 97,
+      "_bgobj_target_x": 327,
+      "_enemy_count": 91,
+      "_player_oam_y_offset": 12,
+      "_player_oam_hide_bottom": 8,
+      "_player_invuln_timer": 19,
+      "_player_x": 134,
+      "_player_vbuf_x": 134,
+      "_player_fx": 134,
+      "_player_flip": 2
+    },
+    "per_metadata_different_boundaries": {
+      "pc": 1201,
+      "ppu": 389,
+      "clock": 1201,
+      "frame_count": 389,
+      "logic_tick": 0,
+      "draw_count": 0,
+      "present_count": 902,
+      "c_sp": 0
+    },
+    "first_state_difference": {
+      "boundary": 260,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 530,
+          "clock": 15766531,
+          "frame_count": 522,
+          "logic_tick": 260,
+          "draw_count": 261,
+          "present_count": 519,
+          "c_sp": 32767
+        },
+        {
+          "pc": 63005,
+          "ppu": 531,
+          "clock": 15786892,
+          "frame_count": 523,
+          "logic_tick": 260,
+          "draw_count": 261,
+          "present_count": 520,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "0a",
+          "v022": "0b"
+        }
+      }
+    },
+    "first_input_difference": {
+      "boundary": 262,
+      "v021": {
+        "JOY1_HELD": 2,
+        "JOY1_PRESSED": 0,
+        "JOY1_RELEASED": 0
+      },
+      "v022": {
+        "JOY1_HELD": 2,
+        "JOY1_PRESSED": 0,
+        "JOY1_RELEASED": 128
+      }
+    },
+    "first_oam_difference": 269,
+    "static_sources": {
+      "reference": {
+        "old_files": 100,
+        "new_files": 100,
+        "identical": true,
+        "differences": {}
+      },
+      "generated/nes_core": {
+        "old_files": 51,
+        "new_files": 51,
+        "identical": true,
+        "differences": {}
+      }
+    },
+    "rom_sha256": {
+      "v021": "d41753d838470c9a31214a5d9305015df95479bde131a1ccf46dc1cc4ca43e76",
+      "v022": "48c7bb329e698f23436c6c34a9d077272918354d21ffcf2bf982d27507d5c640"
+    },
+    "dll_sha256": {
+      "v021": "7492983ad92de13fbf590d3f9baca2f575ad113b17c4e1ac92461b0595dd576b",
+      "v022": "7492983ad92de13fbf590d3f9baca2f575ad113b17c4e1ac92461b0595dd576b"
+    },
+    "current_candidate_sha256": "48c7bb329e698f23436c6c34a9d077272918354d21ffcf2bf982d27507d5c640",
+    "interpretation": "Source bytes identical, but presentation work changes NMI and latched input timing under the same breakpoint-indexed controller overrides. State divergence follows; this run cannot distinguish every later difference causally. PC relocation and CPU clock differences alone are not game-state failures. No RAM writes, clock changes or rebuilds were performed."
+  },
+  "video_metrics": {
+    "rom_sha256": "48c7bb329e698f23436c6c34a9d077272918354d21ffcf2bf982d27507d5c640",
+    "dll_sha256": "7492983ad92de13fbf590d3f9baca2f575ad113b17c4e1ac92461b0595dd576b",
+    "fields": 1800,
+    "fps": 60.0988118623484,
+    "seconds": 29.95067529991705,
+    "deaths": 0,
+    "invincible_all_samples": true,
+    "default_normal_verified": true,
+    "player_x_range": [
+      -112,
+      112
+    ],
+    "ground_offset_range": [
+      0,
+      32
+    ],
+    "boss_states": [
+      0
+    ],
+    "audio_stream": true,
+    "audio_non_silent": true,
+    "video": "[REDACTED_WIN_PATH]",
+    "wall_seconds": 35.64099999982864,
+    "limits": [
+      "Dedicated Mesen only; no actual FPGA or NES hardware validation.",
+      "Same normal ROM. Original SELECT control enables invincibility only for capture; no RAM writes.",
+      "SFC mountains use shared gray/dark green; low-contrast depth columns use solid middle green; ordinary enemy bullets use16-phase SFC rotation. Fixed sky/ground palettes retained.",
+      "Display geometry uses reconstructed continuous scale and Q8.8. Increased queue losses remain; not a stable60fps release. EM1 and boss geometry unchanged."
+    ]
+  },
+  "video_final_counters": {
+    "logic_tick": 904,
+    "draw_count": 905,
+    "present_count": 1761,
+    "queue_drops": 46,
+    "queue_starvations": 47,
+    "late_fields": 439
+  },
+  "rotation_phases_seen": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "budget": {
+    "display_ram_extra_bytes": 256,
+    "zeropage_extra_bytes": 23,
+    "new_8k_prg_bank": 89,
+    "precise_bank_bytes": 7126,
+    "note": "See final rom.map for exact segment usage. No GSU/RBF/mapper change."
+  },
+  "limitations": [
+    "Not a working60fps release. CPU overhead increases missing presentations and changes input phase; do not deploy.",
+    "EM0 has no complete unrounded original path in supplied source. It preserves integer path centers and restores the dropped bottom parity, with continuous display dimensions.",
+    "EM1, boss, bullet geometry are preserved. No claim to have solved their motion.",
+    "Run-center scale/size/GY reconstruction is a visual approximation, not recovery of unknown original floats. Visible sizes differ from collision sizes.",
+    "No physical pixel-by-pixel validation, FPGA, actual NES, RBF, synthesis, timing, all-stage or all-boss validation."
+  ]
+}

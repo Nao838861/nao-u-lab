@@ -1,0 +1,11 @@
+{
+    "target":  "sd:/usb-games/MSH5_R11_VSHIFT_925fa382_9885438f.nes.fpgrom",
+    "commands_completed":  2,
+    "physical_display_verified":  false,
+    "run_reset_reboot":  false,
+    "rbf_sha256":  "9885438f1061289b6a046bbbb75306924e57008f3b1779930dd5b8056916514d",
+    "rom_sha256":  "925fa382c72d2949a7b884fb2adbb487311fb0f321c34d98bf6dc3c7a533f086",
+    "status":  "COPY_ONLY_COMPLETED_NOT_LAUNCHED",
+    "copy_only":  true,
+    "commands_attempted":  2
+}

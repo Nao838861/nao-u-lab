@@ -1,0 +1,16 @@
+from pathlib import Path
+P=Path.cwd()
+def edit(f,a,b):
+ p=P/f;s=p.read_text();assert a in s,(f,a);p.write_text(s.replace(a,b))
+edit('build.py',"run([sys.executable,P/'tools/generate_nes_render_tables.py'])", "run([sys.executable,P/'tools/generate_boss_runtime_atlas.py'])\nrun([sys.executable,P/'tools/generate_rotating_bullets.py'])\nrun([sys.executable,P/'tools/generate_detail_assets.py'])\nrun([sys.executable,P/'tools/generate_nes_render_tables.py'])")
+p=P/'build.py';s=p.read_text();i=s.index("run([sys.executable,P/'tools/generate_direct_depth_v027.py'])");s=s[:i]+s[i:].replace("run([sys.executable,P/'tools/generate_boss_runtime_atlas.py'])\nrun([sys.executable,P/'tools/generate_rotating_bullets.py'])\n",'',1);p.write_text(s.replace('MonoSH_NESFX_v028_GroundPeriod_UNTESTED.nes','MonoSH_NESFX_v030_Detail_UNTESTED.nes'))
+edit('src/render_adapter.s',' lda rid\n clc\n adc #$84\n sta (rp),y',' ldx rid\n lda detail_address_hi,x\n sta (rp),y')
+# Put address data in render bank, not tightly packed fixed ROM.
+edit('src/render_adapter.s','.segment "RENDER_CODE"\nrender_geometry:', '.segment "RENDER_CODE"\n.include "detail_addresses.inc"\nrender_geometry:')
+p=P/'src/gsu.s';s=p.read_text().replace('iwt r8,#$8a00','iwt r8,#$8800').replace('iwt r0,#$9400','iwt r0,#$9200').replace('iwt r0,#$9800','iwt r0,#$9600').replace('iwt r8,#$8700','iwt r8,#$91c0').replace('iwt r8,#$8800\n iwt r11,#$0500','iwt r8,#$9540\n iwt r11,#$0500')
+s=s.replace(' from r6\n hib\n add r8\n move r3,r0',' from r6\n hib\n iwt r3,#192\n cmp r3\n bcs byte_start\n nop\n add r8\n move r3,r0')
+s=s.replace(' add r0\n add r0\n add r0\n add r0\n add r0\n add r0\n iwt r3,#$9000',' dec r0\n add r0\n add r0\n add r0\n add r0\n add r0\n add r0\n iwt r3,#$9000')
+s=s.replace(' lm r8,($8008)\n from r5\n hib',' lm r8,($8008)\n from r8\n iwt r3,#$9a00\n cmp r3\n from r5\n hib\n bcc :+\n nop\n add r0\n:')
+s=s.replace(' lm r3,($8008)\n from r5\n hib',' lm r3,($8008)\n from r3\n iwt r14,#$9a00\n cmp r14\n from r5\n hib\n bcc :+\n nop\n add r0\n:',1)
+s=s.replace(' iwt r0,#18',' ibt r0,#18').replace(' iwt r15,#object\n',' ibt r15,#object\n').replace(' iwt r15,#object_done\n nop\nbyte_row:', ' bra object_done\n nop\nbyte_row:')
+p.write_text(s)

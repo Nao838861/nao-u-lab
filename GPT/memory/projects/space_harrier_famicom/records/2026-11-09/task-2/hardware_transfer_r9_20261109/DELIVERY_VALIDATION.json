@@ -1,0 +1,18 @@
+{
+  "delivery": "[REDACTED_WIN_PATH]",
+  "bytes": 19883819,
+  "sha256": "0b7f5b830def57951024136119f805e2b17697e4f24e3c87a6dbf147be16831c",
+  "source_sha256": "57bf556565395bff2a024cedbfc1160c3d6ceeacdb67f409ca4299378529c28c",
+  "raw_and_delivery_frames": 2349,
+  "all_video_presentation_timestamps_identical": true,
+  "first_PTS": 0,
+  "last_PTS": 2349974,
+  "timebase": "1/60000",
+  "audio_packet_hash_identical": true,
+  "audio_packet_hash": "SHA256=bec865d9c1cbce433121c7851d86eb51b9b364b38e1a76185b74c392f8426e70",
+  "decode_errors": 0,
+  "cuts": false,
+  "speed_changes": false,
+  "interpolation": false,
+  "note": "Decoded duration annotations differ with reordered H264 B frames; all display timestamps and frame count are identical."
+}

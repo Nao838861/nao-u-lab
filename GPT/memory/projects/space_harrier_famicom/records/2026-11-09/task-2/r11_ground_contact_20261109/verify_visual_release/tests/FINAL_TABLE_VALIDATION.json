@@ -1,0 +1,36 @@
+{
+  "model_sha256": "161da74b17cd17ca96feec9a96363b308452b95363d162f6a32017072ac822ac",
+  "assets": {
+    "Tree0": {
+      "full_and_midpoint_samples": 3663,
+      "opposite_top_depth_steps_before": 13,
+      "opposite_top_depth_steps_after": 0,
+      "opposite_top_camera_steps_after": 0,
+      "max_camera_top_step": 2,
+      "max_height_change": 3,
+      "near_far_dimensions_preserved": true
+    },
+    "Bush0": {
+      "full_and_midpoint_samples": 3663,
+      "opposite_top_depth_steps_before": 405,
+      "opposite_top_depth_steps_after": 0,
+      "opposite_top_camera_steps_after": 0,
+      "max_camera_top_step": 2,
+      "max_height_change": 3,
+      "near_far_dimensions_preserved": true
+    },
+    "Bush1": {
+      "full_and_midpoint_samples": 3663,
+      "opposite_top_depth_steps_before": 444,
+      "opposite_top_depth_steps_after": 0,
+      "opposite_top_camera_steps_after": 0,
+      "max_camera_top_step": 2,
+      "max_height_change": 3,
+      "near_far_dimensions_preserved": true
+    }
+  },
+  "root_camera_reverse": 0,
+  "root_depth_reverse": 0,
+  "max_root_change_from_original": 3,
+  "fixed_Em0_width_224_preserved": true
+}

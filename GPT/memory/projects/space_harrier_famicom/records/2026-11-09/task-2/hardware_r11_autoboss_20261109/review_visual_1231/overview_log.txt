@@ -1,0 +1,52 @@
+ffmpeg-win-x86_64-v9.0.2.exe : Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '[REDACTED_WIN_PATH]
+2\hardware_r11_autoboss_20261109\trial\capture.mp4':
+発生場所 行:1 文字:163
++ ... | Out-Null; & '[REDACTED_WIN_PATH] ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Input #0, mov,m...l\capture.mp4'::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 0
+    compatible_brands: mp41isom
+    creation_time   : 2026-11-09T12:29:20.000000Z
+  Duration: 00:01:34.71, start: 0.000000, bitrate: 16040 kb/s
+  Stream #0:0[0x1](und): Video: h264 (Baseline) (avc1 / 0x31637661), yuvj420p(pc, unknown/bt709/unknown, progressive), 
+1280x720 [SAR 1:1 DAR 16:9], 15820 kb/s, 59.99 fps, 60 tbr, 60k tbn (default)
+    Metadata:
+      creation_time   : 2026-11-09T12:29:20.000000Z
+      handler_name    : VideoHandler
+      encoder         : AVC Coding
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 192 kb/s, start 0.005812 (default
+)
+    Metadata:
+      creation_time   : 2026-11-09T12:29:20.000000Z
+      handler_name    : SoundHandler
+Stream mapping:
+  Stream #0:0 -> #0:0 (h264 (native) -> mjpeg (native))
+Press [q] to stop, [?] for help
+[swscaler @ 00000245d2a76a40] deprecated pixel format used, make sure you did set range correctly
+[mjpeg @ 00000245d044ab80] bitrate tolerance 4000000 too small for bitrate 200000, overriding
+Output #0, image2, to '[REDACTED_WIN_PATH]
+31\overview.jpg':
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 0
+    compatible_brands: mp41isom
+    encoder         : Lavf63.1.102
+  Stream #0:0(und): Video: mjpeg, yuvj420p(pc, unknown/bt709/unknown, progressive), 2400x2700 [SAR 1:1 DAR 8:9], q=2-31
+, 200 kb/s, 0.01 fps, 0.01 tbn (default)
+    Metadata:
+      encoder         : Lavc63.1.102 mjpeg
+      creation_time   : 2026-11-09T12:29:20.000000Z
+      handler_name    : VideoHandler
+    Side data:
+      CPB properties: bitrate max/min/avg: 0/0/200000 buffer size: 0 vbv_delay: N/A
+[image2 @ 00000245d03fbec0] The specified filename '[REDACTED_WIN_PATH]
+oss_20261109\review_visual_1231\overview.jpg' does not contain an image sequence pattern or a pattern is invalid.
+[image2 @ 00000245d03fbec0] Use a pattern such as %03d for an image sequence or use the -update option (with -frames:v 
+1 if needed) to write a single image.
+[out#0/image2 @ 00000245d03f4f80] video:510KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing o
+verhead: unknown
+frame=    1 fps=0.4 q=14.4 Lsize=N/A time=00:01:40.00 bitrate=N/A speed=38.9x elapsed=0:00:02.56    

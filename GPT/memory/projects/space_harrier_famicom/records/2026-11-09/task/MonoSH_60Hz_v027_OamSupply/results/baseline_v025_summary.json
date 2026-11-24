@@ -1,0 +1,223 @@
+{
+  "status": "DEVELOPMENT_CANDIDATE_FUNCTIONAL_MODEL_VERIFIED",
+  "baseline_miss_classification": {
+    "framebuffer_copy": 15
+  },
+  "baseline_audit_reproduced_prior_counters": true,
+  "baseline": {
+    "rom_sha256": "d41753d838470c9a31214a5d9305015df95479bde131a1ccf46dc1cc4ca43e76",
+    "dll_sha256": "7492983ad92de13fbf590d3f9baca2f575ad113b17c4e1ac92461b0595dd576b",
+    "fields": 7200,
+    "emulated_seconds": 119.80267888721083,
+    "ntsc_ppu_hz": 60.0988118623484,
+    "rates": {
+      "logic_tick": 30.04941152767751,
+      "draw_count": 30.04941152767751,
+      "present_count": 59.93188188020125,
+      "midpoint_present_count": 29.965940940100626,
+      "current_present_count": 29.965940940100626
+    },
+    "counter_deltas": {
+      "late_fields": 65,
+      "queue_drops": 20,
+      "queue_starvations": 5,
+      "deadline_misses": 15
+    },
+    "steady_hold_fields": 20,
+    "steady_generation_skips": 10,
+    "boss_states": [
+      0,
+      1,
+      2
+    ],
+    "wall_seconds": 141.14099999982864,
+    "scope": "Functional Mesen model; per-field debugger measurement; no hardware or wall-clock60fps claim; original SELECT invincibility; no memory writes."
+  },
+  "candidate": {
+    "rom_sha256": "7e63beb38b1f26075ce86f907733aa23f2e7766023a22169f4efe12ce60b9f45",
+    "dll_sha256": "7492983ad92de13fbf590d3f9baca2f575ad113b17c4e1ac92461b0595dd576b",
+    "fields": 7200,
+    "emulated_seconds": 119.80267944594091,
+    "ntsc_ppu_hz": 60.0988118623484,
+    "rates": {
+      "logic_tick": 30.04941138753448,
+      "draw_count": 30.04941138753448,
+      "present_count": 60.0487404227564,
+      "midpoint_present_count": 30.0243702113782,
+      "current_present_count": 30.0243702113782
+    },
+    "counter_deltas": {
+      "late_fields": 65,
+      "queue_drops": 6,
+      "queue_starvations": 5,
+      "deadline_misses": 1
+    },
+    "steady_hold_fields": 6,
+    "steady_generation_skips": 3,
+    "boss_states": [
+      0,
+      1,
+      2
+    ],
+    "wall_seconds": 132.0,
+    "scope": "Functional Mesen model; per-field debugger measurement; no hardware or wall-clock60fps claim; original SELECT invincibility; no memory writes."
+  },
+  "game_identity": {
+    "complete": true,
+    "ticks": [
+      3601,
+      3601
+    ],
+    "state_differences": [],
+    "input_differences": [],
+    "oam_differences": [],
+    "state_difference_fields": {},
+    "method": "Same controller values assigned at pre-NMI frame_count. 3601 pre-core_tick state/OAM snapshots. No RAM writes. Normal SELECT input. Strict identity includes the60Hz RNG source frame counter."
+  },
+  "pixel_equivalence": {
+    "synthetic_cases": 204,
+    "actual_deadline_packets": 15,
+    "all_12KiB_framebuffers_identical": true
+  },
+  "actual_deadline_packet_costs": [
+    {
+      "baseline_missed_field": 2676,
+      "baseline_ms": 13.12848,
+      "candidate_ms": 13.12848,
+      "saved_ms": 0.0,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 3655,
+      "baseline_ms": 12.88152,
+      "candidate_ms": 8.84078,
+      "saved_ms": 4.0407399999999996,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 3657,
+      "baseline_ms": 13.11062,
+      "candidate_ms": 8.89106,
+      "saved_ms": 4.219560000000001,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 3659,
+      "baseline_ms": 13.52966,
+      "candidate_ms": 9.17826,
+      "saved_ms": 4.3514,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 3661,
+      "baseline_ms": 13.83192,
+      "candidate_ms": 9.4336,
+      "saved_ms": 4.39832,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 3664,
+      "baseline_ms": 12.89158,
+      "candidate_ms": 8.95924,
+      "saved_ms": 3.93234,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 5162,
+      "baseline_ms": 12.90722,
+      "candidate_ms": 10.23092,
+      "saved_ms": 2.6763000000000012,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 5164,
+      "baseline_ms": 13.26984,
+      "candidate_ms": 10.34768,
+      "saved_ms": 2.92216,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 5166,
+      "baseline_ms": 13.4313,
+      "candidate_ms": 10.76338,
+      "saved_ms": 2.6679200000000005,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 5168,
+      "baseline_ms": 13.42462,
+      "candidate_ms": 10.76282,
+      "saved_ms": 2.6618000000000013,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 5170,
+      "baseline_ms": 13.2447,
+      "candidate_ms": 10.70024,
+      "saved_ms": 2.544459999999999,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 5172,
+      "baseline_ms": 13.15362,
+      "candidate_ms": 10.76058,
+      "saved_ms": 2.393040000000001,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 5575,
+      "baseline_ms": 12.94018,
+      "candidate_ms": 8.65472,
+      "saved_ms": 4.2854600000000005,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 5577,
+      "baseline_ms": 13.42852,
+      "candidate_ms": 8.96146,
+      "saved_ms": 4.46706,
+      "framebuffer_identical": true
+    },
+    {
+      "baseline_missed_field": 5579,
+      "baseline_ms": 13.8783,
+      "candidate_ms": 9.10396,
+      "saved_ms": 4.774339999999999,
+      "framebuffer_identical": true
+    }
+  ],
+  "source_equivalence": {
+    "reference": {
+      "identical": true,
+      "files": 100
+    },
+    "generated/nes_core": {
+      "identical": true,
+      "files": 51
+    },
+    "audio": {
+      "identical": true,
+      "files": 12
+    },
+    "runtime": {
+      "identical": true,
+      "files": 1
+    },
+    "src/cpu.s": "identical",
+    "src/interpolation.s": "identical",
+    "src/render_adapter.s": "identical",
+    "assets/stage_atlas.bin": "identical",
+    "assets/scenery_source.bin": "identical"
+  },
+  "gsu_cache_bytes_used": 487,
+  "gsu_cache_capacity_bytes": 512,
+  "gsu_work_ram_bytes": 8192,
+  "hardware_operations": 0,
+  "limits": [
+    "No actual NES/FPGA test. Existing ROM/RBF/SD unchanged.",
+    "Original30Hz gameplay retained;60Hz interpolated display still has6 holds in7200 fields.",
+    "Fixed NMI controller schedule includes original SELECT invincibility;3601 update-boundary identity is not all-input/all-stage proof.",
+    "Framebuffer comparisons are raw12KiB GSU outputs, not full native PPU/audio comparison.",
+    "One ordinary rotating-bullet density deadline and5 CPU supply starvations remain."
+  ]
+}

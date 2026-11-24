@@ -1,0 +1,221 @@
+{
+  "status": "PLAYABLE_FULL60_BOSS_CPU_OPTIMIZED_EMULATOR_VERIFIED",
+  "rom_sha256": "bf51ed4106fea3ac446b6160c1eb6a5dc48ccdd15081420e67c4aebc2a85b5c0",
+  "baseline_rom_sha256": "5ce6828aa837c83d71caf6af7e7d9900a9f5cf02e0492a3dc794d14bcca427fc",
+  "reports": {
+    "final_stage": {
+      "report": "results/smoke_bossopt2_stage_600/RESULT.json",
+      "fields": 600,
+      "deltas": {
+        "logic_tick": 598,
+        "draw_count": 599,
+        "present_count": 598,
+        "late_fields": 2,
+        "deadline_misses": 0,
+        "queue_starvations": 2,
+        "queue_drops": 0
+      },
+      "target_hz": 60.0988,
+      "observed_logic_hz": 59.89847066666667,
+      "observed_present_hz": 59.89847066666667,
+      "gsu_ms_mean": 1.9463564214046822,
+      "gsu_ms_max": 6.62542,
+      "player_state_transitions": [],
+      "status_errors": 0,
+      "em1_pose_conflicts": 0,
+      "unintended_resets": 0
+    },
+    "final_boss": {
+      "report": "results/smoke_bossopt2_boss_600/RESULT.json",
+      "fields": 600,
+      "deltas": {
+        "logic_tick": 583,
+        "draw_count": 582,
+        "present_count": 583,
+        "late_fields": 17,
+        "deadline_misses": 0,
+        "queue_starvations": 17,
+        "queue_drops": 0
+      },
+      "target_hz": 60.0988,
+      "observed_logic_hz": 58.39600066666666,
+      "observed_present_hz": 58.39600066666666,
+      "gsu_ms_mean": 3.17975358490566,
+      "gsu_ms_max": 9.74482,
+      "player_state_transitions": [],
+      "status_errors": 0,
+      "em1_pose_conflicts": 0,
+      "unintended_resets": 0
+    },
+    "mortal_stationary": {
+      "report": "results/smoke_mortalbossopt2_boss_900/RESULT.json",
+      "fields": 900,
+      "deltas": {
+        "logic_tick": 889,
+        "draw_count": 889,
+        "present_count": 887,
+        "late_fields": 11,
+        "deadline_misses": 0,
+        "queue_starvations": 13,
+        "queue_drops": 2
+      },
+      "target_hz": 60.0988,
+      "observed_logic_hz": 59.36425911111111,
+      "observed_present_hz": 59.23070622222222,
+      "gsu_ms_mean": 6.880939278466742,
+      "gsu_ms_max": 11.6311,
+      "player_state_transitions": [
+        [
+          39,
+          1,
+          2
+        ],
+        [
+          147,
+          2,
+          0
+        ],
+        [
+          181,
+          0,
+          1
+        ],
+        [
+          247,
+          1,
+          2
+        ],
+        [
+          355,
+          2,
+          0
+        ],
+        [
+          820,
+          0,
+          1
+        ],
+        [
+          886,
+          1,
+          2
+        ]
+      ],
+      "status_errors": 0,
+      "em1_pose_conflicts": 0,
+      "unintended_resets": 0
+    }
+  },
+  "comparison_per_600_fields": {
+    "stage": {
+      "before_presentations": 594,
+      "after_presentations": 598,
+      "before_fps": 59.497812,
+      "after_fps": 59.89847066666667
+    },
+    "boss": {
+      "before_presentations": 568,
+      "after_presentations": 583,
+      "before_fps": 56.89353066666666,
+      "after_fps": 58.39600066666666
+    }
+  },
+  "cpu_native_per_call": {
+    "boss_draw": {
+      "before": {
+        "calls": 4657,
+        "inclusive_cycles_per_call": 846.0530384367619,
+        "exclusive_cycles_per_call": 581.097058191969,
+        "minimum_cycles": 748
+      },
+      "after": {
+        "calls": 4819,
+        "inclusive_cycles_per_call": 681.7204814276821,
+        "exclusive_cycles_per_call": 585.3069101473335,
+        "minimum_cycles": 598
+      }
+    },
+    "raw_capture": {
+      "before": {
+        "calls": 5836,
+        "inclusive_cycles_per_call": 155.23543522960932,
+        "exclusive_cycles_per_call": 147.41209732693625,
+        "minimum_cycles": 147
+      },
+      "after": {
+        "calls": 6093,
+        "inclusive_cycles_per_call": 46.51780731987527,
+        "exclusive_cycles_per_call": 45.384375512883636,
+        "minimum_cycles": 45
+      }
+    },
+    "store_boss_head": {
+      "before": {
+        "calls": 284,
+        "inclusive_cycles_per_call": 1644.6760563380283,
+        "exclusive_cycles_per_call": 185.3661971830986,
+        "minimum_cycles": 1346
+      },
+      "after": {
+        "calls": 292,
+        "inclusive_cycles_per_call": 487.56849315068496,
+        "exclusive_cycles_per_call": 76.17808219178082,
+        "minimum_cycles": 391
+      }
+    },
+    "lookup_boss_x": {
+      "before": {
+        "calls": 284,
+        "inclusive_cycles_per_call": 863.1408450704225,
+        "exclusive_cycles_per_call": 685.5211267605633,
+        "minimum_cycles": 554
+      },
+      "after": {
+        "calls": 292,
+        "inclusive_cycles_per_call": 367.958904109589,
+        "exclusive_cycles_per_call": 329.2945205479452,
+        "minimum_cycles": 266
+      }
+    }
+  },
+  "cpu_scope": "Native 6502 profiler; original routines and rendering paths. Different progress rates alter sample mixes, so CPU binary differential tests provide exact per-path savings.",
+  "gsu_scope": "GSU kernel and image assets are byte-identical to previous release; trace cycle payload at50MHz records GSU job work separately from CPU. Scene progression changes mean/max job cost. No GSU deadline misses.",
+  "start_switch": "results/reset_switch_bossopt2/RESULT.json: four alternating stage/boss switches, counters monotone",
+  "unit_tests": [
+    "results/cpu6502_smoke.json",
+    "results/projectile_combined.json",
+    "enemy/build/enemy60_cpu_test.json",
+    "enemy/tests/coordinator_review_result.json",
+    "boss/boss60_test_result.json",
+    "boss_logic/test_x_result.json",
+    "boss_render/TEST.json",
+    "bookkeeping/RESULT.json",
+    "verification/RESULT.json"
+  ],
+  "limits": [
+    "Dedicated functional Windows Mesen emulator only; no physical hardware evidence.",
+    "Short stage/boss windows only; no full-game-clear or long-stress claim.",
+    "CPU overload still skips fields and slows simulation time; this is not a constant60fps guarantee.",
+    "Original real-time AI and lifetime cadence preserved; geometry and collision use halfsteps each processed field.",
+    "Some scripted intro/death/stumble motion and discrete sprite changes retain original30Hz steps.",
+    "Original hitbox shapes remain;111Z visual geometry is not fully retuned.",
+    "No SD,USB,FPGA or other hardware operations performed.",
+    "Dead raw-record omission is valid only for this full60 current-packet scheduler, not the old midpoint scheduler.",
+    "Fresh Windows launcher GUI smoke not run: native UI tool unavailable. Launcher compilation, ROM hash/portable rebuild, and dedicated headless game tests passed."
+  ],
+  "generation_equivalence": {
+    "report": "verification/RESULT.json",
+    "matched_logic_generations_per_scene": 350,
+    "matching_game_ram_bytes": 867,
+    "matching_stage_packets": 350,
+    "matching_boss_packets": 346,
+    "excluded_ram": [
+      "NMI frame clock $6008",
+      "NMI audio state $6352-$637B"
+    ],
+    "limits": [
+      "Neutral input after Select/Start, no sustained fire or varied movement.",
+      "Four non-emitted boss generations excluded from packet comparison because producer suppression differs."
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "request": "All BG palettes share NES09 above the displayed scenery-ground horizon; all shareNES1A below. Preserve every ground pixel.",
+  "rom_sha256": "590877f33b346cdb19ac5856e0e24cbeead916b2fb2b510aad1147bcc043d613",
+  "scope": "Emulator display-only horizontal-band backdrop experiment. Not per-palette zero colors and not a real NES raster-write implementation.",
+  "horizon": "Uses the same physical boundary as Mode7Ground::Fetch scenery path:106+front scenery camera.",
+  "unchanged": "Selected vegetation, boss assets, compositor, ROM, emulated GSU/CPU clocks and all nonzero palette colors."
+}

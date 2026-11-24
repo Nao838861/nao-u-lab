@@ -1,0 +1,17 @@
+{
+  "delivery": "[REDACTED_WIN_PATH]",
+  "bytes": 35680204,
+  "sha256": "9c5118b1d42e4c4010a21f5b0ca864cb76ae7162a4ddfd409eff6c5fc0fbdaed",
+  "source_sha256": "d6ff8b724993732fc64da1705c7264c4fdd8d1d5db2359a1f895b6a773beccc3",
+  "raw_and_delivery_frames": 5687,
+  "all_video_presentation_timestamps_identical": true,
+  "timebase": "1/60000",
+  "first_PTS": 0,
+  "last_PTS": 5686731,
+  "audio_packet_hash_identical": true,
+  "audio_packet_hash": "SHA256=7de4620c8c1e45ae21e70d9d91f01774b5151c8520f259418fe7767686229e31",
+  "decode_errors": 0,
+  "cuts": false,
+  "speed_changes": false,
+  "interpolation": false
+}

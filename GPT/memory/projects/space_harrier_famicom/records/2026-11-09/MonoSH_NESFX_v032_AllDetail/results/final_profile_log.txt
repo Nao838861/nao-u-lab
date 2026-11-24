@@ -1,0 +1,10 @@
+scene 0 ppu 19 objects 0 matches 0 snap 0
+scene 100 ppu 220 objects 7 matches 7 snap 0
+scene 200 ppu 420 objects 12 matches 12 snap 0
+scene 300 ppu 620 objects 7 matches 6 snap 0
+scene 400 ppu 819 objects 4 matches 3 snap 0
+scene 500 ppu 1020 objects 8 matches 8 snap 0
+scene 600 ppu 1220 objects 13 matches 13 snap 0
+scene 700 ppu 1420 objects 10 matches 10 snap 0
+scene 800 ppu 1620 objects 6 matches 6 snap 0
+completed 900

@@ -1,0 +1,250 @@
+{
+  "scope": "Matching dedicated r11 Mesen, AllZeros=1, no movement/shooting, original SELECT invincibility, no hardware. CPU elapsed spans include NMI interrupts.",
+  "baseline_sha256": "6c0afe9aa11fbb0d039f2bb4049053e2fc720847408fb087f67d382e7580284e",
+  "two_field_budget_cycles": 59561.333333333336,
+  "two_field_budget_ms": 33.278708156471986,
+  "first_starvation_fields": [
+    1196,
+    1258,
+    1272,
+    1286
+  ],
+  "em1_uploads_at_first_four_starvations": 0,
+  "baseline_major_spans": {
+    "logic": {
+      "count": 850,
+      "cycles_mean": 6794.601176470588,
+      "cycles_p95": 10409,
+      "cycles_max": 12085,
+      "ms_max": 6.752252939339235
+    },
+    "producer": {
+      "count": 850,
+      "cycles_mean": 33344.455294117644,
+      "cycles_p95": 49070,
+      "cycles_max": 54910,
+      "ms_max": 30.67986834084546
+    }
+  },
+  "slow_actual_cycles": [
+    {
+      "cycles": 66650,
+      "ms": 37.239359404796026,
+      "producer_field": 2211,
+      "producer_ms": 30.552477884066864,
+      "following_logic_field": 2213,
+      "logic_ms": 6.686881520729165,
+      "background_objects": 10,
+      "enemies": 7,
+      "enemy_bullets": 0,
+      "raw_geometry": 16
+    },
+    {
+      "cycles": 64099,
+      "ms": 35.81403898706708,
+      "producer_field": 2178,
+      "producer_ms": 30.67986834084546,
+      "following_logic_field": 2180,
+      "logic_ms": 5.134170646221616,
+      "background_objects": 10,
+      "enemies": 7,
+      "enemy_bullets": 0,
+      "raw_geometry": 16
+    },
+    {
+      "cycles": 63654,
+      "ms": 35.56540410431938,
+      "producer_field": 2173,
+      "producer_ms": 28.851703540057876,
+      "following_logic_field": 2175,
+      "logic_ms": 6.713700564261502,
+      "background_objects": 9,
+      "enemies": 7,
+      "enemy_bullets": 0,
+      "raw_geometry": 15
+    },
+    {
+      "cycles": 63511,
+      "ms": 35.48550570379596,
+      "producer_field": 2182,
+      "producer_ms": 29.047259065814494,
+      "following_logic_field": 2184,
+      "logic_ms": 6.438246637981465,
+      "background_objects": 10,
+      "enemies": 7,
+      "enemy_bullets": 0,
+      "raw_geometry": 15
+    },
+    {
+      "cycles": 63437,
+      "ms": 35.444159678350275,
+      "producer_field": 2193,
+      "producer_ms": 28.73045911408877,
+      "following_logic_field": 2195,
+      "logic_ms": 6.713700564261502,
+      "background_objects": 9,
+      "enemies": 7,
+      "enemy_bullets": 0,
+      "raw_geometry": 15
+    },
+    {
+      "cycles": 63310,
+      "ms": 35.3732009590043,
+      "producer_field": 1267,
+      "producer_ms": 29.063462237948613,
+      "following_logic_field": 1269,
+      "logic_ms": 6.3097387210556874,
+      "background_objects": 6,
+      "enemies": 8,
+      "enemy_bullets": 3,
+      "raw_geometry": 16
+    },
+    {
+      "cycles": 62695,
+      "ms": 35.02958196374624,
+      "producer_field": 2202,
+      "producer_ms": 28.871817822707126,
+      "following_logic_field": 2204,
+      "logic_ms": 6.157764141039116,
+      "background_objects": 9,
+      "enemies": 7,
+      "enemy_bullets": 0,
+      "raw_geometry": 15
+    },
+    {
+      "cycles": 62190,
+      "ms": 34.74742327658312,
+      "producer_field": 2200,
+      "producer_ms": 29.857976402594073,
+      "following_logic_field": 2202,
+      "logic_ms": 4.889446873989048,
+      "background_objects": 9,
+      "enemies": 7,
+      "enemy_bullets": 0,
+      "raw_geometry": 16
+    },
+    {
+      "cycles": 62043,
+      "ms": 34.66528995576534,
+      "producer_field": 2198,
+      "producer_ms": 29.775843081776294,
+      "following_logic_field": 2200,
+      "logic_ms": 4.889446873989048,
+      "background_objects": 9,
+      "enemies": 7,
+      "enemy_bullets": 0,
+      "raw_geometry": 16
+    },
+    {
+      "cycles": 61891,
+      "ms": 34.58036298457961,
+      "producer_field": 1250,
+      "producer_ms": 28.471208359942853,
+      "following_logic_field": 1252,
+      "logic_ms": 6.109154624636756,
+      "background_objects": 5,
+      "enemies": 8,
+      "enemy_bullets": 3,
+      "raw_geometry": 16
+    },
+    {
+      "cycles": 61861,
+      "ms": 34.5636010823719,
+      "producer_field": 2642,
+      "producer_ms": 29.664097067058226,
+      "following_logic_field": 2644,
+      "logic_ms": 4.899504015313674,
+      "background_objects": 4,
+      "enemies": 6,
+      "enemy_bullets": 6,
+      "raw_geometry": 15
+    },
+    {
+      "cycles": 61823,
+      "ms": 34.542369339575465,
+      "producer_field": 2180,
+      "producer_ms": 29.42160821512002,
+      "following_logic_field": 2182,
+      "logic_ms": 5.120761124455448,
+      "background_objects": 10,
+      "enemies": 7,
+      "enemy_bullets": 0,
+      "raw_geometry": 15
+    }
+  ],
+  "components_first_cluster": {
+    "logic": {
+      "count": 77,
+      "cycles_mean": 9331.155844155845,
+      "cycles_p95": 11293,
+      "cycles_max": 12085,
+      "ms_max": 6.752252939339235
+    },
+    "producer": {
+      "count": 77,
+      "cycles_mean": 43248.55844155844,
+      "cycles_p95": 51864,
+      "cycles_max": 52519,
+      "ms_max": 29.34394473489096
+    },
+    "draw": {
+      "count": 78,
+      "cycles_mean": 19305.44871794872,
+      "cycles_p95": 25639,
+      "cycles_max": 27054,
+      "ms_max": 15.115883410913005
+    },
+    "midpoint": {
+      "count": 76,
+      "cycles_mean": 16220.302631578947,
+      "cycles_p95": 20531,
+      "cycles_max": 21506,
+      "ms_max": 12.016048962633809
+    },
+    "oam": {
+      "count": 76,
+      "cycles_mean": 5272.8421052631575,
+      "cycles_p95": 7212,
+      "cycles_max": 7674,
+      "ms_max": 4.287694584732254
+    },
+    "camera": {
+      "count": 75,
+      "cycles_mean": 522,
+      "cycles_p95": 522,
+      "cycles_max": 522,
+      "ms_max": 0.29165709841415643
+    }
+  },
+  "nmi_yieldgate_components": {
+    "nmi": {
+      "count": 154,
+      "cycles_mean": 2194.694805194805,
+      "cycles_p95": 2508,
+      "cycles_max": 2960,
+      "ms_max": 1.6538410178274006
+    },
+    "wait": {
+      "count": 154,
+      "cycles_mean": 401.038961038961,
+      "cycles_p95": 398,
+      "cycles_max": 931,
+      "ms_max": 0.5201776985126046
+    },
+    "audio": {
+      "count": 154,
+      "cycles_mean": 393.3051948051948,
+      "cycles_p95": 689,
+      "cycles_max": 1141,
+      "ms_max": 0.6375110139665757
+    }
+  },
+  "interpretation": [
+    "CPU producer plus following logic sometimes exceeds the measured two-display-field budget.",
+    "GSU/copy deadline misses remain zero in the same3000field benchmark; CPU supply is the residual cause.",
+    "Some longest periods occur with7enemies and10background objects but0enemy bullets.",
+    "The first four starvations precede all dynamic EM1 pose uploads; those uploads alone do not explain it.",
+    "Separate component maxima must not be added as if they were one observed frame. Actual paired cycles above show a37.239ms example.",
+    "Audio-order change is deliberately NOT implemented; existing multiplier and OAM/callback optimizations are preferred."
+  ]
+}

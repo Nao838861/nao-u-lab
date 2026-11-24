@@ -1,0 +1,32 @@
+[
+  {
+    "label": "ghdl_compile",
+    "returncode": 0,
+    "seconds": 0.0470000000204891,
+    "output": ""
+  },
+  {
+    "label": "full_no_stalls",
+    "returncode": 0,
+    "seconds": 11.422000000020489,
+    "output": "tb_scenery.vhd:41:2:@276634061ns:(report note): SCENERY_PASS pixels=1966080 max_scanline_cycles=902 max_scanline_ns=36080\nsimulation finished @276634061ns\n"
+  },
+  {
+    "label": "grant_interrupt_0",
+    "returncode": 0,
+    "seconds": 1.0309999999590218,
+    "output": "tb_scenery.vhd:41:2:@18399541ns:(report note): SCENERY_PASS pixels=122880 max_scanline_cycles=962 max_scanline_ns=38480\nsimulation finished @18399541ns\n"
+  },
+  {
+    "label": "grant_interrupt_19",
+    "returncode": 0,
+    "seconds": 1.1089999999385327,
+    "output": "tb_scenery.vhd:41:2:@18398781ns:(report note): SCENERY_PASS pixels=122880 max_scanline_cycles=962 max_scanline_ns=38480\nsimulation finished @18398781ns\n"
+  },
+  {
+    "label": "grant_interrupt_39",
+    "returncode": 0,
+    "seconds": 1.172000000020489,
+    "output": "tb_scenery.vhd:41:2:@18399461ns:(report note): SCENERY_PASS pixels=122880 max_scanline_cycles=962 max_scanline_ns=38480\nsimulation finished @18399461ns\n"
+  }
+]

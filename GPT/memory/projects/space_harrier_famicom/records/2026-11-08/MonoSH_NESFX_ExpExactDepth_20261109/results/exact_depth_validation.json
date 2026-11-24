@@ -1,0 +1,58 @@
+{
+  "oracle": {
+    "current_commands": 6491,
+    "midpoint_commands": 6490,
+    "raw_em0": 2029,
+    "em0_changed_from_half_depth": 1694,
+    "non_em0_unchanged": 4598,
+    "matched_midpoint_objects": 6377,
+    "odd_em0_bottoms": 1652,
+    "stable_order_scenes": 898
+  },
+  "quarter_depth_dimensions_changed": 308,
+  "recovered_y_lowbit_records": 1652,
+  "source_z_mod4": [
+    763,
+    343,
+    579,
+    344
+  ],
+  "excluded_suppressed_candidate_scenes": [
+    650
+  ],
+  "half_depth_baseline": {
+    "scenes": 900,
+    "mean_cycles": 29677.234444444446,
+    "p95_cycles": 41988,
+    "max_cycles": 51469,
+    "ppu_fields": 1799,
+    "presentations": 1796,
+    "late_fields": 46,
+    "drops": 2,
+    "starvations": 3,
+    "fps_at_60_0988": 59.99857965536409
+  },
+  "exact_depth_candidate": {
+    "scenes": 900,
+    "mean_cycles": 29699.301111111112,
+    "p95_cycles": 42479,
+    "max_cycles": 51665,
+    "ppu_fields": 1799,
+    "presentations": 1796,
+    "late_fields": 50,
+    "drops": 2,
+    "starvations": 3,
+    "fps_at_60_0988": 59.99857965536409
+  },
+  "source_identity": {
+    "reference": {
+      "files": 100,
+      "byte_identical": true
+    },
+    "generated/nes_core": {
+      "files": 51,
+      "byte_identical": true
+    }
+  },
+  "scope": "Full captured current and midpoint commands including rotations, clipping, birth/reuse/reset fences. Original 8 buckets; no game-update or collision changes. Not all-stage or hardware proof."
+}

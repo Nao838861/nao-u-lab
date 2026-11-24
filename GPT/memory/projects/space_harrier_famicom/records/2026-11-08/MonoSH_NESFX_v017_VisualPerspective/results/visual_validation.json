@@ -1,0 +1,24 @@
+{
+  "result": "PASS",
+  "unit_output": "PASS: 6336 exact D10/general rows, 33 three-color ground views, altitude perspective, lateral direction, 92250 wrap/midpoint cases",
+  "native_chr": "original two banks byte-identical",
+  "palette": "actual PPU palette RAM matches original player/shadow/bullets, universal dark green preserved",
+  "ground_nes_colors": [
+    "09",
+    "29",
+    "19"
+  ],
+  "sky_nes_color": "14",
+  "shared_fx_colors": [
+    "09",
+    "29",
+    "10"
+  ],
+  "camera_height_range": [
+    160,
+    384
+  ],
+  "continuous_lateral": "actual captured fixed-position steering continues moving the camera",
+  "original_core_comparison": true,
+  "rom_sha256": "9e383acf1fa26d7980524bf626ecb0a22157cc4486472ea0a9ba6581bad91194"
+}

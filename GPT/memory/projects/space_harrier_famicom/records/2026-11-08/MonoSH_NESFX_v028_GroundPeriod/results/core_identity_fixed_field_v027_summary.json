@@ -1,0 +1,150 @@
+{
+  "complete": true,
+  "boundaries": 1201,
+  "game_state_fields": 151,
+  "game_state_bytes": 850,
+  "game_state_identical": false,
+  "state_differences": [
+    {
+      "boundary": 604,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 1219,
+          "clock": 36272161,
+          "frame_count": 1211,
+          "logic_tick": 604,
+          "draw_count": 605,
+          "present_count": 1208,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 1218,
+          "clock": 36268271,
+          "frame_count": 1210,
+          "logic_tick": 604,
+          "draw_count": 605,
+          "present_count": 1207,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "bb",
+          "v026": "ba"
+        }
+      }
+    },
+    {
+      "boundary": 613,
+      "metadata": [
+        {
+          "pc": 62019,
+          "ppu": 1237,
+          "clock": 36811542,
+          "frame_count": 1229,
+          "logic_tick": 613,
+          "draw_count": 614,
+          "present_count": 1225,
+          "c_sp": 32767
+        },
+        {
+          "pc": 62022,
+          "ppu": 1236,
+          "clock": 36804135,
+          "frame_count": 1228,
+          "logic_tick": 613,
+          "draw_count": 614,
+          "present_count": 1224,
+          "c_sp": 32767
+        }
+      ],
+      "fields": {
+        "_frame_counter": {
+          "v021": "cd",
+          "v026": "cc"
+        }
+      }
+    }
+  ],
+  "original_256byte_oam_identical": true,
+  "oam_different_boundaries": [],
+  "latched_inputs_identical": true,
+  "input_differences": [],
+  "boundary_timing_identical": false,
+  "timing_differences": [
+    {
+      "boundary": 604,
+      "v021": {
+        "pc": 62019,
+        "ppu": 1219,
+        "clock": 36272161,
+        "frame_count": 1211,
+        "logic_tick": 604,
+        "draw_count": 605,
+        "present_count": 1208,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 1218,
+        "clock": 36268271,
+        "frame_count": 1210,
+        "logic_tick": 604,
+        "draw_count": 605,
+        "present_count": 1207,
+        "c_sp": 32767
+      }
+    },
+    {
+      "boundary": 613,
+      "v021": {
+        "pc": 62019,
+        "ppu": 1237,
+        "clock": 36811542,
+        "frame_count": 1229,
+        "logic_tick": 613,
+        "draw_count": 614,
+        "present_count": 1225,
+        "c_sp": 32767
+      },
+      "v026": {
+        "pc": 62022,
+        "ppu": 1236,
+        "clock": 36804135,
+        "frame_count": 1228,
+        "logic_tick": 613,
+        "draw_count": 614,
+        "present_count": 1224,
+        "c_sp": 32767
+      }
+    }
+  ],
+  "rom_sha256": {
+    "v021": "d41753d838470c9a31214a5d9305015df95479bde131a1ccf46dc1cc4ca43e76",
+    "v026": "ac17d93dac2e5f65e1bed32d6472f3eecec5cb54910d3b22212d5b23c5a64afb"
+  },
+  "dll_sha256": "c39bca0f76b04a7f0d37b4de1e385b74e1b90ca743a0105f2b290733fe3fb79d",
+  "input": "At NMI entry index f: A=((f//4)%2==0); Select f=2 only; Start f=1600 only; movement phase=(f//120)%4, Left=phase0 and f>120, Right=phase2, Down=phase1, Up=phase3. Override only at fixed physical NMI-field entry, never at logic boundary.",
+  "limits": [
+    "Fixed1201 pre-tick boundaries, not full-stage/all-input proof.",
+    "Controller overrides change at NMI entry independently of producer/logic timing; original NMI/edge/input-accumulation pipeline remains intact.",
+    "Compares original gameplay state and original OAM, not interpolated display OAM or rendered pixels. No emulator RAM writes and no clock changes."
+  ],
+  "effective_gameplay_identical": true,
+  "wallclock_only_field": "_frame_counter; statically verified no read in original compiled gameplay modules",
+  "boss_states": {
+    "v021": [
+      "00",
+      "01",
+      "02"
+    ],
+    "candidate": [
+      "00",
+      "01",
+      "02"
+    ]
+  },
+  "controller_field_indices_identical": false
+}

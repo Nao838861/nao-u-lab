@@ -1,0 +1,239 @@
+{
+  "status": "FIRST_STAGE_EMULATOR_VERIFIED_NOT_FULL_GAME60",
+  "reports": {
+    "baseline_stage": {
+      "ppu_interval": 599,
+      "counter_delta": {
+        "logic_tick": 300,
+        "draw_count": 299,
+        "present_count": 599,
+        "late_fields": 0,
+        "deadline_misses": 0,
+        "queue_starvations": 0,
+        "queue_drops": 0
+      },
+      "observed_samples": 600,
+      "status_nonzero": 0,
+      "pose_conflicts_nonzero": 0,
+      "native_ppu_oam_xy_identical_samples": 411,
+      "motion_probe_16fields": {
+        "logic_position_updates": 8,
+        "fx_values": [
+          0,
+          0,
+          2400,
+          2400,
+          4800,
+          4800,
+          7200,
+          7200,
+          9600,
+          9600,
+          12000,
+          12000,
+          14400,
+          14400,
+          16800,
+          16800,
+          19200
+        ],
+        "ppu_oam_x": [
+          112,
+          112,
+          112,
+          112,
+          112,
+          116,
+          121,
+          125,
+          130,
+          135,
+          149,
+          149,
+          149,
+          153,
+          168,
+          163,
+          168
+        ]
+      }
+    },
+    "response_stage": {
+      "ppu_interval": 599,
+      "counter_delta": {
+        "logic_tick": 300,
+        "draw_count": 299,
+        "present_count": 599,
+        "late_fields": 0,
+        "deadline_misses": 0,
+        "queue_starvations": 0,
+        "queue_drops": 0
+      },
+      "observed_samples": 600,
+      "status_nonzero": 0,
+      "pose_conflicts_nonzero": 0,
+      "native_ppu_oam_xy_identical_samples": 588,
+      "motion_probe_16fields": {
+        "logic_position_updates": 15,
+        "fx_values": [
+          0,
+          0,
+          1200,
+          2400,
+          3600,
+          4800,
+          6000,
+          7200,
+          8400,
+          9600,
+          10800,
+          12000,
+          13200,
+          14400,
+          15600,
+          16800,
+          18000
+        ],
+        "ppu_oam_x": [
+          112,
+          112,
+          116,
+          121,
+          126,
+          130,
+          135,
+          140,
+          144,
+          149,
+          154,
+          158,
+          163,
+          168,
+          172,
+          177,
+          182
+        ]
+      }
+    },
+    "combined_stage": {
+      "ppu_interval": 599,
+      "counter_delta": {
+        "logic_tick": 301,
+        "draw_count": 300,
+        "present_count": 597,
+        "late_fields": 93,
+        "deadline_misses": 0,
+        "queue_starvations": 2,
+        "queue_drops": 4
+      },
+      "observed_samples": 600,
+      "status_nonzero": 0,
+      "pose_conflicts_nonzero": 0,
+      "native_ppu_oam_xy_identical_samples": 589,
+      "motion_probe_16fields": {
+        "logic_position_updates": 15,
+        "fx_values": [
+          0,
+          0,
+          1200,
+          2400,
+          3600,
+          4800,
+          6000,
+          7200,
+          8400,
+          9600,
+          10800,
+          12000,
+          13200,
+          14400,
+          15600,
+          16800,
+          18000
+        ],
+        "ppu_oam_x": [
+          112,
+          112,
+          116,
+          121,
+          126,
+          130,
+          135,
+          140,
+          144,
+          149,
+          154,
+          158,
+          163,
+          168,
+          172,
+          177,
+          182
+        ]
+      }
+    },
+    "response_boss": {
+      "ppu_interval": 599,
+      "counter_delta": {
+        "logic_tick": 299,
+        "draw_count": 299,
+        "present_count": 594,
+        "late_fields": 98,
+        "deadline_misses": 0,
+        "queue_starvations": 5,
+        "queue_drops": 4
+      },
+      "observed_samples": 600,
+      "status_nonzero": 0,
+      "pose_conflicts_nonzero": 0,
+      "native_ppu_oam_xy_identical_samples": 579,
+      "motion_probe_16fields": {
+        "logic_position_updates": 15,
+        "fx_values": [
+          0,
+          0,
+          1200,
+          2400,
+          3600,
+          4800,
+          6000,
+          7200,
+          8400,
+          9600,
+          10800,
+          12000,
+          13200,
+          14400,
+          15600,
+          16800,
+          18000
+        ],
+        "ppu_oam_x": [
+          112,
+          112,
+          116,
+          121,
+          126,
+          130,
+          135,
+          140,
+          144,
+          149,
+          154,
+          158,
+          163,
+          168,
+          172,
+          177,
+          182
+        ]
+      }
+    }
+  },
+  "scope": "600active input samples, each599field first-to-last interval; motion16fieldprobe. Original SELECT invincibility, optional original START boss. No gameplayRAMediting. Dedicated functionalMesen with50MHz GSU, CPU1.789773MHz.",
+  "limitations": [
+    "Only normalplayer input/motion upgraded60Hz. World/collision/bullets/enemies/boss remain30Hz.",
+    "Probe begins on inputedge; firstfield waits for capturedcontrollerinput.",
+    "NMI presentation buffers verified by readbackand representative decodedimages, not physicalhardware."
+  ]
+}

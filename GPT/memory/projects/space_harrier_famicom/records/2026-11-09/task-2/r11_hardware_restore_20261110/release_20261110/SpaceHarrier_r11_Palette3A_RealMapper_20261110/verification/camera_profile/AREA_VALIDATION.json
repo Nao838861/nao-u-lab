@@ -1,0 +1,47 @@
+{
+  "status": "ISOLATED_AREA_REDUCTION_CHECKS",
+  "files": {
+    "rtl/mode7_dsp.vhd": "86515c8ed73a93edc188f588ed98173107596cd48513efb311f60c2f8e24df61",
+    "rtl/mode7_dsp_axis.vhd": "60c973f6ca282e4661ab2d1bd67d84516f036e4df0a81d3620ba4d673d2c60e9",
+    "rtl/serial_math.vhd": "346f06db550472f5907541d482edad73612b4293b5789a4019dd26d431ff1aaf",
+    "core/D10Mode7Row.hpp": "48d5e2ad4fee37aae908633b9ac28e88b005733f3b119b5997896cfcb7f20f12"
+  },
+  "checks": {
+    "generic_nominal": {
+      "status": "passed",
+      "cameras": 70,
+      "log": "tests/rtl_nominal.log"
+    },
+    "generic_backpressure": {
+      "status": "passed",
+      "cameras": 70,
+      "log": "tests/rtl_backpressure.log"
+    },
+    "generic_extreme": {
+      "status": "passed",
+      "cameras": 4,
+      "log": "tests_edges/rtl_edges.log"
+    },
+    "axis_nominal": {
+      "status": "passed",
+      "cameras": 68,
+      "log": "tests_axis/rtl_axis.log"
+    },
+    "axis_backpressure": {
+      "status": "passed",
+      "cameras": 68,
+      "log": "tests_axis/rtl_axis_backpressure.log"
+    }
+  },
+  "generic_cycles_equal_previous_validated70": true,
+  "normalized_axis_validity_proof": "AXIS_VALIDITY_PROOF.txt",
+  "generic_area_saving_measured_by_integration_worker": "56 combinational nodes and32registers versus previous combined implementation, reported by integration worker. Actual integratedfit still6278/6272LE before separate GSU profile reductions.",
+  "axis_profile": "Optional CURRENT_GAME_AXIS=true accepts cs256,sn0,pc256 only; defaultfalse preserves generic arithmetic. Not merged automatically. Unsupported axes return error.",
+  "hardware_actions": 0,
+  "own_quartus_runs": 0,
+  "limits": [
+    "Integrated fit/timing/display verification belongs to integration worker. No physical hardware test here.",
+    "No serial arithmetic or timing-model changes relative to the validated previous candidate.",
+    "Use only the selected mode7 DSP variant; they share an entity name and must not both be compiled."
+  ]
+}

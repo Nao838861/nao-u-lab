@@ -1,0 +1,88 @@
+{
+  "result": "PASS final functional checks; hardware untested",
+  "rom_sha256": "064805f8cab02ee127731cea55ba4878f59adca4e07492bac22d304bd7854224",
+  "dll_sha256": "65f2c97f544e804f1ff64e66ab8a04e2c4fea3e1cbe030d37359008c4150af80",
+  "protected_file_count": 67,
+  "v019_rom_and_dll_unchanged": true,
+  "ground_prg_and_chr_texture_unchanged": true,
+  "native_sprite_chr_unchanged": true,
+  "all_32_ppu_palette_bytes_unchanged": true,
+  "source_game_logic_and_audio_unchanged": true,
+  "core_identity": {
+    "boundaries": 1201,
+    "fields": 151,
+    "bytes": 850,
+    "oam_bytes": 256,
+    "all_game_state_oam_input_and_frame_logic_draw_counters_identical": true
+  },
+  "visible_scenery_sync": {
+    "samples": 1800,
+    "both_midpoint_and_current": {
+      "0": 899,
+      "1": 901
+    },
+    "queue_generation_and_state_matches": 1800,
+    "visible_commit_generation_matches_present_count": 1800,
+    "mountain_wraps": 4,
+    "forest_wraps": 7
+  },
+  "same_input_baseline": {
+    "controller_inputs_identical": true,
+    "v019_last": {
+      "late_fields": 45,
+      "queue_drops": 2,
+      "deadline_misses": 0,
+      "queue_starvations": 3,
+      "logic_tick": 905,
+      "draw_count": 905,
+      "present_count": 1805
+    },
+    "v020_last": {
+      "late_fields": 55,
+      "queue_drops": 2,
+      "deadline_misses": 0,
+      "queue_starvations": 3,
+      "logic_tick": 905,
+      "draw_count": 905,
+      "present_count": 1805
+    },
+    "note": "Late-field service counter rises10 more with scenery. Final presentation count, logic ticks, queue drops and starvation counts match. Counter lateness is not the same as dropped video frames."
+  },
+  "video": {
+    "rom_sha256": "064805f8cab02ee127731cea55ba4878f59adca4e07492bac22d304bd7854224",
+    "dll_sha256": "65f2c97f544e804f1ff64e66ab8a04e2c4fea3e1cbe030d37359008c4150af80",
+    "fields": 1800,
+    "fps": 60.0988118623484,
+    "seconds": 29.95067529991705,
+    "deaths": 0,
+    "invincible_all_samples": true,
+    "default_normal_verified": true,
+    "player_x_range": [
+      -112,
+      112
+    ],
+    "ground_offset_range": [
+      0,
+      32
+    ],
+    "boss_states": [
+      0
+    ],
+    "audio_stream": true,
+    "audio_non_silent": true,
+    "video": "[REDACTED_WIN_PATH]",
+    "wall_seconds": 49.265000000130385,
+    "limits": [
+      "Dedicated Mesen only; no actual FPGA or NES hardware validation.",
+      "Same normal ROM. Original SELECT control enables invincibility only for capture; no RAM writes.",
+      "SFC scenery motion/alpha retained; NES palette selection is fixed by sky/ground only; mountain uses shared gray and forest uses shared greens. Ground depth bands remain v019 approximation.",
+      "Ground projection matched; objects remain original NES geometry. No full-game completion or60fps performance claim."
+    ]
+  },
+  "limits": [
+    "Only dedicated Mesen. No RTL, SD or RBF changes. No synthesis/timing/actual console test.",
+    "Fixed sky/ground palettes. Mountains use shared gray; original SFC colour gradients cannot be reproduced under this constraint.",
+    "Dense scene has existing presentation waits; no guaranteed continuous60fps claim.",
+    "1201 fixed core boundaries and30second video are not a full-stage/all-input proof."
+  ]
+}

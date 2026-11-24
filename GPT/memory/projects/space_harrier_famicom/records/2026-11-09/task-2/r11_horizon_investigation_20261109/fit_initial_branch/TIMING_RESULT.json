@@ -1,0 +1,23 @@
+{
+  "internal_timing_pass": false,
+  "checks": 48,
+  "negative_slacks": [
+    [
+      "Slow 1200mV 85C Model Setup 'clk'",
+      -0.702
+    ],
+    [
+      "Slow 1200mV 0C Model Setup 'clk'",
+      -0.145
+    ]
+  ],
+  "minimum_setup_ns": -0.702,
+  "minimum_hold_ns": 0.157,
+  "qsf_sha256": "f416c66ba0e65372c9abfefda1ce1a62d189705593666866340632bacfeb2166",
+  "sdc_sha256": "12f272275e963026bf10c50ec4dbc8152254de5eb701b87944b3f20e36a71af5",
+  "limits": [
+    "Tool exit0 alone does not establish timing success.",
+    "Internal timing only. External I/O timing/electrical hardware validation is not covered.",
+    "No hardware, SD or USB action is performed."
+  ]
+}

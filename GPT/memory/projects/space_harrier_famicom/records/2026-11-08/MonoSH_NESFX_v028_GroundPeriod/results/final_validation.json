@@ -1,0 +1,158 @@
+{
+  "status": "Verified same-speed doubled full ground pattern cycle; experimental dedicated emulator only",
+  "rom_sha256": "b63798cac9c7ba22a4169ea10aa4f8215480ffdccdb318d7b6b49583f5cce6db",
+  "dll_sha256": "c39bca0f76b04a7f0d37b4de1e385b74e1b90ca743a0105f2b290733fe3fb79d",
+  "video": "[REDACTED_WIN_PATH]",
+  "video_sha256": "882fb8e4e3dac9181aa2039423d2009a963ef7970709f9e4c151146b8a5cf061",
+  "video_bytes": 6340096,
+  "decoded_frames": 1799,
+  "video_seconds": 29.93,
+  "audio_max_db": -21.1,
+  "screenshots_checked_seconds": [
+    7,
+    12,
+    21,
+    27
+  ],
+  "phase": {
+    "rom_sha256": "b63798cac9c7ba22a4169ea10aa4f8215480ffdccdb318d7b6b49583f5cce6db",
+    "actual_scenes": 900,
+    "logic_phase_count": 14,
+    "display_positions_per_full_cycle": 28,
+    "phase_sequence": [
+      0,
+      59,
+      117,
+      176,
+      234,
+      293,
+      351,
+      410,
+      468,
+      527,
+      585,
+      644,
+      702,
+      761
+    ],
+    "half_phase_sequence": [
+      29,
+      88,
+      146,
+      205,
+      263,
+      322,
+      380,
+      439,
+      497,
+      556,
+      614,
+      673,
+      731,
+      790
+    ],
+    "texture_full_period_px": 32,
+    "camera_full_period": 819.2,
+    "texture_advance_per_logic": 2.2857142857142856,
+    "original_texture_advance_per_logic": 2.2857142857142856,
+    "texture_advance_per_display": 1.1428571428571428,
+    "actual_full_wraps_checked": 64,
+    "actual_first_half_boundaries_checked": 65,
+    "first_full_wrap_scenes": [
+      9,
+      23,
+      37,
+      51,
+      65,
+      79,
+      93,
+      107,
+      121,
+      135
+    ],
+    "bank5116_at_all_scenes": 210,
+    "suppressed_scenes": [
+      650
+    ],
+    "source_counter_end": {
+      "ppu": 1818,
+      "frame": 1810,
+      "logic": 904,
+      "gen": 905,
+      "present": 1804,
+      "late": 50,
+      "drop": 2,
+      "starve": 3
+    },
+    "proof": "Actual compiled current and midpoint camera coordinates agree with exact14logic/28display lookup. All900 raw phases congruentmod7. Core entry calltarget asserted in ROM bytes. Exact32texel texture translation haszero mismatches; integerQ7 projection keeps<0.008texel wrap rounding and finite-map edge may affectone rasterrow; not a mathematicalzero pixel-difference claim."
+  },
+  "sampled_wrap": {
+    "texture_pixels": 409600,
+    "mismatch_shift16": 204800,
+    "mismatch_shift32": 0,
+    "half_step_min": 29,
+    "half_step_max": 30,
+    "sampled_common_in_map_pixels": 69304320,
+    "exact_full32_shift_mismatches": 0,
+    "rounded_full819_shift_mismatches": 98304,
+    "old_half16_shift_mismatches": 38731776,
+    "max_rounding_affected_rows_per_camera": 1,
+    "finite_map_edge_mismatches": 261968,
+    "max_map_edge_affected_rows_per_camera": 1
+  },
+  "reset_probe": {
+    "mode": "reset",
+    "ticks": 180,
+    "resets": 2,
+    "frozen_phase_transitions": 0,
+    "death_states": [
+      0
+    ],
+    "reset_requests": 2,
+    "reset_from_lifted_phase7": 2
+  },
+  "freeze_probe": {
+    "mode": "freeze",
+    "ticks": 700,
+    "resets": 0,
+    "frozen_phase_transitions": 231,
+    "death_states": [
+      0,
+      1,
+      2
+    ],
+    "reset_requests": 0,
+    "reset_from_lifted_phase7": 0
+  },
+  "original_sources_unchanged": {
+    "reference/nes_original": 35,
+    "reference/nes_support": 18,
+    "audio": 12,
+    "assets": 112,
+    "core": 11
+  },
+  "original_fixed_code_and_smooth_tables_byte_identical": true,
+  "original_chr_and_ground_texture_byte_identical": true,
+  "fixed_physical_input_test": {
+    "boundaries": 1201,
+    "original_state_fields_identical": 151,
+    "original_state_bytes_identical": 850,
+    "original_oam_identical": true,
+    "latched_input_identical": true,
+    "sampled_frame_logic_draw_counters_identical": true,
+    "clock_delta_min": -8661,
+    "clock_delta_max": 2809,
+    "clock_identity_claimed": false,
+    "boss_states": [
+      "00",
+      "01",
+      "02"
+    ]
+  },
+  "limits": [
+    "CameraQ7 cannot represent819.2 exactly:819-unit integer continuation is0.0078125texel short of exact32px. At mostone affected sampled rasterrow per camera; finite mapedge also affectsat mostone row. No large half-pattern swap remains, but pixel-perfect seam identity is not claimed.",
+    "SFC reference uses nonlinear14display-phase animation; this Mode7 renderer now has14original30Hzlogic phases and28display positions. Same original forward displacementperlogic; not a claim of identicalSFC nonlinear projection.",
+    "Dedicated unchangedMesenCore only; noFPGA/hardware/full-stage proof. Original30Hz position quantization and display queue stalls remain.",
+    "NoSD/RBF/olderversion changes and noROM/archive upload. Rejected dc25results retained separately and excluded."
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "request": "Keep P0 dark NES1A; display P1/P2/P3 color0 as NES09",
+  "rom_sha256": "590877f33b346cdb19ac5856e0e24cbeead916b2fb2b510aad1147bcc043d613",
+  "scope": "Emulator-only virtual per-palette backdrop. Not a hardware implementation. Original selected vegetation and compositor unchanged.",
+  "warning": "P2/P3 are also selected over ground when exposed background slot3 is absent. Therefore ground pixels in such blocks also change to09; this is an intentional faithful test of the requested palette distinction, not a guarantee of unchanged ground appearance."
+}

@@ -1,0 +1,78 @@
+PASS: byte-exact boss expansion, all active GSU texture slots preserved, 8KiB work RAM limit respected
+PASS: four SFC source poses, sixteen rotation phases, alpha preserved, runtime7168bytes
+{
+  "rom": "[REDACTED_WIN_PATH]",
+  "sha256": "d41753d838470c9a31214a5d9305015df95479bde131a1ccf46dc1cc4ca43e76",
+  "bytes": 1179664,
+  "nes_source_commit": "c0e91a8dc5426afad3b4cd56f16fee2c355321fa",
+  "logic_hz": "NTSC/2, approximately30.05Hz",
+  "display": "Mode7+GSU dedicated Mesen only; hardware untested",
+  "asset_sha256": "e76ebf8b86b4c6e980133d8c057bf8e8677241747f05beccb01d56773b72fe67",
+  "gsu_bytes": 512,
+  "rom_banks": [
+    0,
+    1,
+    2,
+    21,
+    29,
+    30,
+    37,
+    59,
+    75,
+    76,
+    80,
+    81,
+    82,
+    84,
+    85,
+    86,
+    87,
+    88
+  ],
+  "source_hashes": {
+    "src\\command_copy_unrolled.inc": "075a77998cfbcd4ebe6e933845523105a5be42b73f795ce862f6c608c921154f",
+    "src\\cpu.s": "16c97f578560bd63c807065db24f4eafa8bb132d5e11347bbe5c4449dfe7cbfb",
+    "src\\cpu_precheck.lst": "a8ecc033b529e73d07efc7abfae1c666bb3daef3808f8a3506f0150bb033e880",
+    "src\\cpu_precheck.o": "e59e0110f2079ffc4fde24a35820b977aec1fafdadb69cf4221500f0d7ede13f",
+    "src\\gsu.cfg": "60c261db1a4806f97be5f78c90f2db58831ef532712f043dcafc31dccfe0faa3",
+    "src\\gsu.s": "603709f3ddc033663de8ce5d6782047e8f76fb88d35de820c119935b8e3f1c4f",
+    "src\\interpolation.s": "f6e19aaab179d5d2d63bbb78b06a5a74ebc7cef205d0f9d1d79ff1c3ba042b99",
+    "src\\NES_CORE_INTERFACE.md": "4d2d597cfa974c36a24adee7f724825132ef89e4a16db90cb175b66d7ec83ae2",
+    "src\\nes_render_tables.inc": "b89e4d87cf598dffb1e57134fd9ae7ef7782213fc5b338f32fad54ef70d18869",
+    "src\\render_adapter.s": "e99cd87f097d01adeb96686dc5f25e7ddaea46ecb3fb9bd4fe2d9636e14bb5a8",
+    "src\\rom.cfg": "000ddab351d19abcbdba004abc7c4eb7f0f1f7fc49857272648eab64b0366d5f"
+  }
+}
+[REDACTED_WIN_PATH] Warning: Variable 'visible_page' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'update_ready' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'render_skip' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'nmi_counter' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'last_nmi_counter' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'wram_read_bank' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'wram_write_bank' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'current_wram_bank' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'vblank_seen' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'ppu_ctrl_shadow' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'irq_pending' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'ppu_update_in_progress' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'frame2_post_pending' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'frame2_clear_pending' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'frame2_exram_pending' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'nt_phase1_pending' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'pending_write_page' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'use_dmc_irq_restore' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'dmc_irq_restore_fired' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'dmc_irq_restore_stage' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'cache_psx' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'cache_pbot' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'cache_psz' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'cache_pzb' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'cache_pwz' is defined but never used
+[REDACTED_WIN_PATH] Warning: Variable 'cache_pat' is defined but never used
+[REDACTED_WIN_PATH] Warning: Function 'remove_bgobj' is defined but never used
+[REDACTED_WIN_PATH] Warning: Function 'remove_enemy' is defined but never used
+[REDACTED_WIN_PATH] DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  values=[3 if (v:=classify(*c))==4 else v for c in canvas.getdata()]
+[REDACTED_WIN_PATH] DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  assert [int(v!=0) for v in values]==[int(c[3]>=128) for c in canvas.getdata()]
+[REDACTED_WIN_PATH] Warning: Didn't use zeropage addressing for ‘copy_hud_src’

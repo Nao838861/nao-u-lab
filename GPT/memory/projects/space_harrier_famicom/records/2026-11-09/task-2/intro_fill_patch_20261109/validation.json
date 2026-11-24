@@ -1,0 +1,33 @@
+{
+  "range_ticks": [
+    2928,
+    3072
+  ],
+  "range_frames_exclusive": [
+    1428,
+    1499
+  ],
+  "range_seconds": [
+    23.760868266666673,
+    24.94225597460318
+  ],
+  "changed_frames": 71,
+  "first_last_changed_frame": [
+    1428,
+    1498
+  ],
+  "total_loop_frames": 14986,
+  "tests": {
+    "five_pitched_streams_identical": true,
+    "all_se_rows_identical": true,
+    "volume_onset_duration_identical": true,
+    "outside_fill_identical": true,
+    "noise_row_count_identical": true
+  },
+  "sha256": {
+    "audio\\build_audio.py": "e2aa004db8c9fb55652b3a3020af870cfd30828ac826626ac5e46628030671de",
+    "audio\\manifest.json": "9bd157b5b9e92c6003d0c0fb7d8d00261eb65ea9fcef0d72148c830f420caca1",
+    "audio\\song.s": "df0d90688f1d731aa8c5e61533d006369585382ef508760b26e6218227786656"
+  },
+  "original_build_audio_sha256": "06c4cd9637eda39e9564239acabda03af4ab928f5a59b91dee00ad0b15c61fdf"
+}

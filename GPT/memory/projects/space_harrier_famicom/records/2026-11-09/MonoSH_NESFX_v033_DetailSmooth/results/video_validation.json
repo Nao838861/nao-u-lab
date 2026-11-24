@@ -1,0 +1,9 @@
+{
+  "file": "[REDACTED_WIN_PATH]",
+  "sha256": "4cab6a00d542d8ed386e044b959a54c24fe96692cb7734b6aa299d8f95a0dacf",
+  "bytes": 11290687,
+  "decode_ok": true,
+  "audio_ok": true,
+  "seconds_approx": 28,
+  "source": "Actual native PPU recordings. 20s normal scene + 8s boss. Same producer-index input pattern, not an exact per-field state-equivalence video. No emulator RAM edits."
+}

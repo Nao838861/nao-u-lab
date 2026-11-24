@@ -1,0 +1,78 @@
+{
+  "status": "Visual candidate verified; motion smoothing remains unresolved",
+  "video": "[REDACTED_WIN_PATH]",
+  "video_sha256": "7882f246690e6b541fe1382cd55105ef03a12f8d7ce72bdbe4a36baae248745f",
+  "video_bytes": 6323686,
+  "decoded_fields": 1800,
+  "seconds": 29.95067529991705,
+  "audio_non_silent": true,
+  "rom_sha256": "db843f114e9589e6d831da9f1ede94701c2894a9e943204c1d12aee6e4173f6c",
+  "dll_sha256": "c39bca0f76b04a7f0d37b4de1e385b74e1b90ca743a0105f2b290733fe3fb79d",
+  "texture_whole_horizontal_rows": {
+    "solid_middle_green_rows": 320,
+    "remaining_checker_rows": 320,
+    "prg_chr_identical": true
+  },
+  "horizon": {
+    "method": "Move ground/scenery down19px; original objects and native shot OAM unchanged",
+    "source_altitudes": 33,
+    "analytic_horizon": "123+2*g",
+    "far_object_root": "124+2*g",
+    "first_ground_owned_row": "125+2*g",
+    "scenery_camera_range": [
+      19,
+      83
+    ],
+    "full_camera83_samples": 501,
+    "max_visible_scenery_camera": 83,
+    "visible_scenery_matches_same_generation_queued_state_all_fields": true,
+    "queue_check_note": "Matches current or previous two field queue snapshots because slots may be recycled after presentation."
+  },
+  "state_validation": {
+    "complete": true,
+    "boundaries": 1201,
+    "game_state_fields": 151,
+    "game_state_bytes": 850,
+    "game_state_identical": true,
+    "state_differences": [],
+    "original_256byte_oam_identical": true,
+    "oam_different_boundaries": [],
+    "latched_inputs_identical": true,
+    "input_differences": [],
+    "boundary_timing_identical": true,
+    "timing_differences": [],
+    "rom_sha256": {
+      "v021": "d41753d838470c9a31214a5d9305015df95479bde131a1ccf46dc1cc4ca43e76",
+      "v026": "db843f114e9589e6d831da9f1ede94701c2894a9e943204c1d12aee6e4173f6c"
+    },
+    "dll_sha256": "c39bca0f76b04a7f0d37b4de1e385b74e1b90ca743a0105f2b290733fe3fb79d",
+    "input": "For boundary index i: A=((i//2)%2==0); Start=False; movement phase=(i//60)%4, Left=phase0 and i>60, Right=phase2, Down=phase1, Up=phase3; remaining buttons off. Set P1 override before resuming toward each pre_core_tick breakpoint.",
+    "limits": [
+      "Fixed1201 pre-tick boundaries, not full-stage/all-input proof.",
+      "Controller override is applied immediately before running toward each indexed breakpoint; original NMI/edge/input-accumulation pipeline is intact.",
+      "Compares original gameplay state and original OAM, not interpolated display OAM or rendered pixels. No emulator RAM writes and no clock changes."
+    ]
+  },
+  "video_counters_end": {
+    "logic_tick": 905,
+    "present_count": 1803,
+    "queue_drops": 4,
+    "queue_starvations": 5,
+    "deadline_misses": 0,
+    "late_fields": 49
+  },
+  "visual_qa": [
+    "Final ground_center/high_left/high_right/low_right/later screenshots inspected",
+    "Whole-width middle-green horizontal bands alternate with checker bands",
+    "No purple sky gap between ground and scenery at lowest camera",
+    "Object geometry and original player/shot OAM retained from v021"
+  ],
+  "limits": [
+    "Dedicated Mesen only; no actual FPGA or NES hardware validation.",
+    "Same normal ROM. Original SELECT control enables invincibility only for capture; no RAM writes.",
+    "SFC mountains use shared gray/dark green; horizontal depth bands use solid middle green; ordinary enemy bullets use16-phase SFC rotation. Fixed sky/ground palettes retained.",
+    "Ground/scenery horizon moved19px to match original object projection; object geometry unchanged. No full-game completion or60fps performance claim.",
+    "No claim that all object size/position stepping is fixed. SFC build-time smooth-size experiment v024 is separate and not accepted.",
+    "Fixed1201-boundary test is not exhaustive all-input/all-stage equivalence."
+  ]
+}

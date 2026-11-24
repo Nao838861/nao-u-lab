@@ -1,0 +1,49 @@
+{
+  "scope": "Dedicated functional Mesen emulator, stationary invincible neutral input. Matched fixed900 NTSC fields but progress differs slightly, so GSU mix differs. Not hardware performance.",
+  "scenes": {
+    "stage": {
+      "baseline": {
+        "presentations": 874,
+        "logic_updates": 874,
+        "late_fields": 26,
+        "gsu_mean_ms": 3.0374138215102975,
+        "gsu_max_ms": 6.86456,
+        "observed_fps": 58.36262312666667,
+        "deadline_misses": 0,
+        "queue_drops": 0
+      },
+      "final": {
+        "presentations": 870,
+        "logic_updates": 870,
+        "late_fields": 30,
+        "gsu_mean_ms": 2.9779645747126438,
+        "gsu_max_ms": 6.86456,
+        "observed_fps": 58.0955173,
+        "deadline_misses": 0,
+        "queue_drops": 0
+      }
+    },
+    "boss": {
+      "baseline": {
+        "presentations": 872,
+        "logic_updates": 876,
+        "late_fields": 23,
+        "gsu_mean_ms": 4.273909564220183,
+        "gsu_max_ms": 11.63108,
+        "observed_fps": 58.22907021333333,
+        "deadline_misses": 0,
+        "queue_drops": 4
+      },
+      "final": {
+        "presentations": 861,
+        "logic_updates": 868,
+        "late_fields": 32,
+        "gsu_mean_ms": 4.203156213704994,
+        "gsu_max_ms": 11.63108,
+        "observed_fps": 57.494529189999994,
+        "deadline_misses": 0,
+        "queue_drops": 7
+      }
+    }
+  }
+}

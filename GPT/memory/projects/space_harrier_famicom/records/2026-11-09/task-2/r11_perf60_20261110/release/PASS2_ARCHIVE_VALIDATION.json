@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "variant": "candidate_round9",
+  "path": "[REDACTED_WIN_PATH]",
+  "size_bytes": 45778224,
+  "sha256": "bd2d5f60d6be1f75a48bb8d366b77525c4b63d6856560630099965efaab5d511",
+  "rom_sha256": "670a4e10a046cf1367c857554ada60f9cbf723c2fb183b84227dbbaab8627eae",
+  "core_sha256": "4c49df2fb0c557ba99126dbb9c6208bfd6c833af87c2f57e622ea96c445f682f",
+  "portable_rebuild_exact": true,
+  "all_archived_hashes_verified": true,
+  "zip_crc_all_passed": true,
+  "launcher_embedded_hashes_verified": true,
+  "ground_palette_unchanged": true,
+  "visible_launcher_test": false,
+  "performance": {
+    "logic_tick": 5964,
+    "present_count": 5963,
+    "late_fields": 35,
+    "queue_starvations": 37,
+    "queue_drops": 1,
+    "deadline_misses": 0,
+    "presentation_fps": 59.72820252253059
+  },
+  "final_emit3_reports_included": true
+}

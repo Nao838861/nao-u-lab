@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "compared_frames": 6000,
+  "telemetry_exact_match": true,
+  "decoded_audio_exact_match": true,
+  "audio_pcm_sha256": "868ead863a751bc24ac4628195d1f27a538b0f06d9aa77df1e602c5ce590f45c",
+  "changed_pixels": 1616139,
+  "only_color_change": "$19 RGB56,135,0 to $09 RGB11,72,0",
+  "changed_pixels_at_or_below_conservative_ground_boundary": 0,
+  "ground_pixels_and_all_other_colors_exact_match": true,
+  "old19_pixels_total": 40782422,
+  "old19_pixels_above_conservative_boundary": 6582533,
+  "old19_pixels_above_boundary_retaining19": 4966394,
+  "max_changed_y": 165,
+  "limitations": [
+    "P1 only changes; adaptive P2/P3 blocks retain19 above horizon too. Thus not all sky-region dark becomes09.",
+    "Objects encoded into P1 share its09 dark; separate object recoloring was not introduced.",
+    "Standard PPU lookup, no display override. Hardware source matching subject to separate fit/timing; physical hardware never touched."
+  ],
+  "video": "[REDACTED_WIN_PATH]",
+  "video_bytes": 14348332,
+  "video_sha256": "3ead95c5c5adee2adf2407d4c2fbe343102d097c504a257901701a7bf41fff2e",
+  "rom_sha256": "50effeaa06522844cb95867db61dc9f2b719e902a6245bb821d523f945a3bd22",
+  "dll_sha256": "918b676cc88428059b931f2e68193a2fef3f80e9e7b175c07c3491e8098c3b2d"
+}

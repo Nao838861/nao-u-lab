@@ -1,0 +1,14 @@
+{
+  "internal_timing_pass": true,
+  "checks": 48,
+  "negative_slacks": [],
+  "minimum_setup_ns": 0.319,
+  "minimum_hold_ns": 0.145,
+  "qsf_sha256": "c63548372e49ef2d16945828a504360ecac392786b2a3316ca8717e931cd171a",
+  "sdc_sha256": "12f272275e963026bf10c50ec4dbc8152254de5eb701b87944b3f20e36a71af5",
+  "limits": [
+    "Tool exit0 alone does not establish timing success.",
+    "Internal timing only. External I/O timing/electrical hardware validation is not covered.",
+    "No hardware, SD or USB action is performed."
+  ]
+}

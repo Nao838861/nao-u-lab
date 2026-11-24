@@ -1,0 +1,86 @@
+{
+  "status": "Verified incremental visual/motion improvement, not complete60fps or exhaustive gameplay proof",
+  "rom_sha256": "ac17d93dac2e5f65e1bed32d6472f3eecec5cb54910d3b22212d5b23c5a64afb",
+  "video": "[REDACTED_WIN_PATH]",
+  "video_sha256": "4882be9526d7a0d2bef652a7924c9c0a2155c8cc33a989dc3b4529d89e1b1b4d",
+  "video_bytes": 6007240,
+  "decoded_frames": 1799,
+  "audio_max_db": -21.2,
+  "video_screenshots_checked_seconds": [
+    7,
+    12,
+    21,
+    27
+  ],
+  "fixed_physical_input_test": {
+    "boundaries": 1201,
+    "different_state_fields": {
+      "_frame_counter": 2
+    },
+    "original_oam_identical": true,
+    "latched_inputs_identical": true,
+    "input_difference_boundaries": 0,
+    "boundary_timing_identical": false
+  },
+  "extended_boundary_triggered_test": {
+    "boundaries": 3601,
+    "different_state_fields": {
+      "_frame_counter": 12
+    },
+    "original_oam_identical": true,
+    "latched_inputs_identical": false,
+    "input_difference_boundaries": 5,
+    "boundary_timing_identical": false
+  },
+  "original_strict_test": {
+    "boundaries": 1201,
+    "different_state_fields": {
+      "_frame_counter": 5
+    },
+    "original_oam_identical": true,
+    "latched_inputs_identical": false,
+    "input_difference_boundaries": 3,
+    "boundary_timing_identical": false
+  },
+  "test_interpretation": "Fixed-physical-NMI-field inputs eliminate raw input-edge differences: all150 gameplay-state fields and original256-byte OAM match, including boss state2. The only different state field is the NMI wallclock counter, which compiled original gameplay never reads. Boundary-triggered tests change the physical input timing when render duration changes, so their input differences cannot alone prove gameplay divergence. Physical execution phase and display stalls still differ; strict all-state/timing equality is NOT claimed.",
+  "geometry": {
+    "actual_dimension_records_verified": 6067,
+    "actual_midpoint_commands_verified": 6344,
+    "midpoint_errors": 0,
+    "matched_pairs": 6247,
+    "ambiguous_lifetime_scenes_excluded": 17,
+    "tree_top_reversals_original": 448,
+    "tree_top_reversals_v024": 138,
+    "tree_top_reversals_v027": 13,
+    "remaining_tree_top_reverse_step_max_px": 1
+  },
+  "performance_900_scenes": {
+    "v026": {
+      "presentations": 1796,
+      "drops": 2,
+      "starvations": 3,
+      "late": 43,
+      "mean_producer_cycles": 29608,
+      "p95_cycles": 42239,
+      "max_cycles": 53591
+    },
+    "v027": {
+      "presentations": 1796,
+      "drops": 2,
+      "starvations": 3,
+      "late": 49,
+      "mean_producer_cycles": 29811,
+      "p95_cycles": 42510,
+      "max_cycles": 51644
+    },
+    "scope": "Same1799PPU-field window; durations include scheduler,yields,NMI,uploads; dedicated emulator,nothardware"
+  },
+  "unchanged_original_reference_audio_files": 47,
+  "limits": [
+    "Only six dimension families smoothed; original position quantization and EM1/projectile/boss dimensions remain.",
+    "CPU-supply stalls remain; no perfect60fps claim.",
+    "Dedicated Mesen camera83 implementation only; no FPGA or hardware test.",
+    "Boss entered through original START shortcut in validation; not a proof of complete natural stage/boss clear.",
+    "All prior versions preserved; only video delivered."
+  ]
+}

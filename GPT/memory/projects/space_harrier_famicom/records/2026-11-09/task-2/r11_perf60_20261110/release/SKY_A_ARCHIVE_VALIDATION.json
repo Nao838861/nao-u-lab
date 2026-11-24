@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "path": "[REDACTED_WIN_PATH]",
+  "size_bytes": 45142312,
+  "sha256": "624753b8a4888825abb6c5e56975a5ff40ab89ab8e34fcfae6f41929c69054f2",
+  "rom_sha256": "457124b5461ddfa363aa9f74b7a93526b03b34340c9255bd090209f184f8b49a",
+  "portable_rebuild_exact": true,
+  "all_archived_hashes_verified": true,
+  "zip_crc_all_passed": true,
+  "launcher_embedded_hashes_verified": true,
+  "ground_palette_unchanged": true,
+  "visible_launcher_test": false
+}

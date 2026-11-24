@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "cmode_sites": [
+    {
+      "address": 3,
+      "mode": 16
+    },
+    {
+      "address": 25,
+      "mode": 16
+    },
+    {
+      "address": 53,
+      "mode": 24
+    }
+  ],
+  "reachable_modes": [
+    16,
+    24
+  ],
+  "color_plot_vectors": 262144,
+  "default_reversal": true,
+  "SCMR_MD": "already constant00 under RACING_2BPP",
+  "sha256": "a3f8c3cab9d7a43e757781172d2ac1f08fa100238d1817e88a62d70bc4b0beff",
+  "restriction": "Profile requires CMODE bits2:0 zero. Profile save-state POR restore clamps those bits; arbitrary old save states unsupported.",
+  "note": "Preserves dynamic FH bit3 and OBJ bit4. No overflow flag clamp.",
+  "production_ghdl_default_vectors": 4194304,
+  "production_ghdl_profile_vectors": 262144,
+  "production_ghdl_log": "tests/por_equivalence.log"
+}

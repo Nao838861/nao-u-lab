@@ -1,0 +1,71 @@
+{
+  "native_size": [
+    320,
+    200
+  ],
+  "source": "palette_rough_01.png, source-game cutout alpha only",
+  "changed_ground_pixels": 4692,
+  "protected_object_pixels_changed": 0,
+  "palette_rgb": [
+    [
+      [
+        92,
+        52,
+        135
+      ],
+      [
+        83,
+        39,
+        30
+      ],
+      [
+        88,
+        153,
+        57
+      ],
+      [
+        35,
+        79,
+        35
+      ]
+    ],
+    [
+      [
+        83,
+        39,
+        30
+      ],
+      [
+        88,
+        153,
+        57
+      ],
+      [
+        202,
+        226,
+        154
+      ],
+      [
+        35,
+        79,
+        35
+      ]
+    ]
+  ],
+  "notes": [
+    "RGB concept colors, not measured or selected NES color codes.",
+    "8x1 groups start x=0 at this static frame and assume arbitrary group-level palette selection. Standard unextended NES backgrounds have coarser attribute granularity.",
+    "Sky index1 purple; ground index1 pale green; common index0 dark green; index2 mid green; index3 brown. This differs from the current runtime sky slot3 purple arrangement.",
+    "Existing assets and runtime are untouched. This static frame does not prove arbitrary poses or positions valid."
+  ],
+  "two_green": {
+    "bad_8x1_groups": [],
+    "total_8x1_groups": 8000,
+    "unique_colors": 5
+  },
+  "three_green": {
+    "bad_8x1_groups": [],
+    "total_8x1_groups": 8000,
+    "unique_colors": 5
+  }
+}

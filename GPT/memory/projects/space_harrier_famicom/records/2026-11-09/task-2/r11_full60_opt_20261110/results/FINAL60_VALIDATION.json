@@ -1,0 +1,159 @@
+{
+  "status": "PLAYABLE_60HZ_TARGET_CPU_OPTIMIZED_WITH_SLOWDOWN",
+  "rom_sha256": "5ce6828aa837c83d71caf6af7e7d9900a9f5cf02e0492a3dc794d14bcca427fc",
+  "baseline_rom_sha256": "69b7c9362980554c1378e77f528e8020ceb92e1ebee1fa53748e5ffa89984860",
+  "reports": {
+    "final_stage": {
+      "report": "results/smoke_fastproj_stage_600/RESULT.json",
+      "fields": 600,
+      "deltas": {
+        "logic_tick": 594,
+        "draw_count": 595,
+        "present_count": 594,
+        "late_fields": 6,
+        "deadline_misses": 0,
+        "queue_starvations": 6,
+        "queue_drops": 0
+      },
+      "target_hz": 60.0988,
+      "observed_logic_hz": 59.497812,
+      "observed_present_hz": 59.497812,
+      "gsu_ms_mean": 1.9772727272727273,
+      "gsu_ms_max": 6.60698,
+      "player_state_transitions": [],
+      "status_errors": 0,
+      "em1_pose_conflicts": 0,
+      "unintended_resets": 0
+    },
+    "final_boss": {
+      "report": "results/smoke_fastproj_boss_600/RESULT.json",
+      "fields": 600,
+      "deltas": {
+        "logic_tick": 568,
+        "draw_count": 568,
+        "present_count": 568,
+        "late_fields": 32,
+        "deadline_misses": 0,
+        "queue_starvations": 32,
+        "queue_drops": 0
+      },
+      "target_hz": 60.0988,
+      "observed_logic_hz": 56.89353066666666,
+      "observed_present_hz": 56.89353066666666,
+      "gsu_ms_mean": 3.566009190140845,
+      "gsu_ms_max": 10.7332,
+      "player_state_transitions": [],
+      "status_errors": 0,
+      "em1_pose_conflicts": 0,
+      "unintended_resets": 0
+    },
+    "mortal_moving": {
+      "report": "results/smoke_fastproj_boss_900/RESULT.json",
+      "fields": 900,
+      "deltas": {
+        "logic_tick": 852,
+        "draw_count": 853,
+        "present_count": 853,
+        "late_fields": 47,
+        "deadline_misses": 0,
+        "queue_starvations": 48,
+        "queue_drops": 0
+      },
+      "target_hz": 60.0988,
+      "observed_logic_hz": 56.89353066666666,
+      "observed_present_hz": 56.960307111111106,
+      "gsu_ms_mean": 3.891254794841735,
+      "gsu_ms_max": 9.45038,
+      "player_state_transitions": [],
+      "status_errors": 0,
+      "em1_pose_conflicts": 0,
+      "unintended_resets": 0
+    },
+    "mortal_stationary": {
+      "report": "results/smoke_mortalstill_boss_900/RESULT.json",
+      "fields": 900,
+      "deltas": {
+        "logic_tick": 873,
+        "draw_count": 873,
+        "present_count": 870,
+        "late_fields": 27,
+        "deadline_misses": 0,
+        "queue_starvations": 30,
+        "queue_drops": 3
+      },
+      "target_hz": 60.0988,
+      "observed_logic_hz": 58.295835999999994,
+      "observed_present_hz": 58.095506666666665,
+      "gsu_ms_mean": 6.953189103448276,
+      "gsu_ms_max": 11.63108,
+      "player_state_transitions": [
+        [
+          49,
+          1,
+          2
+        ],
+        [
+          157,
+          2,
+          0
+        ],
+        [
+          193,
+          0,
+          1
+        ],
+        [
+          259,
+          1,
+          2
+        ],
+        [
+          367,
+          2,
+          0
+        ],
+        [
+          846,
+          0,
+          1
+        ]
+      ],
+      "status_errors": 0,
+      "em1_pose_conflicts": 0,
+      "unintended_resets": 0
+    }
+  },
+  "comparison_per_600_fields": {
+    "stage": {
+      "before_presentations": 564,
+      "after_presentations": 594,
+      "before_fps": 56.492872,
+      "after_fps": 59.497812
+    },
+    "boss": {
+      "before_presentations": 552,
+      "after_presentations": 568,
+      "before_fps": 55.290896,
+      "after_fps": 56.89353066666666
+    }
+  },
+  "start_switch": "results/reset_switch_fastproj/RESULT.json: four alternating stage/boss switches, counters monotone",
+  "unit_tests": [
+    "results/cpu6502_smoke.json",
+    "enemy/build/enemy60_cpu_test.json",
+    "enemy/build/enemy60_differential_test.json",
+    "enemy/tests/coordinator_review_result.json",
+    "boss/boss60_test_result.json",
+    "boss/boss60_differential_result.json",
+    "projection/RESULT.json"
+  ],
+  "limits": [
+    "Dedicated functional Windows Mesen emulator only; no physical hardware evidence.",
+    "Short stage/boss windows only; no full-game-clear or long-stress claim.",
+    "CPU overload still skips fields and slows simulation time; this is not a constant60fps guarantee.",
+    "Original real-time AI and lifetime cadence preserved; geometry and collision use halfsteps each processed field.",
+    "Some scripted intro/death/stumble motion and discrete sprite changes retain original30Hz steps.",
+    "Original hitbox shapes remain;111Z visual geometry is not fully retuned.",
+    "No SD,USB,FPGA or other hardware operations performed."
+  ]
+}

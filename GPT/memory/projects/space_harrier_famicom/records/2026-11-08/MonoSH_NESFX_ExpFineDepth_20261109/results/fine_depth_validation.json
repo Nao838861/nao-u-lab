@@ -1,0 +1,65 @@
+{
+  "baseline": {
+    "scenes": 900,
+    "mean_producer_cycles": 29748.756666666668,
+    "p95_producer_cycles": 42560,
+    "max_producer_cycles": 51654,
+    "first": {
+      "ppu": 19,
+      "present": 8,
+      "late": 0,
+      "drop": 0,
+      "starve": 0
+    },
+    "last": {
+      "ppu": 1818,
+      "present": 1804,
+      "late": 50,
+      "drop": 2,
+      "starve": 3
+    },
+    "presentations_per_emulated_field": 0.9983324068927182,
+    "fps_at_60_0988_fields": 59.99857965536409
+  },
+  "candidate": {
+    "scenes": 900,
+    "mean_producer_cycles": 29677.234444444446,
+    "p95_producer_cycles": 41988,
+    "max_producer_cycles": 51469,
+    "first": {
+      "ppu": 19,
+      "present": 8,
+      "late": 0,
+      "drop": 0,
+      "starve": 0
+    },
+    "last": {
+      "ppu": 1818,
+      "present": 1804,
+      "late": 46,
+      "drop": 2,
+      "starve": 3
+    },
+    "presentations_per_emulated_field": 0.9983324068927182,
+    "fps_at_60_0988_fields": 59.99857965536409
+  },
+  "geometry_oracle": {
+    "raw_em0": 2023,
+    "clipped_em0": 1909,
+    "geometry_changed": 709,
+    "stable_order_scenes": 898,
+    "non_em0_identical": 4598
+  },
+  "excluded_stale_suppressed_raw_scenes": [
+    649,
+    650
+  ],
+  "em0_z_remainders_mod4": [
+    760,
+    343,
+    577,
+    343
+  ],
+  "gameplay_sources_byte_identical": true,
+  "note": "Linked core banks contain relocated calls to moved render labels; code/source logic and all RAM addresses are unchanged. Original bucket linked lists and order retained. No ROM/SD/RBF overwritten. Emulator profile includes scheduler/yields/NMI/uploads, not isolated math cycles. Half-depth retains one of two fractional bits, not full quarter-depth precision."
+}

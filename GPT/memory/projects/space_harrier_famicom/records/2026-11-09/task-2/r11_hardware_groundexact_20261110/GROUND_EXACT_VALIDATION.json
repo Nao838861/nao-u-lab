@@ -1,0 +1,84 @@
+{
+  "status": "ISOLATED_RTL_AND_TIMING_MODEL_VALIDATED_NOT_SYNTHESIZED",
+  "files": {
+    "rtl/mode7_dsp.vhd": {
+      "sha256": "182ff2ccc25b7d3834e5b801d170b105185807daf98162e40e029b6afed5894d",
+      "bytes": 15344
+    },
+    "rtl/serial_math.vhd": {
+      "sha256": "346f06db550472f5907541d482edad73612b4293b5789a4019dd26d431ff1aaf",
+      "bytes": 5548
+    },
+    "core/D10Mode7Row.hpp": {
+      "sha256": "48d5e2ad4fee37aae908633b9ac28e88b005733f3b119b5997896cfcb7f20f12",
+      "bytes": 2906
+    }
+  },
+  "checks": {
+    "tests/rtl_reuse_nominal.log": {
+      "passed": true,
+      "cameras": 70
+    },
+    "tests/rtl_reuse_backpressure.log": {
+      "passed": true,
+      "cameras": 70
+    },
+    "tests_reuse_edges/rtl_edge.log": {
+      "passed": true,
+      "cameras": 4
+    },
+    "tests_baseline/rtl_baseline_cycles.log": {
+      "passed": true,
+      "cameras": 4
+    },
+    "tests_reuse_edges/rtl_final_quartus_compatible.log": {
+      "passed": true,
+      "cameras": 4
+    },
+    "tests/model_timing.log": {
+      "passed": true,
+      "detail": "PASS 70 exact RTL/model ready times, one-clock early/boundary checks, commit"
+    },
+    "tests_reuse_edges/model_edge_timing.log": {
+      "passed": true,
+      "detail": "PASS 4 edge exact RTL/model ready times, one-clock early/boundary checks, commit"
+    }
+  },
+  "unique_cameras": 74,
+  "unique_rows": 15466,
+  "unique_row_words": 61864,
+  "backpressure_cameras": 70,
+  "game_camera_jobs": 66,
+  "game_camera_ready_clocks": [
+    46454,
+    99531
+  ],
+  "game_camera_ready_ms_at_25MHz": [
+    1.85816,
+    3.98124
+  ],
+  "baseline_raw_row_clocks": [
+    10,
+    167,
+    690
+  ],
+  "old_model_raw_row_clocks": [
+    7,
+    164,
+    585
+  ],
+  "normalization_valid_row_extra_clocks": 160,
+  "normalization_valid_bottom_prepass_clocks": 682,
+  "source_baseline": "r11_ground_release_20261110",
+  "functional_reference": "r11_ground_exact_sfc_20261110 Mode7Ground::MatchSfcHorizontal",
+  "hardware_actions": 0,
+  "quartus_runs": 0,
+  "quartus_compatibility_change": "MULT_WIDTH default is18, not a reference to B_WIDTH. Actual mode7 mapping explicitly specifies18. Functional equivalence under that map is exact; final4edge RTL cases rerun.",
+  "limits": [
+    "No integrated synthesis/place-route/internal or external timing verification here. Integration worker owns Quartus.",
+    "No physical FPGA/NES, USB, SD, controller or video test.",
+    "Cycle match covers no-scenery-shortcut, no-additional-store-contention arithmetic schedule. Does not establish cycle-accurate full mapper or physical fps.",
+    "Normalized DU outside signed24 magnitude is rejected explicitly; current33game cameras and tested extreme cameras fit.",
+    "Fresh boot. Existing save-state compatibility is not established."
+  ]
+}

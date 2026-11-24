@@ -1,0 +1,29 @@
+{
+  "rom_sha256": "4817dba7bcbacf1cad727132ab8180d5246adc13eed89c063d4494722e9de725",
+  "dll_sha256": "7492983ad92de13fbf590d3f9baca2f575ad113b17c4e1ac92461b0595dd576b",
+  "fields": 7200,
+  "emulated_seconds": 119.80267721102062,
+  "ntsc_ppu_hz": 60.0988118623484,
+  "rates": {
+    "logic_tick": 30.049411948106588,
+    "draw_count": 30.049411948106588,
+    "present_count": 59.9318827187237,
+    "midpoint_present_count": 29.96594135936185,
+    "current_present_count": 29.96594135936185
+  },
+  "counter_deltas": {
+    "late_fields": 54,
+    "queue_drops": 20,
+    "queue_starvations": 5,
+    "deadline_misses": 15
+  },
+  "steady_hold_fields": 20,
+  "steady_generation_skips": 9,
+  "boss_states": [
+    0,
+    1,
+    2
+  ],
+  "wall_seconds": 140.26499999989755,
+  "scope": "Functional Mesen model; per-field debugger measurement; no hardware or wall-clock60fps claim; original SELECT invincibility; no memory writes."
+}

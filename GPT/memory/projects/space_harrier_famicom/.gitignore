@@ -1,0 +1,5 @@
+# Local playables and test binaries must not be included in this public documentation.
+/local-only/
+*.nes
+*.rbf
+*.fpgrom/

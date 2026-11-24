@@ -1,0 +1,1 @@
+EXPERIMENTAL, NOT PHYSICALLY TESTED. CPU-side projection trial ROM, paired with the unchanged HorizonGrid RBF. No hardware, SD or USB action performed. Physical timing, compatibility and visual-hitbox alignment are unverified. This folder is not used by the Windows game.

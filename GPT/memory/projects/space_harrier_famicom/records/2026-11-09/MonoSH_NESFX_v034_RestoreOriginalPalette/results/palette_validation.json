@@ -1,0 +1,104 @@
+{
+  "status": "PASS",
+  "root_cause": "v031 reverted only the highlight slot while retaining F shadow and band. v032/v033 inherited that partial palette correctly. No branch inheritance regression.",
+  "rom_sha256": "59915596d23df14a2b306475c0f5087f30815ce31989bc39665c48e5c4ee6f44",
+  "rom_differences": [
+    {
+      "offset": "0xe0e",
+      "before": 26,
+      "after": 9
+    },
+    {
+      "offset": "0xe11",
+      "before": 42,
+      "after": 25
+    },
+    {
+      "offset": "0xe12",
+      "before": 26,
+      "after": 9
+    },
+    {
+      "offset": "0xe16",
+      "before": 26,
+      "after": 9
+    },
+    {
+      "offset": "0xe19",
+      "before": 42,
+      "after": 25
+    },
+    {
+      "offset": "0xe1a",
+      "before": 26,
+      "after": 9
+    },
+    {
+      "offset": "0xe1e",
+      "before": 26,
+      "after": 9
+    },
+    {
+      "offset": "0xe22",
+      "before": 26,
+      "after": 9
+    },
+    {
+      "offset": "0xe26",
+      "before": 26,
+      "after": 9
+    },
+    {
+      "offset": "0xe2a",
+      "before": 26,
+      "after": 9
+    }
+  ],
+  "palette_exactly_equals_pre_D_F_v028": true,
+  "runtime_identical_to_v031_v033": true,
+  "forest_quantizer_and_v033_motion_unchanged": true,
+  "scenes": {
+    "stage": {
+      "count": 900,
+      "all_fields_exactly_equal": true
+    },
+    "boss": {
+      "count": 600,
+      "all_fields_exactly_equal": true
+    }
+  },
+  "raw_video": {
+    "stage": {
+      "frames": 1799,
+      "only_intended_two_RGB_transitions": true,
+      "transitions": {
+        "(12, 147, 0) -> (11, 72, 0)": 18803847,
+        "(92, 228, 48) -> (56, 135, 0)": 15304792
+      }
+    },
+    "boss": {
+      "frames": 1199,
+      "only_intended_two_RGB_transitions": true,
+      "transitions": {
+        "(12, 147, 0) -> (11, 72, 0)": 13297252,
+        "(92, 228, 48) -> (56, 135, 0)": 9605820
+      }
+    }
+  },
+  "hardware_verified": false,
+  "original_files_verified_unchanged": 295,
+  "video": {
+    "path": "[REDACTED_WIN_PATH]",
+    "sha256": "68fcc0365ef48229b81ee46fdda997e88424c5a7d1ab85c9bd93795b87973de1",
+    "bytes": 10808304,
+    "decode_ok": true,
+    "audio_ok": true,
+    "approx_seconds": 28,
+    "source": "Actual Mesen PPU recordings, input-only using original SELECT invincibility. Not hardware validation."
+  },
+  "visually_inspected_seconds": [
+    7,
+    17,
+    24
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "zip": "[REDACTED_WIN_PATH]",
+  "bytes": 44792479,
+  "zip_sha256": "7667d7693d616d1b441dad0b5a26e15f343c1510b49c6c2b58e070e12074be55",
+  "file_count": 121,
+  "archive_crc": "PASS",
+  "all_file_hashes": "PASS",
+  "readme_utf8": "PASS",
+  "rom_sha256": "5ce6828aa837c83d71caf6af7e7d9900a9f5cf02e0492a3dc794d14bcca427fc",
+  "launcher": "PASS: matching Mesen child window loaded, normal close, exit 0"
+}

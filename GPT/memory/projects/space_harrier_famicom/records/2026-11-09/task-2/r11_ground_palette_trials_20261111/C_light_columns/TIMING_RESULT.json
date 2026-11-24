@@ -1,0 +1,28 @@
+{
+  "status": "BUILD_FAILED",
+  "failed_tool": "quartus_fit",
+  "internal_timing_pass": false,
+  "source_hashes": {
+    "rtl/clock_mailbox.vhd": "765ca7f9d60c34ee2fe74871371c4c5e9f1e0f9fed728885b43e5211178270b2",
+    "rtl/deadline_guard.vhd": "c115f8ba6a56f143282d447ba024048a45ff1a7fb31cd4bb9c0895d6aef1b1df",
+    "rtl/dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "rtl/GSU.vhd": "a3f8c3cab9d7a43e757781172d2ac1f08fa100238d1817e88a62d70bc4b0beff",
+    "rtl/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "rtl/mmc5_audio.vhd": "d4a1c84e3d01d3d7d54e52f1bc818857bd183e1484e8746039fa5591b99cacc3",
+    "rtl/mmc5_audio_dac.vhd": "575c1713b9a276d21ba1a4231b77bb2ad294611b79e5948b0dc479026f43cc0e",
+    "rtl/mode7_dsp.vhd": "60c973f6ca282e4661ab2d1bd67d84516f036e4df0a81d3620ba4d673d2c60e9",
+    "rtl/prg_early_byte.vhd": "5f4bf8d5707e2bec03c81551773cb00f1f00cc72b308ea35874579dfb3c185e6",
+    "rtl/racing_display.vhd": "01e62a1e8482ec2ba3326b4974ea6ce2525fe1f38c16f873eb88adfce63ec603",
+    "rtl/racing_gsu.vhd": "90ea9004ab4242ab95b82196cc60cf8d7c57ef8063866cd43982b00633121560",
+    "rtl/racing_hud_route.vhd": "d04f75917613709475ea777d514265cf3209e560b3ebad682f1f32606a240ad8",
+    "rtl/racing_top.vhd": "976222f347f615abb35f8ecded27de9d5f4bb17d7b1c965b22ed31a00d6f6e56",
+    "rtl/serial_math.vhd": "346f06db550472f5907541d482edad73612b4293b5789a4019dd26d431ff1aaf",
+    "base_sv/base_io.sv": "9b9135a47fd3587d3ff2ee11a312b4ca5a8f591c494ecbbb5737ba9cd3bbec83",
+    "base_sv/defs.sv": "35a25d2e2138081d922653ae0dee41eb4159888f4d8b59e8ed24ddf0449d3a0d",
+    "base_sv/map_255.sv": "04ffff677a501d0d972c14898fc39466a22dc91cce56f5e68a81ed8594421b96",
+    "base_sv/pi.sv": "fa14d02b6ccf09dd344e8f6367a09493e63fd5602cd2c35f120cbba3f87c300f",
+    "base_sv/structs.sv": "eaacc90832d25c8b7a9869c7de490d2a83afccb396143842e62e740897079596",
+    "base_sv/sys_cfg.sv": "be6c6a5e7cbd2e3e666c27ab4420d30d724e47e0d86e213546b4830d3034b593",
+    "base_sv/top.sv": "2a10734ebb1e277832e75acafeaec46364f1a517af1d1e7ed245ddd63a4a5d60"
+  }
+}

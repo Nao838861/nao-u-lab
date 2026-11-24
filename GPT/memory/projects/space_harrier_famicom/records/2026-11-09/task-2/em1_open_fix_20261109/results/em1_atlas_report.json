@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "original_texels_preserved": 27782,
+  "original_em1_pose1_preserved": true,
+  "gsu_ram_bytes": 8192,
+  "atlas_bytes": 7168,
+  "reserved_row_cache": 64,
+  "dynamic_address": 40095,
+  "dynamic_bytes": 801,
+  "frames": [
+    {
+      "pose": 1,
+      "source_id": 32,
+      "width": 56,
+      "height": 60,
+      "source_sha256": "b6bcde7707bcfcc94f29574347dbe680aa34c36b4c693510a4fb4d7efc91e97e",
+      "stored_bytes": 670
+    },
+    {
+      "pose": 2,
+      "source_id": 33,
+      "width": 60,
+      "height": 60,
+      "source_sha256": "779e91e657a2cc7f740498e061899d40e2aa03c739be84d3bd80e08e4b380558",
+      "stored_bytes": 745
+    },
+    {
+      "pose": 3,
+      "source_id": 34,
+      "width": 60,
+      "height": 60,
+      "source_sha256": "f68ccca59379f8da6ce6261f433eb6e32e6dae2ca23fd5cd1f46d8b894fb27c6",
+      "stored_bytes": 793
+    },
+    {
+      "pose": 4,
+      "source_id": 35,
+      "width": 60,
+      "height": 57,
+      "source_sha256": "667db02c8011657da41b251370976406dca6db75f448c5478c62672dfe71db39",
+      "stored_bytes": 778
+    },
+    {
+      "pose": 5,
+      "source_id": 36,
+      "width": 56,
+      "height": 60,
+      "source_sha256": "46051ffb84b9762c42f64deeec2cedada37a4d9e30a651d8a63fbaced55d7eb2",
+      "stored_bytes": 800
+    }
+  ]
+}

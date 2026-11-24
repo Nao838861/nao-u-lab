@@ -1,0 +1,26 @@
+v030 供給位置の変更（ゲーム互換は合格、性能改善なしのため不採用）
+
+改行形式に依存しないPython処理で、_core_draw直後のservice_render呼出しを
+build_midpoint直後へ移動した。元の位置の削除、新位置の挿入、呼び出し回数不変をassert。
+差分: results/service_timing.patch
+v028/v029の初回未適用パッチによる無効な候補とは区別する。
+GSU、素材、OAM準備、入力、元ゲームコードはv025と同じ。
+
+有効な最終計測
+results/verified_schedule_7200/report.json
+results/verified_fixed_nmi_identity_3601_final/comparison.json
+初回の完了記録がない測定、短い再試験、fixtureパス修正前の空出力先は根拠に含めない。
+
+結果
+7200fieldで期限超過1、CPU供給待ち5、表示保持6、CPU位相遅れ65。
+v025から回数は変わらない。
+最後のCPU供給待ちは、元の入力field3271から3273へ移っただけだった。
+表示保持も3272から3274へ移り、待ちを次の表示位相に送る結果になった。
+供給位置だけでは総準備量の不足を解消できない。
+3601更新境界の入力、元151項目850byte、元OAM256byteは全て一致。
+乱数用_frame_counterも差0。時計を除外して互換性を判定したわけではない。
+GSUと描画素材はv025とbyte同一で、既存の204種＋実15パケットの画素検証を維持する。
+
+新しい候補を採用する理由がないためv025を維持する。
+build/MonoSH_NESFX_v030_ServiceTiming_UNTESTED.nes は比較用の実験ROM。
+実機未検証。実機操作0回。既存ROM/RBF/SD・元プロジェクトへの書込みなし。

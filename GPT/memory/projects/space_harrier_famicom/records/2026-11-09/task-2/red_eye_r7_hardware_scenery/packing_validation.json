@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "output": "DIRECT_COMPOSITOR_PASS blocks=5160960\nPACKING_PASS pixels=15360 layer_pairs=3932160 camera_clipping=10321920\n",
+  "payload_bytes": 3840,
+  "chr_start": "0x1B100",
+  "chr_end_inclusive": "0x1BFFF",
+  "input_source": "[REDACTED_WIN_PATH]",
+  "limits": [
+    "Generated blob only; no ROM altered.",
+    "Quantized to r7 exact palette codes, not original SFC RGB.",
+    "No hardware operation.",
+    "Packing correctness is not integrated timing or fit signoff."
+  ]
+}
