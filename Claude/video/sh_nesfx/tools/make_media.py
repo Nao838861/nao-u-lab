@@ -89,7 +89,7 @@ def main():
         for p in ps.values(): p.stdin.close(); p.wait()
 
     if want('cmp30'):
-        s0 = clips['trees']; L = 60 * 12
+        s0 = clips['cmp']; L = 60 * 12
         p = ff(a, 'rgb24', (256, 240), 60, PUB / 'video/cmp30.mp4', vf='scale=1024:960:flags=neighbor')
         for i in range(L): p.stdin.write(load(a.rec, s0 + 1 + (i // 2) * 2).tobytes())
         p.stdin.close(); p.wait()
@@ -113,6 +113,16 @@ def main():
     if want('pal81'):
         make_pal81(a, clips)
 
+    if want('meters'):
+        m = json.loads((a.rec / 'meters.json').read_text()); s0 = clips['sound']; L = 60 * 60
+        (ROOT / 'src/meters.json').write_text(json.dumps({k: v[s0:s0 + L] for k, v in m.items()}))
+
+    if want('attr16'):
+        make_attr16(a, clips)
+
+    if want('darkgreen'):
+        make_darkgreen(a, clips)
+
     if want('thumb'):
         Image.fromarray(load(a.rec, clips['thumb'])).resize((1920, 1800), Image.NEAREST).crop((0, 360, 1920, 1440)).save(PUB / 'img/thumb_frame.png')
 
@@ -129,7 +139,8 @@ def make_pal81(a, clips):
         for cx in range(w // 8):
             cell = B[y0 + yy, x0 + cx * 8:x0 + cx * 8 + 8]
             tup = [tuple(c) for c in cell]
-            has_sky = SKY in tup; has_gr = any(g in tup for g in GROUND)
+            # ground colors count as background only below the horizon (above it they are parts of objects)
+            has_sky = SKY in tup; has_gr = y0 + yy >= hz and any(g in tup for g in GROUND)
             if has_sky: k = 'sky'
             elif has_gr: k = 'ground'
             elif RED in tup: k = 'red'
@@ -157,6 +168,58 @@ def make_pal81(a, clips):
     for name, k in (('空', 'sky'), ('地面', 'ground'), ('赤', 'red'), ('黒', 'black')):
         d.rectangle([lx, oy + h * z + 30, lx + 34, oy + h * z + 64], fill=colmap[k]); d.text((lx + 44, oy + h * z + 30), name, font=fs, fill=(238, 243, 255)); lx += 130
     img.save(PUB / 'img/pal81.png')
+
+
+def make_attr16(a, clips):
+    """Same crop as pal81 with the ordinary NES attribute grid (one palette per 16x16 dots)."""
+    i = clips['pal81']; x0, y0 = clips.get('pal81_x', 96), clips['pal81_y']
+    A = load(a.rec, i); w, h, z = 64, 48, 8
+    W, H = 1100, 800
+    img = Image.new('RGB', (W, H), (8, 12, 24)); d = ImageDraw.Draw(img)
+    ox, oy = 20, 90
+    img.paste(Image.fromarray(A[y0:y0 + h, x0:x0 + w]).resize((w * z, h * z), Image.NEAREST), (ox, oy))
+    # attribute grid is aligned to the screen: lines at multiples of 16
+    for gx in range(x0 - x0 % 16 + 16 if x0 % 16 else x0, x0 + w + 1, 16):
+        d.line([ox + (gx - x0) * z, oy, ox + (gx - x0) * z, oy + h * z], fill=(255, 181, 71), width=3)
+    for gy in range(y0 - y0 % 16 + 16 if y0 % 16 else y0, y0 + h + 1, 16):
+        d.line([ox, oy + (gy - y0) * z, ox + w * z, oy + (gy - y0) * z], fill=(255, 181, 71), width=3)
+    ox2 = ox + w * z + 36
+    img.paste(Image.fromarray(A[y0:y0 + h, x0:x0 + w]).resize((w * z, h * z), Image.NEAREST), (ox2, oy))
+    for cx in range(w // 8 + 1):
+        d.line([ox2 + cx * 8 * z, oy, ox2 + cx * 8 * z, oy + h * z], fill=(63, 224, 255), width=1)
+    for yy in range(h + 1):
+        d.line([ox2, oy + yy * z, ox2 + w * z, oy + yy * z], fill=(63, 224, 255), width=1)
+    try:
+        f = ImageFont.truetype('C:/Windows/Fonts/YuGothB.ttc', 30)
+    except OSError:
+        f = ImageFont.load_default()
+    d.text((ox, 30), '普通のファミコン：16×16ドット', font=f, fill=(255, 181, 71))
+    d.text((ox2, 30), '今回の回路：8×1ドット', font=f, fill=(63, 224, 255))
+    img.save(PUB / 'img/attr16.png')
+
+
+def make_darkgreen(a, clips):
+    """Tree across the horizon: its dark green is $09 above (sky palette) and $19 below (ground palette)."""
+    i = clips['darkgreen']; B = load(a.nospr, i); hz = horizon(B)
+    x0, y0, w, h, z = 56, 76, 72, 130, 4
+    crop = B[y0:y0 + h, x0:x0 + w]
+    W, H = 840, 560
+    img = Image.new('RGB', (W, H), (8, 12, 24)); d = ImageDraw.Draw(img)
+    img.paste(Image.fromarray(crop).resize((w * z, h * z), Image.NEAREST), (20, 20))
+    yy = 20 + (hz - y0) * z
+    for x in range(10, 20 + w * z + 10, 16): d.line([x, yy, x + 8, yy], fill=(255, 181, 71), width=3)
+    try:
+        f = ImageFont.truetype('C:/Windows/Fonts/YuGothB.ttc', 32); fs = ImageFont.truetype('C:/Windows/Fonts/YuGothB.ttc', 26)
+    except OSError:
+        f = fs = ImageFont.load_default()
+    lx = 20 + w * z + 40
+    d.text((lx, yy - 18), '地平線', font=fs, fill=(255, 181, 71))
+    d.text((lx, 60), '地平線より上（空側）', font=fs, fill=(238, 243, 255))
+    d.rectangle([lx, 100, lx + 90, 170], fill=(11, 72, 0), outline=(255, 255, 255)); d.text((lx + 105, 115), '暗い緑 $09', font=f, fill=(238, 243, 255))
+    d.text((lx, yy + 40), '地平線より下（地面側）', font=fs, fill=(238, 243, 255))
+    d.rectangle([lx, yy + 80, lx + 90, yy + 150], fill=(56, 135, 0), outline=(255, 255, 255)); d.text((lx + 105, yy + 95), '暗い緑 $19', font=f, fill=(238, 243, 255))
+    d.text((lx, H - 70), '同じ木でも、空側と地面側で', font=fs, fill=(159, 176, 214)); d.text((lx, H - 38), '暗い緑が違う色になる', font=fs, fill=(159, 176, 214))
+    img.save(PUB / 'img/darkgreen.png')
 
 
 if __name__ == '__main__':

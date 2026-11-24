@@ -235,6 +235,13 @@ def main():
             else:
                 m1.env.clock(); m2.env.clock(); m1.half(); m2.half()
     for o in out.values(): o[si:] = o[si:]  # tail stays zero
+    # per-frame level of each channel (std of its output over the frame, 0..1) for the on-screen meters
+    spf = a.rate // 60
+    meters = {}
+    for k, o in out.items():
+        nf = len(o) // spf
+        meters[k] = np.round(np.clip(o[:nf * spf].reshape(nf, spf).std(axis=1) / 6.0, 0, 1), 2).tolist()
+    (a.rec / 'meters.json').write_text(json.dumps(meters))
     pul = out['p1'] + out['p2']
     pulse_mix = np.where(pul > 0, 95.88 / (8128.0 / np.maximum(pul, 1e-9) + 100), 0.0)
     mp = out['m1'] + out['m2']
