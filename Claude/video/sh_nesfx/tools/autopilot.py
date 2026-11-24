@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from mesen_run import run
 
-DEFAULT = {'mtn': 14, 'minpix': 4, 'far_max': 60, 'aim_dy': 0, 'jit': 6, 'repick': 90, 'zone_x': 40, 'zone_y': 48, 'near_th': 40, 'red_th': 2, 'dodge': 16, 'ty_min': 60, 'ty_max': 170}
+DEFAULT = {'mtn': 14, 'minpix': 4, 'far_max': 60, 'aim_dy': 0, 'jit': 6, 'repick': 90, 'zone_x': 40, 'zone_y': 48, 'near_th': 40, 'red_th': 2, 'dodge': 16, 'ty_min': 60, 'ty_max': 170, 'dead': 10, 'hold': 6}
 p = argparse.ArgumentParser(); p.add_argument('out', type=Path); p.add_argument('--frames', type=int, default=9000)
 p.add_argument('--chunk', type=int, default=900); p.add_argument('--start-at', type=int, default=480)
 p.add_argument('--params', default='{}'); p.add_argument('--seed', type=int, default=1)

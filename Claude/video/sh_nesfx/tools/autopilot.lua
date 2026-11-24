@@ -1,5 +1,7 @@
 -- Replay committed inputs from power-on, then drive an autopilot until CHUNK frames pass or the player dies.
 -- The autopilot aims at objects it sees on screen (pixels that are not sky/ground) and keeps firing.
+-- It is meant to look like a person playing: delayed reactions, held directions, a dead zone near the target,
+-- and re-aiming only every 0.3-0.6 s (dodges react faster).
 -- Lua only supplies pad input and reads memory/screen; no game state is written. Params (@...@) from tools/autopilot.py
 local out = @OUTDIR@
 local START, STOP, START_AT = @START@, @STOP@, @START_AT@
@@ -16,6 +18,9 @@ local mine = {}
 local tx, ty, wander_x, wander_y = 128, 120, 128, 120
 local death = -1
 local dodge = 0
+local want = {}            -- target decided by scan(), applied after a reaction delay: {at=frame, x=, y=}
+local retarget = 0         -- next frame at which a new aim target may be taken
+local dirx, diry, holdx, holdy = 0, 0, 0, 0
 
 local function player()
   return emu.read(7, emu.memType.nesSpriteRam) + 16, emu.read(4, emu.memType.nesSpriteRam) + 24
@@ -65,23 +70,30 @@ local function scan()
     -- never run into a screen edge: turn back toward the middle instead
     if px + dx * 70 < 40 or px + dx * 70 > 216 then dx = -dx end
     if py + dy * 50 < P.ty_min or py + dy * 50 > P.ty_max then dy = -dy end
-    tx = math.max(32, math.min(224, px + dx * 80))
-    ty = math.max(P.ty_min, math.min(P.ty_max, py + dy * 50))
+    if dodge == 0 then
+      want = {at = frame + math.random(4, 8), x = math.max(32, math.min(224, px + dx * 80)), y = math.max(P.ty_min, math.min(P.ty_max, py + dy * 50))}
+      retarget = frame + math.random(20, 36)
+    end
     dodge = P.dodge
     return
   end
-  if dodge > 0 then return end
+  if dodge > 0 or frame < retarget then return end
   local best, bb = P.minpix, nil
   for b, n in pairs(bins) do
     local s = n + (bins[b - 1] or 0) * 0.5 + (bins[b + 1] or 0) * 0.5
     if s > best and s < P.far_max then best = s; bb = b end
   end
+  local nx, ny
   if bb then
-    tx = bb * 16 + 8; ty = sumy[bb] // bins[bb] + P.aim_dy
+    nx = bb * 16 + 8; ny = sumy[bb] // bins[bb] + P.aim_dy
   else
-    tx, ty = wander_x, wander_y
+    nx, ny = wander_x, wander_y
   end
-  ty = math.max(P.ty_min, math.min(P.ty_max, ty))
+  -- aim is never pixel perfect; the error is chosen once per target, not every frame
+  local J = P.jit + 8 * P.retry
+  nx = nx + math.random(-J, J); ny = math.max(P.ty_min, math.min(P.ty_max, ny + math.random(-J, J)))
+  want = {at = frame + math.random(8, 14), x = nx, y = ny}
+  retarget = frame + math.random(18, 36)
 end
 
 emu.addEventCallback(function()
@@ -92,12 +104,20 @@ emu.addEventCallback(function()
     if frame % P.repick == 0 then wander_x = math.random(50, 206); wander_y = math.random(70, 180) end
     if dodge > 0 then dodge = dodge - 1 end
     if frame % 2 == 0 then scan() end
+    if want.at and frame >= want.at then tx, ty = want.x, want.y; want = {} end
     m = A
     local x, y = player()
-    local J = P.jit + 12 * P.retry
-    local jx, jy = math.random(-J, J), math.random(-J, J)
-    if x < tx + jx - 3 then m = m | RT elseif x > tx + jx + 3 then m = m | LF end
-    if y < ty + jy - 3 then m = m | UP elseif y > ty + jy + 3 then m = m | DN end  -- up = descend, down = climb
+    -- dead zone with hysteresis, and a minimum time a direction stays held (no frame-by-frame twitching)
+    local function axis(d, cur, hold)
+      local need = (cur == 0) and P.dead or 3
+      local nd = (d > need) and 1 or (d < -need) and -1 or 0
+      if nd ~= cur and hold <= 0 then return nd, P.hold + math.random(0, 4) end
+      return cur, hold - 1
+    end
+    dirx, holdx = axis(tx - x, dirx, holdx)
+    diry, holdy = axis(ty - y, diry, holdy)
+    if dirx > 0 then m = m | RT elseif dirx < 0 then m = m | LF end
+    if diry > 0 then m = m | UP elseif diry < 0 then m = m | DN end  -- up = descend, down = climb
   end
   mine[frame + 1] = m
   emu.setInput({a = m & A ~= 0, b = m & B ~= 0, select = m & SEL ~= 0, start = m & STA ~= 0,
