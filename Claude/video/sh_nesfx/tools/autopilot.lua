@@ -21,6 +21,8 @@ local dodge = 0
 local want = {}            -- target decided by scan(), applied after a reaction delay: {at=frame, x=, y=}
 local retarget = 0         -- next frame at which a new aim target may be taken
 local dirx, diry, holdx, holdy = 0, 0, 0, 0
+local lastdx, lastdy, lastdodge = 1, 1, -999  -- keep escaping the same way while a threat stays close
+local fire_on, fire_t = true, 0             -- A must be pressed again for each shot: tap it like a person
 
 local function player()
   return emu.read(7, emu.memType.nesSpriteRam) + 16, emu.read(4, emu.memType.nesSpriteRam) + 24
@@ -64,12 +66,14 @@ local function scan()
     -- something big (close) or a red shot next to the player: step away from the side where it is
     local dx = (left_mass > right_mass) and 1 or -1
     local dy = (up_mass > down_mass) and 1 or -1
+    if frame - lastdodge < 40 then dx, dy = lastdx, lastdy end
     -- on retries, sometimes pick the other way so attempts do not all repeat the same escape
-    if P.retry > 0 and math.random() < 0.3 then dx = -dx end
-    if P.retry > 0 and math.random() < 0.3 then dy = -dy end
+    if P.retry > 0 and frame - lastdodge >= 40 and math.random() < 0.3 then dx = -dx end
+    if P.retry > 0 and frame - lastdodge >= 40 and math.random() < 0.3 then dy = -dy end
     -- never run into a screen edge: turn back toward the middle instead
     if px + dx * 70 < 40 or px + dx * 70 > 216 then dx = -dx end
     if py + dy * 50 < P.ty_min or py + dy * 50 > P.ty_max then dy = -dy end
+    lastdx, lastdy, lastdodge = dx, dy, frame
     if dodge == 0 then
       want = {at = frame + math.random(4, 8), x = math.max(32, math.min(224, px + dx * 80)), y = math.max(P.ty_min, math.min(P.ty_max, py + dy * 50))}
       retarget = frame + math.random(20, 36)
@@ -105,14 +109,30 @@ emu.addEventCallback(function()
     if dodge > 0 then dodge = dodge - 1 end
     if frame % 2 == 0 then scan() end
     if want.at and frame >= want.at then tx, ty = want.x, want.y; want = {} end
-    m = A
+    -- fire: press 3-5 frames, release 3-5 frames
+    fire_t = fire_t - 1
+    if fire_t <= 0 then fire_on = not fire_on; fire_t = math.random(3, 5) end
+    m = fire_on and A or 0
     local x, y = player()
-    -- dead zone with hysteresis, and a minimum time a direction stays held (no frame-by-frame twitching)
+    -- a person holds a direction, stops when the target is reached or passed (no instant reverse),
+    -- and only goes the other way after a short pause
     local function axis(d, cur, hold)
-      local need = (cur == 0) and P.dead or 3
-      local nd = (d > need) and 1 or (d < -need) and -1 or 0
-      if nd ~= cur and hold <= 0 then return nd, P.hold + math.random(0, 4) end
-      return cur, hold - 1
+      if cur ~= 0 then
+        if d * cur <= P.stop then return 0, -(P.pause + math.random(0, 6)) end  -- reached/passed: let go
+        if hold > 0 then return cur, hold - 1 end
+        return cur, 0
+      end
+      if hold < 0 then  -- short pause after letting go, before moving again
+        hold = hold + 1
+        return 0, hold
+      end
+      if d > P.dead then return 1, P.hold + math.random(0, 4) end
+      if d < -P.dead then return -1, P.hold + math.random(0, 4) end
+      return 0, 0
+    end
+    if dodge > 0 then  -- escaping skips the pause
+      if holdx < 0 then holdx = 0 end
+      if holdy < 0 then holdy = 0 end
     end
     dirx, holdx = axis(tx - x, dirx, holdx)
     diry, holdy = axis(ty - y, diry, holdy)
