@@ -42,6 +42,7 @@ SH_RUNTIME=runtime_nospr python tools/record.py rec/ap1/inputs.txt rec/final_ns
 python tools/apu_synth.py rec/final
 # 4. 動画素材（src/clips.json の切り出し位置を使う）
 python tools/make_media.py rec/final rec/final_ns
+python tools/make_palfigs.py rec/final_ns   # S05: 8×1ごとのパレット地図・輪郭の色比較（public/img, src/palspan.json）
 ```
 S03 のレイヤー分解（スプライト／地面／SuperFXの絵）は、スプライトは通常とスプライト非表示の差分で正確、地面とSuperFXの絵は画素の色からの推定（画面にもそう表示）。S05 の 8×1 の図も画素の色からの推定。S06 の30コマ側は、60コマの録画を1コマおきに間引いた説明用。
 

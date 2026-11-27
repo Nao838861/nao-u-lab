@@ -1,7 +1,8 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Composition, Sequence, staticFile} from 'remotion';
 import {FONT, FPS, H, W, Subtitle, leadOf, sceneFrames, sceneOrder, sceneInfo, videoOrder} from './common';
-import {S01, S02, S03, S04, S05} from './scenesA';
+import {S01, S02, S03, S04} from './scenesA';
+import {S05} from './scene05';
 import {S06, S07, S08, S09, Thumbnail} from './scenesB';
 
 const SCENES: Record<string, React.FC> = {S01, S02, S03, S04, S05, S06, S07, S08, S09};

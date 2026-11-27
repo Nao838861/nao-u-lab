@@ -174,7 +174,7 @@ def make_attr16(a, clips):
     """Same crop as pal81 with the ordinary NES attribute grid (one palette per 16x16 dots)."""
     i = clips['pal81']; x0, y0 = clips.get('pal81_x', 96), clips['pal81_y']
     A = load(a.rec, i); w, h, z = 64, 48, 8
-    W, H = 1100, 800
+    W, H = 1100, 500
     img = Image.new('RGB', (W, H), (8, 12, 24)); d = ImageDraw.Draw(img)
     ox, oy = 20, 90
     img.paste(Image.fromarray(A[y0:y0 + h, x0:x0 + w]).resize((w * z, h * z), Image.NEAREST), (ox, oy))
