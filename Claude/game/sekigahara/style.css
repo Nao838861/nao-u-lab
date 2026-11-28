@@ -4,7 +4,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #c8ccc6; fon
 #view canvas { display: block; }
 #labels { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
 .lbl { position: absolute; left: 0; top: 0; pointer-events: auto; cursor: pointer; white-space: nowrap;
-  padding: 2px 7px 2px 9px; background: var(--paper); border-left: 5px solid var(--c); font-size: 13px; line-height: 1.25;
+  padding: 2px 7px 2px 9px; background: var(--paper); border: 0; border-left: 5px solid var(--c); font-size: 13px; line-height: 1.25;
   box-shadow: 0 1px 3px rgba(0,0,0,.35); transform-origin: 50% 100%; }
 .lbl::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 26px; background: rgba(20,20,20,.55); }
 .lbl b { font-weight: 700; margin-right: 6px; }
@@ -23,6 +23,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #c8ccc6; fon
 .lbl.gone { opacity: .5; }
 .lbl.idle { opacity: .85; }
 .lbl.sel { outline: 2px solid #b0331f; }
+.lbl:focus-visible { outline: 2px solid #5a4324; outline-offset: 2px; }
 #title { position: fixed; left: 16px; top: 12px; pointer-events: none; text-shadow: 0 0 6px rgba(255,255,255,.8); }
 #title h1 { margin: 0; font-size: 28px; letter-spacing: .1em; }
 #title h1 small { font-size: 13px; letter-spacing: 0; margin-left: 10px; }
@@ -64,6 +65,22 @@ button:hover { background: #efe6d2; }
 #info { position: fixed; } #info .x { position: absolute; right: 8px; top: 6px; border: none; background: none; font-size: 18px; }
 
 #info { bottom: 120px; }
+#info { max-height: calc(100vh - 136px); overflow-y: auto; }
+#officer-preview { position: fixed; z-index: 5; pointer-events: none; width: min(290px, calc(100vw - 16px));
+  padding: 10px 12px; background: #f8f3e7; color: #29251e; border: 1px solid #938363;
+  box-shadow: 0 3px 12px #211b1640; }
+#officer-preview > strong { display: block; margin: 0 0 6px; font: 700 18px/1.35 "Yu Mincho", serif; }
+.officer-profile { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 11px; align-items: center; }
+#info .officer-profile { margin: 8px 0; }
+.portrait-slot { width: 82px; height: 103px; background: #e5ddcc; display: grid; place-items: center;
+  overflow: hidden; font-size: 11px; color: #5c5040; }
+.portrait-slot img { width: 100%; height: 100%; object-fit: cover; }
+.ratings { font: 13px/1.5 system-ui, sans-serif; }
+.ratings small { display: block; margin-bottom: 3px; color: #665849; font-size: 10px; }
+.rating { display: grid; grid-template-columns: 2.2em 1fr 2em; gap: 6px; align-items: center; }
+.rating i { height: 5px; background: #ded4be; }
+.rating u { display: block; height: 100%; background: #87703c; }
+.rating b { text-align: right; font-variant-numeric: tabular-nums; }
 #card { position: fixed; left: 50%; top: 14px; transform: translateX(-50%); width: min(560px, calc(100vw - 560px)); min-width: 320px;
   background: var(--paper); padding: 12px 18px 10px; box-shadow: 0 3px 14px rgba(0,0,0,.4); font-size: 15px; line-height: 1.75; border-top: 4px solid #8a2a1a; }
 #card .meta { display: flex; gap: 10px; align-items: center; font-size: 12px; opacity: .9; }

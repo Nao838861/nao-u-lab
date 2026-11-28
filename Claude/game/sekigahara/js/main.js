@@ -5,6 +5,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { UNITS, SIDE } from './units.js';
 import { createSim, stepSim, prepare, hhmm, koku, sideTotals, T_START, T_END, SIM_DT } from './sim.js';
 import { cardMaps } from './maps.js';
+import { officerProfile, loadOfficerPortrait } from './officers.js';
 import { applyGroundDetail, nearbyStubble } from './terrain.js';
 import { PARAMS, makeBrain, retarget, EVENTS, DEFAULT_OPTS, OPTIONS, ROUT_EVENTS, routText } from './scenario.js';
 
@@ -884,16 +885,49 @@ function showSummary(T) {
 
 // ───────────────── 名札 ─────────────────
 const labelLayer = document.getElementById('labels');
+const preview = document.getElementById('officer-preview');
+let previewLabel = null;
+function hideOfficer() {
+  if (previewLabel) previewLabel.removeAttribute('aria-describedby');
+  previewLabel = null;
+  preview.hidden = true;
+}
+function positionOfficer(rect) {
+  const gap = 8, width = preview.offsetWidth, height = preview.offsetHeight;
+  const left = rect.right + gap + width <= innerWidth ? rect.right + gap : rect.left - width - gap;
+  preview.style.left = Math.max(gap, Math.min(left, innerWidth - width - gap)) + 'px';
+  preview.style.top = Math.max(gap, Math.min(rect.top, innerHeight - height - gap)) + 'px';
+}
+function previewOfficer(el, def) {
+  if (previewLabel === el) return;
+  hideOfficer();
+  const profile = officerProfile(def);
+  if (!profile) return;
+  previewLabel = el;
+  el.setAttribute('aria-describedby', preview.id);
+  preview.innerHTML = `<strong>${def.name}</strong>${profile}`;
+  preview.hidden = false;
+  loadOfficerPortrait(preview, def);
+  positionOfficer(el.getBoundingClientRect());
+}
+addEventListener('blur', hideOfficer);
+addEventListener('keydown', (e) => { if (e.key === 'Escape') hideOfficer(); });
 let labels = [];
 function buildLabels() {
+  hideOfficer();
   labelLayer.innerHTML = '';
   labels = VIS.map((V) => {
     const u = V.def;
-    const el = document.createElement('div');
+    const el = document.createElement('button');
+    el.type = 'button';
+    el.setAttribute('aria-label', u.name + 'の解説');
     el.className = 'lbl';
     el.style.setProperty('--c', u.color);
     el.innerHTML = `<i class="sd"></i><b>${u.name}</b><span class="n"></span><em><u></u></em>`;
-    el.onclick = () => select(V);
+    el.onpointerenter = (e) => { if (e.pointerType !== 'touch') previewOfficer(el, u); };
+    el.onfocus = () => { if (el.matches(':focus-visible')) previewOfficer(el, u); };
+    el.onpointerleave = el.onblur = () => { if (previewLabel === el) hideOfficer(); };
+    el.onclick = () => { hideOfficer(); select(V); };
     labelLayer.appendChild(el);
     return { V, el, sd: el.querySelector('.sd'), n: el.querySelector('.n'), bar: el.querySelector('u'), last: '' };
   });
@@ -911,7 +945,7 @@ function updateLabels() {
       L.sd.textContent = u.side === 'W' ? '西' : '東';
       L.sd.title = u.side !== u.origSide ? '寝返り' : SIDE[u.side];
     }
-    L.n.textContent = st === 'gone' ? (u.id === 'shimazu' || u.id === 'toyohisa' ? '離脱' : '潰走') : Math.round(u.n).toLocaleString();
+    L.n.textContent = st === 'gone' ? (u.id === 'shimazu' ? '離脱' : u.id === 'toyohisa' ? '討死' : '潰走') : Math.round(u.n).toLocaleString();
     L.bar.style.width = (Math.max(0, u.n / u.n0) * 100).toFixed(0) + '%';
     const V = L.V;
     const c = Math.cos(Math.PI - u.face * Math.PI / 180), s = Math.sin(Math.PI - u.face * Math.PI / 180);
@@ -921,22 +955,29 @@ function updateLabels() {
     tmp.project(camera);
     const minor = u.n0 < 3000 && d > 3500;
     const hide = tmp.z > 1 || state.labels === 'none' || (state.labels === 'major' && minor) || (st === 'gone' && V.vis < 0.05);
-    if (hide || Math.abs(tmp.x) > 1.2 || Math.abs(tmp.y) > 1.2) { L.el.style.display = 'none'; continue; }
+    if (hide || Math.abs(tmp.x) > 1.2 || Math.abs(tmp.y) > 1.2) {
+      L.el.style.display = 'none';
+      if (previewLabel === L.el) hideOfficer();
+      continue;
+    }
     L.el.style.display = '';
     const sc = THREE.MathUtils.clamp(2600 / d, 0.6, 1.15);
     L.el.style.transform = `translate(${(tmp.x * 0.5 + 0.5) * w}px, ${(-tmp.y * 0.5 + 0.5) * h}px) translate(-50%, -100%) scale(${sc})`;
     L.el.style.zIndex = String(100000 - Math.round(d));
   }
+  if (previewLabel) positionOfficer(previewLabel.getBoundingClientRect());
 }
 function select(V) {
   const d = V.def, u = SIM.byId[V.id];
   const p = document.getElementById('info');
   const tags = [d.betray ? '<i class="tag b">合戦中に寝返り</i>' : '', d.idle ? '<i class="tag i">戦わず</i>' : ''].join('');
   p.innerHTML = `<button class="x" title="閉じる">×</button><div class="hd ${d.side}"><span class="side">${SIDE[d.side]}</span><h2>${d.name}</h2>${tags}</div>
+    ${officerProfile(d)}
     <dl><dt>兵数（通説）</dt><dd>${d.n.toLocaleString()}</dd><dt>いま</dt><dd>${Math.round(u.n).toLocaleString()}（士気 ${Math.round(Math.max(0, u.morale) * 100)}）</dd><dt>陣所</dt><dd>${d.place}</dd></dl>
     <p>${d.note}</p><p class="caveat">位置・兵数は通説に基づく概略。</p>
     <button id="goto">この隊へ寄る</button>`;
   p.hidden = false;
+  loadOfficerPortrait(p, d);
   p.querySelector('.x').onclick = () => { p.hidden = true; };
   document.getElementById('goto').onclick = () => focusUnits([V.id], 420);
 }

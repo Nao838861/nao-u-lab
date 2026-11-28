@@ -58,6 +58,7 @@
 </aside>
 
 <article id="info" hidden></article>
+<aside id="officer-preview" role="tooltip" hidden></aside>
 <article id="card" hidden></article>
 <article id="summary" hidden></article>
 <ol id="log"></ol>
@@ -69,7 +70,7 @@
   <select id="speed"><option value="15">ゆっくり</option><option value="60" selected>標準（1秒=1分）</option><option value="180">速い</option><option value="480">とても速い</option></select>
 </nav>
 
-<footer id="credit">地形：国土地理院 標高タイル（DEM10B）を加工 ／ 布陣・兵数・推移：通説に基づく簡易モデル ／ 名札クリックで解説</footer>
+<footer id="credit">地形：国土地理院 標高タイル（DEM10B）を加工 ／ 布陣・兵数・推移：通説に基づく簡易モデル ／ 武将名にカーソルで能力、クリックで解説</footer>
 
 <script src="data/dem.js"></script>
 <script src="data/ground.js"></script>
@@ -1397,6 +1398,71 @@ function nearbyStubble(THREE, scene, image, sizeX, sizeZ, heightAt) {
   };
 }
 
+// 関ヶ原での役回りをもとにした人物紹介用の創作値。合戦の計算とは独立している。
+const traits = ['采配', '武勇', '軍略', '折衝'];
+const ratings = {
+  ishida:     [84, 57, 89, 83],
+  sakon:      [91, 94, 85, 58],
+  gamo:       [77, 88, 71, 54],
+  shimazu:    [94, 93, 86, 62],
+  toyohisa:   [78, 95, 72, 48],
+  konishi:    [79, 69, 83, 94],
+  ukita:      [87, 81, 73, 68],
+  otani:      [91, 65, 95, 85],
+  otani2:     [72, 78, 68, 60],
+  hiratsuka:  [81, 86, 74, 59],
+  wakisaka:   [76, 87, 68, 70],
+  kutsuki:    [65, 63, 75, 81],
+  ogawa:      [72, 70, 63, 74],
+  akaza:      [64, 74, 61, 62],
+  kobayakawa: [66, 71, 57, 69],
+  mori:       [71, 67, 72, 74],
+  kikkawa:    [78, 72, 86, 95],
+  ankokuji:   [62, 44, 83, 96],
+  natsuka:    [71, 58, 76, 84],
+  chosokabe:  [74, 80, 69, 63],
+  ieyasu:     [97, 73, 94, 98],
+  fukushima:  [89, 96, 71, 55],
+  ii:         [92, 95, 81, 76],
+  tadayoshi:  [70, 83, 63, 66],
+  honda:      [93, 98, 82, 61],
+  kuroda:     [88, 84, 92, 93],
+  takenaka:   [70, 65, 82, 75],
+  hosokawa:   [87, 84, 82, 80],
+  kato:       [83, 89, 75, 67],
+  tanaka:     [78, 74, 81, 83],
+  tsutsui:    [71, 74, 68, 67],
+  ikoma:      [73, 72, 70, 75],
+  kanamori:   [83, 80, 81, 77],
+  furuta:     [69, 74, 66, 70],
+  oda:        [62, 64, 70, 91],
+  todo:       [88, 82, 91, 90],
+  kyogoku:    [76, 77, 71, 79],
+  terazawa:   [75, 70, 77, 84],
+  ikeda:      [86, 77, 82, 86],
+  asano:      [82, 85, 75, 74],
+  yamauchi:   [75, 69, 78, 89],
+  arima:      [69, 71, 68, 75],
+};
+
+function officerProfile(def) {
+  const stats = ratings[def.id];
+  if (!stats) return '';
+  const joint = def.name.includes('・');
+  const rows = traits.map((name, i) => `<div class="rating"><span>${name}</span><i aria-hidden="true"><u style="width:${stats[i]}%"></u></i><b>${stats[i]}</b></div>`).join('');
+  return `<div class="officer-profile"><div class="portrait-slot"><span>肖像準備中</span></div>
+    <div class="ratings"><small>${joint ? '合同隊の評価・代表肖像' : '武将の能力'} ／ 創作値・100点満点</small>${rows}</div></div>`;
+}
+
+function loadOfficerPortrait(container, def) {
+  const slot = container.querySelector('.portrait-slot');
+  if (!slot) return;
+  const image = new Image();
+  image.alt = def.name.includes('・') ? '合同隊の代表肖像（想像図）' : def.name + 'の肖像（想像図）';
+  image.onload = () => slot.replaceChildren(image);
+  image.src = 'img/faces/' + def.id + '.jpg';
+}
+
 // 関ヶ原 1600 — 描画と再生（部隊シミュは sim.js、史実シナリオは scenario.js）
 import * as THREE from 'three';
 import { MapControls } from 'three/addons/controls/MapControls.js';
@@ -2278,16 +2344,49 @@ function showSummary(T) {
 
 // ───────────────── 名札 ─────────────────
 const labelLayer = document.getElementById('labels');
+const preview = document.getElementById('officer-preview');
+let previewLabel = null;
+function hideOfficer() {
+  if (previewLabel) previewLabel.removeAttribute('aria-describedby');
+  previewLabel = null;
+  preview.hidden = true;
+}
+function positionOfficer(rect) {
+  const gap = 8, width = preview.offsetWidth, height = preview.offsetHeight;
+  const left = rect.right + gap + width <= innerWidth ? rect.right + gap : rect.left - width - gap;
+  preview.style.left = Math.max(gap, Math.min(left, innerWidth - width - gap)) + 'px';
+  preview.style.top = Math.max(gap, Math.min(rect.top, innerHeight - height - gap)) + 'px';
+}
+function previewOfficer(el, def) {
+  if (previewLabel === el) return;
+  hideOfficer();
+  const profile = officerProfile(def);
+  if (!profile) return;
+  previewLabel = el;
+  el.setAttribute('aria-describedby', preview.id);
+  preview.innerHTML = `<strong>${def.name}</strong>${profile}`;
+  preview.hidden = false;
+  loadOfficerPortrait(preview, def);
+  positionOfficer(el.getBoundingClientRect());
+}
+addEventListener('blur', hideOfficer);
+addEventListener('keydown', (e) => { if (e.key === 'Escape') hideOfficer(); });
 let labels = [];
 function buildLabels() {
+  hideOfficer();
   labelLayer.innerHTML = '';
   labels = VIS.map((V) => {
     const u = V.def;
-    const el = document.createElement('div');
+    const el = document.createElement('button');
+    el.type = 'button';
+    el.setAttribute('aria-label', u.name + 'の解説');
     el.className = 'lbl';
     el.style.setProperty('--c', u.color);
     el.innerHTML = `<i class="sd"></i><b>${u.name}</b><span class="n"></span><em><u></u></em>`;
-    el.onclick = () => select(V);
+    el.onpointerenter = (e) => { if (e.pointerType !== 'touch') previewOfficer(el, u); };
+    el.onfocus = () => { if (el.matches(':focus-visible')) previewOfficer(el, u); };
+    el.onpointerleave = el.onblur = () => { if (previewLabel === el) hideOfficer(); };
+    el.onclick = () => { hideOfficer(); select(V); };
     labelLayer.appendChild(el);
     return { V, el, sd: el.querySelector('.sd'), n: el.querySelector('.n'), bar: el.querySelector('u'), last: '' };
   });
@@ -2305,7 +2404,7 @@ function updateLabels() {
       L.sd.textContent = u.side === 'W' ? '西' : '東';
       L.sd.title = u.side !== u.origSide ? '寝返り' : SIDE[u.side];
     }
-    L.n.textContent = st === 'gone' ? (u.id === 'shimazu' || u.id === 'toyohisa' ? '離脱' : '潰走') : Math.round(u.n).toLocaleString();
+    L.n.textContent = st === 'gone' ? (u.id === 'shimazu' ? '離脱' : u.id === 'toyohisa' ? '討死' : '潰走') : Math.round(u.n).toLocaleString();
     L.bar.style.width = (Math.max(0, u.n / u.n0) * 100).toFixed(0) + '%';
     const V = L.V;
     const c = Math.cos(Math.PI - u.face * Math.PI / 180), s = Math.sin(Math.PI - u.face * Math.PI / 180);
@@ -2315,22 +2414,29 @@ function updateLabels() {
     tmp.project(camera);
     const minor = u.n0 < 3000 && d > 3500;
     const hide = tmp.z > 1 || state.labels === 'none' || (state.labels === 'major' && minor) || (st === 'gone' && V.vis < 0.05);
-    if (hide || Math.abs(tmp.x) > 1.2 || Math.abs(tmp.y) > 1.2) { L.el.style.display = 'none'; continue; }
+    if (hide || Math.abs(tmp.x) > 1.2 || Math.abs(tmp.y) > 1.2) {
+      L.el.style.display = 'none';
+      if (previewLabel === L.el) hideOfficer();
+      continue;
+    }
     L.el.style.display = '';
     const sc = THREE.MathUtils.clamp(2600 / d, 0.6, 1.15);
     L.el.style.transform = `translate(${(tmp.x * 0.5 + 0.5) * w}px, ${(-tmp.y * 0.5 + 0.5) * h}px) translate(-50%, -100%) scale(${sc})`;
     L.el.style.zIndex = String(100000 - Math.round(d));
   }
+  if (previewLabel) positionOfficer(previewLabel.getBoundingClientRect());
 }
 function select(V) {
   const d = V.def, u = SIM.byId[V.id];
   const p = document.getElementById('info');
   const tags = [d.betray ? '<i class="tag b">合戦中に寝返り</i>' : '', d.idle ? '<i class="tag i">戦わず</i>' : ''].join('');
   p.innerHTML = `<button class="x" title="閉じる">×</button><div class="hd ${d.side}"><span class="side">${SIDE[d.side]}</span><h2>${d.name}</h2>${tags}</div>
+    ${officerProfile(d)}
     <dl><dt>兵数（通説）</dt><dd>${d.n.toLocaleString()}</dd><dt>いま</dt><dd>${Math.round(u.n).toLocaleString()}（士気 ${Math.round(Math.max(0, u.morale) * 100)}）</dd><dt>陣所</dt><dd>${d.place}</dd></dl>
     <p>${d.note}</p><p class="caveat">位置・兵数は通説に基づく概略。</p>
     <button id="goto">この隊へ寄る</button>`;
   p.hidden = false;
+  loadOfficerPortrait(p, d);
   p.querySelector('.x').onclick = () => { p.hidden = true; };
   document.getElementById('goto').onclick = () => focusUnits([V.id], 420);
 }
