@@ -16,3 +16,9 @@ index.html をダブルクリックで開ける（three.js は CDN から読む�
 URL パラメータ: `ratio` `t=hh:mm` `play=1` `speed` `view=<プリセット>` `cam=lon,lat,eyeH,lookLon,lookLat` `focus=id,id` `if=kobaya=neutral,...`
 
 設計は [DESIGN.md](DESIGN.md)。
+
+## 街道と秋の地表
+
+街道は[関ケ原町景観計画 第1章の旧街道図](https://www.town.sekigahara.gifu.jp/secure/6497/daiissyou.pdf)を手がかりに、現代の標高と照合して引いた。北国脇往還は笹尾山の麓から玉方面へ、伊勢街道は鳥頭坂方面へ通じる。1600年の細かな屈曲、道幅、街道沿いの家の並びは推定である。
+
+低地には秋の刈田、土の見える区画、草の残る畦を配置した。各筆の形と収穫の進み具合は景観の想定である。近景では土・藁・落葉の写真の濃淡と立体の刈株を重ねる。素材は Poly Haven の [Withered Grass](https://polyhaven.com/a/withered_grass)、[Brown Mud Dry](https://polyhaven.com/a/brown_mud_dry)、[Forest Ground 01](https://polyhaven.com/a/forrest_ground_01)（CC0）。

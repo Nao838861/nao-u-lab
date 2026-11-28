@@ -2,12 +2,13 @@
   - 平地: 刈り入れ後の田(稲株の黄土色)・一部まだ緑・畦
   - 斜面: 里山の草地(薄)→森(杉檜の濃緑＋紅葉しはじめの広葉樹)
   - 川: DEMの流量累積(D8)から自動抽出
-  - 街道: 手入力ポリライン(js/geo.js と同じ座標)
-出力: data/ground.jpg と data/ground.js(base64)、data/rivers.json
+  - 街道: 手入力ポリライン(data/geo.json と同じ座標)
+出力: data/ground.jpg と data/ground.js(base64)、地表材質マスクと data/geo.js
 """
 import base64, io, json, math, os
 import numpy as np
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageFilter
+from scipy.spatial import cKDTree
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 D = os.path.join(HERE, '..', 'data')
@@ -82,30 +83,64 @@ def noise(scale, seed):
     return np.array(Image.fromarray(small, mode='F').resize((OW + scale, OH + scale), Image.BICUBIC))[:OH, :OW]
 n1, n2, n3 = noise(40, 1), noise(9, 2), noise(3, 3)
 
-# ---- 田の区画 (回転した不規則格子) ----
-X, Y = np.meshgrid(np.arange(OW, dtype=np.float32), np.arange(OH, dtype=np.float32))
-mx, my = X * cell / S, Y * cell / S
-ang = math.radians(18)
-u = mx * math.cos(ang) + my * math.sin(ang) + n1 * 40
-v = -mx * math.sin(ang) + my * math.cos(ang) + n1 * 25
-fw, fh = 30.0 + 0*n2, 20.0
-cu, cv = np.floor(u / fw), np.floor(v / fh)
-cid = (cu * 73856093 + cv * 19349663) % 1000 / 1000.0
-fu, fv = u / fw - cu, v / fh - cv
-levee = (np.minimum(np.minimum(fu, 1 - fu) * fw, np.minimum(fv, 1 - fv) * fh) < 0.9)
+# 谷ごとに緩く向きが違う耕地区を作る。各帯の幅・長さ・切れ目も変える。
+def field_parcels():
+    spacing = 190
+    dx = cell / S
+    sy, sx = np.mgrid[-1:int(OH * dx / spacing) + 2, -1:int(OW * dx / spacing) + 2]
+    seeds = np.column_stack((sx.ravel(), sy.ravel())) * spacing
+    seeds = seeds + rng.uniform(-0.42, 0.42, seeds.shape) * spacing
+    tree = cKDTree(seeds)
+    directions = rng.uniform(-0.92, 1.12, len(seeds))
+    widths = rng.uniform(14, 34, len(seeds))
+    lengths = rng.uniform(30, 76, len(seeds))
+    angle = np.empty_like(h)
+    soil = np.empty_like(h)
+    bank = np.empty_like(h)
+    xs = np.arange(OW, dtype=np.float32)[None, :] * dx
+    for y0 in range(0, OH, 64):
+        rows = slice(y0, min(y0 + 64, OH))
+        ys = np.arange(rows.start, rows.stop, dtype=np.float32)[:, None] * dx
+        x = xs + (n1[rows] - 0.5) * 13
+        y = ys + (n2[rows] - 0.5) * 3 + (n1[rows] - 0.5) * 15
+        dist, ids = tree.query(np.stack((x, y), axis=-1), k=2)
+        region = ids[..., 0]
+        a = directions[region]
+        u = x * np.cos(a) + y * np.sin(a)
+        v = -x * np.sin(a) + y * np.cos(a)
+        width = widths[region]
+        strip = np.floor(v / width).astype(np.int32)
+        # 整数で種を混ぜる。大きな座標を浮動小数でハッシュすると縞が生じる。
+        seed = (strip * 7919 + region * 241) % 1009
+        length = lengths[region] * (0.68 + (seed * 193 % 997) / 997)
+        along = u + (seed * 181 % 127)
+        plot = np.floor(along / length).astype(np.int32)
+        crop = ((seed * 59 + plot * 139) % 251) / 250
+        dv = abs((v + width / 2) % width - width / 2)
+        du = abs((along + length / 2) % length - length / 2)
+        edge = np.minimum(np.minimum(dv, du), (dist[..., 1] - dist[..., 0]) * 0.48)
+        bank[rows] = np.clip((2.0 - edge) / 2.4, 0, 1)
+        angle[rows] = (a + 1.0) / 2.2
+        soil[rows] = crop
+    return angle, soil, bank
+
+angle, crop, levee = field_parcels()
 
 def rgb(c): return np.array(c, np.float32) / 255
-stubble = rgb((176, 150, 92)); stubble2 = rgb((150, 124, 74)); dry = rgb((160, 140, 100))
-green = rgb((120, 128, 70)); hasa = rgb((190, 160, 90)); leveec = rgb((118, 112, 66))
+stubble = rgb((176, 150, 92)); stubble2 = rgb((150, 124, 74))
+leveec = rgb((118, 112, 66))
 grass = rgb((150, 140, 88)); grass2 = rgb((122, 122, 72))
 cedar = rgb((38, 56, 34)); broad = rgb((72, 84, 44)); autumn = rgb((128, 92, 44)); autumn2 = rgb((140, 70, 40))
-water = rgb((70, 92, 96)); road = rgb((168, 150, 118)); bare = rgb((140, 124, 96))
+water = rgb((70, 92, 96))
 
 img = np.zeros((OH, OW, 3), np.float32)
 # 田
-pf = np.where(cid[..., None] < 0.55, stubble, np.where(cid[..., None] < 0.8, stubble2, np.where(cid[..., None] < 0.92, green, dry)))
-pf = pf * (0.92 + 0.16 * n3[..., None])
-pf = np.where(levee[..., None], leveec, pf)
+# 刈田・休ませた土・草の混じる畑。畦だけに草色を残す。
+pf = stubble2 + (stubble - stubble2) * crop[..., None]
+rest = np.clip((0.25 - crop) * 5, 0, 1)[..., None]
+pf = pf * (1 - rest) + rgb((128, 120, 78)) * rest
+pf *= (0.89 + 0.13 * n1 + 0.10 * n2)[..., None]
+pf = pf * (1 - levee[..., None]) + leveec * levee[..., None]
 # 草地
 gr = grass * (1 - n2[..., None]) + grass2 * n2[..., None]
 gr = gr * (0.85 + 0.25 * n3[..., None])
@@ -134,17 +169,47 @@ img[riv] = water
 hs = np.clip(0.75 + (-gx * 0.6 + gy * 0.4) * 0.6, 0.55, 1.15)
 img = img * hs[..., None]
 
+# 道の中心からの距離をメートルで求め、路肩を草地へなじませる。
+meters = cell / S
+road_edge = np.full((OH, OW), 10, np.float32)
+for road in geo['roads']:
+    line = np.array(road['pts'])
+    points = np.column_stack(((line[:, 0] - m['west']) / (m['east'] - m['west']) * (OW - 1),
+                              (m['north'] - line[:, 1]) / (m['north'] - m['south']) * (OH - 1)))
+    radius = road['width_m'] / 2
+    margin = int(np.ceil((radius + 10) / meters)) + 1
+    for a, b in zip(points, points[1:]):
+        xmin, ymin = np.maximum(0, np.floor(np.minimum(a, b)).astype(int) - margin)
+        xmax, ymax = np.minimum([OW, OH], np.ceil(np.maximum(a, b)).astype(int) + margin + 1)
+        yy, xx = np.mgrid[ymin:ymax, xmin:xmax]
+        delta = b - a
+        along = np.clip(((xx - a[0]) * delta[0] + (yy - a[1]) * delta[1]) / max(1e-8, delta @ delta), 0, 1)
+        distance = np.hypot(xx - a[0] - along * delta[0], yy - a[1] - along * delta[1]) * meters
+        region = road_edge[ymin:ymax, xmin:xmax]
+        np.minimum(region, distance - radius, out=region)
+# 写真素材を重ねる場所・向き・道の縁。川では土道と稲株を描かない。
+road_edge[riv] = 10
+road_cover = np.clip(0.5 - road_edge / meters, 0, 1)[..., None]
+road_color = rgb((151, 127, 91)) * (0.92 + 0.14 * n2 + 0.05 * n3)[..., None]
+img = img * (1 - road_cover) + road_color * road_cover
+field_cover = w_field * (1 - levee) * (0.55 + 0.45 * np.clip(crop * 4, 0, 1))
+field_cover[riv] = 0
+# R=水面(0) / 陸(0.15)〜田(1)、G=田の向き、B=道の縁からの距離(-4〜10m)
+mask = np.stack((np.where(riv, 0, 0.15 + 0.85 * field_cover), angle, (road_edge + 4) / 14), axis=2)
+
+def encoded_image(image, fmt, **options):
+    buf = io.BytesIO()
+    image.save(buf, fmt, **options)
+    mime = 'jpeg' if fmt == 'JPEG' else 'png'
+    return 'data:image/' + mime + ';base64,' + base64.b64encode(buf.getvalue()).decode()
+
 pil = Image.fromarray((np.clip(img, 0, 1) * 255).astype(np.uint8))
-dr = ImageDraw.Draw(pil)
-def P(lon, lat):
-    return ((lon - m['west']) / (m['east'] - m['west']) * OW, (m['north'] - lat) / (m['north'] - m['south']) * OH)
-for rd in geo['roads']:
-    pts = [P(*p) for p in rd['pts']]
-    dr.line(pts, fill=(112, 98, 72), width=rd.get('w', 3) + 2, joint='curve')
-    dr.line(pts, fill=(186, 168, 132), width=rd.get('w', 3), joint='curve')
-pil.save(os.path.join(D, 'ground.jpg'), quality=82)
-buf = io.BytesIO(); pil.save(buf, 'JPEG', quality=82)
-open(os.path.join(D, 'ground.js'), 'w').write('window.GROUND_JPG="data:image/jpeg;base64,' + base64.b64encode(buf.getvalue()).decode() + '";\n')
-print(OW, OH, len(buf.getvalue()))
-open(os.path.join(D, 'geo.js'), 'w', encoding='utf-8').write('window.GEO=' + json.dumps(geo, ensure_ascii=False) + ';
-')
+pil.save(os.path.join(D, 'ground.jpg'), quality=85)
+# 道の距離を正確に保つため、最終出力は原寸のまま可逆圧縮する。
+mask_img = Image.fromarray(np.round(np.clip(mask, 0, 1) * 255).astype(np.uint8))
+with open(os.path.join(D, 'ground.js'), 'w', encoding='utf-8') as f:
+    f.write('window.GROUND_JPG=' + json.dumps(encoded_image(pil, 'JPEG', quality=85)) + ';\n')
+    f.write('window.GROUND_MASK=' + json.dumps(encoded_image(mask_img, 'PNG')) + ';\n')
+with open(os.path.join(D, 'geo.js'), 'w', encoding='utf-8') as f:
+    f.write('window.GEO=' + json.dumps(geo, ensure_ascii=False) + ';\n')
+print(OW, OH)

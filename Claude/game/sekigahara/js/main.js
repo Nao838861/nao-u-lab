@@ -5,6 +5,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { UNITS, SIDE } from './units.js';
 import { createSim, stepSim, prepare, hhmm, koku, sideTotals, T_START, T_END, SIM_DT } from './sim.js';
 import { MAPS } from './maps.js';
+import { applyGroundDetail, nearbyStubble } from './terrain.js';
 import { PARAMS, makeBrain, retarget, EVENTS, DEFAULT_OPTS, OPTIONS, ROUT_EVENTS, routText } from './scenario.js';
 
 // ───────────────── 地形データ ─────────────────
@@ -71,16 +72,25 @@ scene.add(sun);
 scene.add(new THREE.HemisphereLight(0xc4d0dc, 0x5a5040, 1.15));
 
 // ───────────────── 地形 ─────────────────
+let updateStubble;
 {
   const geo = new THREE.PlaneGeometry(SX, SY, DW - 1, DH - 1);
   geo.rotateX(-Math.PI / 2);
   const pos = geo.attributes.position;
   for (let i = 0; i < pos.count; i++) pos.setY(i, DEM[i]);
   geo.computeVertexNormals();
-  const tex = new THREE.TextureLoader().load(window.GROUND_JPG, () => { buildTrees(tex.image); });
+  const loader = new THREE.TextureLoader();
+  const grain = loader.load(window.GROUND_DETAIL);
+  const tex = loader.load(window.GROUND_JPG, () => { buildTrees(tex.image, grain); });
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   const mat = new THREE.MeshLambertMaterial({ map: tex });
+  const cover = loader.load(window.GROUND_MASK, (texture) => {
+    updateStubble = nearbyStubble(THREE, scene, texture.image, SX, SY, heightAt);
+  });
+  grain.wrapS = grain.wrapT = THREE.RepeatWrapping;
+  grain.anisotropy = tex.anisotropy;
+  applyGroundDetail(mat, cover, grain, SX, SY);
   const terrain = new THREE.Mesh(geo, mat);
   scene.add(terrain);
   // 外周の地面（地図の外を霧に溶かす）
@@ -556,20 +566,31 @@ function clearSmoke() { smoke.g.attributes.aBirth.array.fill(-1e9); smoke.dirty 
 
 
 // ───────────────── 樹木と集落 ─────────────────
-function buildTrees(img) {
+function buildTrees(img, grain) {
   const cv = document.createElement('canvas');
   cv.width = img.width; cv.height = img.height;
   const ctx = cv.getContext('2d');
   ctx.drawImage(img, 0, 0);
   const px = ctx.getImageData(0, 0, cv.width, cv.height).data;
   const rnd = rand(1600);
+  // 枝が段を作る針葉樹。頂点を増やすのは樹冠の輪郭だけにする。
+  const profile = [[.25,2.2],[2.7,2.5],[1.35,5.0],[2.0,4.5],[.82,7.1],[1.24,6.6],[0,10.5]];
+  const pineCrown = new THREE.LatheGeometry(profile.map(([r,y]) => new THREE.Vector2(r,y)), 6);
+  const leafCrown = new THREE.SphereGeometry(3.4, 8, 5);
+  const crownPos = leafCrown.attributes.position;
+  for (let i = 0; i < crownPos.count; i++) {
+    const x = crownPos.getX(i), y = crownPos.getY(i), z = crownPos.getZ(i);
+    const shape = 1 + .14 * Math.sin(1.8*x + 1.2*y) * Math.cos(z + .8*y);
+    crownPos.setXYZ(i, x*shape + .15*y, y*.91 + .22*Math.sin(z), z*shape);
+  }
+  leafCrown.computeVertexNormals();
   const conifer = mergeGeometries([
-    part(new THREE.ConeGeometry(2.6, 9, 6), '#ffffff', 1, 0, 6.5, 0),
-    part(new THREE.CylinderGeometry(0.25, 0.3, 2.5, 4), '#4a3424', 0, 0, 1.25, 0),
+    part(pineCrown, '#ffffff', 1, 0, 0, 0),
+    part(new THREE.CylinderGeometry(0.25, 0.3, 2.5, 4), '#907860', 0, 0, 1.25, 0),
   ]);
   const broad = mergeGeometries([
-    part(new THREE.IcosahedronGeometry(3.4, 0), '#ffffff', 1, 0, 6.0, 0),
-    part(new THREE.CylinderGeometry(0.3, 0.35, 3.5, 4), '#4a3424', 0, 0, 1.75, 0),
+    part(leafCrown, '#ffffff', 1, 0, 5.8, 0),
+    part(new THREE.CylinderGeometry(0.3, 0.35, 3.5, 4), '#907860', 0, 0, 1.75, 0),
   ]);
   const CH = 6, chunks = {};
   const step = 13;
@@ -589,9 +610,35 @@ function buildTrees(img) {
     }
   }
   const dummy = new THREE.Object3D(), col = new THREE.Color();
+  const foliage = bodyMaterial();
+  const tintCrown = foliage.onBeforeCompile;
+  foliage.onBeforeCompile = (shader) => {
+    tintCrown(shader);
+    shader.uniforms.leafGrain = { value: grain };
+    const varyings = 'varying vec3 treePoint; varying float treeDepth; varying float crown;\n';
+    shader.vertexShader = varyings + shader.vertexShader.replace('#include <project_vertex>', `
+      #include <project_vertex>
+      treePoint = (instanceMatrix * vec4(position,1.0)).xyz;
+      treeDepth = -mvPosition.z;
+      crown = armor;
+    `);
+    shader.fragmentShader = varyings + 'uniform sampler2D leafGrain;\n' +
+      shader.fragmentShader.replace('#include <color_fragment>', `
+      #include <color_fragment>
+      if (treeDepth < 220.0) {
+        vec2 q = treePoint.xy + treePoint.z * vec2(.71,.42);
+        float fine = texture2D(leafGrain, q / 1.55).b;
+        float clump = texture2D(leafGrain, q / 5.3).r;
+        float nearTree = 1.0 - smoothstep(75.0,220.0,treeDepth);
+        float leaves = fine * .66 + clump * .34;
+        if (crown > .5 && leaves < .27 * nearTree) discard;
+        float bark = texture2D(leafGrain,q * vec2(1.6,.28)).g;
+        diffuseColor.rgb *= 1.0 + nearTree * mix((bark-.5)*1.1,(leaves-.40)*2.2,crown);
+      }`);
+  };
   let count = 0;
   for (const [key, list] of Object.entries(chunks)) {
-    const mesh = new THREE.InstancedMesh(key[0] === 'c' ? conifer : broad, MAT.body, list.length);
+    const mesh = new THREE.InstancedMesh(key[0] === 'c' ? conifer : broad, foliage, list.length);
     list.forEach(([x, z, R, G, B], i) => {
       dummy.position.set(x, heightAt(x, z) - 0.5, z);
       dummy.rotation.set(0, rnd() * 6.28, 0);
@@ -599,7 +646,7 @@ function buildTrees(img) {
       dummy.scale.set(s, s * (0.8 + rnd() * 0.5), s);
       dummy.updateMatrix();
       mesh.setMatrixAt(i, dummy.matrix);
-      col.setRGB(R / 255 * 0.9, G / 255 * 0.95, B / 255 * 0.85, THREE.SRGBColorSpace);
+      col.setRGB((R + 21) / 255, (G + 26) / 255, (B + 13) / 255, THREE.SRGBColorSpace);
       mesh.setColorAt(i, col);
     });
     mesh.computeBoundingSphere();
@@ -615,23 +662,37 @@ function buildVillages() {
     part(box(8, 2.6, 5.5), '#8a7a62', 0, 0, 1.3, 0),
     part(roofGeo(9.2, 3.2, 6.6), '#ffffff', 1, 0, 2.6, 0),
   ]);
-  const roads = Object.fromEntries(G.roads.map((r) => [r.name, r.pts.map(([lo, la]) => ll2xz(lo, la))]));
+  const roads = Object.fromEntries(G.roads.map((r) => {
+    const points = r.pts.map(([lo, la]) => ll2xz(lo, la));
+    let length = 0;
+    const segments = points.slice(1).map(([x, z], i) => {
+      const [ax, az] = points[i], dx = x - ax, dz = z - az;
+      const span = Math.hypot(dx, dz), start = length;
+      length += span;
+      return { ax, az, ux: dx / span, uz: dz / span, start, end: length };
+    });
+    return [r.name, segments];
+  }));
   const rnd = rand(42);
   const items = [];
   for (const v of G.villages) {
     const [vx, vz] = ll2xz(v.lon, v.lat);
+    const road = roads[v.along];
+    let center = 0, nearest = Infinity;
+    for (const s of road || []) {
+      const along = THREE.MathUtils.clamp((vx - s.ax) * s.ux + (vz - s.az) * s.uz, 0, s.end - s.start);
+      const d = Math.hypot(vx - s.ax - along * s.ux, vz - s.az - along * s.uz);
+      if (d < nearest) { nearest = d; center = s.start + along; }
+    }
     for (let i = 0; i < v.n; i++) {
       let x, z, ang;
-      if (v.along) {
-        // 街道沿いに両側へ並べる
-        const pts = roads[v.along];
-        let best = 0, bd = Infinity;
-        pts.forEach(([px, pz], k) => { const d = Math.hypot(px - vx, pz - vz); if (d < bd) { bd = d; best = k; } });
-        const a = pts[Math.max(0, best - 1)], b = pts[Math.min(pts.length - 1, best + 1)];
-        const dx = b[0] - a[0], dz = b[1] - a[1], L = Math.hypot(dx, dz);
-        const t = (rnd() - 0.5) * 2 * v.r, side = rnd() < 0.5 ? -1 : 1, off = 12 + rnd() * 10;
-        x = vx + dx / L * t - dz / L * off * side; z = vz + dz / L * t + dx / L * off * side;
-        ang = Math.atan2(dx, dz);
+      if (road) {
+        const distance = THREE.MathUtils.clamp(center + (rnd() - .5) * 2 * v.r, 0, road[road.length-1].end);
+        const s = road.find((s) => distance <= s.end);
+        const offset = (i % 2 ? 1 : -1) * (9 + rnd() * 11);
+        x = s.ax + (distance - s.start) * s.ux - offset * s.uz;
+        z = s.az + (distance - s.start) * s.uz + offset * s.ux;
+        ang = Math.atan2(s.ux, s.uz);
       } else {
         const a = rnd() * 6.28, d = Math.sqrt(rnd()) * v.r;
         x = vx + Math.cos(a) * d; z = vz + Math.sin(a) * d; ang = rnd() * 3.14;
@@ -878,6 +939,7 @@ const PRESETS = {
   matsuo: () => presetFrom(136.4547, 35.3466, 60, 136.4600, 35.3610),
   ieyasu: () => presetFrom(136.4905, 35.3642, 50, 136.4620, 35.3660),
   nangu: () => presetFrom(136.5066, 35.3498, 40, 136.4800, 35.3660),
+  road: () => presetFrom(136.47537, 35.36290, 4.7, 136.47503, 35.36285),
 };
 function focusUnits(ids, minDist = 600) {
   const us = ids.map((id) => SIM.byId[id]).filter(Boolean);
@@ -1023,6 +1085,7 @@ function loop() {
   const gh = heightAt(camera.position.x, camera.position.z) + 6;
   if (camera.position.y < gh) camera.position.y = gh;
   scene.userData.sky.position.copy(camera.position);
+  if (updateStubble) updateStubble(camera.position.x, camera.position.y, camera.position.z);
   renderer.render(scene, camera);
   updateLabels();
   $('clock').textContent = `${hhmm(play.gameT)}`;
