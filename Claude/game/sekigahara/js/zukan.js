@@ -1,5 +1,5 @@
 // 武将図鑑：顔と能力の一覧 → クリックで一人ずつの読み物
-import { officerRatings, officerTraits } from './officers.js';
+import { officerRatings, officerTraits, officerPortraitHTML } from './officers.js';
 import { ZUKAN, FATE } from './episodes.js';
 
 const ZK_SIDE = { W: '西軍', E: '東軍' };
@@ -31,7 +31,6 @@ const zkRatingRows = (id) => {
   const s = officerRatings[id];
   return officerTraits.map((t, i) => `<div class="rating"><span>${t}</span><i aria-hidden="true"><u style="width:${s[i]}%"></u></i><b>${s[i]}</b></div>`).join('');
 };
-const zkFace = (d) => 'img/faces/' + (d.portrait ?? d.id + '.jpg');
 
 export function initZukan({ units, onOpen, onLocate }) {
   const list = units.filter((d) => ZUKAN[d.id] && officerRatings[d.id]);
@@ -48,7 +47,7 @@ export function initZukan({ units, onOpen, onLocate }) {
       <button class="zk-x" title="閉じる (Esc)">×</button>
     </div>
     <div class="zk-grid"></div>
-    <p class="zk-note">能力値はこの再現のための創作値。顔は伝来の肖像や逸話をもとにした想像図。</p>
+    <p class="zk-note">能力値はゲーム独自の評価。肖像は想像図です。顔や装いの資料が乏しい人物は、同時代の服装や具足を参考に描いています。</p>
     <div class="zk-pop" hidden><article></article></div>`;
   document.body.appendChild(root);
   const grid = root.querySelector('.zk-grid'), pop = root.querySelector('.zk-pop'), art = pop.querySelector('article');
@@ -64,7 +63,7 @@ export function initZukan({ units, onOpen, onLocate }) {
       const z = ZUKAN[d.id];
       const val = S.show(d);
       return `<button class="zk-card ${d.side}" data-id="${d.id}">
-        <span class="zk-face"><img loading="lazy" src="${zkFace(d)}" alt=""><i class="sd ${d.side}">${d.side === 'W' ? '西' : '東'}</i><em>${i + 1}</em>
+        <span class="zk-face">${officerPortraitHTML(d, true)}<i class="sd ${d.side}">${d.side === 'W' ? '西' : '東'}</i><em>${i + 1}</em>
           ${d.betray ? '<i class="zk-tag b">寝返り</i>' : d.idle ? '<i class="zk-tag i">戦わず</i>' : z.fate <= 1 ? '<i class="zk-tag d">散る</i>' : ''}</span>
         <span class="zk-body"><b>${zkEsc(d.name)}</b><small>${zkEsc(z.catch)}</small>
           <span class="zk-val">${S.lead ? `<span>${S.lead}</span>` : ''}<strong${S.id === 'fate' ? ` class="zk-fate f${z.fate}"` : ''}>${zkEsc(val)}</strong>${S.tail ? `<span>${S.tail}</span>` : ''}</span>
@@ -84,7 +83,7 @@ export function initZukan({ units, onOpen, onLocate }) {
     art.tabIndex = -1;
     art.innerHTML = `<button class="zk-x" title="閉じる">×</button>
       <div class="zk-left">
-        <img src="${zkFace(d)}" alt="${zkEsc(d.name)}の肖像（想像図）">
+        ${officerPortraitHTML(d)}
         <div class="ratings">${zkRatingRows(id)}</div>
         <dl>
           <dt>陣営</dt><dd>${ZK_SIDE[d.side]}${d.betray ? '（合戦中に寝返り）' : d.idle ? '（戦わず）' : ''}</dd>

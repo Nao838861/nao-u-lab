@@ -75,6 +75,11 @@ button:hover { background: #efe6d2; }
 .portrait-slot { width: 82px; height: 103px; background: #e5ddcc; display: grid; place-items: center;
   overflow: hidden; font-size: 11px; color: #5c5040; }
 .portrait-slot img { width: 100%; height: 100%; object-fit: cover; }
+.portrait-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; align-content: center; width: 100%; height: 100%; }
+.portrait-person { display: block; min-width: 0; text-align: center; font: 600 11px/1.5 system-ui, sans-serif; }
+.portrait-pair .portrait-person img { display: block; width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; }
+.officer-profile:has(.portrait-pair) { grid-template-columns: 1fr; }
+.portrait-slot:has(.portrait-pair) { width: min(100%, 168px); height: auto; }
 .ratings { font: 13px/1.5 system-ui, sans-serif; }
 .ratings small { display: block; margin-bottom: 3px; color: #665849; font-size: 10px; }
 .rating { display: grid; grid-template-columns: 2.2em 1fr 2em; gap: 6px; align-items: center; }
@@ -227,4 +232,6 @@ button:hover { background: #efe6d2; }
   .zk-pop .zk-x { top: 4px; right: 6px; }
   .zk-left { display: grid; grid-template-columns: 120px 1fr; gap: 12px; } .zk-left dl { grid-column: 1 / -1; }
   .zk-left .ratings { margin: 0; }
+  .zk-left > .portrait-pair { grid-column: 1 / -1; max-width: 320px; justify-self: center; }
+  .zk-left > .portrait-pair + .ratings { grid-column: 1 / -1; }
 }

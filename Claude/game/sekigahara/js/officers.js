@@ -47,20 +47,29 @@ const ratings = {
 
 export const officerRatings = ratings, officerTraits = traits;
 
+// 合同隊のファイル順は部隊名の表記順と同じ。能力は隊単位で、肖像は一人ずつ表示する。
+const jointFaces = { otani2: ['otani2.jpg', 'kinoshita.jpg'], hiratsuka: ['toda.jpg', 'hiratsuka.jpg'] };
+export function officerPortraitHTML(def, lazy = false) {
+  const files = jointFaces[def.id] ?? [def.portrait ?? def.id + '.jpg'];
+  const names = def.name.split('・');
+  const portraits = files.map((file, i) => {
+    const img = `<img ${lazy ? 'loading="lazy" ' : ''}src="img/faces/${file}" alt="${names[i]}の肖像（想像図）">`;
+    return files.length === 1 ? img : `<span class="portrait-person">${img}<span>${names[i]}</span></span>`;
+  }).join('');
+  return files.length === 1 ? portraits : `<span class="portrait-pair">${portraits}</span>`;
+}
+
 export function officerProfile(def) {
   const stats = ratings[def.id];
   if (!stats) return '';
   const joint = def.name.includes('・');
   const rows = traits.map((name, i) => `<div class="rating"><span>${name}</span><i aria-hidden="true"><u style="width:${stats[i]}%"></u></i><b>${stats[i]}</b></div>`).join('');
   return `<div class="officer-profile"><div class="portrait-slot"><span>肖像準備中</span></div>
-    <div class="ratings"><small>${joint ? '合同隊の評価・代表肖像' : '武将の能力'} ／ 創作値・100点満点</small>${rows}</div></div>`;
+    <div class="ratings"><small>${joint ? '合同隊の評価' : '武将の能力'} ／ 創作値・100点満点</small>${rows}</div></div>`;
 }
 
 export function loadOfficerPortrait(container, def) {
   const slot = container.querySelector('.portrait-slot');
   if (!slot) return;
-  const image = new Image();
-  image.alt = def.name.includes('・') ? '合同隊の代表肖像（想像図）' : def.name + 'の肖像（想像図）';
-  image.onload = () => slot.replaceChildren(image);
-  image.src = 'img/faces/' + (def.portrait ?? def.id + '.jpg');
+  slot.innerHTML = officerPortraitHTML(def);
 }
