@@ -47,6 +47,9 @@ if (!Object.keys(opt).length) {
     ['豊久討死', t('toyohisa_die') !== null],
     ['井伊負傷', t('ii_wound') !== null],
     ['南宮山は戦わず（毛利の損害0）', S.byId.mori.killed < 1],
+    ['島左近は撃たれてから崩れる', t('sakon') !== null && t('sakon') <= (t('rout:sakon') ?? 99)],
+    ['小西隊は小早川の寝返り後に崩れる', t('konishi_flee') >= t('kobaya_betray')],
+    ['島津は退き口まで無傷に近い（9割以上）', (() => { const e = S.log.find((x) => x.id === 'breakout'); return e && e.shimazuN >= 0.9 * 900; })()],
   ];
   let ok = 0;
   for (const [name, pass] of checks) { console.log(pass ? 'PASS' : 'FAIL', name); if (pass) ok++; }

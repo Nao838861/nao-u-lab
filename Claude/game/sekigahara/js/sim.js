@@ -159,8 +159,8 @@ export function stepSim(S, brain) {
         T = (S.retarget && S.retarget(S, u)) || nearestEnemy(S, u, 1600);
         if (T) o.target = T.id; else { setOrder(S, u.id, { type: 'hold' }); }
       }
-      // 目標以外の敵と接していればまずそれと戦う（足止め）
-      if (T && !u.contacts.includes(T) && !u.contacts.some((c) => c.side !== u.side && c.status !== 'rout')) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
+      // 捨て奸に接していれば、それを片づけるまで先へ進めない（足止め）
+      if (T && !u.contacts.includes(T) && !u.contacts.some((c) => c.hidden && c.side !== u.side)) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
     } else if (o.type === 'move') {
       if (moveToward(u, o.x, o.z, u.speed, dt)) setOrder(S, u.id, { type: 'hold' });
     } else if (o.type === 'path') {

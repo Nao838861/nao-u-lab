@@ -336,8 +336,8 @@ function stepSim(S, brain) {
         T = (S.retarget && S.retarget(S, u)) || nearestEnemy(S, u, 1600);
         if (T) o.target = T.id; else { setOrder(S, u.id, { type: 'hold' }); }
       }
-      // 目標以外の敵と接していればまずそれと戦う（足止め）
-      if (T && !u.contacts.includes(T) && !u.contacts.some((c) => c.side !== u.side && c.status !== 'rout')) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
+      // 捨て奸に接していれば、それを片づけるまで先へ進めない（足止め）
+      if (T && !u.contacts.includes(T) && !u.contacts.some((c) => c.hidden && c.side !== u.side)) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
     } else if (o.type === 'move') {
       if (moveToward(u, o.x, o.z, u.speed, dt)) setOrder(S, u.id, { type: 'hold' });
     } else if (o.type === 'path') {
@@ -422,7 +422,7 @@ const PARAMS = {
   gamo: { q: 1.2, fort: 2.8, msens: 0.9, noRout: true, retreat: [136.4470, 35.3890] },
   shimazu: { q: 2.2, fort: 1.8, morale: 0.95, msens: 0.5, noRout: true },
   toyohisa: { q: 2.0, fort: 1.8, morale: 0.95, msens: 0.5, noRout: true },
-  konishi: { q: 0.8, fort: 1.9, morale: 0.82, msens: 1.1, retreat: [136.4400, 35.3850] },
+  konishi: { q: 0.8, fort: 1.9, homeR: 400, morale: 0.82, msens: 1.1, retreat: [136.4400, 35.3850] },
   ukita: { q: 1.0, fort: 1.3, msens: 1.3, retreat: [136.4320, 35.3690] },
   otani: { q: 1.7, fort: 1.4, morale: 0.95, retreat: [136.4320, 35.3580] },
   otani2: { q: 1.3, fort: 1.3, retreat: [136.4320, 35.3620] },
@@ -659,7 +659,7 @@ function makeBrain(opts = DEFAULT_OPTS) {
     setOrder(S, 'shimazu', { type: 'path', pts: route.slice(), i: 0, speed: 1.35 });
     setOrder(S, 'toyohisa', { type: 'path', pts: route.slice(0, 5), i: 0, speed: 1.25 });
     S.flags.breakoutT = S.t;
-    S.emit('breakout');
+    S.emit('breakout', { shimazuN: Math.round(U(S, 'shimazu').n) });
   });
   when('pursuit', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 420, (S) => {
     attack(S, 'ii', 'shimazu'); attack(S, 'tadayoshi', 'shimazu'); attack(S, 'honda', 'shimazu');
