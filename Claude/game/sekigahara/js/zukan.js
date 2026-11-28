@@ -1,6 +1,6 @@
 // 武将図鑑：顔と能力の一覧 → クリックで一人ずつの読み物
 import { officerRatings, officerTraits, officerPortraitHTML } from './officers.js';
-import { ZUKAN, FATE } from './episodes.js';
+import { ZUKAN, FATE, ZK_PEOPLE } from './episodes.js';
 
 const ZK_SIDE = { W: '西軍', E: '東軍' };
 const zkEsc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -33,7 +33,9 @@ const zkRatingRows = (id) => {
 };
 
 export function initZukan({ units, onOpen, onLocate }) {
-  const list = units.filter((d) => ZUKAN[d.id] && officerRatings[d.id]);
+  // 合同隊は一人ずつの項目に分ける。unit は戦場の部隊 id
+  const list = units.flatMap((d) => (ZK_PEOPLE[d.id] ?? [{}]).map((p) => ({ ...d, ...p, unit: d.id, unitName: ZK_PEOPLE[d.id] ? d.name : null })))
+    .filter((d) => ZUKAN[d.id] && officerRatings[d.id]);
   const root = document.createElement('div');
   root.id = 'zukan';
   root.hidden = true;
@@ -41,7 +43,7 @@ export function initZukan({ units, onOpen, onLocate }) {
   root.setAttribute('role', 'dialog');
   root.setAttribute('aria-label', '武将図鑑');
   root.innerHTML = `<div class="zk-head">
-      <h2>武将図鑑 <small>関ヶ原に集った${list.length}隊</small></h2>
+      <h2>武将図鑑 <small>関ヶ原に集った${list.length}人</small></h2>
       <div class="zk-row"><span>並べ替え</span><div class="zk-chips" data-k="sort">${ZK_SORTS.map((s) => `<button data-v="${s.id}">${s.label}</button>`).join('')}</div></div>
       <div class="zk-row"><span>しぼりこみ</span><div class="zk-chips" data-k="filter">${ZK_FILTERS.map((s) => `<button data-v="${s.id}">${s.label}</button>`).join('')}</div></div>
       <button class="zk-x" title="閉じる (Esc)">×</button>
@@ -89,7 +91,7 @@ export function initZukan({ units, onOpen, onLocate }) {
           <dt>陣営</dt><dd>${ZK_SIDE[d.side]}${d.betray ? '（合戦中に寝返り）' : d.idle ? '（戦わず）' : ''}</dd>
           <dt>生没年</dt><dd>${life}</dd>
           <dt>関ヶ原で</dt><dd>${a ? a + '歳（数え）' : '年齢不詳'}</dd>
-          <dt>兵数</dt><dd>${d.n.toLocaleString()}（通説）</dd>
+          <dt>兵数</dt><dd>${d.n.toLocaleString()}（${d.unitName ? zkEsc(d.unitName) + '隊として・' : ''}通説）</dd>
           <dt>陣所</dt><dd>${zkEsc(d.place)}</dd>
           <dt>戦後</dt><dd><i class="zk-fate f${z.fate}">${FATE[z.fate]}</i></dd>
         </dl>
@@ -110,7 +112,7 @@ export function initZukan({ units, onOpen, onLocate }) {
     art.scrollTop = 0;
     art.querySelector('.zk-x').onclick = () => hidePop();
     art.querySelectorAll('[data-go]').forEach((b) => { b.onclick = () => show(b.dataset.go); });
-    art.querySelector('.zk-locate').onclick = () => { close(); onLocate?.(id); };
+    art.querySelector('.zk-locate').onclick = () => { close(); onLocate?.(d.unit); };
     art.focus?.();
   }
   function hidePop() { pop.hidden = true; st.cur = null; grid.querySelector(`[data-id="${CSS.escape(st.lastId ?? '')}"]`)?.focus(); }
@@ -135,7 +137,7 @@ export function initZukan({ units, onOpen, onLocate }) {
     render();
     root.hidden = false;
     root.focus();
-    if (id) show(id);
+    if (id) show(ZK_PEOPLE[id]?.[0].id ?? id); // 部隊 id で開かれたら一人目を見せる
   }
   function close() { pop.hidden = true; root.hidden = true; }
   return { open, close };
