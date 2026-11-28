@@ -347,7 +347,7 @@ function stepSim(S, brain) {
     } else if (o.type === 'flee') {
       moveToward(u, o.x, o.z, u.speed, dt);
       const out = Math.abs(u.x) > S.bounds.hx - 20 || Math.abs(u.z) > S.bounds.hz - 20;
-      if (out || Math.hypot(o.x - u.x, o.z - u.z) < 40 || u.n < 25) { u.status = 'gone'; S.emit('gone:' + u.id, { unit: u.id }); }
+      if (out || Math.hypot(o.x - u.x, o.z - u.z) < 40 || u.n < 25) { u.status = 'gone'; S.emit('gone:' + u.id, { unit: u.id, fled: true }); }
     } else if (o.type === 'hold' || o.type === 'aloof' || o.type === 'idle') {
       if (!u.fighting) moveToward(u, u.hx, u.hz, 0.25, dt);
     }
@@ -448,13 +448,13 @@ const DEFAULT_OPTS = Object.fromEntries(OPTIONS.map((o) => [o.id, 'history']));
 
 // ── イベント（解説カード）。tag: 史実＝諸史料が一致 / 通説＝広く流布するが史料的検討の余地 / 逸話＝後世の軍記・伝承 / 異説 / うんちく / もしも
 const EVENTS = {
-  intro: { title: '関ヶ原、夜明け', tag: 'うんちく', cam: 'overview',
+  intro: { map: 'intro', title: '関ヶ原、夜明け', tag: 'うんちく', cam: 'overview',
     body: '慶長5年9月15日（1600年10月21日）。前夜からの雨の中、石田三成ら西軍は大垣城を出て夜のうちに関ヶ原へ移り、西側の山々に陣を敷いた。東軍もこれを追って盆地に入る。盆地には深い霧が立ちこめていた。' },
-  fuwa: { title: 'なぜ関ヶ原なのか', tag: 'うんちく', cam: 'top',
+  fuwa: { map: 'fuwa', title: 'なぜ関ヶ原なのか', tag: 'うんちく', cam: 'top',
     body: '関ヶ原は古代の三関の一つ「不破関」が置かれた交通の要衝で、中山道・北国脇往還・伊勢街道がここで交わる。672年の壬申の乱でも戦場になった。家康が最初に陣を置いた桃配山は、大海人皇子が兵に桃を配ったという伝承の地。' },
-  hidetada: { title: '来ない3万8千', tag: '史実', cam: 'east', focus: ['ieyasu'],
+  hidetada: { map: 'hidetada', title: '来ない3万8千', tag: '史実', cam: 'east', focus: ['ieyasu'],
     body: '徳川の主力のうち約3万8千は、家康の子・秀忠が率いて中山道を進んでいたが、信濃の上田城で真田昌幸に足止めされ、この日の合戦に間に合わなかった。家康の手元の兵の多くは、豊臣恩顧の大名たちだった。' },
-  otsu: { title: 'もう一つの戦場、大津城', tag: '史実',
+  otsu: { map: 'otsu', title: 'もう一つの戦場、大津城', tag: '史実',
     body: '同じ頃、近江の大津城では東軍の京極高次（京極高知の兄）が籠城し、立花宗茂ら西軍1万以上を引きつけていた。大津城は15日に開城したが、この西軍の精鋭は関ヶ原に間に合わなかった。' },
   fog: { title: '霧が晴れはじめる', tag: '通説', cam: 'overview',
     body: '辰の刻（午前8時頃）、霧が薄れはじめる。100m先も見えないほどの濃霧の中で、両軍は互いの位置を探り合っていた。' },
@@ -469,6 +469,28 @@ const EVENTS = {
     body: '藤堂高虎・京極高知が大谷隊の前面に攻めかかる。戦場の南西では、松尾山の小早川勢がまだ動かずにいる。' },
   gamo_merge: { title: '蒲生郷舎、石田本隊へ退く', tag: '戦況', focus: ['gamo', 'ishida'], slow: true,
     body: '細川忠興・金森長近らの猛攻を受け続けた蒲生郷舎の前衛は、兵の多くを失い、残る兵を率いて笹尾山の石田本隊へ引き下がった。以後は三成の本陣とともに戦う。' },
+  ishida_fence: { title: '笹尾山の二重の柵', tag: '通説', focus: ['ishida', 'sakon', 'kuroda'], slow: true,
+    body: '石田隊は笹尾山の斜面に陣取り、前面に竹矢来（竹の柵）を二重に結って、その内側から鉄砲を撃ちかけた。兵は前衛の島左近・蒲生郷舎を合わせて約6千。攻め寄せる黒田・細川・加藤・田中・竹中らは合わせて2万近い。数では3倍以上の相手を、柵と高所を頼りに迎え撃つ。' },
+  sakon_voice: { title: '鬼左近の「かかれ」', tag: '逸話', focus: ['sakon'],
+    body: '島左近は柵の外へ打って出ては敵を押し返した。その「かかれ、かかれ」という大音声と鬼気迫る姿は、戦いのあと何年も黒田家の兵の夢に出てうなされるほどだったと伝わる（江戸時代の逸話集『常山紀談』など）。' },
+  ishida_hold: { title: '持ちこたえる石田隊', tag: 'うんちく', focus: ['ishida'],
+    body: '東軍の攻撃が最も集中したのは石田隊だったが、隊は崩れなかった。三成が狼煙を上げ、松尾山・南宮山・島津へ使者を走らせ続けたのは、正面が持ちこたえているうちに側面と背後から挟み撃ちにしたかったからだ。午前の戦況は、西軍がむしろ優勢だったとも評される。' },
+  ieyasu_reserve: { title: '家康本陣は戦わない', tag: '通説', focus: ['ieyasu'],
+    body: '家康が直接率いる約3万は、この日ほとんど戦っていない。最前線で血を流したのは福島・黒田・細川ら豊臣恩顧の大名と、井伊・本多・松平忠吉の一部だった。秀忠の主力が来ないなか、徳川の兵を温存したとも、豊臣系大名に手柄を立てさせて東軍に縛りつけたともいわれる。' },
+  ishida_isolated: { title: '孤立する笹尾山', tag: '通説', focus: ['ishida'], slow: true,
+    body: '小西・宇喜多の隊が崩れ、手の空いた東軍の諸隊が次々と笹尾山へ押し寄せる。寝返った小早川勢や脇坂らも加わり、石田隊は正面と側面の三方から攻められる。朝から6時間近く柵を守ってきた兵も、ついに数で押しつぶされていく。' },
+  sakon_last: { title: '島左近の最期', tag: '逸話', focus: ['ishida'],
+    body: '島左近の最期ははっきりしない。午前に撃たれて退いたのち、石田隊が崩れる間際に再び打って出て討ち死にしたとも、戦場を落ち延びて生きながらえたとも伝わり、遺体は見つかっていない。各地に「左近の墓」と称するものが残る。' },
+  breakout_ieyasu: { title: '家康本陣の目の前を', tag: '通説', focus: ['shimazu', 'ieyasu'], slow: true,
+    body: '島津勢は家康の本陣のすぐ前をかすめて南へ駆け抜けた。3万の本陣は動かず、追撃は井伊・本多・松平忠吉らにまかされた。勝敗が決まったあとで、決死の島津勢とぶつかって損害を出すのを避けたともいわれる。' },
+  epi_capture: { title: 'その後①：三成、捕らわる', tag: '史実', focus: ['ishida'], slow: true,
+    body: '戦場を逃れた三成は、わずかな供とともに伊吹山中から近江の故郷方面へ逃れた。6日後の9月21日、古橋村（現・長浜市木之本町）の山中に潜んでいたところを、田中吉政の手の者に捕らえられた。腹をこわして弱っていたと伝わる。' },
+  epi_gate: { title: 'その後②：大津城の門前で', tag: '逸話', focus: ['ishida'], slow: true,
+    body: '三成は大津城の門前に縛られて晒された。通りかかった福島正則が「無益な戦を起こして、そのざまは何だ」と罵ると、三成は「武運がなく、そなたを生け捕りにできなかったのが残念だ」と言い返したという。黒田長政は馬を下りて礼をとり、自分の羽織を着せかけたとも伝わる。' },
+  epi_kaki: { title: 'その後③：干し柿の逸話', tag: '逸話', focus: ['ishida'], slow: true,
+    body: '京で引き回されたのち、処刑場へ向かう途中で三成が湯を所望すると、警固の者は「湯はないが干し柿ならある」と差し出した。三成は「柿は痰の毒だ」と断る。「これから首を斬られる者が毒を気にするのか」と笑われると、「大志を抱く者は、最期の瞬間まで命を大事にするものだ」と答えたと伝わる。' },
+  epi_execution: { title: 'その後④：六条河原', tag: '史実', focus: ['ishida'], slow: true,
+    body: '10月1日、三成は小西行長・安国寺恵瓊とともに京の六条河原で処刑され、首は三条大橋のたもとに晒された。41歳（数え）。三成の居城・佐和山城は、合戦の数日後に小早川秀秋らに攻め落とされていた。' },
   sakon: { title: '島左近、撃たれる', tag: '通説', focus: ['sakon', 'kuroda'], slow: true,
     body: '黒田隊は鉄砲隊の一部を側面の丘に回し、島左近の隊を横から撃たせた。左近は重傷を負って退いたとされる。「鬼左近」の最期には諸説あり、生き延びたという伝承も残る。' },
   taiho: { title: '石田隊の大筒', tag: '通説', focus: ['ishida'],
@@ -513,7 +535,7 @@ const EVENTS = {
   ukita_flee: { title: '宇喜多隊、総崩れ', tag: '通説', focus: ['ukita'], slow: true,
     body: '西軍最大の宇喜多隊も支えきれずに崩れた。秀家は「金吾（秀秋）めを討ち果たす」と小早川勢へ斬り込もうとして、家臣に止められたという。秀家は落ち延びて薩摩の島津家に匿われ、のちに八丈島へ流された。' },
   mitsunari_flee: { title: '石田隊、潰走——三成は伊吹山へ', tag: '史実', focus: ['ishida'], slow: true,
-    body: '最後まで粘った石田隊も崩れ、三成は伊吹山中へ逃れた。数日後、田中吉政の手の者に捕らえられ、10月1日に京の六条河原で小西行長・安国寺恵瓊とともに処刑された。' },
+    body: '西軍の諸隊のなかで最後まで踏みとどまった石田隊も、ついに崩れた。三成は再起を期して自害を選ばず、わずかな供と笹尾山の裏から伊吹山の山中へ逃れた。笹尾山の陣には、主を失った陣幕と旗が残された。' },
   shimazu_shoot: { title: '味方であっても撃つ', tag: '逸話', focus: ['shimazu'], slow: true,
     body: '崩れた西軍の兵が島津の陣に逃げ込もうとした。島津勢は陣が乱れるのを嫌い、味方であろうと近づく者に容赦なく鉄砲を撃ちかけたという。' },
   breakout: { title: '島津の退き口——前へ退く', tag: '通説', focus: ['shimazu', 'toyohisa', 'ieyasu'], slow: true,
@@ -590,6 +612,13 @@ function makeBrain(opts = DEFAULT_OPTS) {
     attack(S, 'tsutsui', 'konishi'); attack(S, 'oda', 'konishi'); attack(S, 'furuta', 'konishi'); attack(S, 'ikoma', 'konishi');
     S.emit('otani_front');
   });
+  at(H(8, 35), 'ishida_fence', (S) => S.emit('ishida_fence'));
+  when('sakon_voice', (S) => S.t >= H(9, 15) && !isBroken(U(S, 'sakon')) && U(S, 'sakon').fighting, (S) => S.emit('sakon_voice'));
+  at(H(10, 25), 'ishida_hold', (S) => { if (!isBroken(U(S, 'ishida'))) S.emit('ishida_hold'); });
+  when('ieyasu_reserve', (S) => S.t >= H(12, 50) && !isBroken(U(S, 'ieyasu')), (S) => S.emit('ieyasu_reserve'));
+  when('ishida_isolated', (S) => isBroken(U(S, 'ukita')) && isBroken(U(S, 'konishi')) && !isBroken(U(S, 'ishida')), (S) => S.emit('ishida_isolated'));
+  when('sakon_last', (S) => S.fired.has('mitsunari_flee') && S.t >= (S.flags.sakonLastAt ||= S.t + 150), (S) => S.emit('sakon_last'));
+  when('breakout_ieyasu', (S) => U(S, 'shimazu').order.type === 'path' && Math.hypot(U(S, 'shimazu').x - U(S, 'ieyasu').x, U(S, 'shimazu').z - U(S, 'ieyasu').z) < 650, (S) => S.emit('breakout_ieyasu'));
   when('sakon', (S) => S.t >= H(9, 50) && U(S, 'sakon').fighting && !isBroken(U(S, 'sakon')), (S) => {
     const u = U(S, 'sakon'); u.morale -= 0.35; u.q *= 0.6; S.emit('sakon');
   });
@@ -727,8 +756,13 @@ function makeBrain(opts = DEFAULT_OPTS) {
     }
   });
   when('kubi', (S) => S.result && S.result.winner === 'E' && S.t >= Math.max(H(15, 0), S.result.t + 2400) && (S.fired.has('shimazu_escape') || O.shimazu !== 'history' || S.t > H(16, 0)), (S) => {
-    S.emit('kubi'); S.over = true;
+    S.emit('kubi'); S.flags.kubiT = S.t;
   });
+  // その後（三成の最期まで）
+  ['epi_capture', 'epi_gate', 'epi_kaki', 'epi_execution'].forEach((id, i) => {
+    when(id, (S) => S.flags.kubiT && S.t >= S.flags.kubiT + 180 * (i + 1), (S) => { S.emit(id); if (id === 'epi_execution') S.flags.overAt = S.t + 120; });
+  });
+  when('over', (S) => S.flags.overAt && S.t >= S.flags.overAt, (S) => { S.over = true; });
   when('end_w', (S) => S.result && S.result.winner === 'W' && S.t >= S.result.t + 2400, (S) => { S.over = true; });
   when('draw', (S) => !S.result && S.t >= H(17, 0) - 4, (S) => { S.result = { winner: 'D', t: S.t }; S.emit('draw'); S.over = true; });
 
@@ -770,6 +804,138 @@ function retarget(S, u) {
   return best;
 }
 
+
+// 解説カードに添える地図（SVG）。座標は経緯度で書き、正距円筒で投影する。
+// 広域図は海岸線を省いた略図（琵琶湖・伊勢湾のみ概形）。
+
+function proj(b, w, h) {
+  const k = Math.cos(((b.s + b.n) / 2) * Math.PI / 180);
+  const sx = w / ((b.e - b.w) * k), sy = h / (b.n - b.s), s = Math.min(sx, sy);
+  const ox = (w - (b.e - b.w) * k * s) / 2, oy = (h - (b.n - b.s) * s) / 2;
+  return ([lon, lat]) => [ox + (lon - b.w) * k * s, oy + (b.n - lat) * s];
+}
+const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const path = (P, pts) => pts.map((p, i) => (i ? 'L' : 'M') + P(p).map((v) => v.toFixed(1)).join(' ')).join('');
+
+function frame(w, h, body, note) {
+  return `<svg class="cardmap" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs>
+  ${body}
+  <g transform="translate(${w - 34},26)"><path d="M0 -14L5 2L0 -2L-5 2z" fill="#3a3024"/><text y="14" text-anchor="middle" font-size="10" fill="#3a3024">北</text></g>
+  ${note ? `<text x="8" y="${h - 7}" font-size="10" fill="#5a5040">${esc(note)}</text>` : ''}
+</svg>`;
+}
+function dot(P, ll, label, o = {}) {
+  const [x, y] = P(ll);
+  const r = o.r || 4, dx = o.dx ?? 7, dy = o.dy ?? 4, anchor = o.anchor || 'start';
+  return `<circle cx="${x}" cy="${y}" r="${r}" fill="${o.fill || '#2a2218'}" stroke="#fff" stroke-width="1.2"/>
+  <text x="${x + dx}" y="${y + dy}" font-size="${o.size || 12}" text-anchor="${anchor}" fill="${o.color || '#1d1a16'}" font-weight="${o.bold ? 700 : 400}" paint-order="stroke" stroke="rgba(246,241,230,.85)" stroke-width="3">${esc(label)}</text>`;
+}
+function mtn(P, ll, label, o = {}) {
+  const [x, y] = P(ll);
+  return `<path d="M${x - 7} ${y + 5}L${x} ${y - 7}L${x + 7} ${y + 5}z" fill="#6b5a3a" stroke="#fff" stroke-width="1"/>
+  <text x="${x + (o.dx ?? 9)}" y="${y + (o.dy ?? 4)}" font-size="${o.size || 11}" text-anchor="${o.anchor || 'start'}" fill="#2a2218" paint-order="stroke" stroke="rgba(246,241,230,.9)" stroke-width="3">${esc(label)}</text>`;
+}
+function route(P, pts, color, o = {}) {
+  return `<path d="${path(P, pts)}" fill="none" stroke="${color}" stroke-width="${o.w || 3}" ${o.dash ? `stroke-dasharray="${o.dash}"` : ''} stroke-linecap="round" stroke-linejoin="round" ${o.arrow ? 'marker-end="url(#ar)"' : ''} opacity="${o.op || 1}"/>`;
+}
+function label(P, ll, text, o = {}) {
+  const [x, y] = P(ll);
+  return `<text x="${x}" y="${y}" font-size="${o.size || 11}" text-anchor="${o.anchor || 'middle'}" fill="${o.color || '#3a3024'}" font-style="${o.italic ? 'italic' : 'normal'}" font-weight="${o.bold ? 700 : 400}" paint-order="stroke" stroke="rgba(246,241,230,.85)" stroke-width="3">${esc(text)}</text>`;
+}
+
+const BIWA = [[136.08, 35.56], [136.17, 35.50], [136.25, 35.42], [136.27, 35.33], [136.22, 35.22], [136.12, 35.15], [136.00, 35.10], [135.93, 35.05], [135.88, 35.00], [135.86, 35.03], [135.92, 35.12], [135.98, 35.23], [136.02, 35.33], [136.00, 35.43], [136.03, 35.52]];
+const ISE = [[136.62, 35.06], [136.85, 35.09], [136.97, 34.95], [136.90, 34.75], [136.78, 34.58], [136.66, 34.68], [136.60, 34.86]];
+const water = (P, poly) => `<path d="${path(P, poly)}z" fill="#9db4bf" stroke="#7a95a2" stroke-width="1"/>`;
+const SEKI = [136.466, 35.364];
+
+const MAPS = {
+  // 関ヶ原という土地（実際の地形の上に）
+  fuwa() {
+    const M = window.DEM_META, G = window.GEO, w = 420, h = 268;
+    const b = { w: M.west, e: M.east, s: M.south, n: M.north };
+    const P = proj(b, w, h);
+    const [x0, y0] = P([b.w, b.n]), [x1, y1] = P([b.e, b.s]);
+    let body = `<image href="${window.GROUND_JPG}" x="${x0}" y="${y0}" width="${x1 - x0}" height="${y1 - y0}" preserveAspectRatio="none" opacity="0.92"/>`;
+    const col = { '中山道': '#b0331f', '北国脇往還': '#2f55b4', '伊勢街道': '#2f6a3a' };
+    for (const r of G.roads) body += route(P, r.pts, col[r.name] || '#333', { w: 4, op: 0.9 });
+    body += label(P, [136.4315, 35.3545], '← 京・大坂へ', { color: '#b0331f', bold: true, anchor: 'start' });
+    body += label(P, [136.5435, 35.3765], '大垣・江戸へ →', { color: '#b0331f', bold: true, anchor: 'end' });
+    body += label(P, [136.4505, 35.3875], '↑ 北陸へ', { color: '#2f55b4', bold: true, anchor: 'end' });
+    body += label(P, [136.4835, 35.3330], '伊勢へ ↓', { color: '#2f6a3a', bold: true, anchor: 'start' });
+    body += label(P, [136.508, 35.3685], '中山道', { color: '#b0331f', size: 10 });
+    body += label(P, [136.4575, 35.3805], '北国脇往還', { color: '#2f55b4', size: 10, anchor: 'end' });
+    body += label(P, [136.4795, 35.3445], '伊勢街道', { color: '#2f6a3a', size: 10, anchor: 'start' });
+    body += dot(P, [136.4565, 35.3612], '不破関跡', { fill: '#7a3a8a', dy: 14, dx: -2, anchor: 'end', bold: true });
+    body += dot(P, SEKI, '関ヶ原', { bold: true, size: 13 });
+    body += mtn(P, [136.4600, 35.3736], '笹尾山（三成）', { anchor: 'end', dx: -9, dy: -6 });
+    body += mtn(P, [136.4541, 35.3464], '松尾山（小早川）', { dy: 14 });
+    body += mtn(P, [136.5066, 35.3498], '南宮山（毛利）');
+    body += mtn(P, [136.4880, 35.3640], '桃配山（家康）', { dy: 14 });
+    return frame(w, h, body, '地形は国土地理院の標高から作成。街道は概略');
+  },
+  // 来ない3万8千（家康と秀忠の進路）
+  hidetada() {
+    const w = 420, h = 250;
+    const P = proj({ w: 135.9, e: 140.1, s: 34.55, n: 36.75 }, w, h);
+    let body = `<rect width="${w}" height="${h}" fill="#efe7d4"/>` + water(P, BIWA) + water(P, ISE);
+    const tokaido = [[139.76, 35.68], [139.15, 35.25], [138.38, 34.97], [137.73, 34.71], [137.16, 34.95], [136.90, 35.15], [136.76, 35.42], [136.575, 35.39], SEKI];
+    const nakasendo = [[139.76, 35.68], [139.00, 36.32], [138.60, 36.33], [138.25, 36.40], [138.08, 36.08], [137.72, 35.85], [137.50, 35.49], [137.20, 35.40], [136.76, 35.42]];
+    body += route(P, tokaido, '#c4891c', { w: 4, arrow: true });
+    body += route(P, nakasendo.slice(0, 4), '#b0331f', { w: 4, arrow: true });
+    body += route(P, nakasendo.slice(3, 7), '#b0331f', { w: 3, dash: '6 5', op: 0.85 });
+    body += route(P, nakasendo.slice(6), '#b0331f', { w: 2, dash: '2 6', op: 0.6 });
+    body += label(P, [138.45, 35.03], '家康 約3万（東海道）', { color: '#8a5a10', bold: true });
+    body += label(P, [138.85, 36.62], '秀忠 約3万8千（中山道）', { color: '#b0331f', bold: true, anchor: 'start' });
+    body += label(P, [137.55, 35.95], '合戦の日はまだ木曽路の途中', { color: '#b0331f', size: 10, anchor: 'start' });
+    body += dot(P, [139.76, 35.68], '江戸', { bold: true });
+    body += dot(P, [139.80, 36.31], '小山（会津攻めから反転）', { anchor: 'end', dx: -7, size: 10 });
+    body += dot(P, [138.25, 36.40], '上田城：真田昌幸が足止め', { fill: '#b0331f', dx: -8, anchor: 'end', bold: true, size: 11 });
+    body += dot(P, [136.61, 35.36], '大垣（西軍）', { fill: '#2f55b4', dy: 15, dx: 2, size: 10 });
+    body += dot(P, SEKI, '関ヶ原', { fill: '#8a2a1a', bold: true, anchor: 'middle', dx: 0, dy: -9, size: 13, r: 5 });
+    return frame(w, h, body, '略図（海岸線は省略）。経路は主な宿場を結んだ概略');
+  },
+  // もう一つの戦場、大津城
+  otsu() {
+    const w = 420, h = 260;
+    const P = proj({ w: 135.40, e: 136.62, s: 34.56, n: 35.62 }, w, h);
+    let body = `<rect width="${w}" height="${h}" fill="#efe7d4"/>` + water(P, BIWA);
+    const naka = [[135.76, 35.01], [135.86, 35.0], [135.96, 35.02], [136.0, 35.1], [136.2, 35.17], [136.27, 35.29], [136.33, 35.33], [136.42, 35.36], SEKI];
+    body += route(P, naka, '#b0331f', { w: 3, op: 0.75 });
+    body += label(P, [136.16, 35.09], '中山道 約60km', { color: '#b0331f', size: 10, anchor: 'start' });
+    body += route(P, [[135.62, 35.16], [135.83, 35.03]], '#2f55b4', { w: 4, arrow: true });
+    body += label(P, [135.55, 35.21], '立花宗茂ら 西軍1万5千', { color: '#2f55b4', bold: true, anchor: 'start', size: 11 });
+    body += dot(P, [135.86, 35.0], '大津城（京極高次）', { fill: '#c4511c', bold: true, dy: 15, dx: 6 });
+    body += dot(P, [135.76, 35.01], '京', { anchor: 'end', dx: -7 });
+    body += dot(P, [135.52, 34.69], '大坂城（毛利輝元）', { size: 11 });
+    body += dot(P, [136.27, 35.28], '佐和山城（三成の居城）', { size: 10, dx: 8 });
+    body += dot(P, SEKI, '関ヶ原', { fill: '#8a2a1a', bold: true, size: 13, r: 5 });
+    body += label(P, [136.10, 35.37], '琵琶湖', { color: '#4a6a7a', size: 11 });
+    body += label(P, [136.02, 34.82], '15日に開城。この兵は関ヶ原に間に合わなかった', { color: '#3a3024', size: 10 });
+    return frame(w, h, body, '略図（海岸線は省略）');
+  },
+  // 前夜の移動（大垣から関ヶ原へ）
+  intro() {
+    const w = 420, h = 250;
+    const P = proj({ w: 136.42, e: 136.66, s: 35.315, n: 35.41 }, w, h);
+    let body = `<rect width="${w}" height="${h}" fill="#efe7d4"/>`;
+    // 南宮山の山塊（概形）
+    body += `<path d="${path(P, [[136.483, 35.366], [136.50, 35.362], [136.52, 35.356], [136.535, 35.345], [136.54, 35.335], [136.525, 35.325], [136.505, 35.335], [136.49, 35.345], [136.478, 35.356]])}z" fill="#c9bf9f" stroke="#a89a70"/>`;
+    body += `<path d="${path(P, [[136.42, 35.395], [136.45, 35.38], [136.48, 35.377], [136.50, 35.385], [136.52, 35.41], [136.42, 35.41]])}z" fill="#c9bf9f" stroke="#a89a70"/>`;
+    body += route(P, [[136.42, 35.357], [136.447, 35.359], SEKI, [136.488, 35.366], [136.505, 35.3695], [136.528, 35.370], [136.575, 35.388], [136.611, 35.3635]], '#8a8070', { w: 2, op: 0.7 });
+    // 西軍: 大垣から南宮山の南を回って関ヶ原へ（雨の夜）
+    body += route(P, [[136.608, 35.357], [136.57, 35.335], [136.535, 35.326], [136.50, 35.328], [136.478, 35.345], [136.468, 35.358]], '#2f55b4', { w: 4, dash: '7 5', arrow: true });
+    // 東軍: 赤坂から中山道を西へ
+    body += route(P, [[136.572, 35.392], [136.53, 35.374], [136.505, 35.372], [136.49, 35.369]], '#c4511c', { w: 4, arrow: true });
+    body += dot(P, [136.6118, 35.3635], '大垣城（西軍の本拠）', { fill: '#2f55b4', anchor: 'end', dx: -8, dy: 16, bold: true, size: 11 });
+    body += dot(P, [136.574, 35.391], '赤坂・岡山（家康）', { fill: '#c4511c', dy: -8, anchor: 'middle', bold: true, size: 11 });
+    body += dot(P, SEKI, '関ヶ原', { fill: '#8a2a1a', bold: true, size: 13, r: 5, dy: -8, anchor: 'middle' });
+    body += mtn(P, [136.5066, 35.3498], '南宮山');
+    body += label(P, [136.54, 35.318], '西軍：雨の夜、南宮山の南を迂回', { color: '#2f55b4', bold: true, size: 11 });
+    body += label(P, [136.545, 35.397], '東軍：夜明け前に中山道を西へ', { color: '#c4511c', bold: true, size: 11, anchor: 'end' });
+    return frame(w, h, body, '略図。経路は通説による概略');
+  },
+};
 
 // 関ヶ原 1600 — 描画と再生（部隊シミュは sim.js、史実シナリオは scenario.js）
 import * as THREE from 'three';
@@ -1503,7 +1669,7 @@ function evInfo(e) {
   if (e.id.startsWith('gone:')) {
     // 潰走を経ずに消えた（全滅した）部隊
     const u = SIM.byId[e.unit];
-    if (SIM.fired.has('rout:' + u.id) || u.hidden || ['shimazu', 'toyohisa', 'gamo'].includes(u.id) || ROUT_EVENTS[u.id]) return null;
+    if (e.fled || SIM.fired.has('rout:' + u.id) || u.hidden || ['shimazu', 'toyohisa', 'gamo'].includes(u.id) || ROUT_EVENTS[u.id]) return null;
     return { title: `${u.name}隊、壊滅`, tag: '戦況', focus: [u.id], slow: true, body: `${u.name}隊は最後まで踏みとどまり、討ち死にした（死傷 約${Math.round(u.killed).toLocaleString()}人）。` };
   }
   if (e.id.startsWith('rout:')) {
@@ -1533,7 +1699,8 @@ function onEvent(e) {
 function showCard(info, e) {
   const extra = e.id === 'shimazu_escape' && e.n !== undefined ? `<p class="num">戦場を離れた島津勢：約${e.n}人（この再現での値）</p>` : '';
   cardEl.innerHTML = `<button class="x" title="閉じる">×</button><div class="meta"><time>${hhmm(e.t)}　${koku(e.t)}</time><i class="tag tag-${info.tag}">${info.tag}</i></div>
-    <h2>${info.title}</h2><p>${info.body}</p>${extra}`;
+    <h2>${info.title}</h2>${info.map && MAPS[info.map] ? `<div class="withmap">${MAPS[info.map]()}<div><p>${info.body}</p>${extra}</div></div>` : `<p>${info.body}</p>${extra}`}`;
+  cardEl.classList.toggle('wide', !!info.map);
   cardEl.hidden = false;
   cardEl.querySelector('.x').onclick = hideCard;
   clearTimeout(cardTimer);

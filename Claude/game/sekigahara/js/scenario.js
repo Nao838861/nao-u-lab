@@ -36,13 +36,13 @@ export const DEFAULT_OPTS = Object.fromEntries(OPTIONS.map((o) => [o.id, 'histor
 
 // ── イベント（解説カード）。tag: 史実＝諸史料が一致 / 通説＝広く流布するが史料的検討の余地 / 逸話＝後世の軍記・伝承 / 異説 / うんちく / もしも
 export const EVENTS = {
-  intro: { title: '関ヶ原、夜明け', tag: 'うんちく', cam: 'overview',
+  intro: { map: 'intro', title: '関ヶ原、夜明け', tag: 'うんちく', cam: 'overview',
     body: '慶長5年9月15日（1600年10月21日）。前夜からの雨の中、石田三成ら西軍は大垣城を出て夜のうちに関ヶ原へ移り、西側の山々に陣を敷いた。東軍もこれを追って盆地に入る。盆地には深い霧が立ちこめていた。' },
-  fuwa: { title: 'なぜ関ヶ原なのか', tag: 'うんちく', cam: 'top',
+  fuwa: { map: 'fuwa', title: 'なぜ関ヶ原なのか', tag: 'うんちく', cam: 'top',
     body: '関ヶ原は古代の三関の一つ「不破関」が置かれた交通の要衝で、中山道・北国脇往還・伊勢街道がここで交わる。672年の壬申の乱でも戦場になった。家康が最初に陣を置いた桃配山は、大海人皇子が兵に桃を配ったという伝承の地。' },
-  hidetada: { title: '来ない3万8千', tag: '史実', cam: 'east', focus: ['ieyasu'],
+  hidetada: { map: 'hidetada', title: '来ない3万8千', tag: '史実', cam: 'east', focus: ['ieyasu'],
     body: '徳川の主力のうち約3万8千は、家康の子・秀忠が率いて中山道を進んでいたが、信濃の上田城で真田昌幸に足止めされ、この日の合戦に間に合わなかった。家康の手元の兵の多くは、豊臣恩顧の大名たちだった。' },
-  otsu: { title: 'もう一つの戦場、大津城', tag: '史実',
+  otsu: { map: 'otsu', title: 'もう一つの戦場、大津城', tag: '史実',
     body: '同じ頃、近江の大津城では東軍の京極高次（京極高知の兄）が籠城し、立花宗茂ら西軍1万以上を引きつけていた。大津城は15日に開城したが、この西軍の精鋭は関ヶ原に間に合わなかった。' },
   fog: { title: '霧が晴れはじめる', tag: '通説', cam: 'overview',
     body: '辰の刻（午前8時頃）、霧が薄れはじめる。100m先も見えないほどの濃霧の中で、両軍は互いの位置を探り合っていた。' },
@@ -57,6 +57,28 @@ export const EVENTS = {
     body: '藤堂高虎・京極高知が大谷隊の前面に攻めかかる。戦場の南西では、松尾山の小早川勢がまだ動かずにいる。' },
   gamo_merge: { title: '蒲生郷舎、石田本隊へ退く', tag: '戦況', focus: ['gamo', 'ishida'], slow: true,
     body: '細川忠興・金森長近らの猛攻を受け続けた蒲生郷舎の前衛は、兵の多くを失い、残る兵を率いて笹尾山の石田本隊へ引き下がった。以後は三成の本陣とともに戦う。' },
+  ishida_fence: { title: '笹尾山の二重の柵', tag: '通説', focus: ['ishida', 'sakon', 'kuroda'], slow: true,
+    body: '石田隊は笹尾山の斜面に陣取り、前面に竹矢来（竹の柵）を二重に結って、その内側から鉄砲を撃ちかけた。兵は前衛の島左近・蒲生郷舎を合わせて約6千。攻め寄せる黒田・細川・加藤・田中・竹中らは合わせて2万近い。数では3倍以上の相手を、柵と高所を頼りに迎え撃つ。' },
+  sakon_voice: { title: '鬼左近の「かかれ」', tag: '逸話', focus: ['sakon'],
+    body: '島左近は柵の外へ打って出ては敵を押し返した。その「かかれ、かかれ」という大音声と鬼気迫る姿は、戦いのあと何年も黒田家の兵の夢に出てうなされるほどだったと伝わる（江戸時代の逸話集『常山紀談』など）。' },
+  ishida_hold: { title: '持ちこたえる石田隊', tag: 'うんちく', focus: ['ishida'],
+    body: '東軍の攻撃が最も集中したのは石田隊だったが、隊は崩れなかった。三成が狼煙を上げ、松尾山・南宮山・島津へ使者を走らせ続けたのは、正面が持ちこたえているうちに側面と背後から挟み撃ちにしたかったからだ。午前の戦況は、西軍がむしろ優勢だったとも評される。' },
+  ieyasu_reserve: { title: '家康本陣は戦わない', tag: '通説', focus: ['ieyasu'],
+    body: '家康が直接率いる約3万は、この日ほとんど戦っていない。最前線で血を流したのは福島・黒田・細川ら豊臣恩顧の大名と、井伊・本多・松平忠吉の一部だった。秀忠の主力が来ないなか、徳川の兵を温存したとも、豊臣系大名に手柄を立てさせて東軍に縛りつけたともいわれる。' },
+  ishida_isolated: { title: '孤立する笹尾山', tag: '通説', focus: ['ishida'], slow: true,
+    body: '小西・宇喜多の隊が崩れ、手の空いた東軍の諸隊が次々と笹尾山へ押し寄せる。寝返った小早川勢や脇坂らも加わり、石田隊は正面と側面の三方から攻められる。朝から6時間近く柵を守ってきた兵も、ついに数で押しつぶされていく。' },
+  sakon_last: { title: '島左近の最期', tag: '逸話', focus: ['ishida'],
+    body: '島左近の最期ははっきりしない。午前に撃たれて退いたのち、石田隊が崩れる間際に再び打って出て討ち死にしたとも、戦場を落ち延びて生きながらえたとも伝わり、遺体は見つかっていない。各地に「左近の墓」と称するものが残る。' },
+  breakout_ieyasu: { title: '家康本陣の目の前を', tag: '通説', focus: ['shimazu', 'ieyasu'], slow: true,
+    body: '島津勢は家康の本陣のすぐ前をかすめて南へ駆け抜けた。3万の本陣は動かず、追撃は井伊・本多・松平忠吉らにまかされた。勝敗が決まったあとで、決死の島津勢とぶつかって損害を出すのを避けたともいわれる。' },
+  epi_capture: { title: 'その後①：三成、捕らわる', tag: '史実', focus: ['ishida'], slow: true,
+    body: '戦場を逃れた三成は、わずかな供とともに伊吹山中から近江の故郷方面へ逃れた。6日後の9月21日、古橋村（現・長浜市木之本町）の山中に潜んでいたところを、田中吉政の手の者に捕らえられた。腹をこわして弱っていたと伝わる。' },
+  epi_gate: { title: 'その後②：大津城の門前で', tag: '逸話', focus: ['ishida'], slow: true,
+    body: '三成は大津城の門前に縛られて晒された。通りかかった福島正則が「無益な戦を起こして、そのざまは何だ」と罵ると、三成は「武運がなく、そなたを生け捕りにできなかったのが残念だ」と言い返したという。黒田長政は馬を下りて礼をとり、自分の羽織を着せかけたとも伝わる。' },
+  epi_kaki: { title: 'その後③：干し柿の逸話', tag: '逸話', focus: ['ishida'], slow: true,
+    body: '京で引き回されたのち、処刑場へ向かう途中で三成が湯を所望すると、警固の者は「湯はないが干し柿ならある」と差し出した。三成は「柿は痰の毒だ」と断る。「これから首を斬られる者が毒を気にするのか」と笑われると、「大志を抱く者は、最期の瞬間まで命を大事にするものだ」と答えたと伝わる。' },
+  epi_execution: { title: 'その後④：六条河原', tag: '史実', focus: ['ishida'], slow: true,
+    body: '10月1日、三成は小西行長・安国寺恵瓊とともに京の六条河原で処刑され、首は三条大橋のたもとに晒された。41歳（数え）。三成の居城・佐和山城は、合戦の数日後に小早川秀秋らに攻め落とされていた。' },
   sakon: { title: '島左近、撃たれる', tag: '通説', focus: ['sakon', 'kuroda'], slow: true,
     body: '黒田隊は鉄砲隊の一部を側面の丘に回し、島左近の隊を横から撃たせた。左近は重傷を負って退いたとされる。「鬼左近」の最期には諸説あり、生き延びたという伝承も残る。' },
   taiho: { title: '石田隊の大筒', tag: '通説', focus: ['ishida'],
@@ -101,7 +123,7 @@ export const EVENTS = {
   ukita_flee: { title: '宇喜多隊、総崩れ', tag: '通説', focus: ['ukita'], slow: true,
     body: '西軍最大の宇喜多隊も支えきれずに崩れた。秀家は「金吾（秀秋）めを討ち果たす」と小早川勢へ斬り込もうとして、家臣に止められたという。秀家は落ち延びて薩摩の島津家に匿われ、のちに八丈島へ流された。' },
   mitsunari_flee: { title: '石田隊、潰走——三成は伊吹山へ', tag: '史実', focus: ['ishida'], slow: true,
-    body: '最後まで粘った石田隊も崩れ、三成は伊吹山中へ逃れた。数日後、田中吉政の手の者に捕らえられ、10月1日に京の六条河原で小西行長・安国寺恵瓊とともに処刑された。' },
+    body: '西軍の諸隊のなかで最後まで踏みとどまった石田隊も、ついに崩れた。三成は再起を期して自害を選ばず、わずかな供と笹尾山の裏から伊吹山の山中へ逃れた。笹尾山の陣には、主を失った陣幕と旗が残された。' },
   shimazu_shoot: { title: '味方であっても撃つ', tag: '逸話', focus: ['shimazu'], slow: true,
     body: '崩れた西軍の兵が島津の陣に逃げ込もうとした。島津勢は陣が乱れるのを嫌い、味方であろうと近づく者に容赦なく鉄砲を撃ちかけたという。' },
   breakout: { title: '島津の退き口——前へ退く', tag: '通説', focus: ['shimazu', 'toyohisa', 'ieyasu'], slow: true,
@@ -178,6 +200,13 @@ export function makeBrain(opts = DEFAULT_OPTS) {
     attack(S, 'tsutsui', 'konishi'); attack(S, 'oda', 'konishi'); attack(S, 'furuta', 'konishi'); attack(S, 'ikoma', 'konishi');
     S.emit('otani_front');
   });
+  at(H(8, 35), 'ishida_fence', (S) => S.emit('ishida_fence'));
+  when('sakon_voice', (S) => S.t >= H(9, 15) && !isBroken(U(S, 'sakon')) && U(S, 'sakon').fighting, (S) => S.emit('sakon_voice'));
+  at(H(10, 25), 'ishida_hold', (S) => { if (!isBroken(U(S, 'ishida'))) S.emit('ishida_hold'); });
+  when('ieyasu_reserve', (S) => S.t >= H(12, 50) && !isBroken(U(S, 'ieyasu')), (S) => S.emit('ieyasu_reserve'));
+  when('ishida_isolated', (S) => isBroken(U(S, 'ukita')) && isBroken(U(S, 'konishi')) && !isBroken(U(S, 'ishida')), (S) => S.emit('ishida_isolated'));
+  when('sakon_last', (S) => S.fired.has('mitsunari_flee') && S.t >= (S.flags.sakonLastAt ||= S.t + 150), (S) => S.emit('sakon_last'));
+  when('breakout_ieyasu', (S) => U(S, 'shimazu').order.type === 'path' && Math.hypot(U(S, 'shimazu').x - U(S, 'ieyasu').x, U(S, 'shimazu').z - U(S, 'ieyasu').z) < 650, (S) => S.emit('breakout_ieyasu'));
   when('sakon', (S) => S.t >= H(9, 50) && U(S, 'sakon').fighting && !isBroken(U(S, 'sakon')), (S) => {
     const u = U(S, 'sakon'); u.morale -= 0.35; u.q *= 0.6; S.emit('sakon');
   });
@@ -315,8 +344,13 @@ export function makeBrain(opts = DEFAULT_OPTS) {
     }
   });
   when('kubi', (S) => S.result && S.result.winner === 'E' && S.t >= Math.max(H(15, 0), S.result.t + 2400) && (S.fired.has('shimazu_escape') || O.shimazu !== 'history' || S.t > H(16, 0)), (S) => {
-    S.emit('kubi'); S.over = true;
+    S.emit('kubi'); S.flags.kubiT = S.t;
   });
+  // その後（三成の最期まで）
+  ['epi_capture', 'epi_gate', 'epi_kaki', 'epi_execution'].forEach((id, i) => {
+    when(id, (S) => S.flags.kubiT && S.t >= S.flags.kubiT + 180 * (i + 1), (S) => { S.emit(id); if (id === 'epi_execution') S.flags.overAt = S.t + 120; });
+  });
+  when('over', (S) => S.flags.overAt && S.t >= S.flags.overAt, (S) => { S.over = true; });
   when('end_w', (S) => S.result && S.result.winner === 'W' && S.t >= S.result.t + 2400, (S) => { S.over = true; });
   when('draw', (S) => !S.result && S.t >= H(17, 0) - 4, (S) => { S.result = { winner: 'D', t: S.t }; S.emit('draw'); S.over = true; });
 

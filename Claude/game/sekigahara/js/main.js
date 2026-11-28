@@ -4,6 +4,7 @@ import { MapControls } from 'three/addons/controls/MapControls.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { UNITS, SIDE } from './units.js';
 import { createSim, stepSim, prepare, hhmm, koku, sideTotals, T_START, T_END, SIM_DT } from './sim.js';
+import { MAPS } from './maps.js';
 import { PARAMS, makeBrain, retarget, EVENTS, DEFAULT_OPTS, OPTIONS, ROUT_EVENTS, routText } from './scenario.js';
 
 // ───────────────── 地形データ ─────────────────
@@ -733,7 +734,7 @@ function evInfo(e) {
   if (e.id.startsWith('gone:')) {
     // 潰走を経ずに消えた（全滅した）部隊
     const u = SIM.byId[e.unit];
-    if (SIM.fired.has('rout:' + u.id) || u.hidden || ['shimazu', 'toyohisa', 'gamo'].includes(u.id) || ROUT_EVENTS[u.id]) return null;
+    if (e.fled || SIM.fired.has('rout:' + u.id) || u.hidden || ['shimazu', 'toyohisa', 'gamo'].includes(u.id) || ROUT_EVENTS[u.id]) return null;
     return { title: `${u.name}隊、壊滅`, tag: '戦況', focus: [u.id], slow: true, body: `${u.name}隊は最後まで踏みとどまり、討ち死にした（死傷 約${Math.round(u.killed).toLocaleString()}人）。` };
   }
   if (e.id.startsWith('rout:')) {
@@ -763,7 +764,8 @@ function onEvent(e) {
 function showCard(info, e) {
   const extra = e.id === 'shimazu_escape' && e.n !== undefined ? `<p class="num">戦場を離れた島津勢：約${e.n}人（この再現での値）</p>` : '';
   cardEl.innerHTML = `<button class="x" title="閉じる">×</button><div class="meta"><time>${hhmm(e.t)}　${koku(e.t)}</time><i class="tag tag-${info.tag}">${info.tag}</i></div>
-    <h2>${info.title}</h2><p>${info.body}</p>${extra}`;
+    <h2>${info.title}</h2>${info.map && MAPS[info.map] ? `<div class="withmap">${MAPS[info.map]()}<div><p>${info.body}</p>${extra}</div></div>` : `<p>${info.body}</p>${extra}`}`;
+  cardEl.classList.toggle('wide', !!info.map);
   cardEl.hidden = false;
   cardEl.querySelector('.x').onclick = hideCard;
   clearTimeout(cardTimer);

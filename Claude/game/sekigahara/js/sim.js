@@ -170,7 +170,7 @@ export function stepSim(S, brain) {
     } else if (o.type === 'flee') {
       moveToward(u, o.x, o.z, u.speed, dt);
       const out = Math.abs(u.x) > S.bounds.hx - 20 || Math.abs(u.z) > S.bounds.hz - 20;
-      if (out || Math.hypot(o.x - u.x, o.z - u.z) < 40 || u.n < 25) { u.status = 'gone'; S.emit('gone:' + u.id, { unit: u.id }); }
+      if (out || Math.hypot(o.x - u.x, o.z - u.z) < 40 || u.n < 25) { u.status = 'gone'; S.emit('gone:' + u.id, { unit: u.id, fled: true }); }
     } else if (o.type === 'hold' || o.type === 'aloof' || o.type === 'idle') {
       if (!u.fighting) moveToward(u, u.hx, u.hz, 0.25, dt);
     }
