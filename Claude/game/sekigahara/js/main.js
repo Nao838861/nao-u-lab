@@ -1,8 +1,10 @@
-// 関ヶ原 1600 — M0: 地形と布陣の静的表示
+// 関ヶ原 1600 — 描画と再生（部隊シミュは sim.js、史実シナリオは scenario.js）
 import * as THREE from 'three';
 import { MapControls } from 'three/addons/controls/MapControls.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { UNITS, SIDE } from './units.js';
+import { createSim, stepSim, prepare, hhmm, koku, sideTotals, T_START, T_END, SIM_DT } from './sim.js';
+import { PARAMS, makeBrain, retarget, EVENTS, DEFAULT_OPTS, OPTIONS, ROUT_EVENTS, routText } from './scenario.js';
 
 // ───────────────── 地形データ ─────────────────
 const M = window.DEM_META;
@@ -36,8 +38,7 @@ renderer.toneMappingExposure = 1.05;
 document.getElementById('view').appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-const FOG = { clear: 0.00005, haze: 0.00016, mist: 0.0009 };
-scene.fog = new THREE.FogExp2(0xc8ccc6, FOG.haze);
+scene.fog = new THREE.FogExp2(0xc8ccc6, 0.00016);
 
 const camera = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 2, 60000);
 const controls = new MapControls(camera, renderer.domElement);
@@ -212,6 +213,94 @@ const GEO = {
 };
 const MAT = { body: bodyMaterial(), flag: flagMaterial() };
 
+
+// ───────────────── 動く部隊のシェーダ ─────────────────
+// 兵一人ひとりの「部隊内の位置」を instanceMatrix に持ち、部隊の中心・向き・散開・損耗は uniform で渡す。
+// 地面の高さは DEM テクスチャから頂点シェーダで引く。
+const demTex = new THREE.DataTexture(DEM, DW, DH, THREE.RedFormat, THREE.FloatType);
+demTex.needsUpdate = true;
+const SHARED = {
+  uDem: { value: demTex }, uDemInfo: { value: new THREE.Vector4(DW, DH, SX, SY) }, uTime: { value: 0 },
+};
+const UNIT_PARS = `
+uniform vec2 uCenter; uniform float uYaw; uniform float uSpread; uniform float uLost; uniform float uVis; uniform float uMove;
+uniform float uTime; uniform sampler2D uDem; uniform vec4 uDemInfo;
+attribute float aRank;
+float demH(vec2 p) {
+  vec2 g = clamp((p / uDemInfo.zw + 0.5) * (uDemInfo.xy - 1.0), vec2(0.0), uDemInfo.xy - 1.001);
+  ivec2 i = ivec2(floor(g)); vec2 f = fract(g);
+  float a = texelFetch(uDem, i, 0).r, b = texelFetch(uDem, i + ivec2(1, 0), 0).r;
+  float c = texelFetch(uDem, i + ivec2(0, 1), 0).r, d = texelFetch(uDem, i + ivec2(1, 1), 0).r;
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+}
+vec2 rotY(vec2 v, float a) { float c = cos(a), s = sin(a); return vec2(c * v.x + s * v.y, -s * v.x + c * v.y); }
+`;
+const UNIT_NORMAL = `
+vec3 transformedNormal = mat3(instanceMatrix) * objectNormal;
+transformedNormal.xz = rotY(transformedNormal.xz, uYaw);
+transformedNormal = normalMatrix * transformedNormal;
+#ifdef FLIP_SIDED
+  transformedNormal = - transformedNormal;
+#endif
+`;
+const UNIT_PROJECT = `
+vec4 lp = instanceMatrix * vec4(transformed, 1.0);
+vec2 foot = vec2(instanceMatrix[3].x, instanceMatrix[3].z);
+vec2 so = foot * (uSpread - 1.0) * 0.6 + vec2(sin(aRank * 913.0), cos(aRank * 517.0)) * (uSpread - 1.0) * 9.0;
+vec2 footW = uCenter + rotY(foot + so, uYaw);
+vec2 pw = uCenter + rotY(lp.xz + so, uYaw);
+float bob = uMove * abs(sin(uTime * 9.0 + aRank * 60.0)) * 0.15;
+vec3 wpos = vec3(pw.x, lp.y + demH(footW) + bob, pw.y);
+if (aRank < uLost || uVis < 0.02) wpos = vec3(0.0, -500.0, 0.0);
+vec4 mvPosition = viewMatrix * vec4(wpos, 1.0);
+gl_Position = projectionMatrix * mvPosition;
+`;
+function unitMaterials(color) {
+  const uni = {
+    uCenter: { value: new THREE.Vector2() }, uYaw: { value: 0 }, uSpread: { value: 1 }, uLost: { value: 0 }, uVis: { value: 1 }, uMove: { value: 0 },
+  };
+  const hook = (s) => { Object.assign(s.uniforms, SHARED, uni); };
+  const body = new THREE.MeshLambertMaterial({ vertexColors: true });
+  body.onBeforeCompile = (s) => {
+    hook(s);
+    s.vertexShader = s.vertexShader
+      .replace('#include <common>', '#include <common>\nattribute float armor;' + UNIT_PARS)
+      .replace('#include <color_vertex>', `vColor = vec3(1.0);
+        #ifdef USE_COLOR
+          vColor *= color;
+        #endif
+        #ifdef USE_INSTANCING_COLOR
+          vColor.rgb *= mix(vec3(1.0), instanceColor.rgb, armor);
+        #endif`)
+      .replace('#include <defaultnormal_vertex>', UNIT_NORMAL)
+      .replace('#include <project_vertex>', UNIT_PROJECT);
+  };
+  body.customProgramCacheKey = () => 'unit-body';
+  const flag = new THREE.MeshLambertMaterial({ side: THREE.DoubleSide });
+  flag.onBeforeCompile = (s) => {
+    hook(s);
+    s.vertexShader = s.vertexShader
+      .replace('#include <common>', '#include <common>\nattribute float flex;' + UNIT_PARS)
+      .replace('#include <begin_vertex>', `vec3 transformed = vec3(position);
+        transformed.z += sin(uTime * 3.2 + aRank * 50.0 + flex * 5.0 + position.y * 1.3) * 0.18 * flex;`)
+      .replace('#include <defaultnormal_vertex>', UNIT_NORMAL)
+      .replace('#include <project_vertex>', UNIT_PROJECT);
+  };
+  flag.customProgramCacheKey = () => 'unit-flag';
+  const foot = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide, fog: false });
+  foot.onBeforeCompile = (s) => {
+    hook(s);
+    s.vertexShader = s.vertexShader
+      .replace('#include <common>', '#include <common>' + UNIT_PARS)
+      .replace('#include <project_vertex>', `
+        vec2 pw = uCenter + rotY(transformed.xz * (1.0 + (uSpread - 1.0) * 0.8), uYaw);
+        vec4 mvPosition = viewMatrix * vec4(pw.x, demH(pw) + 2.5, pw.y, 1.0);
+        gl_Position = projectionMatrix * mvPosition;`);
+  };
+  foot.customProgramCacheKey = () => 'unit-foot';
+  return { uni, body, flag, foot };
+}
+
 // ───────────────── 部隊の隊形 ─────────────────
 // 1つの「備」の構成（前から）: 鉄砲 → 弓 → 長柄（槍） → 騎馬 → 旗本 → 小荷駄
 const BLOCKS = [
@@ -223,20 +312,54 @@ const BLOCKS = [
   { type: 'nimotsu', frac: 0.13, sx: 1.9, sz: 2.5, wf: 0.55 },
 ];
 const SONAE_MAX = 6500;
-
 function rand(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+function estimateDepth(per, F, sp) {
+  let d = 0;
+  for (const bl of BLOCKS) {
+    const files = Math.max(1, Math.floor(F * bl.wf / (bl.sx * sp)));
+    d += Math.ceil(per * bl.frac / (sp * sp) / files) * bl.sz * sp + 5 * sp;
+  }
+  return d;
+}
 
 const state = { ratio: 1, scale: 1.6, labels: 'all' };
 const armyGroup = new THREE.Group();
 scene.add(armyGroup);
-const unitAnchors = []; // {unit, pos:Vector3}
+let VIS = []; // 部隊ごとの描画データ
+
+// 倒れた兵（遺体）のプール
+const fallenGeo = (() => { const g = footman('none'); g.rotateX(-Math.PI / 2); g.translate(0, 0.18, 0); return g; })();
+let corpses = null, corpseN = 0;
+function resetCorpses() {
+  if (corpses) { scene.remove(corpses); corpses.dispose(); }
+  const max = Math.ceil(UNITS.reduce((s, u) => s + u.n, 0) / state.ratio * 0.45) + 200;
+  corpses = new THREE.InstancedMesh(fallenGeo, MAT.body, max);
+  corpses.count = 0; corpseN = 0; corpses.frustumCulled = false;
+  corpses.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  corpses.setColorAt(0, new THREE.Color());
+  scene.add(corpses);
+}
+const _d = new THREE.Object3D(), _c = new THREE.Color();
+function addCorpse(x, z, yaw, color) {
+  if (corpseN >= corpses.instanceMatrix.count) return;
+  _d.position.set(x, heightAt(x, z), z);
+  _d.rotation.set(0, yaw, 0);
+  _d.scale.setScalar(state.scale);
+  _d.updateMatrix();
+  corpses.setMatrixAt(corpseN, _d.matrix);
+  _c.copy(color).multiplyScalar(0.7);
+  corpses.setColorAt(corpseN, _c);
+  corpseN++;
+  corpses.count = corpseN;
+  corpses.instanceMatrix.needsUpdate = true;
+  corpses.instanceColor.needsUpdate = true;
+}
 
 function buildArmies() {
   armyGroup.traverse((o) => { if (o.isInstancedMesh) o.dispose(); });
   armyGroup.clear();
-  unitAnchors.length = 0;
-  footMats.length = 0;
-  const jm = []; // 陣幕の頂点
+  VIS = [];
+  const jm = [];
   let total = 0, drawn = 0;
   const r = state.ratio, sp = Math.sqrt(r), S = state.scale;
   const dummy = new THREE.Object3D();
@@ -245,11 +368,9 @@ function buildArmies() {
     const [cx, cz] = ll2xz(u.lon, u.lat);
     const b = THREE.MathUtils.degToRad(u.face);
     const fx = Math.sin(b), fz = -Math.cos(b), rx = Math.cos(b), rz = Math.sin(b);
-    const yaw = Math.PI - b;
     const k = Math.ceil(u.n / SONAE_MAX);
     const per = u.n / k;
     const F = THREE.MathUtils.clamp(Math.sqrt(per) * 2.5, 28, 240);
-    // 備ごとの位置（2列ずつ前から後ろへ）
     const lists = { yari: [], teppo: [], yumi: [], nimotsu: [], kiba: [], nob: [] };
     let honjinAt = null;
     const bb = [Infinity, -Infinity, Infinity, -Infinity];
@@ -258,8 +379,7 @@ function buildArmies() {
     for (let si = 0; si < k; si++) {
       const row = Math.floor(si / 2), inRow = Math.min(2, k - row * 2), col = si % 2;
       const ou = inRow === 1 ? 0 : (col === 0 ? -1 : 1) * (F / 2 + 18);
-      const ov = -row * (sonaeDepth + 45);
-      let v = ov;
+      let v = -row * (sonaeDepth + 45);
       const isMain = si === k - 1;
       for (const bl of BLOCKS) {
         if (bl.honjin && !isMain) continue;
@@ -277,84 +397,102 @@ function buildArmies() {
           lists[bl.type].push([lu, lv, (rnd() - 0.5) * 0.5]);
           if (lu < bb[0]) bb[0] = lu; if (lu > bb[1]) bb[1] = lu; if (lv < bb[2]) bb[2] = lv; if (lv > bb[3]) bb[3] = lv;
         }
-        // 幟（のぼり）: 約60人に1本
         const nob = Math.round(per * frac / 60 / Math.max(1, sp * 0.7));
-        for (let q = 0; q < nob; q++) {
-          lists.nob.push([ou + (rnd() - 0.5) * F * bl.wf, v - rnd() * rows * sz, (rnd() - 0.5) * 0.3]);
-        }
-        if (bl.honjin) {
-          honjinAt = [ou, v - rows * sz / 2, F * bl.wf / 2 + 6, rows * sz / 2 + 6];
-        }
+        for (let q = 0; q < nob; q++) lists.nob.push([ou + (rnd() - 0.5) * F * bl.wf, v - rnd() * rows * sz, (rnd() - 0.5) * 0.3]);
+        if (bl.honjin) honjinAt = [ou, v - rows * sz / 2, F * bl.wf / 2 + 6, rows * sz / 2 + 6];
         v -= rows * sz + 5 * sp;
       }
       depthAcc = Math.max(depthAcc, -v);
     }
-    // 部隊中心に合わせる: 前端を中心から depth/2 だけ前へ
     const shift = depthAcc / 2;
-    const toWorld = (lu, lv) => {
-      const lvv = lv + shift;
-      const x = cx + rx * lu + fx * lvv, z = cz + rz * lu + fz * lvv;
-      return [x, heightAt(x, z), z];
-    };
+    // 部隊ローカル座標（x=左右, z=前後, 前が+z）
+    const L = (lu, lv) => [-lu, lv + shift];
+    const front = bb[3], back = bb[2];
+    const rankOf = (lv) => Math.min(0.999, 0.5 * rnd() + 0.5 * (1 - (lv - back) / Math.max(1, front - back)));
+    const toWorld = (lu, lv) => { const lvv = lv + shift; const x = cx + rx * lu + fx * lvv, z = cz + rz * lu + fz * lvv; return [x, heightAt(x, z), z]; };
+    const mats = unitMaterials(u.color);
     const armorCol = C(u.armor || '#3a302a');
     const flagCol = C(u.color);
-    const add = (geoKey, list, colFn, sc) => {
-      if (!list.length) return null;
-      const mesh = new THREE.InstancedMesh(GEO[geoKey], geoKey.includes('lag') ? MAT.flag : MAT.body, list.length);
+    const soldiers = []; // 遺体を置くための記録 [lx, lz, rank, yaw]
+    const add = (geoKey, list, ranks, colFn, sc, isFlag) => {
+      if (!list.length) return;
+      const g = GEO[geoKey].clone();
+      g.setAttribute('aRank', new THREE.InstancedBufferAttribute(ranks, 1));
+      const mesh = new THREE.InstancedMesh(g, isFlag ? mats.flag : mats.body, list.length);
       const col = new THREE.Color();
       list.forEach((p, i) => {
-        const [x, y, z] = toWorld(p[0], p[1]);
-        dummy.position.set(x, y, z);
-        dummy.rotation.set(0, yaw + p[2], 0);
+        const [lx, lz] = L(p[0], p[1]);
+        dummy.position.set(lx, 0, lz);
+        dummy.rotation.set(0, p[2], 0);
         dummy.scale.setScalar(sc);
         dummy.updateMatrix();
         mesh.setMatrixAt(i, dummy.matrix);
         colFn(col, i);
         mesh.setColorAt(i, col);
       });
-      mesh.computeBoundingSphere();
+      mesh.frustumCulled = false;
       armyGroup.add(mesh);
-      return mesh;
     };
     const vary = (base, amt) => (c) => { const t = 1 + (rnd() - 0.5) * amt; c.copy(base).multiplyScalar(t); };
     let n = 0;
-    for (const t of ['yari', 'teppo', 'yumi', 'nimotsu']) { add(t, lists[t], vary(armorCol, 0.35), S); n += lists[t].length; }
-    add('kiba', lists.kiba, vary(armorCol, 0.3), S); n += lists.kiba.length;
+    const rankLists = {};
+    for (const t of ['yari', 'teppo', 'yumi', 'nimotsu', 'kiba']) {
+      const rk = new Float32Array(lists[t].map((p) => rankOf(p[1])));
+      rankLists[t] = rk;
+      add(t, lists[t], rk, vary(armorCol, 0.35), S, false);
+      lists[t].forEach((p, i) => { const [lx, lz] = L(p[0], p[1]); soldiers.push([lx, lz, rk[i], p[2]]); });
+      n += lists[t].length;
+    }
     const foot = [...lists.yari, ...lists.teppo, ...lists.yumi];
-    add('footFlag', foot, vary(flagCol, 0.12), S);
-    add('horseFlag', lists.kiba, vary(flagCol, 0.12), S);
-    add('nobPole', lists.nob, (c) => c.set(1, 1, 1), 1 + (S - 1) * 0.5);
-    add('nobFlag', lists.nob, vary(flagCol, 0.08), 1 + (S - 1) * 0.5);
+    const footRk = new Float32Array([...rankLists.yari, ...rankLists.teppo, ...rankLists.yumi]);
+    add('footFlag', foot, footRk, vary(flagCol, 0.12), S, true);
+    add('horseFlag', lists.kiba, rankLists.kiba, vary(flagCol, 0.12), S, true);
+    const nobRk = new Float32Array(lists.nob.map((p) => rankOf(p[1])));
+    add('nobPole', lists.nob, nobRk, (c) => c.set(1, 1, 1), 1 + (S - 1) * 0.5, false);
+    add('nobFlag', lists.nob, nobRk, vary(flagCol, 0.08), 1 + (S - 1) * 0.5, true);
     total += u.n; drawn += n;
-    addFootprint(u, bb, toWorld);
-    // 本陣: 陣幕・大将・馬印
+    soldiers.sort((a, b) => a[2] - b[2]);
+    // 本陣（大将と馬印）: 部隊とともに動く。陣幕は陣所に残る
+    let anchorL = [0, 0];
     if (honjinAt) {
       const [hu, hv, hw, hd] = honjinAt;
       const corners = [[hu - hw, hv + hd], [hu + hw, hv + hd], [hu + hw, hv - hd], [hu - hw, hv - hd], [hu - hw, hv + hd]];
       for (let e = 0; e < 4; e++) {
         const [a0, b0] = corners[e], [a1, b1] = corners[e + 1];
         const len = Math.hypot(a1 - a0, b1 - b0), seg = Math.max(1, Math.ceil(len / 4));
-        // 正面中央は開ける
         for (let s = 0; s < seg; s++) {
           if (e === 0 && Math.abs((s + 0.5) / seg - 0.5) < 0.12) continue;
-          const p0 = toWorld(a0 + (a1 - a0) * s / seg, b0 + (b1 - b0) * s / seg);
-          const p1 = toWorld(a0 + (a1 - a0) * (s + 1) / seg, b0 + (b1 - b0) * (s + 1) / seg);
-          jm.push([p0, p1, flagCol]);
+          jm.push([toWorld(a0 + (a1 - a0) * s / seg, b0 + (b1 - b0) * s / seg), toWorld(a0 + (a1 - a0) * (s + 1) / seg, b0 + (b1 - b0) * (s + 1) / seg), flagCol]);
         }
       }
-      const [lx, ly, lz] = toWorld(hu, hv);
-      addUmajirushi(u, lx, ly, lz, yaw);
-      unitAnchors.push({ unit: u, pos: new THREE.Vector3(lx, ly + 45, lz), base: new THREE.Vector3(lx, ly, lz) });
+      anchorL = L(hu, hv);
+      const ug = umaGeo(u);
+      ug.setAttribute('aRank', new THREE.InstancedBufferAttribute(new Float32Array([2]), 1));
+      const um = new THREE.InstancedMesh(ug, mats.body, 1);
+      dummy.position.set(anchorL[0], 0, anchorL[1]); dummy.rotation.set(0, 0, 0); dummy.scale.setScalar(Math.max(1.4, S * 1.1)); dummy.updateMatrix();
+      um.setMatrixAt(0, dummy.matrix); um.setColorAt(0, flagCol); um.frustumCulled = false;
+      armyGroup.add(um);
     }
+    // 遠景用の色面
+    const N = 6, pad = 8, P = [], I = [];
+    for (let j = 0; j <= N; j++) for (let i = 0; i <= N; i++) {
+      const [lx, lz] = L(bb[0] - pad + (bb[1] - bb[0] + pad * 2) * i / N, bb[2] - pad + (bb[3] - bb[2] + pad * 2) * j / N);
+      P.push(lx, 0, lz);
+    }
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) { const a = j * (N + 1) + i; I.push(a, a + N + 1, a + 1, a + 1, a + N + 1, a + N + 2); }
+    const fg = new THREE.BufferGeometry();
+    fg.setAttribute('position', new THREE.Float32BufferAttribute(P, 3)); fg.setIndex(I);
+    const fm = new THREE.Mesh(fg, mats.foot);
+    fm.frustumCulled = false; fm.renderOrder = 1;
+    armyGroup.add(fm);
+    VIS.push({ id: u.id, def: u, mats, soldiers, ptr: 0, armorCol, spread: 1, vis: 1, anchorL, radius: Math.max(bb[1] - bb[0], bb[3] - bb[2]) / 2 });
   }
-  // 陣幕をひとまとめのメッシュに
+  // 陣幕
   const P = [], CC = [];
   const white = C('#e8e4da').convertSRGBToLinear();
   for (const [p0, p1, fc] of jm) {
     const lc = fc.clone().convertSRGBToLinear();
-    const H1 = 0.6 * state.scale, H2 = 1.1 * state.scale, H3 = 1.8 * state.scale;
-    const bands = [[0.15, H1, white], [H1, H2, lc], [H2, H3, white]];
-    for (const [y0, y1, cc] of bands) {
+    for (const [y0, y1, cc] of [[0.15, 0.55, white], [0.55, 0.95, lc], [0.95, 1.6, white]]) {
       const q = [[p0[0], p0[1] + y0, p0[2]], [p1[0], p1[1] + y0, p1[2]], [p1[0], p1[1] + y1, p1[2]], [p0[0], p0[1] + y1, p0[2]]];
       for (const idx of [0, 1, 2, 0, 2, 3]) { P.push(...q[idx]); CC.push(cc.r, cc.g, cc.b); }
     }
@@ -364,63 +502,56 @@ function buildArmies() {
   jg.setAttribute('color', new THREE.Float32BufferAttribute(CC, 3));
   jg.computeVertexNormals();
   armyGroup.add(new THREE.Mesh(jg, new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })));
-  document.getElementById('count').textContent =
-    `兵 ${total.toLocaleString()} 人 → 描画 ${drawn.toLocaleString()} 体（1体 = ${r}人）`;
+  document.getElementById('count').textContent = `兵 ${total.toLocaleString()} 人 → 描画 ${drawn.toLocaleString()} 体（1体 = ${r}人）`;
+  resetCorpses();
   buildLabels();
 }
-// 遠景用: 部隊の占める地面を陣営色で塗る（近づくと消える）
-const footMats = [];
-function addFootprint(u, bb, toWorld) {
-  const N = 10, pad = 8, P = [], I = [];
-  for (let j = 0; j <= N; j++) for (let i = 0; i <= N; i++) {
-    const lu = bb[0] - pad + (bb[1] - bb[0] + pad * 2) * i / N, lv = bb[2] - pad + (bb[3] - bb[2] + pad * 2) * j / N;
-    const [x, y, z] = toWorld(lu, lv);
-    P.push(x, y + 1.5, z);
-  }
-  for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
-    const a = j * (N + 1) + i; I.push(a, a + N + 1, a + 1, a + 1, a + N + 1, a + N + 2);
-  }
+function umaGeo(u) {
+  const ps = [horseman(), part(new THREE.CylinderGeometry(0.08, 0.1, 9, 6), '#3b2a1a', 0, 1.2, 4.5, -1.5)];
+  if (u.leaderMark === 'fan') ps.push(part(new THREE.CircleGeometry(1.9, 16, Math.PI * 0.15, Math.PI * 0.7), '#e8b828', 0, 1.2, 7.6, -1.5));
+  else ps.push(part(new THREE.PlaneGeometry(1.4, 2.6), WHITE, 1, 1.95, 7.4, -1.5));
+  return mergeGeometries(ps.map((g) => { if (g.attributes.uv) g.deleteAttribute('uv'); return g; }));
+}
+
+// 硝煙
+const SMOKE_N = 6000;
+const smoke = (() => {
   const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3)); g.setIndex(I);
-  const m = new THREE.MeshBasicMaterial({ color: u.color, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide,
-    polygonOffset: true, polygonOffsetFactor: -2, fog: false });
-  const mesh = new THREE.Mesh(g, m);
-  mesh.renderOrder = 1;
-  footMats.push({ m, c: new THREE.Vector3().fromArray(toWorld((bb[0] + bb[1]) / 2, (bb[2] + bb[3]) / 2)) });
-  armyGroup.add(mesh);
+  g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(SMOKE_N * 3), 3));
+  g.setAttribute('aBirth', new THREE.BufferAttribute(new Float32Array(SMOKE_N).fill(-1e9), 1));
+  g.setAttribute('aSeed', new THREE.BufferAttribute(new Float32Array(SMOKE_N).map(() => Math.random()), 1));
+  g.setAttribute('aBig', new THREE.BufferAttribute(new Float32Array(SMOKE_N), 1));
+  const cv = document.createElement('canvas'); cv.width = cv.height = 64;
+  const x = cv.getContext('2d'); const gr = x.createRadialGradient(32, 32, 2, 32, 32, 31);
+  gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.5, 'rgba(255,255,255,0.45)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+  x.fillStyle = gr; x.fillRect(0, 0, 64, 64);
+  const m = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false,
+    uniforms: { uNow: { value: 0 }, uPx: { value: 800 }, uTex: { value: new THREE.CanvasTexture(cv) } },
+    vertexShader: `attribute float aBirth; attribute float aSeed; attribute float aBig; uniform float uNow; uniform float uPx; varying float vA;
+      void main() {
+        float age = uNow - aBirth; float life = 160.0 + aBig * 300.0; float k = clamp(age / life, 0.0, 1.0);
+        vec3 p = position + vec3(sin(aSeed * 40.0) * k * 25.0 + k * 30.0, k * (20.0 + aBig * 40.0), cos(aSeed * 31.0) * k * 25.0);
+        vec4 mv = modelViewMatrix * vec4(p, 1.0); gl_Position = projectionMatrix * mv;
+        gl_PointSize = min(512.0, (5.0 + (24.0 + aBig * 50.0) * sqrt(k)) * uPx / -mv.z);
+        vA = (age < 0.0 || age > life) ? 0.0 : (1.0 - k) * min(1.0, age / 3.0) * (0.42 + aBig * 0.2);
+      }`,
+    fragmentShader: `uniform sampler2D uTex; varying float vA; void main() { float a = texture2D(uTex, gl_PointCoord).a * vA; if (a < 0.01) discard; gl_FragColor = vec4(vec3(0.86, 0.86, 0.84), a); }`,
+  });
+  const pts = new THREE.Points(g, m);
+  pts.frustumCulled = false; pts.renderOrder = 2;
+  scene.add(pts);
+  return { g, m, i: 0 };
+})();
+function puff(x, z, t, big = 0) {
+  const i = smoke.i = (smoke.i + 1) % SMOKE_N;
+  smoke.g.attributes.position.setXYZ(i, x, heightAt(x, z) + 2.5, z);
+  smoke.g.attributes.aBirth.setX(i, t);
+  smoke.g.attributes.aBig.setX(i, big);
+  smoke.dirty = true;
 }
-function estimateDepth(per, F, sp) {
-  let d = 0;
-  for (const bl of BLOCKS) {
-    const files = Math.max(1, Math.floor(F * bl.wf / (bl.sx * sp)));
-    d += Math.ceil(per * bl.frac / (sp * sp) / files) * bl.sz * sp + 5 * sp;
-  }
-  return d;
-}
-function addUmajirushi(u, x, y, z, yaw) {
-  const g = new THREE.Group();
-  const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 9, 6), new THREE.MeshLambertMaterial({ color: 0x3b2a1a }));
-  pole.position.y = 4.5;
-  g.add(pole);
-  let top;
-  if (u.leaderMark === 'fan') {
-    const fan = new THREE.CircleGeometry(1.9, 16, Math.PI * 0.15, Math.PI * 0.7);
-    top = new THREE.Mesh(fan, new THREE.MeshStandardMaterial({ color: 0xe8b828, metalness: 0.8, roughness: 0.3, side: THREE.DoubleSide }));
-    top.position.y = 7.6;
-  } else {
-    top = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 2.6), new THREE.MeshLambertMaterial({ color: u.color, side: THREE.DoubleSide }));
-    top.position.set(0.75, 7.4, 0);
-  }
-  g.add(top);
-  // 大将（騎馬）
-  const leader = new THREE.Mesh(GEO.kiba, MAT.body);
-  leader.position.set(0, 0, 3);
-  g.add(leader);
-  g.position.set(x, y, z);
-  g.rotation.y = yaw;
-  g.scale.setScalar(Math.max(1.4, state.scale * 1.1));
-  armyGroup.add(g);
-}
+function clearSmoke() { smoke.g.attributes.aBirth.array.fill(-1e9); smoke.dirty = true; }
+
 
 // ───────────────── 樹木と集落 ─────────────────
 function buildTrees(img) {
@@ -532,126 +663,332 @@ function roofGeo(w, h, d) {
   return g;
 }
 
-// ───────────────── ラベルと解説 ─────────────────
+
+// ───────────────── シミュレーション（再生） ─────────────────
+const HALF = { hx: SX / 2, hz: SY / 2 };
+const play = { opts: { ...DEFAULT_OPTS }, speed: 60, playing: false, gameT: T_START, slowUntil: 0, seeking: false, autoCam: true, slowEv: true, weather: 'auto' };
+let SIM = null, BRAIN = null;
+function newSim() {
+  SIM = prepare(createSim(UNITS, ll2xz, PARAMS, HALF));
+  SIM.retarget = retarget;
+  BRAIN = makeBrain(play.opts);
+  SIM.listeners.push(onEvent);
+  for (const u of SIM.units) { u.px = u.x; u.pz = u.z; u.pface = u.face; }
+  play.gameT = SIM.t;
+}
+function simStep() {
+  for (const u of SIM.units) { u.px = u.x; u.pz = u.z; u.pface = u.face; }
+  stepSim(SIM, BRAIN);
+  // 硝煙
+  for (const u of SIM.units) {
+    if (!u.fighting || u.status === 'gone') continue;
+    const nPuff = u.status === 'rout' ? 0 : Math.min(3, 1 + Math.floor(u.fire * 2));
+    const b = u.face * Math.PI / 180, fx = Math.sin(b), fz = -Math.cos(b);
+    for (let i = 0; i < nPuff; i++) {
+      if (Math.random() > 0.6) continue;
+      const lat = (Math.random() - 0.5) * u.r * 1.5, fw = u.r * (0.4 + Math.random() * 0.4);
+      puff(u.x + fx * fw - fz * lat, u.z + fz * fw + fx * lat, SIM.t);
+    }
+  }
+  if (SIM.flags.cannon && SIM.t - SIM.flags.cannon < 900 && Math.random() < 0.25) {
+    const u = SIM.byId.ishida; puff(u.x + 60, u.z + (Math.random() - 0.5) * 80, SIM.t, 1);
+  }
+  if (SIM.flags.noroshi && SIM.t - SIM.flags.noroshi < 1200 && Math.random() < 0.5) {
+    const [x, z] = ll2xz(136.4590, 35.3742); puff(x, z, SIM.t, 1.5);
+  }
+  spawnCorpses();
+}
+function spawnCorpses() {
+  for (const V of VIS) {
+    const u = SIM.byId[V.id];
+    const lost = Math.min(1, u.killed / u.n0);
+    const yaw = Math.PI - u.face * Math.PI / 180;
+    const c = Math.cos(yaw), s = Math.sin(yaw);
+    while (V.ptr < V.soldiers.length && V.soldiers[V.ptr][2] < lost) {
+      const [lx, lz, rk, ry] = V.soldiers[V.ptr++];
+      const sp = V.spread - 1;
+      const ox = lx + lx * sp * 0.6 + Math.sin(rk * 913) * sp * 9, oz = lz + lz * sp * 0.6 + Math.cos(rk * 517) * sp * 9;
+      addCorpse(u.x + c * ox + s * oz, u.z - s * ox + c * oz, yaw + ry + (rk * 37 % 1 - 0.5) * 2, V.armorCol);
+    }
+  }
+}
+function seek(t) {
+  play.seeking = true;
+  for (const V of VIS) { V.ptr = 0; V.spread = 1; V.vis = 1; }
+  resetCorpses(); clearSmoke();
+  newSim();
+  logEl.innerHTML = '';
+  while (SIM.t < t && !SIM.over) simStep();
+  play.gameT = SIM.t;
+  play.seeking = false;
+  hideCard();
+}
+
+// ───────────────── イベント表示 ─────────────────
+const cardEl = document.getElementById('card'), logEl = document.getElementById('log');
+let cardTimer = 0;
+function evInfo(e) {
+  if (EVENTS[e.id]) return EVENTS[e.id];
+  if (e.id.startsWith('rout:')) {
+    const u = SIM.byId[e.unit];
+    if (ROUT_EVENTS[u.id] || u.n0 < 400 || u.id === 'shimazu' || u.id === 'toyohisa') return null;
+    return routText(SIM, e);
+  }
+  return null;
+}
+function onEvent(e) {
+  const info = evInfo(e);
+  if (!info) return;
+  const li = document.createElement('li');
+  li.className = 'tag-' + info.tag;
+  li.innerHTML = `<time>${hhmm(e.t)}</time>${info.title}`;
+  li.onclick = () => { seek(Math.max(T_START, e.t - 30)); showCard(info, e); };
+  logEl.prepend(li);
+  if (play.seeking) return;
+  if (info.tag === '経過') return;
+  showCard(info, e);
+  if (play.slowEv && info.slow) play.slowUntil = performance.now() + 9000;
+  if (play.autoCam) focusEvent(info);
+  if (e.id === 'east_win' || e.id === 'west_win' || e.id === 'draw') setTimeout(showSummary, 100);
+}
+function showCard(info, e) {
+  const extra = e.id === 'shimazu_escape' && e.n !== undefined ? `<p class="num">戦場を離れた島津勢：約${e.n}人（この再現での値）</p>` : '';
+  cardEl.innerHTML = `<button class="x" title="閉じる">×</button><div class="meta"><time>${hhmm(e.t)}　${koku(e.t)}</time><i class="tag tag-${info.tag}">${info.tag}</i></div>
+    <h2>${info.title}</h2><p>${info.body}</p>${extra}`;
+  cardEl.hidden = false;
+  cardEl.querySelector('.x').onclick = hideCard;
+  clearTimeout(cardTimer);
+  cardTimer = setTimeout(hideCard, Math.max(9000, info.body.length * 110));
+}
+function hideCard() { cardEl.hidden = true; }
+function showSummary() {
+  const T = sideTotals(SIM), w = SIM.result?.winner;
+  const head = w === 'E' ? '東軍の勝利' : w === 'W' ? '西軍の勝利' : '決着つかず';
+  document.getElementById('summary').innerHTML = `<button class="x">×</button><h2>${head}</h2>
+    <p>決着 ${SIM.result ? hhmm(SIM.result.t) : '-'}（${SIM.result ? koku(SIM.result.t) : ''}）</p>
+    <dl><dt>西軍の死傷（この再現）</dt><dd>${Math.round(T.W.killed).toLocaleString()} 人</dd><dt>東軍の死傷（この再現）</dt><dd>${Math.round(T.E.killed).toLocaleString()} 人</dd></dl>
+    <p class="caveat">死傷者数には諸説ある（西軍約8千、東軍約4千などとされる）。この数字は簡易モデルによる再現値。</p>
+    <p>右のパネルの「もしも」で条件を変えて、もう一度見てみよう。</p>`;
+  const el = document.getElementById('summary'); el.hidden = false;
+  el.querySelector('.x').onclick = () => { el.hidden = true; };
+}
+
+// ───────────────── 名札 ─────────────────
 const labelLayer = document.getElementById('labels');
+let labels = [];
 function buildLabels() {
   labelLayer.innerHTML = '';
-  for (const a of unitAnchors) {
+  labels = VIS.map((V) => {
+    const u = V.def;
     const el = document.createElement('div');
-    el.className = 'lbl ' + a.unit.side + (a.unit.betray ? ' betray' : '') + (a.unit.idle ? ' idle' : '');
-    el.innerHTML = `<b>${a.unit.name}</b><span>${a.unit.n.toLocaleString()}</span>`;
-    el.style.setProperty('--c', a.unit.color);
-    el.onclick = () => select(a);
+    el.className = 'lbl';
+    el.style.setProperty('--c', u.color);
+    el.innerHTML = `<i class="sd"></i><b>${u.name}</b><span class="n"></span><em><u></u></em>`;
+    el.onclick = () => select(V);
     labelLayer.appendChild(el);
-    a.el = el;
-  }
+    return { V, el, sd: el.querySelector('.sd'), n: el.querySelector('.n'), bar: el.querySelector('u'), last: '' };
+  });
 }
 const tmp = new THREE.Vector3();
 function updateLabels() {
-  const w = innerWidth, h = innerHeight;
-  const camPos = camera.position;
-  for (const a of unitAnchors) {
-    tmp.copy(a.pos).project(camera);
-    const d = camPos.distanceTo(a.pos);
-    const hide = tmp.z > 1 || state.labels === 'none' || (state.labels === 'major' && a.unit.n < 3000 && !a.unit.parent && d > 3500) || (a.unit.parent && d > 5000 && state.labels !== 'all');
-    if (hide || Math.abs(tmp.x) > 1.2 || Math.abs(tmp.y) > 1.2) { a.el.style.display = 'none'; continue; }
-    a.el.style.display = '';
-    const s = THREE.MathUtils.clamp(2600 / d, 0.62, 1.15);
-    a.el.style.transform = `translate(${(tmp.x * 0.5 + 0.5) * w}px, ${(-tmp.y * 0.5 + 0.5) * h}px) translate(-50%, -100%) scale(${s})`;
-    a.el.style.zIndex = String(100000 - Math.round(d));
+  const w = innerWidth, h = innerHeight, camPos = camera.position;
+  for (const L of labels) {
+    const u = SIM.byId[L.V.id];
+    const st = u.status === 'gone' ? 'gone' : u.status === 'rout' ? 'rout' : '';
+    const key = u.side + st + (u.side !== u.origSide ? 't' : '') + (u.order.type === 'aloof' ? 'a' : '') + (u.order.type === 'idle' ? 'i' : '') + (u.fighting ? 'f' : '');
+    if (key !== L.last) {
+      L.last = key;
+      L.el.className = `lbl ${u.side} ${st} ${u.side !== u.origSide ? 'turn' : ''} ${u.fighting && !st ? 'fight' : ''} ${u.order.type === 'idle' ? 'idle' : ''}`;
+      L.sd.textContent = u.side === 'W' ? '西' : '東';
+      L.sd.title = u.side !== u.origSide ? '寝返り' : SIDE[u.side];
+    }
+    L.n.textContent = st === 'gone' ? (u.id === 'shimazu' || u.id === 'toyohisa' ? '離脱' : '潰走') : Math.round(u.n).toLocaleString();
+    L.bar.style.width = (Math.max(0, u.n / u.n0) * 100).toFixed(0) + '%';
+    const V = L.V;
+    const c = Math.cos(Math.PI - u.face * Math.PI / 180), s = Math.sin(Math.PI - u.face * Math.PI / 180);
+    const ax = u.x + c * V.anchorL[0] + s * V.anchorL[1], az = u.z - s * V.anchorL[0] + c * V.anchorL[1];
+    tmp.set(ax, heightAt(ax, az) + 40, az);
+    const d = camPos.distanceTo(tmp);
+    tmp.project(camera);
+    const minor = u.n0 < 3000 && d > 3500;
+    const hide = tmp.z > 1 || state.labels === 'none' || (state.labels === 'major' && minor) || (st === 'gone' && V.vis < 0.05);
+    if (hide || Math.abs(tmp.x) > 1.2 || Math.abs(tmp.y) > 1.2) { L.el.style.display = 'none'; continue; }
+    L.el.style.display = '';
+    const sc = THREE.MathUtils.clamp(2600 / d, 0.6, 1.15);
+    L.el.style.transform = `translate(${(tmp.x * 0.5 + 0.5) * w}px, ${(-tmp.y * 0.5 + 0.5) * h}px) translate(-50%, -100%) scale(${sc})`;
+    L.el.style.zIndex = String(100000 - Math.round(d));
   }
 }
-function select(a) {
-  const u = a.unit;
-  document.querySelectorAll('.lbl.sel').forEach((e) => e.classList.remove('sel'));
-  a.el.classList.add('sel');
+function select(V) {
+  const d = V.def, u = SIM.byId[V.id];
   const p = document.getElementById('info');
-  const tags = [u.betray ? '<i class="tag b">合戦中に寝返り</i>' : '', u.idle ? '<i class="tag i">戦わず</i>' : ''].join('');
-  p.innerHTML = `<button class="x" title="閉じる">×</button><div class="hd ${u.side}"><span class="side">${SIDE[u.side]}</span><h2>${u.name}</h2>${tags}</div>
-    <dl><dt>兵数（通説）</dt><dd>${u.n.toLocaleString()}</dd><dt>陣所</dt><dd>${u.place}</dd></dl>
-    <p>${u.note}</p><p class="caveat">位置・兵数は通説に基づく概略で、典拠の照合はこれから。</p>
-    <button id="goto">この陣へ寄る</button>`;
+  const tags = [d.betray ? '<i class="tag b">合戦中に寝返り</i>' : '', d.idle ? '<i class="tag i">戦わず</i>' : ''].join('');
+  p.innerHTML = `<button class="x" title="閉じる">×</button><div class="hd ${d.side}"><span class="side">${SIDE[d.side]}</span><h2>${d.name}</h2>${tags}</div>
+    <dl><dt>兵数（通説）</dt><dd>${d.n.toLocaleString()}</dd><dt>いま</dt><dd>${Math.round(u.n).toLocaleString()}（士気 ${Math.round(Math.max(0, u.morale) * 100)}）</dd><dt>陣所</dt><dd>${d.place}</dd></dl>
+    <p>${d.note}</p><p class="caveat">位置・兵数は通説に基づく概略。</p>
+    <button id="goto">この隊へ寄る</button>`;
   p.hidden = false;
-  document.getElementById('goto').onclick = () => flyTo(a.base, u.face, 420, 0.95);
+  p.querySelector('.x').onclick = () => { p.hidden = true; };
+  document.getElementById('goto').onclick = () => focusUnits([V.id], 420);
 }
 
 // ───────────────── 視点 ─────────────────
 let fly = null;
-function flyTo(target, faceDeg, dist, pitch) {
-  // faceDeg の向きを見る位置（背後上空）にカメラを置く
-  const b = THREE.MathUtils.degToRad(faceDeg);
-  const dir = new THREE.Vector3(Math.sin(b), 0, -Math.cos(b));
-  const camT = target.clone().addScaledVector(dir, -dist * Math.cos(pitch * 0.9));
-  camT.y = target.y + dist * Math.sin(pitch * 0.9);
-  const lookT = target.clone().addScaledVector(dir, dist * 0.5);
-  fly = { p0: camera.position.clone(), t0: controls.target.clone(), p1: camT, t1: lookT, k: 0 };
-}
+function flyCam(p1, t1, dur = 2.2) { fly = { p0: camera.position.clone(), t0: controls.target.clone(), p1, t1, k: 0, dur }; }
 function presetFrom(lon, lat, eyeH, lookLon, lookLat) {
   const [x, z] = ll2xz(lon, lat), [lx, lz] = ll2xz(lookLon, lookLat);
-  const p1 = new THREE.Vector3(x, heightAt(x, z) + eyeH, z);
-  const t1 = new THREE.Vector3(lx, heightAt(lx, lz), lz);
-  fly = { p0: camera.position.clone(), t0: controls.target.clone(), p1, t1, k: 0 };
+  flyCam(new THREE.Vector3(x, heightAt(x, z) + eyeH, z), new THREE.Vector3(lx, heightAt(lx, lz), lz));
 }
 const PRESETS = {
   overview: () => presetFrom(136.4990, 35.3560, 2100, 136.4630, 35.3640),
   east: () => presetFrom(136.4830, 35.3640, 500, 136.4620, 35.3660),
   south: () => presetFrom(136.4750, 35.3300, 2400, 136.4650, 35.3620),
+  top: () => presetFrom(136.4800, 35.3600, 7600, 136.4800, 35.3602),
   ishida: () => presetFrom(136.4592, 35.3740, 60, 136.4720, 35.3660),
-  matsuo: () => presetFrom(136.4547, 35.3466, 40, 136.4620, 35.3620),
+  matsuo: () => presetFrom(136.4547, 35.3466, 60, 136.4600, 35.3610),
   ieyasu: () => presetFrom(136.4905, 35.3642, 50, 136.4620, 35.3660),
   nangu: () => presetFrom(136.5066, 35.3498, 40, 136.4800, 35.3660),
-  top: () => presetFrom(136.4700, 35.3610, 7000, 136.4700, 35.3612),
 };
-function initialView() {
-  const [x, z] = ll2xz(136.4990, 35.3560), [lx, lz] = ll2xz(136.4630, 35.3640);
-  camera.position.set(x, heightAt(x, z) + 2100, z);
-  controls.target.set(lx, heightAt(lx, lz), lz);
-  controls.update();
+function focusUnits(ids, minDist = 600) {
+  const us = ids.map((id) => SIM.byId[id]).filter(Boolean);
+  if (!us.length) return;
+  let cx = 0, cz = 0; for (const u of us) { cx += u.x; cz += u.z; } cx /= us.length; cz /= us.length;
+  let ext = 0; for (const u of us) ext = Math.max(ext, Math.hypot(u.x - cx, u.z - cz) + u.r);
+  const d = THREE.MathUtils.clamp(ext * 2.2 + 250, minDist, 3200), pitch = 0.62, brg = 1.92; // 東南東から
+  const t = new THREE.Vector3(cx, heightAt(cx, cz), cz);
+  const p = t.clone().add(new THREE.Vector3(Math.sin(brg) * Math.cos(pitch) * d, Math.sin(pitch) * d, -Math.cos(brg) * Math.cos(pitch) * d));
+  flyCam(p, t);
+}
+function focusEvent(info) {
+  if (info.cam && PRESETS[info.cam]) PRESETS[info.cam]();
+  else if (info.focus) focusUnits(info.focus);
+}
+
+// ───────────────── 時刻による霧と光 ─────────────────
+const FOG = { clear: 0.00005, haze: 0.00016, mist: 0.0011 };
+function updateEnvironment(t) {
+  let dens;
+  if (play.weather !== 'auto') dens = FOG[play.weather];
+  else {
+    const h = t / 3600;
+    dens = h < 7.93 ? FOG.mist : h < 9 ? FOG.mist + (FOG.haze - FOG.mist) * (h - 7.93) / 1.07 : FOG.haze;
+  }
+  scene.fog.density = dens;
+  const h = t / 3600;
+  const az = THREE.MathUtils.degToRad(95 + (h - 7) / 10 * 160);
+  const el = THREE.MathUtils.degToRad(Math.max(3, 42 - Math.abs(h - 11.8) * 7.5));
+  sun.position.set(Math.sin(az) * Math.cos(el) * 8000, Math.sin(el) * 8000, -Math.cos(az) * Math.cos(el) * 8000);
+  const eve = THREE.MathUtils.clamp((h - 15) / 2, 0, 1);
+  sun.color.setRGB(1, 0.95 - eve * 0.2, 0.86 - eve * 0.35);
+  sun.intensity = 2.4 - eve * 0.9;
 }
 
 // ───────────────── UI ─────────────────
+const $ = (id) => document.getElementById(id);
 function bindUI() {
-  const $ = (id) => document.getElementById(id);
-  $('ratio').onchange = (e) => { state.ratio = +e.target.value; buildArmies(); };
+  $('ratio').onchange = (e) => { state.ratio = +e.target.value; buildArmies(); for (const V of VIS) V.ptr = 0; spawnCorpses(); };
   $('scale').oninput = (e) => { $('scaleV').textContent = (+e.target.value).toFixed(1) + '倍'; };
-  $('scale').onchange = (e) => { state.scale = +e.target.value; buildArmies(); };
-  $('fog').onchange = (e) => { scene.fog.density = FOG[e.target.value]; };
+  $('scale').onchange = (e) => { state.scale = +e.target.value; buildArmies(); for (const V of VIS) V.ptr = 0; spawnCorpses(); };
+  $('fog').onchange = (e) => { play.weather = e.target.value; };
   $('labelsSel').onchange = (e) => { state.labels = e.target.value; };
+  $('autoCam').onchange = (e) => { play.autoCam = e.target.checked; };
+  $('slowEv').onchange = (e) => { play.slowEv = e.target.checked; };
   document.querySelectorAll('[data-view]').forEach((b) => (b.onclick = () => PRESETS[b.dataset.view]()));
-  $('info').addEventListener('click', (e) => { if (e.target.classList.contains('x')) $('info').hidden = true; });
-  // 外部から状態を設定できるように（スクリーンショット検証用）
-  const q = new URLSearchParams(location.search);
-  if (q.get('ratio')) { state.ratio = +q.get('ratio'); $('ratio').value = q.get('ratio'); }
-  if (q.get('fog')) { scene.fog.density = FOG[q.get('fog')]; $('fog').value = q.get('fog'); }
+  $('playBtn').onclick = togglePlay;
+  $('startBtn').onclick = () => { $('start').hidden = true; setPlaying(true); };
+  $('speed').onchange = (e) => { play.speed = +e.target.value; };
+  $('seek').oninput = (e) => { $('clock').textContent = hhmm(+e.target.value); };
+  $('seek').onchange = (e) => { seek(+e.target.value); };
+  $('seek').min = T_START; $('seek').max = T_END;
+  // もしも
+  const box = $('ifs');
+  for (const o of OPTIONS) {
+    const l = document.createElement('label');
+    l.innerHTML = `${o.label}<select data-opt="${o.id}">${o.choices.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select>`;
+    box.appendChild(l);
+  }
+  $('ifRun').onclick = () => {
+    box.querySelectorAll('select').forEach((s) => { play.opts[s.dataset.opt] = s.value; });
+    $('summary').hidden = true;
+    seek(T_START); buildMarkers(); setPlaying(true);
+  };
+  addEventListener('keydown', (e) => { if (e.code === 'Space' && e.target === document.body) { e.preventDefault(); togglePlay(); } });
+}
+function setPlaying(v) { play.playing = v; $('playBtn').textContent = v ? '❚❚' : '▶'; $('start').hidden = true; }
+function togglePlay() { setPlaying(!play.playing); }
+// 先に最後まで計算して、年表に主な出来事の印をつける
+function buildMarkers() {
+  const S2 = prepare(createSim(UNITS, ll2xz, PARAMS, HALF));
+  S2.retarget = retarget;
+  const br = makeBrain(play.opts);
+  while (!S2.over && S2.t < T_END) stepSim(S2, br);
+  const box = $('marks'); box.innerHTML = '';
+  for (const e of S2.log) {
+    const info = EVENTS[e.id];
+    if (!info || !info.slow) continue;
+    const m = document.createElement('i');
+    m.style.left = ((e.t - T_START) / (T_END - T_START) * 100) + '%';
+    m.title = `${hhmm(e.t)} ${info.title}`;
+    m.className = 'tag-' + info.tag;
+    m.onclick = () => { seek(Math.max(T_START, e.t - 40)); setPlaying(true); };
+    box.appendChild(m);
+  }
 }
 
 // ───────────────── ループ ─────────────────
 const clock = new THREE.Clock();
 let frames = 0, fpsT = 0;
 function loop() {
-  const dt = clock.getDelta();
-  windU.value += dt;
+  const dt = Math.min(0.1, clock.getDelta());
+  SHARED.uTime.value += dt;
+  if (play.playing && !SIM.over) {
+    const sp = performance.now() < play.slowUntil ? Math.min(play.speed, 12) : play.speed;
+    play.gameT += dt * sp;
+    let guard = 0;
+    while (SIM.t < play.gameT && !SIM.over && guard++ < 400) simStep();
+    if (SIM.over) { play.gameT = SIM.t; setPlaying(false); }
+  }
+  // 部隊の描画を更新（シム2秒刻みの間を補間）
+  const a = THREE.MathUtils.clamp(1 - (SIM.t - play.gameT) / SIM_DT, 0, 1);
+  for (const V of VIS) {
+    const u = SIM.byId[V.id], U = V.mats.uni;
+    const x = u.px + (u.x - u.px) * a, z = u.pz + (u.z - u.pz) * a;
+    let df = ((u.face - u.pface + 540) % 360) - 180;
+    const face = u.pface + df * a;
+    U.uCenter.value.set(x, z);
+    U.uYaw.value = Math.PI - face * Math.PI / 180;
+    V.spread += ((u.status === 'rout' || u.status === 'gone' ? 2.6 : 1) - V.spread) * Math.min(1, dt * 0.8);
+    U.uSpread.value = V.spread;
+    U.uLost.value = Math.min(1, u.killed / u.n0);
+    V.vis += ((u.status === 'gone' ? 0 : 1) - V.vis) * Math.min(1, dt * 0.7);
+    U.uVis.value = V.vis;
+    U.uMove.value = play.playing && u.moving ? 1 : 0;
+    const d = camera.position.distanceTo(tmp.set(x, heightAt(x, z), z));
+    V.mats.foot.opacity = THREE.MathUtils.clamp((d - 700) / 2200, 0, 0.6) * V.vis * (u.status === 'rout' ? 0.5 : 1);
+    V.mats.foot.visible = V.mats.foot.opacity > 0.01;
+  }
+  if (smoke.dirty) { smoke.g.attributes.position.needsUpdate = true; smoke.g.attributes.aBirth.needsUpdate = true; smoke.g.attributes.aBig.needsUpdate = true; smoke.dirty = false; }
+  smoke.m.uniforms.uNow.value = play.gameT;
+  smoke.m.uniforms.uPx.value = renderer.domElement.height / (2 * Math.tan(camera.fov * Math.PI / 360));
+  updateEnvironment(play.gameT);
   if (fly) {
-    fly.k = Math.min(1, fly.k + dt / 2.2);
+    fly.k = Math.min(1, fly.k + dt / fly.dur);
     const e = fly.k < 0.5 ? 2 * fly.k * fly.k : 1 - Math.pow(-2 * fly.k + 2, 2) / 2;
     camera.position.lerpVectors(fly.p0, fly.p1, e);
     controls.target.lerpVectors(fly.t0, fly.t1, e);
     if (fly.k >= 1) fly = null;
   }
   controls.update();
-  // カメラが地面に潜らないように
   const gh = heightAt(camera.position.x, camera.position.z) + 6;
   if (camera.position.y < gh) camera.position.y = gh;
   scene.userData.sky.position.copy(camera.position);
-  for (const f of footMats) {
-    const d = camera.position.distanceTo(f.c);
-    f.m.opacity = THREE.MathUtils.clamp((d - 700) / 2200, 0, 0.6);
-    f.m.visible = f.m.opacity > 0.01;
-  }
   renderer.render(scene, camera);
   updateLabels();
+  $('clock').textContent = `${hhmm(play.gameT)}`;
+  $('koku').textContent = koku(play.gameT);
+  if (!$('seek').matches(':active')) $('seek').value = play.gameT;
   frames++; fpsT += dt;
-  if (fpsT > 0.5) { document.getElementById('fps').textContent = Math.round(frames / fpsT) + ' fps'; frames = 0; fpsT = 0; }
+  if (fpsT > 0.5) { $('fps').textContent = Math.round(frames / fpsT) + ' fps'; frames = 0; fpsT = 0; }
   requestAnimationFrame(loop);
 }
 addEventListener('resize', () => {
@@ -659,13 +996,31 @@ addEventListener('resize', () => {
   renderer.setSize(innerWidth, innerHeight);
 });
 
+// ───────────────── 起動 ─────────────────
 bindUI();
 buildVillages();
+newSim();
 buildArmies();
-const q0 = new URLSearchParams(location.search);
-initialView();
-if (q0.get('view') && PRESETS[q0.get('view')]) { PRESETS[q0.get('view')](); if (fly) { fly.k = 1; camera.position.copy(fly.p1); controls.target.copy(fly.t1); fly = null; controls.update(); } }
-if (q0.get('cam')) { const c = q0.get('cam').split(',').map(Number); presetFrom(...c); fly.k = 1; camera.position.copy(fly.p1); controls.target.copy(fly.t1); fly = null; controls.update(); }
-if (q0.get('sel')) { const a = unitAnchors.find((x) => x.unit.id === q0.get('sel')); if (a) select(a); }
+buildMarkers();
+{
+  const [x, z] = ll2xz(136.4990, 35.3560), [lx, lz] = ll2xz(136.4630, 35.3640);
+  camera.position.set(x, heightAt(x, z) + 2100, z);
+  controls.target.set(lx, heightAt(lx, lz), lz);
+  controls.update();
+}
+// 検証用 URL パラメータ: t=秒 or hh:mm, play=1, view=, cam=lon,lat,h,lookLon,lookLat, ratio=, sel=
+{
+  const q = new URLSearchParams(location.search);
+  if (q.get('ratio')) { state.ratio = +q.get('ratio'); $('ratio').value = q.get('ratio'); buildArmies(); }
+  if (q.get('if')) { for (const kv of q.get('if').split(',')) { const [k, v] = kv.split('='); play.opts[k] = v; } newSim(); buildMarkers(); }
+  if (q.get('t')) { const [hh, mm] = q.get('t').split(':').map(Number); seek(hh * 3600 + (mm || 0) * 60); $('start').hidden = true; }
+  const fin = () => { if (fly) { fly.k = 1; camera.position.copy(fly.p1); controls.target.copy(fly.t1); fly = null; controls.update(); } };
+  if (q.get('view') && PRESETS[q.get('view')]) { PRESETS[q.get('view')](); fin(); }
+  if (q.get('cam')) { presetFrom(...q.get('cam').split(',').map(Number)); fin(); }
+  if (q.get('focus')) { focusUnits(q.get('focus').split(',')); fin(); }
+  if (q.get('play')) { setPlaying(true); }
+  if (q.get('speed')) { play.speed = +q.get('speed'); }
+}
 window.__ready = true;
+window.__sim = () => SIM;
 loop();

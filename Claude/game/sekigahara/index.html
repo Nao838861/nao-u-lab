@@ -11,8 +11,7 @@
 <div id="labels"></div>
 
 <header id="title">
-  <h1>関ヶ原 <small>慶長5年9月15日（1600年10月21日）辰の刻前</small></h1>
-  <p>両軍布陣 — M0 モック（静止表示）</p>
+  <h1>関ヶ原 <small>慶長5年9月15日（1600年10月21日）</small></h1>
 </header>
 
 <aside id="panel">
@@ -37,21 +36,38 @@
       <input id="scale" type="range" min="1" max="4" step="0.2" value="1.6">
     </label>
     <label>天候
-      <select id="fog"><option value="clear">晴れ</option><option value="haze" selected>薄霞</option><option value="mist">朝霧（開戦前）</option></select>
+      <select id="fog"><option value="auto" selected>史実どおり（朝霧が晴れる）</option><option value="clear">晴れ</option><option value="haze">薄霞</option><option value="mist">霧</option></select>
     </label>
+    <label class="chk"><input id="autoCam" type="checkbox" checked> 出来事でカメラが動く</label>
+    <label class="chk"><input id="slowEv" type="checkbox" checked> 出来事で再生を遅くする</label>
     <label>名札
       <select id="labelsSel"><option value="all">すべて</option><option value="major">主要のみ</option><option value="none">なし</option></select>
     </label>
   </section>
+  <section>
+    <h3>もしも</h3>
+    <div id="ifs"></div>
+    <button id="ifRun">この条件で最初から</button>
+  </section>
   <section class="stats"><div id="count"></div><div id="trees"></div><div id="fps"></div></section>
   <section class="legend">
-    <span class="lg W">西軍</span><span class="lg E">東軍</span><span class="lg betray">寝返り</span><span class="lg idle">戦わず</span>
+    <span class="lg"><i class="sd W">西</i>西軍</span><span class="lg"><i class="sd E">東</i>東軍</span><span class="lg"><i class="sd E turn">東</i>寝返り</span>
   </section>
 </aside>
 
 <article id="info" hidden></article>
+<article id="card" hidden></article>
+<article id="summary" hidden></article>
+<ol id="log"></ol>
+<div id="start"><button id="startBtn">▶ 合戦を見る</button><p>午前7時30分から。出来事ごとに解説が出ます（スペースキーで一時停止）</p></div>
+<nav id="timeline">
+  <button id="playBtn">▶</button>
+  <div class="tm"><b id="clock">7:30</b><small id="koku">辰の刻</small></div>
+  <div class="track"><div id="marks"></div><input id="seek" type="range" step="60"></div>
+  <select id="speed"><option value="15">ゆっくり</option><option value="60" selected>標準（1秒=1分）</option><option value="180">速い</option><option value="480">とても速い</option></select>
+</nav>
 
-<footer id="credit">地形：国土地理院 標高タイル（DEM10B）を加工 ／ 布陣・兵数：通説に基づく概略（検証中） ／ 名札クリックで解説</footer>
+<footer id="credit">地形：国土地理院 標高タイル（DEM10B）を加工 ／ 布陣・兵数・推移：通説に基づく簡易モデル ／ 名札クリックで解説</footer>
 
 <script src="data/dem.js"></script>
 <script src="data/ground.js"></script>
@@ -156,7 +172,566 @@ const UNITS = [
   { id: 'arima', name: '有馬豊氏', side: 'E', n: 900, lon: 136.4950, lat: 35.3700, face: 180, color: '#d0b09a', place: '野上付近（南宮山の押さえ）', note: '南宮山に備えた。' },
 ];
 
-// 関ヶ原 1600 — M0: 地形と布陣の静的表示
+// 部隊シミュレーション層（描画から独立。Node でもそのまま動く）
+// 時刻は「0時からの秒」。1ステップ = SIM_DT 秒。決定論（乱数なし）。
+
+const T_START = 7.5 * 3600;   // 7:30
+const T_END = 17 * 3600;      // 17:00 日没
+const SIM_DT = 2;
+const K_FIRE = 0.0011;               // 戦闘力係数（人/秒/√人）
+
+function hhmm(t) {
+  const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60);
+  return `${h}:${String(m).padStart(2, '0')}`;
+}
+function koku(t) {
+  const h = t / 3600;
+  if (h < 7) return '卯の刻'; if (h < 9) return '辰の刻'; if (h < 11) return '巳の刻';
+  if (h < 13) return '午の刻'; if (h < 15) return '未の刻'; if (h < 17) return '申の刻'; return '酉の刻';
+}
+
+// units: units.js の定義, xz: (lon,lat)=>[x,z], params: 部隊ごとの能力, bounds: {hx, hz} 地図の半幅
+function createSim(units, xz, params, bounds) {
+  const S = { t: T_START, units: [], byId: {}, flags: {}, fired: new Set(), log: [], listeners: [], result: null, over: false, xz, bounds, contacts: [] };
+  for (const d of units) {
+    const p = params[d.id] || {};
+    const [x, z] = xz(d.lon, d.lat);
+    const u = {
+      id: d.id, def: d, name: d.name, side: d.side, origSide: d.side,
+      n: d.n, n0: d.n, killed: 0, morale: p.morale ?? 0.9, morale0: p.morale ?? 0.9, msens: p.msens ?? 1.6,
+      q: p.q ?? 1, fort: p.fort ?? 1, x, z, hx: x, hz: z, face: d.face, homeFace: d.face,
+      r: Math.min(190, Math.max(25, Math.sqrt(d.n) * 1.4)),
+      order: { type: d.idle ? 'idle' : 'hold' }, status: 'hold', contacts: [],
+      moving: 0, fighting: 0, fire: 0, retreat: p.retreat ? xz(...p.retreat) : null, speed: p.speed ?? 0.9, noRout: !!p.noRout,
+    };
+    S.units.push(u); S.byId[d.id] = u;
+  }
+  S.emit = (id, data = {}) => {
+    if (S.fired.has(id)) return false;
+    S.fired.add(id);
+    const e = { id, t: S.t, ...data };
+    S.log.push(e);
+    for (const f of S.listeners) f(e);
+    return true;
+  };
+  return S;
+}
+
+const alive = (u) => u.status !== 'gone';
+const dist = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
+const isBroken = (u) => u.status === 'rout' || u.status === 'gone';
+
+function setOrder(S, id, order) {
+  const u = S.byId[id];
+  if (!u || isBroken(u)) return;
+  u.order = order;
+  if (order.type === 'hold') { u.hx = u.x; u.hz = u.z; }
+}
+
+function hostile(a, b) {
+  if (a.side !== b.side) return true;
+  // 島津は陣を乱して逃げ込む味方にも鉄砲を向けた
+  return (a.order.type === 'aloof' && b.status === 'rout') || (b.order.type === 'aloof' && a.status === 'rout');
+}
+
+function rout(S, u, why) {
+  if (isBroken(u)) return;
+  u.status = 'rout';
+  let to = u.retreat;
+  if (!to) to = u.side === 'E' ? S.xz(136.545, 35.370) : S.xz(136.432, 35.378);
+  u.order = { type: 'flee', x: to[0], z: to[1] };
+  u.speed = 1.5;
+  S.emit('rout:' + u.id, { unit: u.id, why });
+  // 周囲の味方の動揺
+  for (const f of S.units) {
+    if (f === u || f.side !== u.side || isBroken(f)) continue;
+    const d = dist(f, u);
+    if (d < 1100) f.morale -= 0.1 * Math.min(1.5, Math.max(0.3, u.n0 / 5000)) * (1 - d / 1400);
+  }
+}
+
+function nearestEnemy(S, u, maxD, filter) {
+  let best = null, bd = maxD;
+  for (const e of S.units) {
+    if (!alive(e) || e.side === u.side || e.status === 'rout') continue;
+    if (e.order.type === 'aloof' || e.order.type === 'idle') continue;
+    if (filter && !filter(e)) continue;
+    const d = dist(u, e);
+    if (d < bd) { bd = d; best = e; }
+  }
+  return best;
+}
+
+function moveToward(u, tx, tz, speed, dt, stopAt = 0) {
+  const dx = tx - u.x, dz = tz - u.z, d = Math.hypot(dx, dz);
+  if (d <= stopAt + 0.5) return true;
+  const s = Math.min(speed * dt, d - stopAt);
+  u.x += dx / d * s; u.z += dz / d * s;
+  u.moveDir = Math.atan2(dx, -dz) * 180 / Math.PI; // 方位
+  u.moved += s;
+  return false;
+}
+
+function stepSim(S, brain) {
+  const dt = SIM_DT;
+  S.t += dt;
+  brain(S);
+  const U = S.units.filter(alive);
+  for (const u of U) { u.contacts = []; u.moved = 0; u.fire = 0; }
+  S.contacts = [];
+  // 接触判定
+  for (let i = 0; i < U.length; i++) for (let j = i + 1; j < U.length; j++) {
+    const a = U[i], b = U[j];
+    if (!hostile(a, b)) continue;
+    if ((a.order.type === 'idle' && b.order.type === 'idle')) continue;
+    const reach = a.r + b.r + 25 + ((a.order.type === 'aloof' || b.order.type === 'aloof') ? 40 : 0);
+    if (dist(a, b) < reach) { a.contacts.push(b); b.contacts.push(a); S.contacts.push([a, b]); }
+  }
+  // 射撃・白兵（Lanchester 風、正面幅で頭打ちになるよう √n）
+  const dmg = new Map();
+  for (const a of U) {
+    const targets = a.contacts.filter((b) => a.side !== b.side || a.order.type === 'aloof');
+    a.fighting = targets.length ? 1 : 0;
+    if (!targets.length) continue;
+    let F = K_FIRE * a.q * (0.35 + 0.65 * Math.max(0, a.morale)) * Math.sqrt(a.n) * dt;
+    if (a.status === 'rout') F *= 0.15;
+    a.fire = F;
+    const W = targets.reduce((s, b) => s + Math.sqrt(Math.max(0, b.n)), 0);
+    if (W <= 0) continue;
+    for (const b of targets) {
+      let f = F * Math.sqrt(Math.max(0, b.n)) / W;
+      // 側面・背後からの攻撃は効く
+      const brg = Math.atan2(a.x - b.x, -(a.z - b.z)) * 180 / Math.PI;
+      const off = Math.abs(((brg - b.face + 540) % 360) - 180);
+      const flank = off > 110 ? 1.8 : off > 65 ? 1.35 : 1;
+      f *= flank;
+      if (flank > 1) b.flanked = (b.flanked || 0) + 1;
+      if (b.status === 'rout') f *= 2.5;
+      else if (b.atHome) f /= b.fort;
+      dmg.set(b, (dmg.get(b) || 0) + f);
+    }
+  }
+  for (const [b, f] of dmg) {
+    const real = Math.min(f, b.n);
+    b.n -= real; b.killed += real;
+    if (b.n < 1) { b.n = 0; b.status = 'gone'; }
+    if (b.status !== 'rout') b.morale -= real / b.n0 * b.msens;
+  }
+  // 士気の回復・崩壊判定
+  for (const u of U) {
+    if (!u.fighting && u.status !== 'rout' && u.morale < u.morale0) u.morale = Math.min(u.morale0, u.morale + 0.00008 * dt);
+    if (u.status !== 'rout' && !u.noRout && (u.morale < 0.18 || u.n < 0.22 * u.n0)) rout(S, u, u.n < 0.22 * u.n0 ? 'loss' : 'morale');
+  }
+  // 移動
+  for (const u of U) {
+    const o = u.order;
+    if (o.type === 'attack') {
+      let T = S.byId[o.target];
+      if (!T || isBroken(T) || T.side === u.side) {
+        T = (S.retarget && S.retarget(S, u)) || nearestEnemy(S, u, 1600);
+        if (T) o.target = T.id; else { setOrder(S, u.id, { type: 'hold' }); }
+      }
+      if (T && !u.contacts.includes(T)) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
+    } else if (o.type === 'move') {
+      if (moveToward(u, o.x, o.z, u.speed, dt)) setOrder(S, u.id, { type: 'hold' });
+    } else if (o.type === 'path') {
+      const wp = o.pts[o.i];
+      if (!wp) { o.done = true; }
+      else if (moveToward(u, wp[0], wp[1], o.speed || 1.3, dt)) o.i++;
+    } else if (o.type === 'flee') {
+      moveToward(u, o.x, o.z, u.speed, dt);
+      const out = Math.abs(u.x) > S.bounds.hx - 20 || Math.abs(u.z) > S.bounds.hz - 20;
+      if (out || Math.hypot(o.x - u.x, o.z - u.z) < 40 || u.n < 25) { u.status = 'gone'; S.emit('gone:' + u.id, { unit: u.id }); }
+    } else if (o.type === 'hold' || o.type === 'aloof' || o.type === 'idle') {
+      if (!u.fighting) moveToward(u, u.hx, u.hz, 0.25, dt);
+    }
+    u.atHome = (o.type === 'hold' || o.type === 'aloof' || o.type === 'idle') && Math.hypot(u.x - u.def0x(), u.z - u.def0z()) < 150;
+  }
+  // 押し合い（優勢な側へ戦線が動く）
+  for (const [a, b] of S.contacts) {
+    if (a.side === b.side || isBroken(a) || isBroken(b)) continue;
+    if (a.order.type === 'path' || b.order.type === 'path') continue;
+    const fa = a.fire, fb = b.fire;
+    if (fa + fb <= 0) continue;
+    const p = (fa - fb) / (fa + fb);
+    const d = dist(a, b) || 1, ux = (b.x - a.x) / d, uz = (b.z - a.z) / d;
+    const s = p * 0.3 * dt;
+    for (const u of [a, b]) {
+      u.x += ux * s; u.z += uz * s;
+      if (u.order.type === 'hold') { // 持ち場から離れすぎない
+        const hx = u.x - u.hx, hz = u.z - u.hz, hd = Math.hypot(hx, hz);
+        if (hd > 350) { u.x = u.hx + hx / hd * 350; u.z = u.hz + hz / hd * 350; }
+      }
+    }
+  }
+  // 重なり回避
+  for (let i = 0; i < U.length; i++) for (let j = i + 1; j < U.length; j++) {
+    const a = U[i], b = U[j];
+    if (a.status === 'gone' || b.status === 'gone') continue;
+    if (a.order.type === 'path' || b.order.type === 'path' || a.status === 'rout' || b.status === 'rout') continue;
+    const k = a.side === b.side ? 0.8 : 0.75;
+    const d = dist(a, b), min = (a.r + b.r) * k;
+    if (d < min && d > 0.01) {
+      const push = (min - d) * 0.06, ux = (b.x - a.x) / d, uz = (b.z - a.z) / d;
+      a.x -= ux * push; a.z -= uz * push; b.x += ux * push; b.z += uz * push;
+    }
+  }
+  // 向き
+  for (const u of U) {
+    let want = u.homeFace;
+    if (u.contacts.length) {
+      const e = u.contacts.reduce((m, c) => (dist(u, c) < dist(u, m) ? c : m));
+      want = Math.atan2(e.x - u.x, -(e.z - u.z)) * 180 / Math.PI;
+    } else if (u.moved > 0.1 * dt && u.moveDir !== undefined) want = u.moveDir;
+    let df = ((want - u.face + 540) % 360) - 180;
+    u.face += df * Math.min(1, 0.03 * dt);
+    u.moving = u.moved > 0.15 * dt ? 1 : 0;
+  }
+}
+
+// 初期位置（持ち場判定用）
+function prepare(S) {
+  for (const u of S.units) { const x0 = u.x, z0 = u.z; u.def0x = () => x0; u.def0z = () => z0; }
+  return S;
+}
+
+function sideTotals(S) {
+  const r = { W: { n0: 0, killed: 0 }, E: { n0: 0, killed: 0 } };
+  for (const u of S.units) { r[u.origSide].n0 += u.n0; r[u.origSide].killed += u.killed; }
+  return r;
+}
+
+// 史実シナリオ：武将の判断ルール＋イベント（解説カード）＋もしも（if）
+
+const H = (h, m = 0) => h * 3600 + m * 60;
+
+// 部隊ごとの能力（q=戦闘力倍率, fort=陣地の守りの堅さ, morale=初期士気, msens=損害に対する士気の脆さ, retreat=敗走先）
+const PARAMS = {
+  ishida: { q: 1.25, fort: 3.4, msens: 0.8, retreat: [136.4470, 35.3890] },
+  sakon: { q: 1.4, fort: 1.8, retreat: [136.4470, 35.3890] },
+  gamo: { q: 1.2, fort: 1.8, retreat: [136.4470, 35.3890] },
+  shimazu: { q: 2.2, fort: 1.8, morale: 0.95, msens: 0.5, noRout: true },
+  toyohisa: { q: 2.0, fort: 1.8, morale: 0.95, msens: 0.5, noRout: true },
+  konishi: { q: 0.8, fort: 1.9, morale: 0.82, msens: 1.1, retreat: [136.4400, 35.3850] },
+  ukita: { q: 1.0, fort: 1.3, msens: 1.3, retreat: [136.4320, 35.3690] },
+  otani: { q: 1.7, fort: 1.4, morale: 0.95, retreat: [136.4320, 35.3580] },
+  otani2: { q: 1.3, fort: 1.3, retreat: [136.4320, 35.3620] },
+  hiratsuka: { q: 1.6, fort: 1.3, morale: 0.95, retreat: [136.4320, 35.3580] },
+  kobayakawa: { q: 0.65, morale: 0.8 },
+  wakisaka: { q: 0.9 }, kutsuki: { q: 0.9 }, ogawa: { q: 0.9 }, akaza: { q: 0.9 },
+  mori: { retreat: [136.5440, 35.3350] }, kikkawa: { retreat: [136.5440, 35.3350] }, ankokuji: { retreat: [136.5440, 35.3350] },
+  natsuka: { retreat: [136.5440, 35.3350] }, chosokabe: { retreat: [136.5440, 35.3330] },
+  ieyasu: { q: 1.0, fort: 1.2, morale: 0.95 },
+  fukushima: { q: 1.2 }, ii: { q: 1.3, speed: 1.0 }, tadayoshi: { q: 1.0 }, honda: { q: 1.6, speed: 1.1 },
+  kuroda: { q: 1.2 }, hosokawa: { q: 1.1 }, kato: { q: 1.1 }, todo: { q: 1.1 }, kyogoku: { q: 1.0 },
+};
+
+// もしも（if）の選択肢。先頭が史実（通説）。
+const OPTIONS = [
+  { id: 'kobaya', label: '小早川秀秋', choices: [['history', '正午、問鉄砲を受けて寝返る（通説）'], ['early', '開戦まもなく寝返る（新説）'], ['neutral', '最後まで松尾山で傍観'], ['west', '西軍として東軍に攻めかかる']] },
+  { id: 'four', label: '脇坂ら4隊', choices: [['history', '小早川に続いて寝返る'], ['loyal', '西軍に留まり大谷隊を助ける']] },
+  { id: 'kikkawa', label: '吉川広家', choices: [['history', '道を塞ぎ、南宮山の毛利勢は動かず'], ['open', '道を開け、毛利勢が家康の背後を突く']] },
+  { id: 'shimazu', label: '島津義弘', choices: [['history', '要請を断り孤高、最後に敵中突破'], ['fight', '三成の要請に応じて参戦']] },
+  { id: 'open', label: '開戦', choices: [['history', '井伊直政・松平忠吉の抜け駆け'], ['fukushima', '先鋒・福島正則が一番に攻める']] },
+];
+const DEFAULT_OPTS = Object.fromEntries(OPTIONS.map((o) => [o.id, 'history']));
+
+// ── イベント（解説カード）。tag: 史実＝諸史料が一致 / 通説＝広く流布するが史料的検討の余地 / 逸話＝後世の軍記・伝承 / 異説 / うんちく / もしも
+const EVENTS = {
+  intro: { title: '関ヶ原、夜明け', tag: 'うんちく', cam: 'overview',
+    body: '慶長5年9月15日（1600年10月21日）。前夜からの雨の中、石田三成ら西軍は大垣城を出て夜のうちに関ヶ原へ移り、西側の山々に陣を敷いた。東軍もこれを追って盆地に入る。盆地には深い霧が立ちこめていた。' },
+  fuwa: { title: 'なぜ関ヶ原なのか', tag: 'うんちく', cam: 'top',
+    body: '関ヶ原は古代の三関の一つ「不破関」が置かれた交通の要衝で、中山道・北国脇往還・伊勢街道がここで交わる。672年の壬申の乱でも戦場になった。家康が最初に陣を置いた桃配山は、大海人皇子が兵に桃を配ったという伝承の地。' },
+  hidetada: { title: '来ない3万8千', tag: '史実', cam: 'east', focus: ['ieyasu'],
+    body: '徳川の主力のうち約3万8千は、家康の子・秀忠が率いて中山道を進んでいたが、信濃の上田城で真田昌幸に足止めされ、この日の合戦に間に合わなかった。家康の手元の兵の多くは、豊臣恩顧の大名たちだった。' },
+  otsu: { title: 'もう一つの戦場、大津城', tag: '史実',
+    body: '同じ頃、近江の大津城では東軍の京極高次（京極高知の兄）が籠城し、立花宗茂ら西軍1万以上を引きつけていた。大津城は15日に開城したが、この西軍の精鋭は関ヶ原に間に合わなかった。' },
+  fog: { title: '霧が晴れはじめる', tag: '通説', cam: 'overview',
+    body: '辰の刻（午前8時頃）、霧が薄れはじめる。100m先も見えないほどの濃霧の中で、両軍は互いの位置を探り合っていた。' },
+  nukegake: { title: '先陣は誰か——井伊直政の抜け駆け', tag: '通説', focus: ['ii', 'tadayoshi'], slow: true,
+    body: '先鋒は福島正則と決められていた。しかし井伊直政は、初陣同然の娘婿・松平忠吉を連れて福島隊の脇をすり抜ける。福島家の可児才蔵に咎められると「物見（偵察）だ」と言って前に出て、宇喜多隊に鉄砲を撃ちかけた。家康の子に一番槍の功を立てさせるためとされる。' },
+  fukushima_first: { title: 'もしも：福島正則が先陣', tag: 'もしも', focus: ['fukushima'], body: '予定どおり先鋒の福島正則が、一番に宇喜多隊へ攻めかかる。' },
+  fukushima_clash: { title: '福島正則 vs 宇喜多秀家', tag: '通説', focus: ['fukushima', 'ukita'], slow: true,
+    body: '先を越された福島隊が宇喜多隊に猛然と攻めかかる。宇喜多の先鋒・明石全登（掃部）との戦いは激しく、福島隊は何度も押し戻されて旗が後退したと伝わる。' },
+  ishida_attack: { title: '石田隊へ殺到する東軍', tag: '通説', focus: ['ishida', 'kuroda', 'hosokawa'], slow: true,
+    body: '黒田長政・細川忠興・加藤嘉明・田中吉政・竹中重門らが、三成の笹尾山へ攻めかかる。三成への恨みを抱く豊臣恩顧の大名が多かった。前衛の島左近・蒲生郷舎が柵を盾にこれを迎え撃つ。' },
+  otani_front: { title: '藤堂・京極 vs 大谷隊', tag: '通説', focus: ['todo', 'kyogoku', 'otani2'],
+    body: '藤堂高虎・京極高知が大谷隊の前面に攻めかかる。戦場の南西では、松尾山の小早川勢がまだ動かずにいる。' },
+  sakon: { title: '島左近、撃たれる', tag: '通説', focus: ['sakon', 'kuroda'], slow: true,
+    body: '黒田隊は鉄砲隊の一部を側面の丘に回し、島左近の隊を横から撃たせた。左近は重傷を負って退いたとされる。「鬼左近」の最期には諸説あり、生き延びたという伝承も残る。' },
+  taiho: { title: '石田隊の大筒', tag: '通説', focus: ['ishida'],
+    body: '石田隊は大筒（大砲）を持ち出して東軍に撃ちかけたと伝わる。笹尾山の前は、鉄砲と大筒の硝煙に包まれた。' },
+  noroshi: { title: '狼煙、上がる', tag: '通説', focus: ['ishida', 'kobayakawa', 'mori'], cam: 'overview', slow: true,
+    body: '三成は笹尾山から狼煙を上げ、松尾山の小早川と南宮山の毛利勢に参戦を促した。挟み撃ちが成れば西軍の勝ちである。しかし、どちらも動かなかった。' },
+  bento: { title: '宰相殿の空弁当', tag: '逸話', focus: ['mori', 'kikkawa'], slow: true,
+    body: '南宮山の毛利秀元は、前に陣取る吉川広家が動かないため下山できない。吉川は黒田長政を通じて東軍と内通し、毛利家の所領を守る約束を取りつけていた。参戦を催促する長束正家・安国寺恵瓊の使者に、秀元は「いま兵に弁当を食べさせている」と答えたという。秀元の官職（参議＝宰相）にちなんで「宰相殿の空弁当」と呼ばれる。' },
+  mori_descend: { title: 'もしも：毛利勢、下山', tag: 'もしも', focus: ['mori', 'kikkawa', 'ikeda', 'asano'], slow: true,
+    body: '吉川広家が道を開けた。南宮山の毛利秀元・長宗我部盛親ら2万8千が山を下り、家康の背後を押さえる池田輝政・浅野幸長らに襲いかかる。' },
+  shimazu_envoy: { title: '島津、動かず', tag: '逸話', focus: ['shimazu'], slow: true,
+    body: '三成の使者・八十島助左衛門が島津の陣に来て加勢を求めた。馬から下りずに口上を述べたため、島津勢は無礼だと怒鳴り返したという。島津豊久は「今日はそれぞれが自分の戦をするまで」と突き放した。前夜の夜襲の献策を三成が退けたことが、確執の原因とも語られる（後世の軍記による）。' },
+  mitsunari_visit: { title: '三成みずから島津陣へ', tag: '逸話', focus: ['shimazu', 'ishida'],
+    body: '三成自身が馬を飛ばして島津陣を訪れ、出陣を頼んだ。答えは同じだった。島津勢は兵約1,500。陣に近づく者は敵味方を問わず寄せつけず、孤高を保つ。' },
+  shimazu_join: { title: 'もしも：島津、参戦', tag: 'もしも', focus: ['shimazu', 'toyohisa'], slow: true,
+    body: '島津義弘が三成の要請に応じた。「鬼島津」の精兵が正面の東軍に斬り込む。' },
+  ieyasu_move: { title: '家康、本陣を前へ', tag: '通説', focus: ['ieyasu'],
+    body: '戦況が膠着するなか、家康は桃配山から陣場野へ本陣を進め、諸隊を督励した。' },
+  tsume: { title: '爪を噛む家康', tag: '逸話', focus: ['ieyasu', 'kobayakawa'],
+    body: '約束どおり寝返るはずの小早川秀秋が、なかなか動かない。苛立った家康は、若い頃からの癖である爪噛みをしながら「せがれめに謀られたか」とつぶやいたと伝わる。' },
+  toi_deppo: { title: '問鉄砲', tag: '通説', focus: ['kobayakawa', 'ieyasu'], slow: true, cam: 'matsuo',
+    body: '業を煮やした家康は、松尾山に向けて鉄砲を撃ちかけさせ、秀秋に決断を迫ったという（問鉄砲）。ただし近年は、当時の手紙など一次史料に基づき、小早川は開戦と同時に寝返っていて問鉄砲はなかったとする説（白峰旬ら）も出ている。「もしも」の「新説」で、その展開を試せる。' },
+  kobaya_betray: { title: '小早川秀秋、寝返る', tag: '通説', focus: ['kobayakawa', 'hiratsuka', 'otani'], slow: true, cam: 'matsuo',
+    body: '松尾山の小早川勢1万5千余が山を駆け下り、西軍の大谷隊へ襲いかかった。勝敗の天秤が大きく傾く。' },
+  kobaya_early: { title: '新説：開戦まもなく小早川が寝返る', tag: '異説', focus: ['kobayakawa', 'otani'], slow: true, cam: 'matsuo',
+    body: '合戦直後に書かれた手紙などでは、小早川は開戦と同時に西軍を攻め、戦いは短時間で決着したと読める。問鉄砲の話は後世の軍記にしか見えない、というのがこの説の根拠である。' },
+  kobaya_neutral: { title: 'もしも：小早川、動かず', tag: 'もしも', focus: ['kobayakawa'], slow: true, cam: 'matsuo',
+    body: '問鉄砲にも秀秋は動かない。松尾山の1万5千は最後まで傍観を決めこむ。' },
+  kobaya_west: { title: 'もしも：小早川、東軍を攻める', tag: 'もしも', focus: ['kobayakawa', 'todo'], slow: true, cam: 'matsuo',
+    body: '秀秋は西軍として松尾山を下り、藤堂・京極隊の側面に襲いかかった。' },
+  otani_push: { title: '大谷吉継、裏切りを撃退', tag: '通説', focus: ['otani', 'hiratsuka', 'kobayakawa'], slow: true,
+    body: '小早川の裏切りを予期していた吉継は、松尾山に備えていた兵で小早川勢を迎え撃ち、何度も押し返した。兵の数では大きく劣りながらの奮戦だった。' },
+  four_betray: { title: '脇坂・朽木・小川・赤座も寝返る', tag: '通説', focus: ['wakisaka', 'ogawa', 'otani'], slow: true,
+    body: '大谷隊の備えの内側にいた脇坂安治・朽木元綱・小川祐忠・赤座直保の4隊が、一斉に大谷隊へ攻めかかる。脇坂は事前に東軍に通じていたとされる。挟まれた大谷隊はもはや支えきれない。' },
+  four_loyal: { title: 'もしも：4隊は踏みとどまる', tag: 'もしも', focus: ['wakisaka', 'otani'], body: '脇坂ら4隊は寝返らず、大谷隊とともに小早川勢を迎え撃つ。' },
+  hiratsuka_die: { title: '平塚為広・戸田勝成、討死', tag: '通説', focus: ['hiratsuka'],
+    body: '大谷隊とともに戦った平塚為広・戸田勝成が相次いで討死した。為広は討ち取った敵の首に辞世の歌を添えて吉継に送ったと伝わる。' },
+  yoshitsugu: { title: '大谷吉継、自害', tag: '通説', focus: ['otani'], slow: true,
+    body: '隊が崩れたのを見て、吉継は自害した。家臣の湯浅五助が主の首を敵に渡さぬよう埋め、その後討ち取られたという。五助を討った藤堂家の藤堂高刑は、首の在処を秘す約束を守ったと伝わる。' },
+  konishi_flee: { title: '小西隊、崩れる', tag: '通説', focus: ['konishi'],
+    body: '大谷隊の壊滅で側面が開き、小西行長の隊が崩れた。行長は伊吹山中へ逃れたが、のちに捕らえられた。' },
+  ukita_flee: { title: '宇喜多隊、総崩れ', tag: '通説', focus: ['ukita'], slow: true,
+    body: '西軍最大の宇喜多隊も支えきれずに崩れた。秀家は「金吾（秀秋）めを討ち果たす」と小早川勢へ斬り込もうとして、家臣に止められたという。秀家は落ち延びて薩摩の島津家に匿われ、のちに八丈島へ流された。' },
+  mitsunari_flee: { title: '石田隊、潰走——三成は伊吹山へ', tag: '史実', focus: ['ishida'], slow: true,
+    body: '最後まで粘った石田隊も崩れ、三成は伊吹山中へ逃れた。数日後、田中吉政の手の者に捕らえられ、10月1日に京の六条河原で小西行長・安国寺恵瓊とともに処刑された。' },
+  shimazu_shoot: { title: '味方であっても撃つ', tag: '逸話', focus: ['shimazu'], slow: true,
+    body: '崩れた西軍の兵が島津の陣に逃げ込もうとした。島津勢は陣が乱れるのを嫌い、味方であろうと近づく者に容赦なく鉄砲を撃ちかけたという。' },
+  breakout: { title: '島津の退き口——前へ退く', tag: '通説', focus: ['shimazu', 'toyohisa', 'ieyasu'], slow: true,
+    body: '西軍が崩れ、島津勢は東軍のただ中に取り残された。義弘は退路を後ろの伊吹山ではなく前に求めた。敵の正面を突き破り、家康本陣の前をかすめて伊勢街道を南へ駆け抜ける。' },
+  sutegamari: { title: '捨て奸（すてがまり）', tag: '通説', focus: ['toyohisa', 'shimazu'],
+    body: '追いすがる東軍に対し、島津勢は数人ずつを道に残して座り込ませ、鉄砲で狙撃させては死ぬまで足止めさせた。残った者が全滅すると、また次の組を残す。「捨て奸」と呼ばれる壮絶な撤退戦法である。' },
+  ii_wound: { title: '井伊直政、撃たれる', tag: '通説', focus: ['ii', 'shimazu'], slow: true,
+    body: '島津を追った井伊直政は、島津兵（柏木源藤と伝わる）の鉄砲を受けて落馬した。この傷がもとで直政は2年後に没したとされる。松平忠吉も負傷した。' },
+  honda_fall: { title: '本多忠勝、落馬', tag: '逸話', focus: ['honda', 'shimazu'],
+    body: '本多忠勝も追撃に加わったが、乗馬を撃たれて落馬したという。生涯の戦いで傷一つ負わなかったと伝わる猛将である。' },
+  toyohisa_die: { title: '島津豊久、討死', tag: '通説', focus: ['toyohisa'], slow: true,
+    body: '殿（しんがり）をつとめた甥の豊久が、烏頭坂（うとうざか）付近で討死した。伯父の義弘を逃がすための戦いだった。' },
+  chojuin: { title: '長寿院盛淳、身代わりに', tag: '通説', focus: ['shimazu'],
+    body: '家老の長寿院盛淳は、義弘から拝領した陣羽織を着て「島津兵庫頭（義弘）である」と名乗り、敵を引きつけて討死した。' },
+  shimazu_escape: { title: '島津義弘、戦場を離脱', tag: '通説', focus: ['shimazu'], slow: true,
+    body: '義弘は伊勢街道から伊賀・大坂を経て、海路で薩摩へ帰り着いた。関ヶ原に入った約1,500のうち、帰国できたのは80余人だったという。島津家はその後の交渉で所領を守り抜いた。' },
+  nangu_withdraw: { title: '南宮山の諸隊、戦わずに退く', tag: '史実', focus: ['mori', 'chosokabe'], cam: 'nangu',
+    body: '本戦が決着し、南宮山の毛利秀元・長宗我部盛親・長束正家・安国寺恵瓊らは一戦も交えずに退いた。吉川広家の内通で守ったはずの毛利家は、戦後に120万石から周防・長門の約30万石に減らされた。' },
+  east_win: { title: '東軍の勝利', tag: '史実', cam: 'overview', slow: true,
+    body: '西軍の主力が崩れ、天下分け目の戦いは東軍の勝利に終わった。戦いが続いたのはおよそ半日だった。' },
+  west_win: { title: 'もしも：西軍の勝利', tag: 'もしも', cam: 'overview', slow: true, body: '東軍が崩れた。歴史は別の道を歩みはじめる。' },
+  draw: { title: '日没——決着つかず', tag: 'もしも', cam: 'overview', slow: true, body: '日が暮れ、両軍は兵を収めた。勝敗は翌日以降に持ち越される。' },
+  kubi: { title: '勝って兜の緒を締めよ', tag: '逸話', focus: ['ieyasu'], slow: true,
+    body: '戦いのあと、家康は藤川台で首実検を行った。このとき初めて兜をかぶり、緒を締めながら「勝って兜の緒を締めよ」と言ったと伝わる。小早川秀秋は戦後に備前・美作を与えられたが、2年後に21歳で没した。' },
+};
+
+// 敗走メッセージ（固有イベントのない部隊用）
+function routText(S, e) {
+  const u = S.byId[e.unit];
+  return { title: `${u.name}隊、潰走`, tag: '経過', focus: [u.id], body: `${u.name}隊（残り約${Math.round(u.n).toLocaleString()}）が崩れ、退いていく。` };
+}
+
+// ── 判断ルール ──
+function makeBrain(opts = DEFAULT_OPTS) {
+  const O = { ...DEFAULT_OPTS, ...opts };
+  const rules = [];
+  const at = (t, id, fn) => rules.push({ id, when: (S) => S.t >= t, fn });
+  const when = (id, cond, fn) => rules.push({ id, when: cond, fn });
+  const attack = (S, id, target) => setOrder(S, id, { type: 'attack', target });
+  const U = (S, id) => S.byId[id];
+  const broken = (S, ...ids) => ids.every((id) => isBroken(S.byId[id]));
+  const near = (S, a, b, d) => Math.hypot(U(S, a).x - U(S, b).x, U(S, a).z - U(S, b).z) < d;
+
+  at(H(7, 30), 'intro', (S) => S.emit('intro'));
+  at(H(7, 36), 'fuwa', (S) => S.emit('fuwa'));
+  at(H(7, 43), 'hidetada', (S) => S.emit('hidetada'));
+  at(H(7, 50), 'otsu', (S) => S.emit('otsu'));
+  at(H(7, 56), 'fog', (S) => S.emit('fog'));
+  // 島津は最初から孤高
+  at(H(7, 30), 'shimazu_stance', (S) => {
+    if (O.shimazu === 'history') { setOrder(S, 'shimazu', { type: 'aloof' }); setOrder(S, 'toyohisa', { type: 'aloof' }); }
+  });
+  // 開戦
+  at(H(8, 0), 'open', (S) => {
+    if (O.open === 'history') { attack(S, 'ii', 'ukita'); attack(S, 'tadayoshi', 'ukita'); S.emit('nukegake'); }
+    else { attack(S, 'fukushima', 'ukita'); S.emit('fukushima_first'); }
+  });
+  at(H(8, 6), 'fukushima', (S) => {
+    attack(S, 'fukushima', 'ukita');
+    if (O.open === 'history') S.emit('fukushima_clash');
+    else { attack(S, 'ii', 'ukita'); attack(S, 'tadayoshi', 'ukita'); }
+  });
+  at(H(8, 12), 'ishida_attack', (S) => {
+    attack(S, 'kuroda', 'sakon'); attack(S, 'takenaka', 'sakon'); attack(S, 'hosokawa', 'gamo');
+    attack(S, 'kato', 'ishida'); attack(S, 'tanaka', 'ishida'); attack(S, 'kanamori', 'gamo');
+    S.emit('ishida_attack');
+  });
+  at(H(8, 18), 'otani_front', (S) => {
+    attack(S, 'todo', 'otani2'); attack(S, 'kyogoku', 'otani2'); attack(S, 'terazawa', 'ukita');
+    attack(S, 'tsutsui', 'konishi'); attack(S, 'oda', 'konishi'); attack(S, 'furuta', 'konishi'); attack(S, 'ikoma', 'konishi');
+    S.emit('otani_front');
+  });
+  when('sakon', (S) => S.t >= H(9, 50) && U(S, 'sakon').fighting && !isBroken(U(S, 'sakon')), (S) => {
+    const u = U(S, 'sakon'); u.morale -= 0.35; u.q *= 0.6; S.emit('sakon');
+  });
+  at(H(10, 12), 'taiho', (S) => { S.flags.cannon = S.t; S.emit('taiho'); });
+  at(H(10, 40), 'noroshi', (S) => { S.flags.noroshi = S.t; S.emit('noroshi'); });
+  at(H(11, 0), 'mori', (S) => {
+    if (O.kikkawa === 'history') S.emit('bento');
+    else {
+      for (const id of ['kikkawa', 'mori', 'ankokuji', 'natsuka', 'chosokabe']) setOrder(S, id, { type: 'hold' });
+      attack(S, 'kikkawa', 'yamauchi'); attack(S, 'mori', 'ikeda'); attack(S, 'ankokuji', 'asano');
+      attack(S, 'natsuka', 'asano'); attack(S, 'chosokabe', 'asano');
+      attack(S, 'ikeda', 'mori'); attack(S, 'asano', 'ankokuji'); attack(S, 'yamauchi', 'kikkawa'); attack(S, 'arima', 'kikkawa');
+      S.emit('mori_descend');
+    }
+  });
+  at(H(11, 15), 'envoy', (S) => {
+    if (O.shimazu === 'history') S.emit('shimazu_envoy');
+    else { attack(S, 'shimazu', 'ii'); attack(S, 'toyohisa', 'tadayoshi'); S.emit('shimazu_join'); }
+  });
+  at(H(11, 30), 'ieyasu_move', (S) => {
+    const [x, z] = S.xz(136.4760, 35.3668);
+    setOrder(S, 'ieyasu', { type: 'move', x, z }); U(S, 'ieyasu').speed = 0.7; S.emit('ieyasu_move');
+  });
+  at(H(11, 37), 'mitsunari_visit', (S) => { if (O.shimazu === 'history') S.emit('mitsunari_visit'); });
+  at(H(11, 48), 'tsume', (S) => { if (O.kobaya === 'history' || O.kobaya === 'neutral') S.emit('tsume'); });
+  // 小早川
+  const betray = (S) => {
+    const k = U(S, 'kobayakawa'); k.side = 'E'; k.speed = 1.1;
+    attack(S, 'kobayakawa', 'hiratsuka');
+    S.flags.betrayT = S.t;
+  };
+  if (O.kobaya === 'history') {
+    at(H(12, 0), 'toi', (S) => S.emit('toi_deppo'));
+    at(H(12, 6), 'betray', (S) => { betray(S); S.emit('kobaya_betray'); });
+  } else if (O.kobaya === 'early') {
+    at(H(8, 25), 'betray', (S) => { betray(S); S.emit('kobaya_early'); });
+  } else if (O.kobaya === 'neutral') {
+    at(H(12, 0), 'toi', (S) => S.emit('toi_deppo'));
+    at(H(12, 6), 'kneutral', (S) => S.emit('kobaya_neutral'));
+  } else if (O.kobaya === 'west') {
+    at(H(12, 0), 'kwest', (S) => { U(S, 'kobayakawa').q = 0.9; U(S, 'kobayakawa').speed = 1.1; attack(S, 'kobayakawa', 'todo'); S.emit('kobaya_west'); });
+  }
+  when('otani_push', (S) => S.flags.betrayT && S.t >= S.flags.betrayT + 900 && !isBroken(U(S, 'otani')), (S) => S.emit('otani_push'));
+  // 脇坂ら4隊
+  when('four', (S) => S.flags.betrayT && S.t >= S.flags.betrayT + 1500, (S) => {
+    if (O.four === 'history') {
+      for (const id of ['wakisaka', 'kutsuki', 'ogawa', 'akaza']) { U(S, id).side = 'E'; U(S, id).speed = 1.0; }
+      attack(S, 'wakisaka', 'otani'); attack(S, 'kutsuki', 'otani'); attack(S, 'ogawa', 'hiratsuka'); attack(S, 'akaza', 'otani');
+      for (const id of ['otani', 'otani2', 'hiratsuka']) U(S, id).morale -= 0.2;
+      S.emit('four_betray');
+    } else {
+      attack(S, 'wakisaka', 'kobayakawa'); attack(S, 'ogawa', 'kobayakawa'); attack(S, 'kutsuki', 'kobayakawa'); attack(S, 'akaza', 'kobayakawa');
+      S.emit('four_loyal');
+    }
+  });
+  // 西軍の崩壊の連鎖
+  when('shimazu_shoot', (S) => O.shimazu === 'history' && S.t >= H(12, 0) && S.units.some((u) => u.side === 'W' && u.status === 'rout' && u.contacts.includes(U(S, 'shimazu'))),
+    (S) => S.emit('shimazu_shoot'));
+  when('shimazu_shoot_late', (S) => O.shimazu === 'history' && S.flags.breakoutReady && !S.fired.has('shimazu_shoot'), (S) => S.emit('shimazu_shoot'));
+  // 島津の退き口
+  when('breakout', (S) => O.shimazu === 'history' && broken(S, 'ishida', 'ukita', 'konishi') && !isBroken(U(S, 'shimazu')), (S) => {
+    S.flags.breakoutReady = true;
+  });
+  when('breakout_go', (S) => S.flags.breakoutReady && S.fired.has('shimazu_shoot') && S.t >= (S.flags.breakoutAt ||= S.t + 300), (S) => {
+    const P = (lo, la) => S.xz(lo, la);
+    const route = [P(136.4668, 35.3672), P(136.4720, 35.3640), P(136.4752, 35.3608), P(136.4745, 35.3540), P(136.4770, 35.3478), P(136.4815, 35.3380), P(136.4850, 35.3300)];
+    setOrder(S, 'shimazu', { type: 'path', pts: route.slice(), i: 0, speed: 1.35 });
+    setOrder(S, 'toyohisa', { type: 'path', pts: route.slice(0, 5), i: 0, speed: 1.25 });
+    S.flags.breakoutT = S.t;
+    S.emit('breakout');
+  });
+  when('pursuit', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 420, (S) => {
+    attack(S, 'ii', 'shimazu'); attack(S, 'tadayoshi', 'shimazu'); attack(S, 'honda', 'shimazu');
+    for (const id of ['ii', 'tadayoshi', 'honda']) U(S, id).speed = 1.5;
+  });
+  when('sutegamari', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 900, (S) => S.emit('sutegamari'));
+  when('ii_wound', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 1000 && (U(S, 'ii').fighting || S.t >= S.flags.breakoutT + 1600), (S) => {
+    const ii = U(S, 'ii'), td = U(S, 'tadayoshi');
+    ii.morale -= 0.3; setOrder(S, 'ii', { type: 'hold' }); setOrder(S, 'tadayoshi', { type: 'hold' }); td.morale -= 0.15;
+    S.emit('ii_wound');
+  });
+  when('honda_fall', (S) => S.fired.has('ii_wound') && S.t >= S.flags.breakoutT + 1300, (S) => {
+    setOrder(S, 'honda', { type: 'hold' }); S.emit('honda_fall');
+  });
+  when('toyohisa_stop', (S) => { const o = U(S, 'toyohisa').order; return o.type === 'path' && o.i >= o.pts.length; }, (S) => {
+    setOrder(S, 'toyohisa', { type: 'hold' }); U(S, 'toyohisa').fort = 1.0; U(S, 'toyohisa').msens = 3; U(S, 'toyohisa').noRout = false;
+  });
+  when('toyohisa_die', (S) => S.flags.breakoutT && (isBroken(U(S, 'toyohisa')) || S.t > S.flags.breakoutT + 3000), (S) => {
+    const t = U(S, 'toyohisa'); t.killed += t.n * 0.9; t.n *= 0.1; t.status = 'gone'; S.emit('toyohisa_die');
+  });
+  when('chojuin', (S) => S.flags.breakoutT && near(S, 'shimazu', 'toyohisa', 3000) && U(S, 'shimazu').order.type === 'path' && U(S, 'shimazu').order.i >= 5, (S) => {
+    const s = U(S, 'shimazu'); const k = s.n * 0.25; s.n -= k; s.killed += k; S.emit('chojuin');
+  });
+  when('shimazu_escape', (S) => { const o = U(S, 'shimazu').order; return o.type === 'path' && o.i >= o.pts.length; }, (S) => {
+    const s = U(S, 'shimazu'); s.status = 'gone'; S.emit('shimazu_escape', { n: Math.round(s.n + (isBroken(U(S, 'toyohisa')) ? 0 : U(S, 'toyohisa').n)) });
+  });
+  // 勝敗
+  when('east_win', (S) => !S.result && broken(S, 'ishida', 'ukita', 'konishi', 'otani') &&
+    (O.kobaya !== 'west' || isBroken(U(S, 'kobayakawa'))), (S) => {
+    S.result = { winner: 'E', t: S.t }; S.emit('east_win');
+  });
+  when('west_win', (S) => !S.result && (isBroken(U(S, 'ieyasu')) || eastFrontBroken(S)), (S) => {
+    S.result = { winner: 'W', t: S.t }; S.emit('west_win');
+    for (const u of S.units) if (u.side === 'E' && !isBroken(u) && u.id !== 'ieyasu') rout(S, u, 'collapse');
+  });
+  when('nangu_withdraw', (S) => S.result && S.result.winner === 'E' && S.t >= S.result.t + 1500, (S) => {
+    for (const id of ['mori', 'kikkawa', 'ankokuji', 'natsuka', 'chosokabe']) {
+      const u = U(S, id); if (isBroken(u)) continue;
+      const to = u.retreat; u.status = 'rout'; u.order = { type: 'flee', x: to[0], z: to[1] }; u.speed = 0.9;
+    }
+    S.emit('nangu_withdraw');
+  });
+  when('mop', (S) => S.result && S.result.winner === 'E', (S) => {
+    // 残る西軍への掃討
+    for (const u of S.units) if (u.side === 'E' && u.order.type === 'hold' && !['ieyasu', 'ikeda', 'asano', 'yamauchi', 'arima', 'ii', 'tadayoshi', 'honda'].includes(u.id)) {
+      const e = S.units.find((w) => w.side === 'W' && !isBroken(w) && w.order.type !== 'aloof' && w.order.type !== 'idle' && w.order.type !== 'path' && Math.hypot(w.x - u.x, w.z - u.z) < 1500);
+      if (e) setOrder(S, u.id, { type: 'attack', target: e.id });
+    }
+  });
+  when('kubi', (S) => S.result && S.result.winner === 'E' && S.t >= Math.max(H(15, 0), S.result.t + 2400) && (S.fired.has('shimazu_escape') || O.shimazu !== 'history' || S.t > H(16, 0)), (S) => {
+    S.emit('kubi'); S.over = true;
+  });
+  when('end_w', (S) => S.result && S.result.winner === 'W' && S.t >= S.result.t + 2400, (S) => { S.over = true; });
+  when('draw', (S) => !S.result && S.t >= H(17, 0) - 4, (S) => { S.result = { winner: 'D', t: S.t }; S.emit('draw'); S.over = true; });
+
+  // 大谷隊の壊滅で西軍の南翼が開く
+  when('flank', (S) => isBroken(U(S, 'otani')), (S) => { for (const id of ['ukita', 'konishi']) U(S, id).morale -= 0.15; });
+  for (const [uid, ev] of Object.entries(ROUT_EVENTS)) when('re_' + uid, (S) => S.fired.has('rout:' + uid) || (S.byId[uid].status === 'gone'), (S) => S.emit(ev));
+  const brain = (S) => {
+    for (const r of rules) if (!S.fired.has('rule:' + r.id) && r.when(S)) { S.fired.add('rule:' + r.id); r.fn(S); }
+  };
+  return brain;
+}
+
+function eastFrontBroken(S) {
+  const ids = ['fukushima', 'ii', 'tadayoshi', 'kuroda', 'hosokawa', 'kato', 'tanaka', 'todo', 'kyogoku', 'terazawa', 'tsutsui', 'ikeda', 'asano'];
+  let n0 = 0, b = 0;
+  for (const id of ids) { const u = S.byId[id]; n0 += u.n0; if (isBroken(u)) b += u.n0; }
+  return b / n0 > 0.6;
+}
+
+// 敗走イベントに固有カードを割り当てる
+const ROUT_EVENTS = { otani: 'yoshitsugu', hiratsuka: 'hiratsuka_die', konishi: 'konishi_flee', ukita: 'ukita_flee', ishida: 'mitsunari_flee' };
+
+// 退却後の標的選び（寝返り部隊は近い西軍を、東軍は島津・南宮山を避ける）
+function retarget(S, u) {
+  let best = null, bd = 2200;
+  for (const e of S.units) {
+    if (e.side === u.side || isBroken(e)) continue;
+    if (e.order.type === 'aloof' || e.order.type === 'idle' || e.order.type === 'path') continue;
+    const d = Math.hypot(e.x - u.x, e.z - u.z);
+    if (d < bd) { bd = d; best = e; }
+  }
+  return best;
+}
+
+
+// 関ヶ原 1600 — 描画と再生（部隊シミュは sim.js、史実シナリオは scenario.js）
 import * as THREE from 'three';
 import { MapControls } from 'three/addons/controls/MapControls.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -193,8 +768,7 @@ renderer.toneMappingExposure = 1.05;
 document.getElementById('view').appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-const FOG = { clear: 0.00005, haze: 0.00016, mist: 0.0009 };
-scene.fog = new THREE.FogExp2(0xc8ccc6, FOG.haze);
+scene.fog = new THREE.FogExp2(0xc8ccc6, 0.00016);
 
 const camera = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 2, 60000);
 const controls = new MapControls(camera, renderer.domElement);
@@ -369,6 +943,94 @@ const GEO = {
 };
 const MAT = { body: bodyMaterial(), flag: flagMaterial() };
 
+
+// ───────────────── 動く部隊のシェーダ ─────────────────
+// 兵一人ひとりの「部隊内の位置」を instanceMatrix に持ち、部隊の中心・向き・散開・損耗は uniform で渡す。
+// 地面の高さは DEM テクスチャから頂点シェーダで引く。
+const demTex = new THREE.DataTexture(DEM, DW, DH, THREE.RedFormat, THREE.FloatType);
+demTex.needsUpdate = true;
+const SHARED = {
+  uDem: { value: demTex }, uDemInfo: { value: new THREE.Vector4(DW, DH, SX, SY) }, uTime: { value: 0 },
+};
+const UNIT_PARS = `
+uniform vec2 uCenter; uniform float uYaw; uniform float uSpread; uniform float uLost; uniform float uVis; uniform float uMove;
+uniform float uTime; uniform sampler2D uDem; uniform vec4 uDemInfo;
+attribute float aRank;
+float demH(vec2 p) {
+  vec2 g = clamp((p / uDemInfo.zw + 0.5) * (uDemInfo.xy - 1.0), vec2(0.0), uDemInfo.xy - 1.001);
+  ivec2 i = ivec2(floor(g)); vec2 f = fract(g);
+  float a = texelFetch(uDem, i, 0).r, b = texelFetch(uDem, i + ivec2(1, 0), 0).r;
+  float c = texelFetch(uDem, i + ivec2(0, 1), 0).r, d = texelFetch(uDem, i + ivec2(1, 1), 0).r;
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+}
+vec2 rotY(vec2 v, float a) { float c = cos(a), s = sin(a); return vec2(c * v.x + s * v.y, -s * v.x + c * v.y); }
+`;
+const UNIT_NORMAL = `
+vec3 transformedNormal = mat3(instanceMatrix) * objectNormal;
+transformedNormal.xz = rotY(transformedNormal.xz, uYaw);
+transformedNormal = normalMatrix * transformedNormal;
+#ifdef FLIP_SIDED
+  transformedNormal = - transformedNormal;
+#endif
+`;
+const UNIT_PROJECT = `
+vec4 lp = instanceMatrix * vec4(transformed, 1.0);
+vec2 foot = vec2(instanceMatrix[3].x, instanceMatrix[3].z);
+vec2 so = foot * (uSpread - 1.0) * 0.6 + vec2(sin(aRank * 913.0), cos(aRank * 517.0)) * (uSpread - 1.0) * 9.0;
+vec2 footW = uCenter + rotY(foot + so, uYaw);
+vec2 pw = uCenter + rotY(lp.xz + so, uYaw);
+float bob = uMove * abs(sin(uTime * 9.0 + aRank * 60.0)) * 0.15;
+vec3 wpos = vec3(pw.x, lp.y + demH(footW) + bob, pw.y);
+if (aRank < uLost || uVis < 0.02) wpos = vec3(0.0, -500.0, 0.0);
+vec4 mvPosition = viewMatrix * vec4(wpos, 1.0);
+gl_Position = projectionMatrix * mvPosition;
+`;
+function unitMaterials(color) {
+  const uni = {
+    uCenter: { value: new THREE.Vector2() }, uYaw: { value: 0 }, uSpread: { value: 1 }, uLost: { value: 0 }, uVis: { value: 1 }, uMove: { value: 0 },
+  };
+  const hook = (s) => { Object.assign(s.uniforms, SHARED, uni); };
+  const body = new THREE.MeshLambertMaterial({ vertexColors: true });
+  body.onBeforeCompile = (s) => {
+    hook(s);
+    s.vertexShader = s.vertexShader
+      .replace('#include <common>', '#include <common>\nattribute float armor;' + UNIT_PARS)
+      .replace('#include <color_vertex>', `vColor = vec3(1.0);
+        #ifdef USE_COLOR
+          vColor *= color;
+        #endif
+        #ifdef USE_INSTANCING_COLOR
+          vColor.rgb *= mix(vec3(1.0), instanceColor.rgb, armor);
+        #endif`)
+      .replace('#include <defaultnormal_vertex>', UNIT_NORMAL)
+      .replace('#include <project_vertex>', UNIT_PROJECT);
+  };
+  body.customProgramCacheKey = () => 'unit-body';
+  const flag = new THREE.MeshLambertMaterial({ side: THREE.DoubleSide });
+  flag.onBeforeCompile = (s) => {
+    hook(s);
+    s.vertexShader = s.vertexShader
+      .replace('#include <common>', '#include <common>\nattribute float flex;' + UNIT_PARS)
+      .replace('#include <begin_vertex>', `vec3 transformed = vec3(position);
+        transformed.z += sin(uTime * 3.2 + aRank * 50.0 + flex * 5.0 + position.y * 1.3) * 0.18 * flex;`)
+      .replace('#include <defaultnormal_vertex>', UNIT_NORMAL)
+      .replace('#include <project_vertex>', UNIT_PROJECT);
+  };
+  flag.customProgramCacheKey = () => 'unit-flag';
+  const foot = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide, fog: false });
+  foot.onBeforeCompile = (s) => {
+    hook(s);
+    s.vertexShader = s.vertexShader
+      .replace('#include <common>', '#include <common>' + UNIT_PARS)
+      .replace('#include <project_vertex>', `
+        vec2 pw = uCenter + rotY(transformed.xz * (1.0 + (uSpread - 1.0) * 0.8), uYaw);
+        vec4 mvPosition = viewMatrix * vec4(pw.x, demH(pw) + 2.5, pw.y, 1.0);
+        gl_Position = projectionMatrix * mvPosition;`);
+  };
+  foot.customProgramCacheKey = () => 'unit-foot';
+  return { uni, body, flag, foot };
+}
+
 // ───────────────── 部隊の隊形 ─────────────────
 // 1つの「備」の構成（前から）: 鉄砲 → 弓 → 長柄（槍） → 騎馬 → 旗本 → 小荷駄
 const BLOCKS = [
@@ -380,20 +1042,54 @@ const BLOCKS = [
   { type: 'nimotsu', frac: 0.13, sx: 1.9, sz: 2.5, wf: 0.55 },
 ];
 const SONAE_MAX = 6500;
-
 function rand(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+function estimateDepth(per, F, sp) {
+  let d = 0;
+  for (const bl of BLOCKS) {
+    const files = Math.max(1, Math.floor(F * bl.wf / (bl.sx * sp)));
+    d += Math.ceil(per * bl.frac / (sp * sp) / files) * bl.sz * sp + 5 * sp;
+  }
+  return d;
+}
 
 const state = { ratio: 1, scale: 1.6, labels: 'all' };
 const armyGroup = new THREE.Group();
 scene.add(armyGroup);
-const unitAnchors = []; // {unit, pos:Vector3}
+let VIS = []; // 部隊ごとの描画データ
+
+// 倒れた兵（遺体）のプール
+const fallenGeo = (() => { const g = footman('none'); g.rotateX(-Math.PI / 2); g.translate(0, 0.18, 0); return g; })();
+let corpses = null, corpseN = 0;
+function resetCorpses() {
+  if (corpses) { scene.remove(corpses); corpses.dispose(); }
+  const max = Math.ceil(UNITS.reduce((s, u) => s + u.n, 0) / state.ratio * 0.45) + 200;
+  corpses = new THREE.InstancedMesh(fallenGeo, MAT.body, max);
+  corpses.count = 0; corpseN = 0; corpses.frustumCulled = false;
+  corpses.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  corpses.setColorAt(0, new THREE.Color());
+  scene.add(corpses);
+}
+const _d = new THREE.Object3D(), _c = new THREE.Color();
+function addCorpse(x, z, yaw, color) {
+  if (corpseN >= corpses.instanceMatrix.count) return;
+  _d.position.set(x, heightAt(x, z), z);
+  _d.rotation.set(0, yaw, 0);
+  _d.scale.setScalar(state.scale);
+  _d.updateMatrix();
+  corpses.setMatrixAt(corpseN, _d.matrix);
+  _c.copy(color).multiplyScalar(0.7);
+  corpses.setColorAt(corpseN, _c);
+  corpseN++;
+  corpses.count = corpseN;
+  corpses.instanceMatrix.needsUpdate = true;
+  corpses.instanceColor.needsUpdate = true;
+}
 
 function buildArmies() {
   armyGroup.traverse((o) => { if (o.isInstancedMesh) o.dispose(); });
   armyGroup.clear();
-  unitAnchors.length = 0;
-  footMats.length = 0;
-  const jm = []; // 陣幕の頂点
+  VIS = [];
+  const jm = [];
   let total = 0, drawn = 0;
   const r = state.ratio, sp = Math.sqrt(r), S = state.scale;
   const dummy = new THREE.Object3D();
@@ -402,11 +1098,9 @@ function buildArmies() {
     const [cx, cz] = ll2xz(u.lon, u.lat);
     const b = THREE.MathUtils.degToRad(u.face);
     const fx = Math.sin(b), fz = -Math.cos(b), rx = Math.cos(b), rz = Math.sin(b);
-    const yaw = Math.PI - b;
     const k = Math.ceil(u.n / SONAE_MAX);
     const per = u.n / k;
     const F = THREE.MathUtils.clamp(Math.sqrt(per) * 2.5, 28, 240);
-    // 備ごとの位置（2列ずつ前から後ろへ）
     const lists = { yari: [], teppo: [], yumi: [], nimotsu: [], kiba: [], nob: [] };
     let honjinAt = null;
     const bb = [Infinity, -Infinity, Infinity, -Infinity];
@@ -415,8 +1109,7 @@ function buildArmies() {
     for (let si = 0; si < k; si++) {
       const row = Math.floor(si / 2), inRow = Math.min(2, k - row * 2), col = si % 2;
       const ou = inRow === 1 ? 0 : (col === 0 ? -1 : 1) * (F / 2 + 18);
-      const ov = -row * (sonaeDepth + 45);
-      let v = ov;
+      let v = -row * (sonaeDepth + 45);
       const isMain = si === k - 1;
       for (const bl of BLOCKS) {
         if (bl.honjin && !isMain) continue;
@@ -434,84 +1127,102 @@ function buildArmies() {
           lists[bl.type].push([lu, lv, (rnd() - 0.5) * 0.5]);
           if (lu < bb[0]) bb[0] = lu; if (lu > bb[1]) bb[1] = lu; if (lv < bb[2]) bb[2] = lv; if (lv > bb[3]) bb[3] = lv;
         }
-        // 幟（のぼり）: 約60人に1本
         const nob = Math.round(per * frac / 60 / Math.max(1, sp * 0.7));
-        for (let q = 0; q < nob; q++) {
-          lists.nob.push([ou + (rnd() - 0.5) * F * bl.wf, v - rnd() * rows * sz, (rnd() - 0.5) * 0.3]);
-        }
-        if (bl.honjin) {
-          honjinAt = [ou, v - rows * sz / 2, F * bl.wf / 2 + 6, rows * sz / 2 + 6];
-        }
+        for (let q = 0; q < nob; q++) lists.nob.push([ou + (rnd() - 0.5) * F * bl.wf, v - rnd() * rows * sz, (rnd() - 0.5) * 0.3]);
+        if (bl.honjin) honjinAt = [ou, v - rows * sz / 2, F * bl.wf / 2 + 6, rows * sz / 2 + 6];
         v -= rows * sz + 5 * sp;
       }
       depthAcc = Math.max(depthAcc, -v);
     }
-    // 部隊中心に合わせる: 前端を中心から depth/2 だけ前へ
     const shift = depthAcc / 2;
-    const toWorld = (lu, lv) => {
-      const lvv = lv + shift;
-      const x = cx + rx * lu + fx * lvv, z = cz + rz * lu + fz * lvv;
-      return [x, heightAt(x, z), z];
-    };
+    // 部隊ローカル座標（x=左右, z=前後, 前が+z）
+    const L = (lu, lv) => [-lu, lv + shift];
+    const front = bb[3], back = bb[2];
+    const rankOf = (lv) => Math.min(0.999, 0.5 * rnd() + 0.5 * (1 - (lv - back) / Math.max(1, front - back)));
+    const toWorld = (lu, lv) => { const lvv = lv + shift; const x = cx + rx * lu + fx * lvv, z = cz + rz * lu + fz * lvv; return [x, heightAt(x, z), z]; };
+    const mats = unitMaterials(u.color);
     const armorCol = C(u.armor || '#3a302a');
     const flagCol = C(u.color);
-    const add = (geoKey, list, colFn, sc) => {
-      if (!list.length) return null;
-      const mesh = new THREE.InstancedMesh(GEO[geoKey], geoKey.includes('lag') ? MAT.flag : MAT.body, list.length);
+    const soldiers = []; // 遺体を置くための記録 [lx, lz, rank, yaw]
+    const add = (geoKey, list, ranks, colFn, sc, isFlag) => {
+      if (!list.length) return;
+      const g = GEO[geoKey].clone();
+      g.setAttribute('aRank', new THREE.InstancedBufferAttribute(ranks, 1));
+      const mesh = new THREE.InstancedMesh(g, isFlag ? mats.flag : mats.body, list.length);
       const col = new THREE.Color();
       list.forEach((p, i) => {
-        const [x, y, z] = toWorld(p[0], p[1]);
-        dummy.position.set(x, y, z);
-        dummy.rotation.set(0, yaw + p[2], 0);
+        const [lx, lz] = L(p[0], p[1]);
+        dummy.position.set(lx, 0, lz);
+        dummy.rotation.set(0, p[2], 0);
         dummy.scale.setScalar(sc);
         dummy.updateMatrix();
         mesh.setMatrixAt(i, dummy.matrix);
         colFn(col, i);
         mesh.setColorAt(i, col);
       });
-      mesh.computeBoundingSphere();
+      mesh.frustumCulled = false;
       armyGroup.add(mesh);
-      return mesh;
     };
     const vary = (base, amt) => (c) => { const t = 1 + (rnd() - 0.5) * amt; c.copy(base).multiplyScalar(t); };
     let n = 0;
-    for (const t of ['yari', 'teppo', 'yumi', 'nimotsu']) { add(t, lists[t], vary(armorCol, 0.35), S); n += lists[t].length; }
-    add('kiba', lists.kiba, vary(armorCol, 0.3), S); n += lists.kiba.length;
+    const rankLists = {};
+    for (const t of ['yari', 'teppo', 'yumi', 'nimotsu', 'kiba']) {
+      const rk = new Float32Array(lists[t].map((p) => rankOf(p[1])));
+      rankLists[t] = rk;
+      add(t, lists[t], rk, vary(armorCol, 0.35), S, false);
+      lists[t].forEach((p, i) => { const [lx, lz] = L(p[0], p[1]); soldiers.push([lx, lz, rk[i], p[2]]); });
+      n += lists[t].length;
+    }
     const foot = [...lists.yari, ...lists.teppo, ...lists.yumi];
-    add('footFlag', foot, vary(flagCol, 0.12), S);
-    add('horseFlag', lists.kiba, vary(flagCol, 0.12), S);
-    add('nobPole', lists.nob, (c) => c.set(1, 1, 1), 1 + (S - 1) * 0.5);
-    add('nobFlag', lists.nob, vary(flagCol, 0.08), 1 + (S - 1) * 0.5);
+    const footRk = new Float32Array([...rankLists.yari, ...rankLists.teppo, ...rankLists.yumi]);
+    add('footFlag', foot, footRk, vary(flagCol, 0.12), S, true);
+    add('horseFlag', lists.kiba, rankLists.kiba, vary(flagCol, 0.12), S, true);
+    const nobRk = new Float32Array(lists.nob.map((p) => rankOf(p[1])));
+    add('nobPole', lists.nob, nobRk, (c) => c.set(1, 1, 1), 1 + (S - 1) * 0.5, false);
+    add('nobFlag', lists.nob, nobRk, vary(flagCol, 0.08), 1 + (S - 1) * 0.5, true);
     total += u.n; drawn += n;
-    addFootprint(u, bb, toWorld);
-    // 本陣: 陣幕・大将・馬印
+    soldiers.sort((a, b) => a[2] - b[2]);
+    // 本陣（大将と馬印）: 部隊とともに動く。陣幕は陣所に残る
+    let anchorL = [0, 0];
     if (honjinAt) {
       const [hu, hv, hw, hd] = honjinAt;
       const corners = [[hu - hw, hv + hd], [hu + hw, hv + hd], [hu + hw, hv - hd], [hu - hw, hv - hd], [hu - hw, hv + hd]];
       for (let e = 0; e < 4; e++) {
         const [a0, b0] = corners[e], [a1, b1] = corners[e + 1];
         const len = Math.hypot(a1 - a0, b1 - b0), seg = Math.max(1, Math.ceil(len / 4));
-        // 正面中央は開ける
         for (let s = 0; s < seg; s++) {
           if (e === 0 && Math.abs((s + 0.5) / seg - 0.5) < 0.12) continue;
-          const p0 = toWorld(a0 + (a1 - a0) * s / seg, b0 + (b1 - b0) * s / seg);
-          const p1 = toWorld(a0 + (a1 - a0) * (s + 1) / seg, b0 + (b1 - b0) * (s + 1) / seg);
-          jm.push([p0, p1, flagCol]);
+          jm.push([toWorld(a0 + (a1 - a0) * s / seg, b0 + (b1 - b0) * s / seg), toWorld(a0 + (a1 - a0) * (s + 1) / seg, b0 + (b1 - b0) * (s + 1) / seg), flagCol]);
         }
       }
-      const [lx, ly, lz] = toWorld(hu, hv);
-      addUmajirushi(u, lx, ly, lz, yaw);
-      unitAnchors.push({ unit: u, pos: new THREE.Vector3(lx, ly + 45, lz), base: new THREE.Vector3(lx, ly, lz) });
+      anchorL = L(hu, hv);
+      const ug = umaGeo(u);
+      ug.setAttribute('aRank', new THREE.InstancedBufferAttribute(new Float32Array([2]), 1));
+      const um = new THREE.InstancedMesh(ug, mats.body, 1);
+      dummy.position.set(anchorL[0], 0, anchorL[1]); dummy.rotation.set(0, 0, 0); dummy.scale.setScalar(Math.max(1.4, S * 1.1)); dummy.updateMatrix();
+      um.setMatrixAt(0, dummy.matrix); um.setColorAt(0, flagCol); um.frustumCulled = false;
+      armyGroup.add(um);
     }
+    // 遠景用の色面
+    const N = 6, pad = 8, P = [], I = [];
+    for (let j = 0; j <= N; j++) for (let i = 0; i <= N; i++) {
+      const [lx, lz] = L(bb[0] - pad + (bb[1] - bb[0] + pad * 2) * i / N, bb[2] - pad + (bb[3] - bb[2] + pad * 2) * j / N);
+      P.push(lx, 0, lz);
+    }
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) { const a = j * (N + 1) + i; I.push(a, a + N + 1, a + 1, a + 1, a + N + 1, a + N + 2); }
+    const fg = new THREE.BufferGeometry();
+    fg.setAttribute('position', new THREE.Float32BufferAttribute(P, 3)); fg.setIndex(I);
+    const fm = new THREE.Mesh(fg, mats.foot);
+    fm.frustumCulled = false; fm.renderOrder = 1;
+    armyGroup.add(fm);
+    VIS.push({ id: u.id, def: u, mats, soldiers, ptr: 0, armorCol, spread: 1, vis: 1, anchorL, radius: Math.max(bb[1] - bb[0], bb[3] - bb[2]) / 2 });
   }
-  // 陣幕をひとまとめのメッシュに
+  // 陣幕
   const P = [], CC = [];
   const white = C('#e8e4da').convertSRGBToLinear();
   for (const [p0, p1, fc] of jm) {
     const lc = fc.clone().convertSRGBToLinear();
-    const H1 = 0.6 * state.scale, H2 = 1.1 * state.scale, H3 = 1.8 * state.scale;
-    const bands = [[0.15, H1, white], [H1, H2, lc], [H2, H3, white]];
-    for (const [y0, y1, cc] of bands) {
+    for (const [y0, y1, cc] of [[0.15, 0.55, white], [0.55, 0.95, lc], [0.95, 1.6, white]]) {
       const q = [[p0[0], p0[1] + y0, p0[2]], [p1[0], p1[1] + y0, p1[2]], [p1[0], p1[1] + y1, p1[2]], [p0[0], p0[1] + y1, p0[2]]];
       for (const idx of [0, 1, 2, 0, 2, 3]) { P.push(...q[idx]); CC.push(cc.r, cc.g, cc.b); }
     }
@@ -521,63 +1232,56 @@ function buildArmies() {
   jg.setAttribute('color', new THREE.Float32BufferAttribute(CC, 3));
   jg.computeVertexNormals();
   armyGroup.add(new THREE.Mesh(jg, new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })));
-  document.getElementById('count').textContent =
-    `兵 ${total.toLocaleString()} 人 → 描画 ${drawn.toLocaleString()} 体（1体 = ${r}人）`;
+  document.getElementById('count').textContent = `兵 ${total.toLocaleString()} 人 → 描画 ${drawn.toLocaleString()} 体（1体 = ${r}人）`;
+  resetCorpses();
   buildLabels();
 }
-// 遠景用: 部隊の占める地面を陣営色で塗る（近づくと消える）
-const footMats = [];
-function addFootprint(u, bb, toWorld) {
-  const N = 10, pad = 8, P = [], I = [];
-  for (let j = 0; j <= N; j++) for (let i = 0; i <= N; i++) {
-    const lu = bb[0] - pad + (bb[1] - bb[0] + pad * 2) * i / N, lv = bb[2] - pad + (bb[3] - bb[2] + pad * 2) * j / N;
-    const [x, y, z] = toWorld(lu, lv);
-    P.push(x, y + 1.5, z);
-  }
-  for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
-    const a = j * (N + 1) + i; I.push(a, a + N + 1, a + 1, a + 1, a + N + 1, a + N + 2);
-  }
+function umaGeo(u) {
+  const ps = [horseman(), part(new THREE.CylinderGeometry(0.08, 0.1, 9, 6), '#3b2a1a', 0, 1.2, 4.5, -1.5)];
+  if (u.leaderMark === 'fan') ps.push(part(new THREE.CircleGeometry(1.9, 16, Math.PI * 0.15, Math.PI * 0.7), '#e8b828', 0, 1.2, 7.6, -1.5));
+  else ps.push(part(new THREE.PlaneGeometry(1.4, 2.6), WHITE, 1, 1.95, 7.4, -1.5));
+  return mergeGeometries(ps.map((g) => { if (g.attributes.uv) g.deleteAttribute('uv'); return g; }));
+}
+
+// 硝煙
+const SMOKE_N = 6000;
+const smoke = (() => {
   const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3)); g.setIndex(I);
-  const m = new THREE.MeshBasicMaterial({ color: u.color, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide,
-    polygonOffset: true, polygonOffsetFactor: -2, fog: false });
-  const mesh = new THREE.Mesh(g, m);
-  mesh.renderOrder = 1;
-  footMats.push({ m, c: new THREE.Vector3().fromArray(toWorld((bb[0] + bb[1]) / 2, (bb[2] + bb[3]) / 2)) });
-  armyGroup.add(mesh);
+  g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(SMOKE_N * 3), 3));
+  g.setAttribute('aBirth', new THREE.BufferAttribute(new Float32Array(SMOKE_N).fill(-1e9), 1));
+  g.setAttribute('aSeed', new THREE.BufferAttribute(new Float32Array(SMOKE_N).map(() => Math.random()), 1));
+  g.setAttribute('aBig', new THREE.BufferAttribute(new Float32Array(SMOKE_N), 1));
+  const cv = document.createElement('canvas'); cv.width = cv.height = 64;
+  const x = cv.getContext('2d'); const gr = x.createRadialGradient(32, 32, 2, 32, 32, 31);
+  gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.5, 'rgba(255,255,255,0.45)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+  x.fillStyle = gr; x.fillRect(0, 0, 64, 64);
+  const m = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false,
+    uniforms: { uNow: { value: 0 }, uPx: { value: 800 }, uTex: { value: new THREE.CanvasTexture(cv) } },
+    vertexShader: `attribute float aBirth; attribute float aSeed; attribute float aBig; uniform float uNow; uniform float uPx; varying float vA;
+      void main() {
+        float age = uNow - aBirth; float life = 160.0 + aBig * 300.0; float k = clamp(age / life, 0.0, 1.0);
+        vec3 p = position + vec3(sin(aSeed * 40.0) * k * 25.0 + k * 30.0, k * (20.0 + aBig * 40.0), cos(aSeed * 31.0) * k * 25.0);
+        vec4 mv = modelViewMatrix * vec4(p, 1.0); gl_Position = projectionMatrix * mv;
+        gl_PointSize = min(512.0, (5.0 + (24.0 + aBig * 50.0) * sqrt(k)) * uPx / -mv.z);
+        vA = (age < 0.0 || age > life) ? 0.0 : (1.0 - k) * min(1.0, age / 3.0) * (0.42 + aBig * 0.2);
+      }`,
+    fragmentShader: `uniform sampler2D uTex; varying float vA; void main() { float a = texture2D(uTex, gl_PointCoord).a * vA; if (a < 0.01) discard; gl_FragColor = vec4(vec3(0.86, 0.86, 0.84), a); }`,
+  });
+  const pts = new THREE.Points(g, m);
+  pts.frustumCulled = false; pts.renderOrder = 2;
+  scene.add(pts);
+  return { g, m, i: 0 };
+})();
+function puff(x, z, t, big = 0) {
+  const i = smoke.i = (smoke.i + 1) % SMOKE_N;
+  smoke.g.attributes.position.setXYZ(i, x, heightAt(x, z) + 2.5, z);
+  smoke.g.attributes.aBirth.setX(i, t);
+  smoke.g.attributes.aBig.setX(i, big);
+  smoke.dirty = true;
 }
-function estimateDepth(per, F, sp) {
-  let d = 0;
-  for (const bl of BLOCKS) {
-    const files = Math.max(1, Math.floor(F * bl.wf / (bl.sx * sp)));
-    d += Math.ceil(per * bl.frac / (sp * sp) / files) * bl.sz * sp + 5 * sp;
-  }
-  return d;
-}
-function addUmajirushi(u, x, y, z, yaw) {
-  const g = new THREE.Group();
-  const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 9, 6), new THREE.MeshLambertMaterial({ color: 0x3b2a1a }));
-  pole.position.y = 4.5;
-  g.add(pole);
-  let top;
-  if (u.leaderMark === 'fan') {
-    const fan = new THREE.CircleGeometry(1.9, 16, Math.PI * 0.15, Math.PI * 0.7);
-    top = new THREE.Mesh(fan, new THREE.MeshStandardMaterial({ color: 0xe8b828, metalness: 0.8, roughness: 0.3, side: THREE.DoubleSide }));
-    top.position.y = 7.6;
-  } else {
-    top = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 2.6), new THREE.MeshLambertMaterial({ color: u.color, side: THREE.DoubleSide }));
-    top.position.set(0.75, 7.4, 0);
-  }
-  g.add(top);
-  // 大将（騎馬）
-  const leader = new THREE.Mesh(GEO.kiba, MAT.body);
-  leader.position.set(0, 0, 3);
-  g.add(leader);
-  g.position.set(x, y, z);
-  g.rotation.y = yaw;
-  g.scale.setScalar(Math.max(1.4, state.scale * 1.1));
-  armyGroup.add(g);
-}
+function clearSmoke() { smoke.g.attributes.aBirth.array.fill(-1e9); smoke.dirty = true; }
+
 
 // ───────────────── 樹木と集落 ─────────────────
 function buildTrees(img) {
@@ -689,126 +1393,332 @@ function roofGeo(w, h, d) {
   return g;
 }
 
-// ───────────────── ラベルと解説 ─────────────────
+
+// ───────────────── シミュレーション（再生） ─────────────────
+const HALF = { hx: SX / 2, hz: SY / 2 };
+const play = { opts: { ...DEFAULT_OPTS }, speed: 60, playing: false, gameT: T_START, slowUntil: 0, seeking: false, autoCam: true, slowEv: true, weather: 'auto' };
+let SIM = null, BRAIN = null;
+function newSim() {
+  SIM = prepare(createSim(UNITS, ll2xz, PARAMS, HALF));
+  SIM.retarget = retarget;
+  BRAIN = makeBrain(play.opts);
+  SIM.listeners.push(onEvent);
+  for (const u of SIM.units) { u.px = u.x; u.pz = u.z; u.pface = u.face; }
+  play.gameT = SIM.t;
+}
+function simStep() {
+  for (const u of SIM.units) { u.px = u.x; u.pz = u.z; u.pface = u.face; }
+  stepSim(SIM, BRAIN);
+  // 硝煙
+  for (const u of SIM.units) {
+    if (!u.fighting || u.status === 'gone') continue;
+    const nPuff = u.status === 'rout' ? 0 : Math.min(3, 1 + Math.floor(u.fire * 2));
+    const b = u.face * Math.PI / 180, fx = Math.sin(b), fz = -Math.cos(b);
+    for (let i = 0; i < nPuff; i++) {
+      if (Math.random() > 0.6) continue;
+      const lat = (Math.random() - 0.5) * u.r * 1.5, fw = u.r * (0.4 + Math.random() * 0.4);
+      puff(u.x + fx * fw - fz * lat, u.z + fz * fw + fx * lat, SIM.t);
+    }
+  }
+  if (SIM.flags.cannon && SIM.t - SIM.flags.cannon < 900 && Math.random() < 0.25) {
+    const u = SIM.byId.ishida; puff(u.x + 60, u.z + (Math.random() - 0.5) * 80, SIM.t, 1);
+  }
+  if (SIM.flags.noroshi && SIM.t - SIM.flags.noroshi < 1200 && Math.random() < 0.5) {
+    const [x, z] = ll2xz(136.4590, 35.3742); puff(x, z, SIM.t, 1.5);
+  }
+  spawnCorpses();
+}
+function spawnCorpses() {
+  for (const V of VIS) {
+    const u = SIM.byId[V.id];
+    const lost = Math.min(1, u.killed / u.n0);
+    const yaw = Math.PI - u.face * Math.PI / 180;
+    const c = Math.cos(yaw), s = Math.sin(yaw);
+    while (V.ptr < V.soldiers.length && V.soldiers[V.ptr][2] < lost) {
+      const [lx, lz, rk, ry] = V.soldiers[V.ptr++];
+      const sp = V.spread - 1;
+      const ox = lx + lx * sp * 0.6 + Math.sin(rk * 913) * sp * 9, oz = lz + lz * sp * 0.6 + Math.cos(rk * 517) * sp * 9;
+      addCorpse(u.x + c * ox + s * oz, u.z - s * ox + c * oz, yaw + ry + (rk * 37 % 1 - 0.5) * 2, V.armorCol);
+    }
+  }
+}
+function seek(t) {
+  play.seeking = true;
+  for (const V of VIS) { V.ptr = 0; V.spread = 1; V.vis = 1; }
+  resetCorpses(); clearSmoke();
+  newSim();
+  logEl.innerHTML = '';
+  while (SIM.t < t && !SIM.over) simStep();
+  play.gameT = SIM.t;
+  play.seeking = false;
+  hideCard();
+}
+
+// ───────────────── イベント表示 ─────────────────
+const cardEl = document.getElementById('card'), logEl = document.getElementById('log');
+let cardTimer = 0;
+function evInfo(e) {
+  if (EVENTS[e.id]) return EVENTS[e.id];
+  if (e.id.startsWith('rout:')) {
+    const u = SIM.byId[e.unit];
+    if (ROUT_EVENTS[u.id] || u.n0 < 400 || u.id === 'shimazu' || u.id === 'toyohisa') return null;
+    return routText(SIM, e);
+  }
+  return null;
+}
+function onEvent(e) {
+  const info = evInfo(e);
+  if (!info) return;
+  const li = document.createElement('li');
+  li.className = 'tag-' + info.tag;
+  li.innerHTML = `<time>${hhmm(e.t)}</time>${info.title}`;
+  li.onclick = () => { seek(Math.max(T_START, e.t - 30)); showCard(info, e); };
+  logEl.prepend(li);
+  if (play.seeking) return;
+  if (info.tag === '経過') return;
+  showCard(info, e);
+  if (play.slowEv && info.slow) play.slowUntil = performance.now() + 9000;
+  if (play.autoCam) focusEvent(info);
+  if (e.id === 'east_win' || e.id === 'west_win' || e.id === 'draw') setTimeout(showSummary, 100);
+}
+function showCard(info, e) {
+  const extra = e.id === 'shimazu_escape' && e.n !== undefined ? `<p class="num">戦場を離れた島津勢：約${e.n}人（この再現での値）</p>` : '';
+  cardEl.innerHTML = `<button class="x" title="閉じる">×</button><div class="meta"><time>${hhmm(e.t)}　${koku(e.t)}</time><i class="tag tag-${info.tag}">${info.tag}</i></div>
+    <h2>${info.title}</h2><p>${info.body}</p>${extra}`;
+  cardEl.hidden = false;
+  cardEl.querySelector('.x').onclick = hideCard;
+  clearTimeout(cardTimer);
+  cardTimer = setTimeout(hideCard, Math.max(9000, info.body.length * 110));
+}
+function hideCard() { cardEl.hidden = true; }
+function showSummary() {
+  const T = sideTotals(SIM), w = SIM.result?.winner;
+  const head = w === 'E' ? '東軍の勝利' : w === 'W' ? '西軍の勝利' : '決着つかず';
+  document.getElementById('summary').innerHTML = `<button class="x">×</button><h2>${head}</h2>
+    <p>決着 ${SIM.result ? hhmm(SIM.result.t) : '-'}（${SIM.result ? koku(SIM.result.t) : ''}）</p>
+    <dl><dt>西軍の死傷（この再現）</dt><dd>${Math.round(T.W.killed).toLocaleString()} 人</dd><dt>東軍の死傷（この再現）</dt><dd>${Math.round(T.E.killed).toLocaleString()} 人</dd></dl>
+    <p class="caveat">死傷者数には諸説ある（西軍約8千、東軍約4千などとされる）。この数字は簡易モデルによる再現値。</p>
+    <p>右のパネルの「もしも」で条件を変えて、もう一度見てみよう。</p>`;
+  const el = document.getElementById('summary'); el.hidden = false;
+  el.querySelector('.x').onclick = () => { el.hidden = true; };
+}
+
+// ───────────────── 名札 ─────────────────
 const labelLayer = document.getElementById('labels');
+let labels = [];
 function buildLabels() {
   labelLayer.innerHTML = '';
-  for (const a of unitAnchors) {
+  labels = VIS.map((V) => {
+    const u = V.def;
     const el = document.createElement('div');
-    el.className = 'lbl ' + a.unit.side + (a.unit.betray ? ' betray' : '') + (a.unit.idle ? ' idle' : '');
-    el.innerHTML = `<b>${a.unit.name}</b><span>${a.unit.n.toLocaleString()}</span>`;
-    el.style.setProperty('--c', a.unit.color);
-    el.onclick = () => select(a);
+    el.className = 'lbl';
+    el.style.setProperty('--c', u.color);
+    el.innerHTML = `<i class="sd"></i><b>${u.name}</b><span class="n"></span><em><u></u></em>`;
+    el.onclick = () => select(V);
     labelLayer.appendChild(el);
-    a.el = el;
-  }
+    return { V, el, sd: el.querySelector('.sd'), n: el.querySelector('.n'), bar: el.querySelector('u'), last: '' };
+  });
 }
 const tmp = new THREE.Vector3();
 function updateLabels() {
-  const w = innerWidth, h = innerHeight;
-  const camPos = camera.position;
-  for (const a of unitAnchors) {
-    tmp.copy(a.pos).project(camera);
-    const d = camPos.distanceTo(a.pos);
-    const hide = tmp.z > 1 || state.labels === 'none' || (state.labels === 'major' && a.unit.n < 3000 && !a.unit.parent && d > 3500) || (a.unit.parent && d > 5000 && state.labels !== 'all');
-    if (hide || Math.abs(tmp.x) > 1.2 || Math.abs(tmp.y) > 1.2) { a.el.style.display = 'none'; continue; }
-    a.el.style.display = '';
-    const s = THREE.MathUtils.clamp(2600 / d, 0.62, 1.15);
-    a.el.style.transform = `translate(${(tmp.x * 0.5 + 0.5) * w}px, ${(-tmp.y * 0.5 + 0.5) * h}px) translate(-50%, -100%) scale(${s})`;
-    a.el.style.zIndex = String(100000 - Math.round(d));
+  const w = innerWidth, h = innerHeight, camPos = camera.position;
+  for (const L of labels) {
+    const u = SIM.byId[L.V.id];
+    const st = u.status === 'gone' ? 'gone' : u.status === 'rout' ? 'rout' : '';
+    const key = u.side + st + (u.side !== u.origSide ? 't' : '') + (u.order.type === 'aloof' ? 'a' : '') + (u.order.type === 'idle' ? 'i' : '') + (u.fighting ? 'f' : '');
+    if (key !== L.last) {
+      L.last = key;
+      L.el.className = `lbl ${u.side} ${st} ${u.side !== u.origSide ? 'turn' : ''} ${u.fighting && !st ? 'fight' : ''} ${u.order.type === 'idle' ? 'idle' : ''}`;
+      L.sd.textContent = u.side === 'W' ? '西' : '東';
+      L.sd.title = u.side !== u.origSide ? '寝返り' : SIDE[u.side];
+    }
+    L.n.textContent = st === 'gone' ? (u.id === 'shimazu' || u.id === 'toyohisa' ? '離脱' : '潰走') : Math.round(u.n).toLocaleString();
+    L.bar.style.width = (Math.max(0, u.n / u.n0) * 100).toFixed(0) + '%';
+    const V = L.V;
+    const c = Math.cos(Math.PI - u.face * Math.PI / 180), s = Math.sin(Math.PI - u.face * Math.PI / 180);
+    const ax = u.x + c * V.anchorL[0] + s * V.anchorL[1], az = u.z - s * V.anchorL[0] + c * V.anchorL[1];
+    tmp.set(ax, heightAt(ax, az) + 40, az);
+    const d = camPos.distanceTo(tmp);
+    tmp.project(camera);
+    const minor = u.n0 < 3000 && d > 3500;
+    const hide = tmp.z > 1 || state.labels === 'none' || (state.labels === 'major' && minor) || (st === 'gone' && V.vis < 0.05);
+    if (hide || Math.abs(tmp.x) > 1.2 || Math.abs(tmp.y) > 1.2) { L.el.style.display = 'none'; continue; }
+    L.el.style.display = '';
+    const sc = THREE.MathUtils.clamp(2600 / d, 0.6, 1.15);
+    L.el.style.transform = `translate(${(tmp.x * 0.5 + 0.5) * w}px, ${(-tmp.y * 0.5 + 0.5) * h}px) translate(-50%, -100%) scale(${sc})`;
+    L.el.style.zIndex = String(100000 - Math.round(d));
   }
 }
-function select(a) {
-  const u = a.unit;
-  document.querySelectorAll('.lbl.sel').forEach((e) => e.classList.remove('sel'));
-  a.el.classList.add('sel');
+function select(V) {
+  const d = V.def, u = SIM.byId[V.id];
   const p = document.getElementById('info');
-  const tags = [u.betray ? '<i class="tag b">合戦中に寝返り</i>' : '', u.idle ? '<i class="tag i">戦わず</i>' : ''].join('');
-  p.innerHTML = `<button class="x" title="閉じる">×</button><div class="hd ${u.side}"><span class="side">${SIDE[u.side]}</span><h2>${u.name}</h2>${tags}</div>
-    <dl><dt>兵数（通説）</dt><dd>${u.n.toLocaleString()}</dd><dt>陣所</dt><dd>${u.place}</dd></dl>
-    <p>${u.note}</p><p class="caveat">位置・兵数は通説に基づく概略で、典拠の照合はこれから。</p>
-    <button id="goto">この陣へ寄る</button>`;
+  const tags = [d.betray ? '<i class="tag b">合戦中に寝返り</i>' : '', d.idle ? '<i class="tag i">戦わず</i>' : ''].join('');
+  p.innerHTML = `<button class="x" title="閉じる">×</button><div class="hd ${d.side}"><span class="side">${SIDE[d.side]}</span><h2>${d.name}</h2>${tags}</div>
+    <dl><dt>兵数（通説）</dt><dd>${d.n.toLocaleString()}</dd><dt>いま</dt><dd>${Math.round(u.n).toLocaleString()}（士気 ${Math.round(Math.max(0, u.morale) * 100)}）</dd><dt>陣所</dt><dd>${d.place}</dd></dl>
+    <p>${d.note}</p><p class="caveat">位置・兵数は通説に基づく概略。</p>
+    <button id="goto">この隊へ寄る</button>`;
   p.hidden = false;
-  document.getElementById('goto').onclick = () => flyTo(a.base, u.face, 420, 0.95);
+  p.querySelector('.x').onclick = () => { p.hidden = true; };
+  document.getElementById('goto').onclick = () => focusUnits([V.id], 420);
 }
 
 // ───────────────── 視点 ─────────────────
 let fly = null;
-function flyTo(target, faceDeg, dist, pitch) {
-  // faceDeg の向きを見る位置（背後上空）にカメラを置く
-  const b = THREE.MathUtils.degToRad(faceDeg);
-  const dir = new THREE.Vector3(Math.sin(b), 0, -Math.cos(b));
-  const camT = target.clone().addScaledVector(dir, -dist * Math.cos(pitch * 0.9));
-  camT.y = target.y + dist * Math.sin(pitch * 0.9);
-  const lookT = target.clone().addScaledVector(dir, dist * 0.5);
-  fly = { p0: camera.position.clone(), t0: controls.target.clone(), p1: camT, t1: lookT, k: 0 };
-}
+function flyCam(p1, t1, dur = 2.2) { fly = { p0: camera.position.clone(), t0: controls.target.clone(), p1, t1, k: 0, dur }; }
 function presetFrom(lon, lat, eyeH, lookLon, lookLat) {
   const [x, z] = ll2xz(lon, lat), [lx, lz] = ll2xz(lookLon, lookLat);
-  const p1 = new THREE.Vector3(x, heightAt(x, z) + eyeH, z);
-  const t1 = new THREE.Vector3(lx, heightAt(lx, lz), lz);
-  fly = { p0: camera.position.clone(), t0: controls.target.clone(), p1, t1, k: 0 };
+  flyCam(new THREE.Vector3(x, heightAt(x, z) + eyeH, z), new THREE.Vector3(lx, heightAt(lx, lz), lz));
 }
 const PRESETS = {
   overview: () => presetFrom(136.4990, 35.3560, 2100, 136.4630, 35.3640),
   east: () => presetFrom(136.4830, 35.3640, 500, 136.4620, 35.3660),
   south: () => presetFrom(136.4750, 35.3300, 2400, 136.4650, 35.3620),
+  top: () => presetFrom(136.4800, 35.3600, 7600, 136.4800, 35.3602),
   ishida: () => presetFrom(136.4592, 35.3740, 60, 136.4720, 35.3660),
-  matsuo: () => presetFrom(136.4547, 35.3466, 40, 136.4620, 35.3620),
+  matsuo: () => presetFrom(136.4547, 35.3466, 60, 136.4600, 35.3610),
   ieyasu: () => presetFrom(136.4905, 35.3642, 50, 136.4620, 35.3660),
   nangu: () => presetFrom(136.5066, 35.3498, 40, 136.4800, 35.3660),
-  top: () => presetFrom(136.4700, 35.3610, 7000, 136.4700, 35.3612),
 };
-function initialView() {
-  const [x, z] = ll2xz(136.4990, 35.3560), [lx, lz] = ll2xz(136.4630, 35.3640);
-  camera.position.set(x, heightAt(x, z) + 2100, z);
-  controls.target.set(lx, heightAt(lx, lz), lz);
-  controls.update();
+function focusUnits(ids, minDist = 600) {
+  const us = ids.map((id) => SIM.byId[id]).filter(Boolean);
+  if (!us.length) return;
+  let cx = 0, cz = 0; for (const u of us) { cx += u.x; cz += u.z; } cx /= us.length; cz /= us.length;
+  let ext = 0; for (const u of us) ext = Math.max(ext, Math.hypot(u.x - cx, u.z - cz) + u.r);
+  const d = THREE.MathUtils.clamp(ext * 2.2 + 250, minDist, 3200), pitch = 0.62, brg = 1.92; // 東南東から
+  const t = new THREE.Vector3(cx, heightAt(cx, cz), cz);
+  const p = t.clone().add(new THREE.Vector3(Math.sin(brg) * Math.cos(pitch) * d, Math.sin(pitch) * d, -Math.cos(brg) * Math.cos(pitch) * d));
+  flyCam(p, t);
+}
+function focusEvent(info) {
+  if (info.cam && PRESETS[info.cam]) PRESETS[info.cam]();
+  else if (info.focus) focusUnits(info.focus);
+}
+
+// ───────────────── 時刻による霧と光 ─────────────────
+const FOG = { clear: 0.00005, haze: 0.00016, mist: 0.0011 };
+function updateEnvironment(t) {
+  let dens;
+  if (play.weather !== 'auto') dens = FOG[play.weather];
+  else {
+    const h = t / 3600;
+    dens = h < 7.93 ? FOG.mist : h < 9 ? FOG.mist + (FOG.haze - FOG.mist) * (h - 7.93) / 1.07 : FOG.haze;
+  }
+  scene.fog.density = dens;
+  const h = t / 3600;
+  const az = THREE.MathUtils.degToRad(95 + (h - 7) / 10 * 160);
+  const el = THREE.MathUtils.degToRad(Math.max(3, 42 - Math.abs(h - 11.8) * 7.5));
+  sun.position.set(Math.sin(az) * Math.cos(el) * 8000, Math.sin(el) * 8000, -Math.cos(az) * Math.cos(el) * 8000);
+  const eve = THREE.MathUtils.clamp((h - 15) / 2, 0, 1);
+  sun.color.setRGB(1, 0.95 - eve * 0.2, 0.86 - eve * 0.35);
+  sun.intensity = 2.4 - eve * 0.9;
 }
 
 // ───────────────── UI ─────────────────
+const $ = (id) => document.getElementById(id);
 function bindUI() {
-  const $ = (id) => document.getElementById(id);
-  $('ratio').onchange = (e) => { state.ratio = +e.target.value; buildArmies(); };
+  $('ratio').onchange = (e) => { state.ratio = +e.target.value; buildArmies(); for (const V of VIS) V.ptr = 0; spawnCorpses(); };
   $('scale').oninput = (e) => { $('scaleV').textContent = (+e.target.value).toFixed(1) + '倍'; };
-  $('scale').onchange = (e) => { state.scale = +e.target.value; buildArmies(); };
-  $('fog').onchange = (e) => { scene.fog.density = FOG[e.target.value]; };
+  $('scale').onchange = (e) => { state.scale = +e.target.value; buildArmies(); for (const V of VIS) V.ptr = 0; spawnCorpses(); };
+  $('fog').onchange = (e) => { play.weather = e.target.value; };
   $('labelsSel').onchange = (e) => { state.labels = e.target.value; };
+  $('autoCam').onchange = (e) => { play.autoCam = e.target.checked; };
+  $('slowEv').onchange = (e) => { play.slowEv = e.target.checked; };
   document.querySelectorAll('[data-view]').forEach((b) => (b.onclick = () => PRESETS[b.dataset.view]()));
-  $('info').addEventListener('click', (e) => { if (e.target.classList.contains('x')) $('info').hidden = true; });
-  // 外部から状態を設定できるように（スクリーンショット検証用）
-  const q = new URLSearchParams(location.search);
-  if (q.get('ratio')) { state.ratio = +q.get('ratio'); $('ratio').value = q.get('ratio'); }
-  if (q.get('fog')) { scene.fog.density = FOG[q.get('fog')]; $('fog').value = q.get('fog'); }
+  $('playBtn').onclick = togglePlay;
+  $('startBtn').onclick = () => { $('start').hidden = true; setPlaying(true); };
+  $('speed').onchange = (e) => { play.speed = +e.target.value; };
+  $('seek').oninput = (e) => { $('clock').textContent = hhmm(+e.target.value); };
+  $('seek').onchange = (e) => { seek(+e.target.value); };
+  $('seek').min = T_START; $('seek').max = T_END;
+  // もしも
+  const box = $('ifs');
+  for (const o of OPTIONS) {
+    const l = document.createElement('label');
+    l.innerHTML = `${o.label}<select data-opt="${o.id}">${o.choices.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select>`;
+    box.appendChild(l);
+  }
+  $('ifRun').onclick = () => {
+    box.querySelectorAll('select').forEach((s) => { play.opts[s.dataset.opt] = s.value; });
+    $('summary').hidden = true;
+    seek(T_START); buildMarkers(); setPlaying(true);
+  };
+  addEventListener('keydown', (e) => { if (e.code === 'Space' && e.target === document.body) { e.preventDefault(); togglePlay(); } });
+}
+function setPlaying(v) { play.playing = v; $('playBtn').textContent = v ? '❚❚' : '▶'; $('start').hidden = true; }
+function togglePlay() { setPlaying(!play.playing); }
+// 先に最後まで計算して、年表に主な出来事の印をつける
+function buildMarkers() {
+  const S2 = prepare(createSim(UNITS, ll2xz, PARAMS, HALF));
+  S2.retarget = retarget;
+  const br = makeBrain(play.opts);
+  while (!S2.over && S2.t < T_END) stepSim(S2, br);
+  const box = $('marks'); box.innerHTML = '';
+  for (const e of S2.log) {
+    const info = EVENTS[e.id];
+    if (!info || !info.slow) continue;
+    const m = document.createElement('i');
+    m.style.left = ((e.t - T_START) / (T_END - T_START) * 100) + '%';
+    m.title = `${hhmm(e.t)} ${info.title}`;
+    m.className = 'tag-' + info.tag;
+    m.onclick = () => { seek(Math.max(T_START, e.t - 40)); setPlaying(true); };
+    box.appendChild(m);
+  }
 }
 
 // ───────────────── ループ ─────────────────
 const clock = new THREE.Clock();
 let frames = 0, fpsT = 0;
 function loop() {
-  const dt = clock.getDelta();
-  windU.value += dt;
+  const dt = Math.min(0.1, clock.getDelta());
+  SHARED.uTime.value += dt;
+  if (play.playing && !SIM.over) {
+    const sp = performance.now() < play.slowUntil ? Math.min(play.speed, 12) : play.speed;
+    play.gameT += dt * sp;
+    let guard = 0;
+    while (SIM.t < play.gameT && !SIM.over && guard++ < 400) simStep();
+    if (SIM.over) { play.gameT = SIM.t; setPlaying(false); }
+  }
+  // 部隊の描画を更新（シム2秒刻みの間を補間）
+  const a = THREE.MathUtils.clamp(1 - (SIM.t - play.gameT) / SIM_DT, 0, 1);
+  for (const V of VIS) {
+    const u = SIM.byId[V.id], U = V.mats.uni;
+    const x = u.px + (u.x - u.px) * a, z = u.pz + (u.z - u.pz) * a;
+    let df = ((u.face - u.pface + 540) % 360) - 180;
+    const face = u.pface + df * a;
+    U.uCenter.value.set(x, z);
+    U.uYaw.value = Math.PI - face * Math.PI / 180;
+    V.spread += ((u.status === 'rout' || u.status === 'gone' ? 2.6 : 1) - V.spread) * Math.min(1, dt * 0.8);
+    U.uSpread.value = V.spread;
+    U.uLost.value = Math.min(1, u.killed / u.n0);
+    V.vis += ((u.status === 'gone' ? 0 : 1) - V.vis) * Math.min(1, dt * 0.7);
+    U.uVis.value = V.vis;
+    U.uMove.value = play.playing && u.moving ? 1 : 0;
+    const d = camera.position.distanceTo(tmp.set(x, heightAt(x, z), z));
+    V.mats.foot.opacity = THREE.MathUtils.clamp((d - 700) / 2200, 0, 0.6) * V.vis * (u.status === 'rout' ? 0.5 : 1);
+    V.mats.foot.visible = V.mats.foot.opacity > 0.01;
+  }
+  if (smoke.dirty) { smoke.g.attributes.position.needsUpdate = true; smoke.g.attributes.aBirth.needsUpdate = true; smoke.g.attributes.aBig.needsUpdate = true; smoke.dirty = false; }
+  smoke.m.uniforms.uNow.value = play.gameT;
+  smoke.m.uniforms.uPx.value = renderer.domElement.height / (2 * Math.tan(camera.fov * Math.PI / 360));
+  updateEnvironment(play.gameT);
   if (fly) {
-    fly.k = Math.min(1, fly.k + dt / 2.2);
+    fly.k = Math.min(1, fly.k + dt / fly.dur);
     const e = fly.k < 0.5 ? 2 * fly.k * fly.k : 1 - Math.pow(-2 * fly.k + 2, 2) / 2;
     camera.position.lerpVectors(fly.p0, fly.p1, e);
     controls.target.lerpVectors(fly.t0, fly.t1, e);
     if (fly.k >= 1) fly = null;
   }
   controls.update();
-  // カメラが地面に潜らないように
   const gh = heightAt(camera.position.x, camera.position.z) + 6;
   if (camera.position.y < gh) camera.position.y = gh;
   scene.userData.sky.position.copy(camera.position);
-  for (const f of footMats) {
-    const d = camera.position.distanceTo(f.c);
-    f.m.opacity = THREE.MathUtils.clamp((d - 700) / 2200, 0, 0.6);
-    f.m.visible = f.m.opacity > 0.01;
-  }
   renderer.render(scene, camera);
   updateLabels();
+  $('clock').textContent = `${hhmm(play.gameT)}`;
+  $('koku').textContent = koku(play.gameT);
+  if (!$('seek').matches(':active')) $('seek').value = play.gameT;
   frames++; fpsT += dt;
-  if (fpsT > 0.5) { document.getElementById('fps').textContent = Math.round(frames / fpsT) + ' fps'; frames = 0; fpsT = 0; }
+  if (fpsT > 0.5) { $('fps').textContent = Math.round(frames / fpsT) + ' fps'; frames = 0; fpsT = 0; }
   requestAnimationFrame(loop);
 }
 addEventListener('resize', () => {
@@ -816,15 +1726,33 @@ addEventListener('resize', () => {
   renderer.setSize(innerWidth, innerHeight);
 });
 
+// ───────────────── 起動 ─────────────────
 bindUI();
 buildVillages();
+newSim();
 buildArmies();
-const q0 = new URLSearchParams(location.search);
-initialView();
-if (q0.get('view') && PRESETS[q0.get('view')]) { PRESETS[q0.get('view')](); if (fly) { fly.k = 1; camera.position.copy(fly.p1); controls.target.copy(fly.t1); fly = null; controls.update(); } }
-if (q0.get('cam')) { const c = q0.get('cam').split(',').map(Number); presetFrom(...c); fly.k = 1; camera.position.copy(fly.p1); controls.target.copy(fly.t1); fly = null; controls.update(); }
-if (q0.get('sel')) { const a = unitAnchors.find((x) => x.unit.id === q0.get('sel')); if (a) select(a); }
+buildMarkers();
+{
+  const [x, z] = ll2xz(136.4990, 35.3560), [lx, lz] = ll2xz(136.4630, 35.3640);
+  camera.position.set(x, heightAt(x, z) + 2100, z);
+  controls.target.set(lx, heightAt(lx, lz), lz);
+  controls.update();
+}
+// 検証用 URL パラメータ: t=秒 or hh:mm, play=1, view=, cam=lon,lat,h,lookLon,lookLat, ratio=, sel=
+{
+  const q = new URLSearchParams(location.search);
+  if (q.get('ratio')) { state.ratio = +q.get('ratio'); $('ratio').value = q.get('ratio'); buildArmies(); }
+  if (q.get('if')) { for (const kv of q.get('if').split(',')) { const [k, v] = kv.split('='); play.opts[k] = v; } newSim(); buildMarkers(); }
+  if (q.get('t')) { const [hh, mm] = q.get('t').split(':').map(Number); seek(hh * 3600 + (mm || 0) * 60); $('start').hidden = true; }
+  const fin = () => { if (fly) { fly.k = 1; camera.position.copy(fly.p1); controls.target.copy(fly.t1); fly = null; controls.update(); } };
+  if (q.get('view') && PRESETS[q.get('view')]) { PRESETS[q.get('view')](); fin(); }
+  if (q.get('cam')) { presetFrom(...q.get('cam').split(',').map(Number)); fin(); }
+  if (q.get('focus')) { focusUnits(q.get('focus').split(',')); fin(); }
+  if (q.get('play')) { setPlaying(true); }
+  if (q.get('speed')) { play.speed = +q.get('speed'); }
+}
 window.__ready = true;
+window.__sim = () => SIM;
 loop();
 
 </script>

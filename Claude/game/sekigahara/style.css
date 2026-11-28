@@ -9,11 +9,19 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #c8ccc6; fon
 .lbl::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 26px; background: rgba(20,20,20,.55); }
 .lbl b { font-weight: 700; margin-right: 6px; }
 .lbl span { font-size: 11px; font-family: system-ui, sans-serif; opacity: .75; }
-.lbl.W { box-shadow: inset 0 -3px 0 var(--w), 0 1px 3px rgba(0,0,0,.35); }
-.lbl.E { box-shadow: inset 0 -3px 0 var(--e), 0 1px 3px rgba(0,0,0,.35); }
-.lbl.betray b::before { content: "⚑ "; color: #b0331f; }
-.lbl.idle { opacity: .82; }
-.lbl.idle b::before { content: "◇ "; color: #666; }
+/* 陣営アイコン */
+.sd { display: inline-block; width: 18px; height: 18px; line-height: 18px; border-radius: 50%; text-align: center; font-style: normal;
+  font-size: 12px; font-weight: 700; color: #fff; margin: 0 5px 0 -3px; vertical-align: 1px; }
+.sd.W, .lbl.W .sd { background: #2f55b4; }
+.sd.E, .lbl.E .sd { background: #c4511c; }
+.sd.turn, .lbl.turn .sd { background: #c4511c; box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2f55b4; }
+.lbl em { display: block; height: 3px; background: rgba(0,0,0,.15); margin-top: 1px; }
+.lbl em u { display: block; height: 100%; }
+.lbl.W em u { background: #2f55b4; } .lbl.E em u { background: #c4511c; }
+.lbl.fight { outline: 1px solid rgba(176,51,31,.6); }
+.lbl.rout { opacity: .75; } .lbl.rout b { text-decoration: line-through; }
+.lbl.gone { opacity: .5; }
+.lbl.idle { opacity: .85; }
 .lbl.sel { outline: 2px solid #b0331f; }
 #title { position: fixed; left: 16px; top: 12px; pointer-events: none; text-shadow: 0 0 6px rgba(255,255,255,.8); }
 #title h1 { margin: 0; font-size: 28px; letter-spacing: .1em; }
@@ -31,9 +39,12 @@ button:hover { background: #efe6d2; }
 .stats { font-family: system-ui, sans-serif; font-size: 11px; line-height: 1.6; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; }
 .lg::before { content: ""; display: inline-block; width: 18px; height: 4px; margin-right: 4px; vertical-align: middle; }
-.lg.W::before { background: var(--w); } .lg.E::before { background: var(--e); }
-.lg.betray::before { content: "⚑"; width: auto; height: auto; color: #b0331f; }
-.lg.idle::before { content: "◇"; width: auto; height: auto; color: #666; }
+.lg::before { display: none; }
+.chk { display: flex !important; gap: 6px; align-items: center; }
+.chk input { width: auto !important; }
+#ifs label { font-size: 12px; }
+#ifs select { font-size: 11px; }
+#ifRun { margin-top: 6px; width: 100%; }
 #info { position: fixed; left: 16px; bottom: 40px; width: min(380px, calc(100vw - 32px)); background: var(--paper); padding: 12px 14px;
   box-shadow: 0 2px 10px rgba(0,0,0,.35); font-size: 14px; line-height: 1.7; }
 #info .hd { border-bottom: 3px solid var(--w); margin-bottom: 6px; }
@@ -50,3 +61,43 @@ button:hover { background: #efe6d2; }
   background: rgba(30,28,24,.55); color: #eee; }
 @media (max-width: 640px) { #panel { width: 180px; font-size: 12px; } #title h1 { font-size: 20px; } #title h1 small { display: block; margin: 0; } }
 #info { position: fixed; } #info .x { position: absolute; right: 8px; top: 6px; border: none; background: none; font-size: 18px; }
+
+#info { bottom: 120px; }
+#card { position: fixed; left: 50%; top: 14px; transform: translateX(-50%); width: min(560px, calc(100vw - 560px)); min-width: 320px;
+  background: var(--paper); padding: 12px 18px 10px; box-shadow: 0 3px 14px rgba(0,0,0,.4); font-size: 15px; line-height: 1.75; border-top: 4px solid #8a2a1a; }
+#card .meta { display: flex; gap: 10px; align-items: center; font-size: 12px; opacity: .9; }
+#card h2 { margin: 2px 0 4px; font-size: 22px; }
+#card p { margin: 0 0 4px; }
+#card .num { font-weight: 700; }
+#card .x, #summary .x, #info .x { position: absolute; right: 8px; top: 6px; border: none; background: none; font-size: 18px; }
+.tag { font-style: normal; font-size: 11px; padding: 1px 7px; color: #fff; background: #777; }
+.tag-史実 { background: #2f6a3a; } .tag-通説 { background: #8a5a1a; } .tag-逸話 { background: #7a3a8a; } .tag-異説 { background: #1a5a8a; }
+.tag-うんちく { background: #4a6a6a; } .tag-もしも { background: #b0331f; } .tag-経過 { background: #888; }
+#summary { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(440px, 92vw); background: var(--paper); padding: 18px 22px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.5); font-size: 14px; line-height: 1.7; }
+#summary h2 { margin: 0 0 4px; font-size: 26px; }
+#summary dl { display: grid; grid-template-columns: auto auto; gap: 2px 14px; }
+#summary dd { margin: 0; font-weight: 700; }
+#summary .caveat { font-size: 11px; opacity: .7; }
+#log { position: fixed; left: 16px; top: 64px; width: 250px; max-height: 36vh; overflow: auto; margin: 0; padding: 0; list-style: none;
+  font-size: 12px; line-height: 1.4; }
+#log li { background: rgba(246,241,230,.85); margin-bottom: 3px; padding: 3px 7px; cursor: pointer; border-left: 4px solid #888; }
+#log li:hover { background: #fff; }
+#log li time { font-family: system-ui, sans-serif; font-size: 11px; margin-right: 6px; opacity: .7; }
+#log li.tag-史実 { border-color: #2f6a3a; } #log li.tag-通説 { border-color: #8a5a1a; } #log li.tag-逸話 { border-color: #7a3a8a; }
+#log li.tag-異説 { border-color: #1a5a8a; } #log li.tag-うんちく { border-color: #4a6a6a; } #log li.tag-もしも { border-color: #b0331f; }
+#log li.tag-経過 { opacity: .75; }
+#start { position: fixed; left: 50%; top: 45%; transform: translate(-50%, -50%); text-align: center; }
+#startBtn { font-size: 24px; padding: 12px 34px; background: #8a2a1a; color: #fff; border: none; box-shadow: 0 3px 12px rgba(0,0,0,.4); font-family: inherit; }
+#startBtn:hover { background: #a8341f; }
+#start p { background: rgba(246,241,230,.85); padding: 4px 10px; font-size: 13px; }
+#timeline { position: fixed; left: 16px; right: 16px; bottom: 30px; display: flex; gap: 10px; align-items: center; background: rgba(246,241,230,.92);
+  padding: 6px 12px; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+#playBtn { font-size: 16px; width: 44px; height: 34px; }
+.tm { min-width: 96px; } .tm b { font-size: 22px; font-family: system-ui, sans-serif; } .tm small { margin-left: 6px; }
+.track { flex: 1; position: relative; padding-top: 12px; }
+#seek { width: 100%; margin: 0; }
+#marks { position: absolute; left: 0; right: 0; top: 0; height: 12px; }
+#marks i { position: absolute; top: 0; width: 9px; height: 11px; margin-left: -4px; background: #888; cursor: pointer; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+#marks i.tag-通説 { background: #8a5a1a; } #marks i.tag-史実 { background: #2f6a3a; } #marks i.tag-逸話 { background: #7a3a8a; } #marks i.tag-もしも { background: #b0331f; } #marks i.tag-異説 { background: #1a5a8a; }
+@media (max-width: 900px) { #log { display: none; } #card { width: calc(100vw - 32px); top: auto; bottom: 90px; } }
