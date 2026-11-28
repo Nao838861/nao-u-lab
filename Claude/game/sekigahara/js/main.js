@@ -945,7 +945,7 @@ function updateLabels() {
       L.sd.textContent = u.side === 'W' ? '西' : '東';
       L.sd.title = u.side !== u.origSide ? '寝返り' : SIDE[u.side];
     }
-    L.n.textContent = st === 'gone' ? (u.id === 'shimazu' ? '離脱' : u.id === 'toyohisa' ? '討死' : '潰走') : Math.round(u.n).toLocaleString();
+    L.n.textContent = st === 'gone' ? (u.id === 'shimazu' ? '離脱' : u.id === 'toyohisa' ? '討死' : u.hidden ? '全滅' : '潰走') : Math.round(u.n).toLocaleString();
     L.bar.style.width = (Math.max(0, u.n / u.n0) * 100).toFixed(0) + '%';
     const V = L.V;
     const c = Math.cos(Math.PI - u.face * Math.PI / 180), s = Math.sin(Math.PI - u.face * Math.PI / 180);

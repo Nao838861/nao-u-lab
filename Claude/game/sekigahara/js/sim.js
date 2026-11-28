@@ -132,6 +132,7 @@ export function stepSim(S, brain) {
       const off = Math.abs(((brg - b.face + 540) % 360) - 180);
       const flank = off > 110 ? 1.8 : off > 65 ? 1.35 : 1;
       f *= flank;
+      if (b.frail) f *= b.frail; // 捨て奸: 少人数で座り込むため、接されれば短時間で全滅する
       if (flank > 1) b.flanked = (b.flanked || 0) + 1;
       if (b.status === 'rout') f *= 2.5;
       else if (b.order.type === 'path') f *= PATH_EXPOSE; // 敵中を駆け抜ける隊は四方から撃たれる
@@ -160,12 +161,13 @@ export function stepSim(S, brain) {
         if (T) o.target = T.id; else { setOrder(S, u.id, { type: 'hold' }); }
       }
       // 捨て奸に接していれば、それを片づけるまで先へ進めない（足止め）
-      if (T && !u.contacts.includes(T) && !u.contacts.some((c) => c.hidden && c.side !== u.side)) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
+      if (T && !u.contacts.includes(T) && !u.contacts.some((c) => (c.hidden || c.blocker) && c.side !== u.side)) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
     } else if (o.type === 'move') {
       if (moveToward(u, o.x, o.z, u.speed, dt)) setOrder(S, u.id, { type: 'hold' });
     } else if (o.type === 'path') {
       const wp = o.pts[o.i];
       if (!wp) { o.done = true; }
+      else if (o.chase && u.contacts.some((c) => (c.hidden || c.blocker) && c.side !== u.side)) { /* 追手は捨て奸・殿を片づけるまで進めない */ }
       else if (moveToward(u, wp[0], wp[1], o.speed || 1.3, dt)) o.i++;
     } else if (o.type === 'flee') {
       moveToward(u, o.x, o.z, u.speed, dt);

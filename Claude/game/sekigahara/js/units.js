@@ -19,7 +19,7 @@ export const UNITS = [
     note: '兵は約1,500（諸説あり）と少数。三成の使者の出陣要請に応じず、陣に近づく者は敵味方を問わず寄せつけなかったと伝わる。最後は敵の正面を突破して戦場を離脱する「島津の退き口」。' },
   { id: 'toyohisa', name: '島津豊久', side: 'W', n: 600, lon: 136.461197, lat: 35.366167, pos: 'parent', face: 95, color: '#333333', place: '小池村（前備）', parent: 'shimazu',
     note: '義弘の甥。島津勢の前備。退き口で殿（しんがり）をつとめ、烏頭坂（うとうざか）付近で討死したとされる。' },
-  ...Array.from({ length: 16 }, (_, k) => k + 1).map((i) => ({ id: 'sute' + i, name: '島津 捨て奸', side: 'W', n: 60, lon: 136.4622, lat: 35.3706, face: 0, color: '#2a2a2a',
+  ...Array.from({ length: 24 }, (_, k) => k + 1).map((i) => ({ id: 'sute' + i, name: '島津 捨て奸', side: 'W', n: 60, lon: 136.4622, lat: 35.3706, face: 0, color: '#2a2a2a',
     place: '退き口の道筋', hidden: true, parent: 'shimazu',
     note: '退却する島津本隊から切り離され、道に残って追手を足止めする小部隊。座り込んで鉄砲で狙撃し、全滅するまで戦う（捨て奸）。' })),
   { id: 'konishi', name: '小西行長', side: 'W', n: 4000, lon: 136.457925, lat: 35.365816, pos: 'stele', face: 95, color: '#c9a227', place: '北天満山',

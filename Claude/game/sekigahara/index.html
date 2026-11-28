@@ -105,7 +105,7 @@ const UNITS = [
     note: '兵は約1,500（諸説あり）と少数。三成の使者の出陣要請に応じず、陣に近づく者は敵味方を問わず寄せつけなかったと伝わる。最後は敵の正面を突破して戦場を離脱する「島津の退き口」。' },
   { id: 'toyohisa', name: '島津豊久', side: 'W', n: 600, lon: 136.461197, lat: 35.366167, pos: 'parent', face: 95, color: '#333333', place: '小池村（前備）', parent: 'shimazu',
     note: '義弘の甥。島津勢の前備。退き口で殿（しんがり）をつとめ、烏頭坂（うとうざか）付近で討死したとされる。' },
-  ...Array.from({ length: 16 }, (_, k) => k + 1).map((i) => ({ id: 'sute' + i, name: '島津 捨て奸', side: 'W', n: 60, lon: 136.4622, lat: 35.3706, face: 0, color: '#2a2a2a',
+  ...Array.from({ length: 24 }, (_, k) => k + 1).map((i) => ({ id: 'sute' + i, name: '島津 捨て奸', side: 'W', n: 60, lon: 136.4622, lat: 35.3706, face: 0, color: '#2a2a2a',
     place: '退き口の道筋', hidden: true, parent: 'shimazu',
     note: '退却する島津本隊から切り離され、道に残って追手を足止めする小部隊。座り込んで鉄砲で狙撃し、全滅するまで戦う（捨て奸）。' })),
   { id: 'konishi', name: '小西行長', side: 'W', n: 4000, lon: 136.457925, lat: 35.365816, pos: 'stele', face: 95, color: '#c9a227', place: '北天満山',
@@ -315,6 +315,7 @@ function stepSim(S, brain) {
       const off = Math.abs(((brg - b.face + 540) % 360) - 180);
       const flank = off > 110 ? 1.8 : off > 65 ? 1.35 : 1;
       f *= flank;
+      if (b.frail) f *= b.frail; // 捨て奸: 少人数で座り込むため、接されれば短時間で全滅する
       if (flank > 1) b.flanked = (b.flanked || 0) + 1;
       if (b.status === 'rout') f *= 2.5;
       else if (b.order.type === 'path') f *= PATH_EXPOSE; // 敵中を駆け抜ける隊は四方から撃たれる
@@ -343,12 +344,13 @@ function stepSim(S, brain) {
         if (T) o.target = T.id; else { setOrder(S, u.id, { type: 'hold' }); }
       }
       // 捨て奸に接していれば、それを片づけるまで先へ進めない（足止め）
-      if (T && !u.contacts.includes(T) && !u.contacts.some((c) => c.hidden && c.side !== u.side)) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
+      if (T && !u.contacts.includes(T) && !u.contacts.some((c) => (c.hidden || c.blocker) && c.side !== u.side)) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
     } else if (o.type === 'move') {
       if (moveToward(u, o.x, o.z, u.speed, dt)) setOrder(S, u.id, { type: 'hold' });
     } else if (o.type === 'path') {
       const wp = o.pts[o.i];
       if (!wp) { o.done = true; }
+      else if (o.chase && u.contacts.some((c) => (c.hidden || c.blocker) && c.side !== u.side)) { /* 追手は捨て奸・殿を片づけるまで進めない */ }
       else if (moveToward(u, wp[0], wp[1], o.speed || 1.3, dt)) o.i++;
     } else if (o.type === 'flee') {
       moveToward(u, o.x, o.z, u.speed, dt);
@@ -501,7 +503,7 @@ const EVENTS = {
   epi_execution: { title: 'その後④：六条河原', tag: '史実', focus: ['ishida'], slow: true,
     body: '10月1日、三成は小西行長・安国寺恵瓊とともに京の六条河原で斬られた。41歳。居城の佐和山城は、すでに小早川らに落とされていた。' },
   sakon: { title: '島左近、撃たれる', tag: '通説', focus: ['sakon', 'kuroda'], slow: true,
-    body: '黒田隊は鉄砲隊の一部を側面の丘に回し、島左近の隊を横から撃たせた。左近は重傷を負って退いたとされる。「鬼左近」の最期には諸説あり、生き延びたという伝承も残る。' },
+    body: '黒田隊は鉄砲隊を側面の丘に回し、島左近を横から撃たせた。左近は深手を負い、柵の内へ運ばれた。' },
   taiho: { title: '石田隊の大筒', tag: '通説', focus: ['ishida'],
     body: '石田隊が大筒（大砲）を撃ち放つ。笹尾山の前は硝煙に包まれた。' },
   noroshi: { title: '狼煙、上がる', tag: '通説', focus: ['ishida', 'kobayakawa', 'mori'], cam: 'overview', slow: true,
@@ -554,20 +556,30 @@ const EVENTS = {
     body: '最後まで踏みとどまった石田隊も、ついに崩れた。三成は自害せず、再起を期して伊吹山中へ逃れる。笹尾山には、主を失った陣幕と旗が残された。' },
   shimazu_shoot: { title: '味方であっても撃つ', tag: '逸話', focus: ['shimazu'], slow: true,
     body: '崩れた西軍の兵が島津の陣へ逃げ込もうとする。島津勢は陣が乱れるのを嫌い、味方であろうと容赦なく撃ちかけた。' },
+  shimazu_alone: { title: '取り残された島津', tag: '逸話', focus: ['shimazu', 'toyohisa'], slow: true,
+    body: '西軍は総崩れになり、戦場に残る西軍は島津の1,500だけになった。まわりは勝ちに沸く東軍7万。66歳の義弘は家康の本陣へ斬り込んで死ぬつもりだったが、甥の豊久が「生きて薩摩へ帰られよ」と止めたという。' },
+  pursuit: { title: '追手、迫る', tag: '通説', focus: ['honda', 'tadayoshi', 'ii', 'shimazu'], slow: true,
+    body: '井伊直政・松平忠吉・本多忠勝が馬を飛ばして追う。狙うは義弘の首。勝負の決まった戦場に残った、最後の大手柄だ。' },
+  sute_again: { title: 'また一組、残る', tag: '通説', focus: ['shimazu'], slow: true,
+    body: '追手が追いつくたびに、次の組が道に座りこむ。追う側は進むほどに、先頭を駆ける大将が撃たれていく。' },
+  toyohisa_stand: { title: '豊久、踏みとどまる', tag: '通説', focus: ['toyohisa', 'shimazu'], slow: true,
+    body: '追手がまた迫る。甥の豊久は手勢とともに道に踏みとどまり、追手の前に立ちふさがった。伯父を逃がすための、最後の大きな捨て奸だった。' },
+  shimazu_legacy: { title: '前へ逃げた島津、その後', tag: 'うんちく', focus: ['shimazu'], slow: true,
+    body: '敵に背を見せず、前へ逃げた島津に家康は手を焼いた。島津家は領地を守り抜き、260年後、その薩摩が徳川の幕府を倒す。鹿児島では今も、鎧姿でこの日を偲んで歩く「妙円寺詣り」が続いている。' },
   breakout: { title: '島津の退き口——前へ退く', tag: '通説', focus: ['shimazu', 'toyohisa', 'ieyasu'], slow: true,
-    body: '島津勢は敵中に取り残された。義弘が選んだ退路は、後ろの山ではなく前。敵の正面を突き破り、伊勢街道を南へ駆け抜ける。' },
-  sutegamari: { title: '捨て奸（すてがまり）', tag: '通説', focus: ['sute1', 'shimazu', 'tadayoshi'], slow: true,
-    body: '追いすがる東軍に対し、島津勢は少人数の組を道に残して座り込ませた。鉄砲で狙い撃ち、死ぬまで敵を足止めする。一組が全滅すると、また次の組を残す。「捨て奸」と呼ばれる壮絶な退き方だ。' },
-  ii_wound: { title: '井伊直政、撃たれる', tag: '通説', focus: ['ii', 'shimazu'], slow: true,
-    body: '島津を追う井伊直政が、島津兵の鉄砲に撃たれて落馬した。この傷がもとで、直政は2年後に世を去る。' },
-  honda_fall: { title: '本多忠勝、落馬', tag: '逸話', focus: ['honda', 'shimazu'],
-    body: '追撃する本多忠勝の馬が撃たれ、忠勝は落馬した。生涯の戦で傷一つ負わなかったと伝わる猛将である。' },
+    body: '義弘が選んだ退路は、後ろの伊吹山ではなく前だった。山へ逃げれば、逃げ惑う味方と追う敵に呑まれて全滅する。勝ちに浮かれた敵のど真ん中を突き抜け、伊勢街道から薩摩を目指す。' },
+  sutegamari: { title: '捨て奸（すてがまり）', tag: '通説', focus: ['sute1', 'shimazu'], slow: true,
+    body: '追手が迫ると、島津は数人から数十人をその場に残す。残った兵は座り込んで鉄砲を構え、馬上の大将を狙い撃つ。生きて帰る望みはない。全滅するまで撃ち続け、そのあいだに本隊が逃げる。これが「捨て奸」だ。' },
+  ii_wound: { title: '井伊直政、撃たれる', tag: '通説', focus: ['ii'], slow: true,
+    body: '捨て奸の一発が、先頭を駆ける井伊直政を撃ち抜いた。直政は落馬し、この傷がもとで2年後に世を去る。' },
+  honda_fall: { title: '本多忠勝、落馬', tag: '逸話', focus: ['honda'], slow: true,
+    body: '本多忠勝の馬が撃たれ、忠勝は地面に投げ出された。生涯の戦で傷一つ負わなかったと伝わる猛将も、ここで足が止まる。' },
   toyohisa_die: { title: '島津豊久、討死', tag: '通説', focus: ['toyohisa'], slow: true,
-    body: '殿をつとめた甥の豊久が、烏頭坂のあたりで討死した。伯父の義弘を逃がすための戦いだった。' },
-  chojuin: { title: '長寿院盛淳、身代わりに', tag: '通説', focus: ['shimazu'],
-    body: '家老の長寿院盛淳は、義弘の陣羽織をまとって「我こそ島津兵庫頭」と名乗り、敵を引きつけて討死した。' },
-  shimazu_escape: { title: '島津義弘、戦場を離脱', tag: '通説', focus: ['shimazu'], slow: true,
-    body: '義弘は伊賀・大坂を経て、海路で薩摩へ帰り着いた。関ヶ原に入った約1,500のうち、帰れたのは80余人だったという。' },
+    body: '豊久は烏頭坂のあたりで討たれた。31歳。' },
+  chojuin: { title: '長寿院盛淳、身代わりに', tag: '通説', focus: ['shimazu'], slow: true,
+    body: '家老の長寿院盛淳は、義弘の陣羽織をまとって「我こそ島津兵庫頭」と名乗り、追手を引きつけて討死した。' },
+  shimazu_escape: { title: '島津義弘、逃げ切る', tag: '通説', focus: ['shimazu'], slow: true,
+    body: '追手を振り切った義弘は、伊勢から大坂を経て、海路で薩摩へ帰り着いた。関ヶ原に入った約1,500のうち、帰れたのは80余人だったという。' },
   nangu_withdraw: { title: '南宮山の諸隊、戦わずに退く', tag: '史実', focus: ['mori', 'chosokabe'], cam: 'nangu',
     body: '南宮山の毛利秀元らは、一戦も交えずに退いた。吉川の内通で守ったはずの毛利家は、戦後に120万石から約30万石へ減らされる。' },
   east_win: { title: '東軍の勝利', tag: '史実', cam: 'overview', slow: true,
@@ -699,78 +711,149 @@ function makeBrain(opts = DEFAULT_OPTS) {
   when('shimazu_shoot', (S) => O.shimazu === 'history' && S.t >= H(12, 0) && S.units.some((u) => u.side === 'W' && u.status === 'rout' && u.contacts.includes(U(S, 'shimazu'))),
     (S) => S.emit('shimazu_shoot'));
   when('shimazu_shoot_late', (S) => O.shimazu === 'history' && S.flags.breakoutReady && !S.fired.has('shimazu_shoot'), (S) => S.emit('shimazu_shoot'));
-  // 島津の退き口
+  // ───── 島津の退き口 ─────
+  // 西軍が崩れると、島津は敵中に取り残される。前へ（家康本陣の前→関ヶ原宿→伊勢街道）突き抜けて逃げる。
+  // 追手（井伊・松平忠吉・本多）は騎馬で島津より少し速く、放っておけば追いつく。
+  // 追手が迫るたびに、島津は追手との間に捨て奸を一組残す。捨て奸は追手の大将を撃ち、1〜2分で全滅する。
+  // そのあいだに本隊が距離を稼ぎ、追手がまた詰める——を繰り返す。最後は豊久が殿に残り、長寿院が身代わりになる。
+  const CHASERS = ['ii', 'tadayoshi', 'honda'];
+  const V_SHIMAZU = 1.5, V_CHASE = 2.1;   // m/s
+  const SUTE_MARGIN = 130;                  // 追手が本隊に接する130m手前で捨て奸を残す
+  const rearOf = (S) => U(S, 'shimazu');   // 列の最後尾は義弘の本隊（豊久は列の前を進み、最後に殿として引き返す）
+  // 道（route）の上で、u に最も近い先の経由点
+  const nextOnRoute = (R, u) => {
+    let i = 0;
+    for (let k = 1; k < R.length; k++) if (Math.hypot(R[k][0] - u.x, R[k][1] - u.z) < Math.hypot(R[i][0] - u.x, R[i][1] - u.z)) i = k;
+    if (i < R.length - 1 && Math.hypot(R[i + 1][0] - u.x, R[i + 1][1] - u.z) < Math.hypot(R[i + 1][0] - R[i][0], R[i + 1][1] - R[i][1])) i++;
+    return i;
+  };
   when('breakout', (S) => O.shimazu === 'history' && broken(S, 'ishida', 'ukita', 'konishi') && !isBroken(U(S, 'shimazu')), (S) => {
-    S.flags.breakoutReady = true;
+    S.flags.breakoutReady = true; S.emit('shimazu_alone');
   });
   when('breakout_go', (S) => S.flags.breakoutReady && S.fired.has('shimazu_shoot') && S.t >= (S.flags.breakoutAt ||= S.t + 300), (S) => {
     const P = (lo, la) => S.xz(lo, la);
-    // 島津陣から家康本陣（陣場野）の前面をかすめて関ヶ原宿へ出て、伊勢街道を南へ
+    // 島津陣から田を突っ切って家康本陣（陣場野）の前をかすめ、関ヶ原宿で伊勢街道に入って南へ
     // （data/geo.json の伊勢街道を 40m の許容で間引き、折り返しのとげを除いたもの。街道を引き直したら合わせる）
     const route = [P(136.4625, 35.3650), P(136.4672, 35.3629), P(136.4680, 35.3621), P(136.4685, 35.3571), P(136.4692, 35.3558), P(136.4715, 35.3548),
       P(136.4739, 35.3526), P(136.4786, 35.3539), P(136.4817, 35.3530), P(136.4815, 35.3489), P(136.4817, 35.3454), P(136.4840, 35.3428),
       P(136.4856, 35.3413), P(136.4892, 35.3377), P(136.4899, 35.3347), P(136.4946, 35.3321), P(136.4944, 35.3306)];
-    setOrder(S, 'shimazu', { type: 'path', pts: route.slice(), i: 0, speed: 1.35 });
-    setOrder(S, 'toyohisa', { type: 'path', pts: route.slice(0, 10), i: 0, speed: 1.25 }); // 街道を約2km下った所で踏みとどまる
+    setOrder(S, 'shimazu', { type: 'path', pts: route.slice(), i: 0, speed: V_SHIMAZU });
+    setOrder(S, 'toyohisa', { type: 'path', pts: route.slice(), i: 0, speed: V_SHIMAZU * 1.01 }); // 豊久の隊は列の前を進む
     S.flags.breakoutT = S.t; S.flags.route = route;
     S.emit('breakout', { shimazuN: Math.round(U(S, 'shimazu').n) });
   });
-  when('pursuit', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 420, (S) => {
-    // 追手はまず島津と同じ道筋（家康本陣の前→伊勢街道）に入る。島津へ一直線に向かうと家康本隊にぶつかって進めないため
-    const R = S.flags.route, s = U(S, 'shimazu');
-    for (const id of ['ii', 'tadayoshi', 'honda']) {
-      const u = U(S, id);
-      // 自分に近い経由点から、島津がいる区間の手前まで道をたどる
-      let i0 = 0;
-      for (let i = 1; i < R.length; i++) if (Math.hypot(R[i][0] - u.x, R[i][1] - u.z) < Math.hypot(R[i0][0] - u.x, R[i0][1] - u.z)) i0 = i;
-      const i1 = Math.max(i0 + 1, s.order.i || 1);
-      setOrder(S, id, { type: 'path', pts: R.slice(i0, i1), i: 0, speed: 1.5, chase: true });
-      u.speed = 1.5;
-    }
+  // 追撃開始。追手はまず島津と同じ道筋に入る（島津へ一直線に向かうと家康本隊にぶつかって進めない）
+  when('pursuit', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 90, (S) => {
+    S.flags.chasing = Object.fromEntries(CHASERS.map((id) => [id, true]));
+    for (const id of CHASERS) U(S, id).speed = V_CHASE;
+    S.emit('pursuit');
   });
-  // 道をたどり終えた追手は、島津本隊を直接追う
-  rules.push({ id: 'chase_attack', repeat: true, when: (S) => S.flags.route && ['ii', 'tadayoshi', 'honda'].some((id) => { const o = U(S, id).order; return o.chase && o.i >= o.pts.length; }), fn: (S) => {
-    for (const id of ['ii', 'tadayoshi', 'honda']) { const o = U(S, id).order; if (o.chase && o.i >= o.pts.length) attack(S, id, 'shimazu'); }
+  // 追手の動き: 遠ければ道をたどり、間近なら直接斬りかかる
+  rules.push({ id: 'chase', repeat: true, when: (S) => S.flags.chasing && U(S, 'shimazu').status !== 'gone', fn: (S) => {
+    const R = S.flags.route, s = U(S, 'shimazu'), rear = rearOf(S);
+    for (const id of CHASERS) {
+      if (!S.flags.chasing[id]) continue;
+      const u = U(S, id);
+      if (isBroken(u)) { S.flags.chasing[id] = false; continue; }
+      if (S.t < (u.stunUntil || 0)) continue;            // 落馬などで一時止まっている
+      const d = Math.hypot(rear.x - u.x, rear.z - u.z);
+      if (d < 260) { if (u.order.type !== 'attack' || u.order.target !== rear.id) attack(S, id, rear.id); u.speed = V_CHASE; continue; }
+      const o = u.order;
+      if (o.type === 'path' && o.chase && o.i < o.pts.length) continue;
+      const i0 = nextOnRoute(R, u), i1 = Math.max(i0 + 1, Math.min(R.length, (s.order.i || 0) + 1));
+      setOrder(S, id, { type: 'path', pts: R.slice(i0, i1), i: 0, speed: V_CHASE, chase: true });
+    }
   } });
-  when('sutegamari', (S) => S.fired.has('sute:sute1'), (S) => S.emit('sutegamari'));
-  // 捨て奸: 退却中、少人数の組を道に残して死ぬまで足止めさせる（その兵は戻らない）
-  rules.push({ id: 'sute_loop', repeat: true, when: (S) => S.flags.breakoutT && U(S, 'shimazu').order.type === 'path' && S.t >= (S.flags.suteNext ||= S.flags.breakoutT + 600), fn: (S) => {
-    S.flags.suteNext = S.t + 150;
-    const s = U(S, 'shimazu');
+  // 捨て奸: 追手が迫った瞬間に、追手と列の最後尾のあいだへ一組残す
+  rules.push({ id: 'sute_drop', repeat: true, when: (S) => S.flags.chasing && !S.flags.rearStand && U(S, 'shimazu').order.type === 'path' && S.t >= (S.flags.suteCool || 0), fn: (S) => {
+    const s = U(S, 'shimazu'), rear = rearOf(S);
+    let best = null, bd = 1e9;
+    for (const id of CHASERS) {
+      const u = U(S, id);
+      if (!S.flags.chasing[id] || isBroken(u)) continue;
+      const d = Math.hypot(u.x - rear.x, u.z - rear.z);
+      if (d < bd) { bd = d; best = u; }
+    }
+    if (!best || bd > best.r + s.r + 25 + SUTE_MARGIN) return;
+    // 追手の目の前にまだ生きた捨て奸がいれば、次は残さない
+    if (S.units.some((u) => u.hidden && u.used && u.status !== 'gone' && Math.hypot(u.x - best.x, u.z - best.z) < best.r + 70)) return;
     const d = S.units.find((u) => u.hidden && u.status === 'gone' && !u.used);
-    if (!d || s.n < 80) return;
-    const k = Math.max(15, Math.min(30, Math.round(s.n * 0.04)));  // 1組20〜30人の小部隊
+    if (!d || s.n < 120) return;
+    const k = Math.max(20, Math.min(50, Math.round(s.n * 0.08)));   // 本隊から20〜50人
     s.n -= k;
-    // 本隊の真後ろ（来た方向）に残し、追手の方を向かせる
-    const back = (s.face + 180) % 360, rad = back * Math.PI / 180;
-    Object.assign(d, { used: true, n: k, n0: k, killed: 0, status: 'hold', morale: 1, morale0: 1, q: 2.2, fort: 1.3, noRout: true, msens: 0.3,
-      x: s.x + Math.sin(rad) * 60, z: s.z - Math.cos(rad) * 60, face: back, homeFace: back, r: 22 });
+    const ux = (best.x - rear.x) / bd, uz = (best.z - rear.z) / bd;
+    const face = (Math.atan2(ux, -uz) * 180 / Math.PI + 360) % 360;   // 追手の方を向く
+    Object.assign(d, { used: true, n: k, n0: k, killed: 0, status: 'hold', morale: 1, morale0: 1, q: 2.5, fort: 1, frail: 8, noRout: true, msens: 0.3,
+      x: rear.x + ux * (s.r + 60), z: rear.z + uz * (s.r + 60), face, homeFace: face, r: 14 });
     d.hx = d.x; d.hz = d.z; d.order = { type: 'hold' };
     const x0 = d.x, z0 = d.z; d.def0x = () => x0; d.def0z = () => z0;
+    S.flags.suteCool = S.t + 60; S.flags.suteCount = (S.flags.suteCount || 0) + 1;
     S.emit('sute:' + d.id, { unit: d.id, n: k });
   } });
-  const vsShimazu = (u) => u.contacts.some((c) => c.id === 'shimazu' || c.id === 'toyohisa' || (c.hidden && c.side !== u.side));
-  when('ii_wound', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 600 && vsShimazu(U(S, 'ii')), (S) => {
-    const ii = U(S, 'ii'), td = U(S, 'tadayoshi');
-    ii.morale -= 0.3; setOrder(S, 'ii', { type: 'hold' }); td.morale -= 0.1; // 井伊隊は止まるが、忠吉・本多は追い続ける
+  // 捨て奸を片づけた追手は、隊を立て直すのにしばらく止まる
+  rules.push({ id: 'sute_cleared', repeat: true, when: (S) => S.flags.chasing && S.units.some((u) => u.hidden && u.used && u.status === 'gone' && !u.cleared), fn: (S) => {
+    for (const g of S.units) {
+      if (!(g.hidden && g.used && g.status === 'gone' && !g.cleared)) continue;
+      g.cleared = true;
+      for (const id of CHASERS) { const u = U(S, id); if (S.flags.chasing[id] && Math.hypot(u.x - g.x, u.z - g.z) < u.r + 60) { u.stunUntil = Math.max(u.stunUntil || 0, S.t + 40); setOrder(S, id, { type: 'hold' }); } }
+    }
+  } });
+  when('sutegamari', (S) => S.fired.has('sute:sute1'), (S) => S.emit('sutegamari'));
+  when('sute_again', (S) => (S.flags.suteCount || 0) >= 9, (S) => S.emit('sute_again'));
+  // 追手の大将が撃たれるのは、捨て奸か殿と接している時
+  const vsRearguard = (u) => u.contacts.some((c) => (c.hidden || c.blocker || c.id === 'toyohisa') && c.side !== u.side);
+  when('ii_wound', (S) => S.flags.chasing && (S.flags.suteCount || 0) >= 6 && vsRearguard(U(S, 'ii')), (S) => {
+    const ii = U(S, 'ii');
+    ii.morale -= 0.3; S.flags.chasing.ii = false; setOrder(S, 'ii', { type: 'hold' }); // 大将を撃たれた井伊隊は追撃をやめる
     S.emit('ii_wound');
   });
-  when('honda_fall', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 600 && vsShimazu(U(S, 'honda')), (S) => {
-    U(S, 'honda').morale -= 0.1; S.emit('honda_fall');
+  when('honda_fall', (S) => S.flags.chasing && (S.flags.suteCount || 0) >= 4 && vsRearguard(U(S, 'honda')), (S) => {
+    const h = U(S, 'honda'); h.morale -= 0.1; h.stunUntil = S.t + 120; setOrder(S, 'honda', { type: 'hold' }); // 馬を替えて、また追う
+    S.emit('honda_fall');
   });
-  when('toyohisa_stop', (S) => { const o = U(S, 'toyohisa').order; return o.type === 'path' && o.i >= o.pts.length; }, (S) => {
-    setOrder(S, 'toyohisa', { type: 'hold' }); U(S, 'toyohisa').fort = 1.0; U(S, 'toyohisa').msens = 3; U(S, 'toyohisa').noRout = false;
+  // 豊久、殿に残る: 道の終わり近くで追手がまた迫った時
+  when('toyohisa_stand', (S) => S.flags.chasing && U(S, 'toyohisa').order.type === 'path' && (U(S, 'shimazu').order.i >= 15 || (U(S, 'shimazu').order.i >= 11 &&
+    CHASERS.some((id) => S.flags.chasing[id] && Math.hypot(U(S, id).x - U(S, 'toyohisa').x, U(S, id).z - U(S, 'toyohisa').z) < 320))), (S) => {
+    // 列の前から本隊の後ろへ引き返し、追手の前に立ちふさがる
+    const t = U(S, 'toyohisa'), s = U(S, 'shimazu');
+    let best = null, bd = 1e9;
+    for (const id of CHASERS) { const u = U(S, id); if (!S.flags.chasing[id]) continue; const d = Math.hypot(u.x - s.x, u.z - s.z); if (d < bd) { bd = d; best = u; } }
+    const ux = best ? (best.x - s.x) / bd : 0, uz = best ? (best.z - s.z) / bd : 1;
+    const x0 = s.x + ux * (s.r + t.r + 15), z0 = s.z + uz * (s.r + t.r + 15);
+    setOrder(S, 'toyohisa', { type: 'move', x: x0, z: z0 }); t.speed = 4;
+    Object.assign(t, { blocker: true, noRout: true, fort: 1, frail: 5, face: (Math.atan2(ux, -uz) * 180 / Math.PI + 360) % 360 });
+    t.def0x = () => x0; t.def0z = () => z0;
+    S.flags.rearStand = S.t;
+    S.emit('toyohisa_stand');
   });
-  when('toyohisa_die', (S) => S.flags.breakoutT && (isBroken(U(S, 'toyohisa')) || S.t > S.flags.breakoutT + 3000), (S) => {
-    const t = U(S, 'toyohisa'); t.killed += t.n * 0.9; t.n *= 0.1; t.status = 'gone'; S.emit('toyohisa_die');
+  // 豊久は追手と4分戦うか、兵が尽きたら討たれる
+  when('toyohisa_die', (S) => { if (!S.flags.rearStand) return false; const t = U(S, 'toyohisa'); if (t.fighting) S.flags.tyFight = (S.flags.tyFight || 0) + 2; return t.n < 60 || S.flags.tyFight >= 240; }, (S) => {
+    const t = U(S, 'toyohisa'); t.killed += t.n; t.n = 0; t.status = 'gone'; S.emit('toyohisa_die');
   });
-  when('chojuin', (S) => S.flags.breakoutT && near(S, 'shimazu', 'toyohisa', 3000) && U(S, 'shimazu').order.type === 'path' && U(S, 'shimazu').order.i >= 5, (S) => {
-    const s = U(S, 'shimazu'); const k = s.n * 0.25; s.n -= k; s.killed += k; S.emit('chojuin');
+  // 長寿院盛淳: 追撃のさなか、義弘の陣羽織をまとって名乗りを上げ、大きめの一隊で追手を引きつける
+  when('chojuin', (S) => (S.flags.suteCount || 0) >= 10 && !S.flags.rearStand && U(S, 'shimazu').order.type === 'path', (S) => {
+    const s = U(S, 'shimazu'), d = S.units.find((u) => u.hidden && u.status === 'gone' && !u.used);
+    let best = null, bd = 1e9;
+    for (const id of CHASERS) { const u = U(S, id); if (!S.flags.chasing[id]) continue; const dd = Math.hypot(u.x - s.x, u.z - s.z); if (dd < bd) { bd = dd; best = u; } }
+    const k = Math.round(s.n * 0.10); s.n -= k;
+    if (d && best) {
+      const ux = (best.x - s.x) / bd, uz = (best.z - s.z) / bd, face = (Math.atan2(ux, -uz) * 180 / Math.PI + 360) % 360;
+      Object.assign(d, { used: true, n: k, n0: k, killed: 0, status: 'hold', morale: 1, morale0: 1, q: 2.5, fort: 1, frail: 4, noRout: true, msens: 0.3,
+        x: s.x + ux * (s.r + 25), z: s.z + uz * (s.r + 25), face, homeFace: face, r: 20 });
+      d.hx = d.x; d.hz = d.z; d.order = { type: 'hold' };
+      const x0 = d.x, z0 = d.z; d.def0x = () => x0; d.def0z = () => z0;
+      S.flags.suteCool = S.t + 120;
+    } else s.killed += k;
+    S.emit('chojuin');
   });
   when('shimazu_escape', (S) => { const o = U(S, 'shimazu').order; return o.type === 'path' && o.i >= o.pts.length; }, (S) => {
-    for (const id of ['tadayoshi', 'honda']) setOrder(S, id, { type: 'hold' });
-    const s = U(S, 'shimazu'); s.status = 'gone'; S.emit('shimazu_escape', { n: Math.round(s.n + (isBroken(U(S, 'toyohisa')) ? 0 : U(S, 'toyohisa').n)) });
+    // 義弘は逃げ切った。追手は、まだ道に踏みとどまる豊久へ向かう
+    const ty = U(S, 'toyohisa'), tyAlive = S.flags.rearStand && ty.status !== 'gone';
+    if (S.flags.chasing) for (const id of CHASERS) { const on = S.flags.chasing[id]; S.flags.chasing[id] = false; if (isBroken(U(S, id))) continue; if (on && tyAlive) attack(S, id, 'toyohisa'); else setOrder(S, id, { type: 'hold' }); }
+    const s = U(S, 'shimazu'); s.status = 'gone';
+    S.emit('shimazu_escape', { n: Math.round(s.n + (U(S, 'toyohisa').status === 'gone' || isBroken(U(S, 'toyohisa')) ? 0 : U(S, 'toyohisa').n)) });
   });
+  when('shimazu_legacy', (S) => S.fired.has('shimazu_escape') && S.t >= S.log.find((e) => e.id === 'shimazu_escape').t + 60, (S) => S.emit('shimazu_legacy'));
   // 勝敗
   when('east_win', (S) => !S.result && broken(S, 'ishida', 'ukita', 'konishi', 'otani') &&
     (O.kobaya !== 'west' || isBroken(U(S, 'kobayakawa'))), (S) => {
@@ -2404,7 +2487,7 @@ function updateLabels() {
       L.sd.textContent = u.side === 'W' ? '西' : '東';
       L.sd.title = u.side !== u.origSide ? '寝返り' : SIDE[u.side];
     }
-    L.n.textContent = st === 'gone' ? (u.id === 'shimazu' ? '離脱' : u.id === 'toyohisa' ? '討死' : '潰走') : Math.round(u.n).toLocaleString();
+    L.n.textContent = st === 'gone' ? (u.id === 'shimazu' ? '離脱' : u.id === 'toyohisa' ? '討死' : u.hidden ? '全滅' : '潰走') : Math.round(u.n).toLocaleString();
     L.bar.style.width = (Math.max(0, u.n / u.n0) * 100).toFixed(0) + '%';
     const V = L.V;
     const c = Math.cos(Math.PI - u.face * Math.PI / 180), s = Math.sin(Math.PI - u.face * Math.PI / 180);
