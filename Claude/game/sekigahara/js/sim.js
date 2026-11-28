@@ -28,7 +28,7 @@ export function createSim(units, xz, params, bounds) {
       n: d.n, n0: d.n, killed: 0, morale: p.morale ?? 0.9, morale0: p.morale ?? 0.9, msens: p.msens ?? 1.6,
       q: p.q ?? 1, fort: p.fort ?? 1, x, z, hx: x, hz: z, face: d.face, homeFace: d.face,
       r: Math.min(190, Math.max(25, Math.sqrt(d.n) * 1.4)),
-      order: { type: d.idle ? 'idle' : 'hold' }, status: 'hold', contacts: [],
+      order: { type: d.idle ? 'idle' : 'hold' }, status: d.hidden ? 'gone' : 'hold', hidden: !!d.hidden, contacts: [],
       moving: 0, fighting: 0, fire: 0, retreat: p.retreat ? xz(...p.retreat) : null, speed: p.speed ?? 0.9, noRout: !!p.noRout, homeR: p.homeR ?? 150,
     };
     S.units.push(u); S.byId[d.id] = u;
@@ -159,7 +159,8 @@ export function stepSim(S, brain) {
         T = (S.retarget && S.retarget(S, u)) || nearestEnemy(S, u, 1600);
         if (T) o.target = T.id; else { setOrder(S, u.id, { type: 'hold' }); }
       }
-      if (T && !u.contacts.includes(T)) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
+      // 目標以外の敵と接していればまずそれと戦う（足止め）
+      if (T && !u.contacts.includes(T) && !u.contacts.some((c) => c.side !== u.side && c.status !== 'rout')) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
     } else if (o.type === 'move') {
       if (moveToward(u, o.x, o.z, u.speed, dt)) setOrder(S, u.id, { type: 'hold' });
     } else if (o.type === 'path') {
@@ -229,6 +230,6 @@ export function prepare(S) {
 
 export function sideTotals(S) {
   const r = { W: { n0: 0, killed: 0 }, E: { n0: 0, killed: 0 } };
-  for (const u of S.units) { r[u.origSide].n0 += u.n0; r[u.origSide].killed += u.killed; }
+  for (const u of S.units) { if (!u.hidden) r[u.origSide].n0 += u.n0; r[u.origSide].killed += u.killed; }
   return r;
 }

@@ -450,7 +450,7 @@ function buildArmies() {
     const nobRk = new Float32Array(lists.nob.map((p) => rankOf(p[1])));
     add('nobPole', lists.nob, nobRk, (c) => c.set(1, 1, 1), 1 + (S - 1) * 0.5, false);
     add('nobFlag', lists.nob, nobRk, vary(flagCol, 0.08), 1 + (S - 1) * 0.5, true);
-    total += u.n; drawn += n;
+    if (!u.hidden) { total += u.n; drawn += n; }
     soldiers.sort((a, b) => a[2] - b[2]);
     // 本陣（大将と馬印）: 部隊とともに動く。陣幕は陣所に残る
     let anchorL = [0, 0];
@@ -485,7 +485,8 @@ function buildArmies() {
     const fm = new THREE.Mesh(fg, mats.foot);
     fm.frustumCulled = false; fm.renderOrder = 1;
     armyGroup.add(fm);
-    VIS.push({ id: u.id, def: u, mats, soldiers, ptr: 0, armorCol, spread: 1, vis: 1, anchorL, radius: Math.max(bb[1] - bb[0], bb[3] - bb[2]) / 2 });
+    if (!u.hidden) { total += 0; }
+    VIS.push({ id: u.id, def: u, mats, soldiers, ptr: 0, armorCol, spread: 1, vis: u.hidden ? 0 : 1, anchorL, radius: Math.max(bb[1] - bb[0], bb[3] - bb[2]) / 2 });
   }
   // 陣幕
   const P = [], CC = [];
@@ -714,7 +715,7 @@ function spawnCorpses() {
 }
 function seek(t) {
   play.seeking = true;
-  for (const V of VIS) { V.ptr = 0; V.spread = 1; V.vis = 1; }
+  for (const V of VIS) { V.ptr = 0; V.spread = 1; V.vis = V.def.hidden ? 0 : 1; }
   resetCorpses(); clearSmoke();
   newSim();
   logEl.innerHTML = '';
@@ -732,7 +733,7 @@ function evInfo(e) {
   if (e.id.startsWith('gone:')) {
     // 潰走を経ずに消えた（全滅した）部隊
     const u = SIM.byId[e.unit];
-    if (SIM.fired.has('rout:' + u.id) || ['shimazu', 'toyohisa', 'gamo'].includes(u.id) || ROUT_EVENTS[u.id]) return null;
+    if (SIM.fired.has('rout:' + u.id) || u.hidden || ['shimazu', 'toyohisa', 'gamo'].includes(u.id) || ROUT_EVENTS[u.id]) return null;
     return { title: `${u.name}隊、壊滅`, tag: '戦況', focus: [u.id], slow: true, body: `${u.name}隊は最後まで踏みとどまり、討ち死にした（死傷 約${Math.round(u.killed).toLocaleString()}人）。` };
   }
   if (e.id.startsWith('rout:')) {

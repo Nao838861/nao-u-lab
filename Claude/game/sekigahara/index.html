@@ -99,6 +99,9 @@ const UNITS = [
     note: '兵は約1,500（諸説あり）と少数。三成の使者の出陣要請に応じず、陣に近づく者は敵味方を問わず寄せつけなかったと伝わる。最後は敵の正面を突破して戦場を離脱する「島津の退き口」。' },
   { id: 'toyohisa', name: '島津豊久', side: 'W', n: 600, lon: 136.4642, lat: 35.3697, face: 95, color: '#333333', place: '小池村（前備）', parent: 'shimazu',
     note: '義弘の甥。島津勢の前備。退き口で殿（しんがり）をつとめ、烏頭坂（うとうざか）付近で討死したとされる。' },
+  ...[1, 2, 3, 4, 5, 6, 7, 8].map((i) => ({ id: 'sute' + i, name: '島津 捨て奸', side: 'W', n: 60, lon: 136.4622, lat: 35.3706, face: 0, color: '#2a2a2a',
+    place: '退き口の道筋', hidden: true, parent: 'shimazu',
+    note: '退却する島津本隊から切り離され、道に残って追手を足止めする小部隊。座り込んで鉄砲で狙撃し、全滅するまで戦う（捨て奸）。' })),
   { id: 'konishi', name: '小西行長', side: 'W', n: 4000, lon: 136.4592, lat: 35.3684, face: 95, color: '#c9a227', place: '北天満山',
     note: 'キリシタン大名。朝鮮出兵では加藤清正と先陣を争った。戦後、三成・安国寺恵瓊とともに京の六条河原で処刑された。' },
   { id: 'ukita', name: '宇喜多秀家', side: 'W', n: 17000, lon: 136.4580, lat: 35.3640, face: 90, color: '#7a2d8c', place: '南天満山',
@@ -202,7 +205,7 @@ function createSim(units, xz, params, bounds) {
       n: d.n, n0: d.n, killed: 0, morale: p.morale ?? 0.9, morale0: p.morale ?? 0.9, msens: p.msens ?? 1.6,
       q: p.q ?? 1, fort: p.fort ?? 1, x, z, hx: x, hz: z, face: d.face, homeFace: d.face,
       r: Math.min(190, Math.max(25, Math.sqrt(d.n) * 1.4)),
-      order: { type: d.idle ? 'idle' : 'hold' }, status: 'hold', contacts: [],
+      order: { type: d.idle ? 'idle' : 'hold' }, status: d.hidden ? 'gone' : 'hold', hidden: !!d.hidden, contacts: [],
       moving: 0, fighting: 0, fire: 0, retreat: p.retreat ? xz(...p.retreat) : null, speed: p.speed ?? 0.9, noRout: !!p.noRout, homeR: p.homeR ?? 150,
     };
     S.units.push(u); S.byId[d.id] = u;
@@ -333,7 +336,8 @@ function stepSim(S, brain) {
         T = (S.retarget && S.retarget(S, u)) || nearestEnemy(S, u, 1600);
         if (T) o.target = T.id; else { setOrder(S, u.id, { type: 'hold' }); }
       }
-      if (T && !u.contacts.includes(T)) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
+      // 目標以外の敵と接していればまずそれと戦う（足止め）
+      if (T && !u.contacts.includes(T) && !u.contacts.some((c) => c.side !== u.side && c.status !== 'rout')) moveToward(u, T.x, T.z, u.speed, dt, u.r + T.r + 15);
     } else if (o.type === 'move') {
       if (moveToward(u, o.x, o.z, u.speed, dt)) setOrder(S, u.id, { type: 'hold' });
     } else if (o.type === 'path') {
@@ -403,7 +407,7 @@ function prepare(S) {
 
 function sideTotals(S) {
   const r = { W: { n0: 0, killed: 0 }, E: { n0: 0, killed: 0 } };
-  for (const u of S.units) { r[u.origSide].n0 += u.n0; r[u.origSide].killed += u.killed; }
+  for (const u of S.units) { if (!u.hidden) r[u.origSide].n0 += u.n0; r[u.origSide].killed += u.killed; }
   return r;
 }
 
@@ -514,7 +518,7 @@ const EVENTS = {
     body: '崩れた西軍の兵が島津の陣に逃げ込もうとした。島津勢は陣が乱れるのを嫌い、味方であろうと近づく者に容赦なく鉄砲を撃ちかけたという。' },
   breakout: { title: '島津の退き口——前へ退く', tag: '通説', focus: ['shimazu', 'toyohisa', 'ieyasu'], slow: true,
     body: '西軍が崩れ、島津勢は東軍のただ中に取り残された。義弘は退路を後ろの伊吹山ではなく前に求めた。敵の正面を突き破り、家康本陣の前をかすめて伊勢街道を南へ駆け抜ける。' },
-  sutegamari: { title: '捨て奸（すてがまり）', tag: '通説', focus: ['toyohisa', 'shimazu'],
+  sutegamari: { title: '捨て奸（すてがまり）', tag: '通説', focus: ['sute1', 'shimazu', 'tadayoshi'], slow: true,
     body: '追いすがる東軍に対し、島津勢は数人ずつを道に残して座り込ませ、鉄砲で狙撃させては死ぬまで足止めさせた。残った者が全滅すると、また次の組を残す。「捨て奸」と呼ばれる壮絶な撤退戦法である。' },
   ii_wound: { title: '井伊直政、撃たれる', tag: '通説', focus: ['ii', 'shimazu'], slow: true,
     body: '島津を追った井伊直政は、島津兵（柏木源藤と伝わる）の鉄砲を受けて落馬した。この傷がもとで直政は2年後に没したとされる。松平忠吉も負傷した。' },
@@ -661,18 +665,30 @@ function makeBrain(opts = DEFAULT_OPTS) {
     attack(S, 'ii', 'shimazu'); attack(S, 'tadayoshi', 'shimazu'); attack(S, 'honda', 'shimazu');
     for (const id of ['ii', 'tadayoshi', 'honda']) U(S, id).speed = 1.5;
   });
-  when('sutegamari', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 900, (S) => S.emit('sutegamari'));
+  when('sutegamari', (S) => S.fired.has('sute:sute1'), (S) => S.emit('sutegamari'));
   // 捨て奸: 退却中、数人ずつを道に残して死ぬまで足止めさせる（その兵は戻らない）
   rules.push({ id: 'sute_loop', repeat: true, when: (S) => S.flags.breakoutT && U(S, 'shimazu').order.type === 'path' && S.t >= (S.flags.suteNext ||= S.flags.breakoutT + 600), fn: (S) => {
-    const s = U(S, 'shimazu'); const k = s.n * 0.11; s.n -= k; s.killed += k; S.flags.suteNext = S.t + 300;
+    S.flags.suteNext = S.t + 300;
+    const s = U(S, 'shimazu');
+    const d = S.units.find((u) => u.hidden && u.status === 'gone' && !u.used);
+    if (!d || s.n < 60) return;
+    const k = Math.round(s.n * 0.12);
+    s.n -= k;
+    // 本隊の真後ろ（来た方向）に残し、追手の方を向かせる
+    const back = (s.face + 180) % 360, rad = back * Math.PI / 180;
+    Object.assign(d, { used: true, n: k, n0: k, killed: 0, status: 'hold', morale: 1, morale0: 1, q: 2.2, fort: 1.3, noRout: true, msens: 0.3,
+      x: s.x + Math.sin(rad) * 60, z: s.z - Math.cos(rad) * 60, face: back, homeFace: back, r: 22 });
+    d.hx = d.x; d.hz = d.z; d.order = { type: 'hold' };
+    const x0 = d.x, z0 = d.z; d.def0x = () => x0; d.def0z = () => z0;
+    S.emit('sute:' + d.id, { unit: d.id, n: k });
   } });
   when('ii_wound', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 1000 && (U(S, 'ii').fighting || S.t >= S.flags.breakoutT + 1600), (S) => {
     const ii = U(S, 'ii'), td = U(S, 'tadayoshi');
-    ii.morale -= 0.3; setOrder(S, 'ii', { type: 'hold' }); setOrder(S, 'tadayoshi', { type: 'hold' }); td.morale -= 0.15;
+    ii.morale -= 0.3; setOrder(S, 'ii', { type: 'hold' }); td.morale -= 0.1; // 井伊隊は止まるが、忠吉・本多は追い続ける
     S.emit('ii_wound');
   });
   when('honda_fall', (S) => S.fired.has('ii_wound') && S.t >= S.flags.breakoutT + 1300, (S) => {
-    setOrder(S, 'honda', { type: 'hold' }); S.emit('honda_fall');
+    U(S, 'honda').morale -= 0.1; S.emit('honda_fall');
   });
   when('toyohisa_stop', (S) => { const o = U(S, 'toyohisa').order; return o.type === 'path' && o.i >= o.pts.length; }, (S) => {
     setOrder(S, 'toyohisa', { type: 'hold' }); U(S, 'toyohisa').fort = 1.0; U(S, 'toyohisa').msens = 3; U(S, 'toyohisa').noRout = false;
@@ -684,6 +700,7 @@ function makeBrain(opts = DEFAULT_OPTS) {
     const s = U(S, 'shimazu'); const k = s.n * 0.25; s.n -= k; s.killed += k; S.emit('chojuin');
   });
   when('shimazu_escape', (S) => { const o = U(S, 'shimazu').order; return o.type === 'path' && o.i >= o.pts.length; }, (S) => {
+    for (const id of ['tadayoshi', 'honda']) setOrder(S, id, { type: 'hold' });
     const s = U(S, 'shimazu'); s.status = 'gone'; S.emit('shimazu_escape', { n: Math.round(s.n + (isBroken(U(S, 'toyohisa')) ? 0 : U(S, 'toyohisa').n)) });
   });
   // 勝敗
@@ -1203,7 +1220,7 @@ function buildArmies() {
     const nobRk = new Float32Array(lists.nob.map((p) => rankOf(p[1])));
     add('nobPole', lists.nob, nobRk, (c) => c.set(1, 1, 1), 1 + (S - 1) * 0.5, false);
     add('nobFlag', lists.nob, nobRk, vary(flagCol, 0.08), 1 + (S - 1) * 0.5, true);
-    total += u.n; drawn += n;
+    if (!u.hidden) { total += u.n; drawn += n; }
     soldiers.sort((a, b) => a[2] - b[2]);
     // 本陣（大将と馬印）: 部隊とともに動く。陣幕は陣所に残る
     let anchorL = [0, 0];
@@ -1238,7 +1255,8 @@ function buildArmies() {
     const fm = new THREE.Mesh(fg, mats.foot);
     fm.frustumCulled = false; fm.renderOrder = 1;
     armyGroup.add(fm);
-    VIS.push({ id: u.id, def: u, mats, soldiers, ptr: 0, armorCol, spread: 1, vis: 1, anchorL, radius: Math.max(bb[1] - bb[0], bb[3] - bb[2]) / 2 });
+    if (!u.hidden) { total += 0; }
+    VIS.push({ id: u.id, def: u, mats, soldiers, ptr: 0, armorCol, spread: 1, vis: u.hidden ? 0 : 1, anchorL, radius: Math.max(bb[1] - bb[0], bb[3] - bb[2]) / 2 });
   }
   // 陣幕
   const P = [], CC = [];
@@ -1467,7 +1485,7 @@ function spawnCorpses() {
 }
 function seek(t) {
   play.seeking = true;
-  for (const V of VIS) { V.ptr = 0; V.spread = 1; V.vis = 1; }
+  for (const V of VIS) { V.ptr = 0; V.spread = 1; V.vis = V.def.hidden ? 0 : 1; }
   resetCorpses(); clearSmoke();
   newSim();
   logEl.innerHTML = '';
@@ -1485,7 +1503,7 @@ function evInfo(e) {
   if (e.id.startsWith('gone:')) {
     // 潰走を経ずに消えた（全滅した）部隊
     const u = SIM.byId[e.unit];
-    if (SIM.fired.has('rout:' + u.id) || ['shimazu', 'toyohisa', 'gamo'].includes(u.id) || ROUT_EVENTS[u.id]) return null;
+    if (SIM.fired.has('rout:' + u.id) || u.hidden || ['shimazu', 'toyohisa', 'gamo'].includes(u.id) || ROUT_EVENTS[u.id]) return null;
     return { title: `${u.name}隊、壊滅`, tag: '戦況', focus: [u.id], slow: true, body: `${u.name}隊は最後まで踏みとどまり、討ち死にした（死傷 約${Math.round(u.killed).toLocaleString()}人）。` };
   }
   if (e.id.startsWith('rout:')) {
