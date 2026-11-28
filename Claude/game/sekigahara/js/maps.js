@@ -61,10 +61,10 @@ export const MAPS = {
     body += label(P, [136.4795, 35.3445], '伊勢街道', { color: '#2f6a3a', size: 10, anchor: 'start' });
     body += dot(P, [136.4565, 35.3612], '不破関跡', { fill: '#7a3a8a', dy: 14, dx: -2, anchor: 'end', bold: true });
     body += dot(P, SEKI, '関ヶ原', { bold: true, size: 13 });
-    body += mtn(P, [136.4600, 35.3736], '笹尾山（三成）', { anchor: 'end', dx: -9, dy: -6 });
+    body += mtn(P, [136.4587, 35.3718], '笹尾山（三成）', { anchor: 'end', dx: -9, dy: -6 });
     body += mtn(P, [136.4541, 35.3464], '松尾山（小早川）', { dy: 14 });
     body += mtn(P, [136.5066, 35.3498], '南宮山（毛利）');
-    body += mtn(P, [136.4880, 35.3640], '桃配山（家康）', { dy: 14 });
+    body += mtn(P, [136.4884, 35.3654], '桃配山（家康）', { dy: 14 });
     return frame(w, h, body, '地形は国土地理院の標高から作成。街道は概略');
   },
   // 来ない3万8千（家康と秀忠の進路）

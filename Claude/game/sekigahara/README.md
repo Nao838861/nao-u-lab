@@ -10,7 +10,7 @@ index.html をダブルクリックで開ける（three.js は CDN から読む�
 - 左：出来事の記録（クリックでその時刻へ戻る）。上：解説カード（史実／通説／逸話／異説／うんちく のタグ付き）
 - 解説カードは「次に進む」で閉じる。一定時間が過ぎると合戦時計が止まり、読み終えて押すと再開する。続けて起きた出来事も順番に読める。
 - 右パネル：視点、1体あたりの人数（1/4/10）、兵の大きさ、天候、カメラ自動追従、もしも（条件を変えて最初から）
-- 史実再現テスト：`node tools/sim_test.mjs`（`--trace` で30分ごとの兵力、`--if kobaya=neutral` で分岐）
+- 筋書きテスト（採用した通説の流れが崩れていないかの検査。史料との照合ではない）：`node tools/sim_test.mjs`（`--trace` で30分ごとの兵力、`--if kobaya=neutral` で分岐）
 
 検証用スクリーンショット: `node tools/shot.mjs "http://sekigahara.local/?ratio=1&view=overview" out.png`（ローカルサーバ不要、リクエストを横取りして配信）
 URL パラメータ: `ratio` `t=hh:mm` `play=1` `speed` `view=<プリセット>` `cam=lon,lat,eyeH,lookLon,lookLat` `focus=id,id` `if=kobaya=neutral,...`

@@ -1,4 +1,4 @@
-// 史実再現テスト: node tools/sim_test.mjs [--if kobaya=neutral,...] [--trace]
+// 筋書きテスト（採用した通説の流れが版の更新で崩れないかの検査。史料照合ではない）: node tools/sim_test.mjs [--if kobaya=neutral,...] [--trace]
 import fs from 'node:fs';
 import { UNITS } from '../js/units.js';
 import { createSim, stepSim, prepare, hhmm, sideTotals, isBroken } from '../js/sim.js';

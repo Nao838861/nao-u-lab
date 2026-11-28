@@ -45,7 +45,7 @@
     </label>
   </section>
   <section>
-    <h3>もしも</h3>
+    <h3>異説・もしも</h3>
     <div id="ifs"></div>
     <button id="ifRun">この条件で最初から</button>
   </section>
@@ -82,37 +82,39 @@
 <script type="module">
 // 両軍の布陣データ（M0: 通説ベースの概略）
 // 位置・兵数は「通説」（明治期の参謀本部『日本戦史 関原役』以来流布する布陣図・兵数）を基準にした概略値。
-// 1部隊ずつ典拠を確認して verified:true にしていく。face は部隊正面の方位（0=北, 90=東）。
+// pos: 'stele' は関ケ原町の陣跡標柱の位置（関ヶ原位置情報リスト2013, linkdata.org rdf1s884i）に合わせた隊、
+// pos: 'parent' は親の隊と同じだけ動かした前備。標柱も江戸期の軍記〜近代の布陣図を経て定着したもので、1600年当日の位置そのものではない。
+// それ以外の隊は通説の布陣図からの概略値のまま。face は部隊正面の方位（0=北, 90=東）。
 // color は識別用の表示色であり、史実の旗色を示すものではない（井伊の赤備えなど一部を除く）。
 
 const SIDE = { W: '西軍', E: '東軍' };
 
 const UNITS = [
   // ───────── 西軍 ─────────
-  { id: 'ishida', name: '石田三成', side: 'W', n: 4000, lon: 136.4600, lat: 35.3736, face: 100, color: '#ece6d4', place: '笹尾山',
+  { id: 'ishida', name: '石田三成', side: 'W', n: 4000, lon: 136.458746, lat: 35.371796, pos: 'stele', face: 100, color: '#ece6d4', place: '笹尾山',
     note: '西軍の実質的な総指揮者。笹尾山に本陣を置き、前面に柵（竹矢来）を二重に構えた。旗印「大一大万大吉」で知られる。' },
-  { id: 'sakon', name: '島左近', side: 'W', n: 1000, lon: 136.4630, lat: 35.3724, face: 100, color: '#ddd5bc', place: '笹尾山前面', parent: 'ishida',
+  { id: 'sakon', name: '島左近', side: 'W', n: 1000, lon: 136.461746, lat: 35.370596, pos: 'parent', face: 100, color: '#ddd5bc', place: '笹尾山前面', parent: 'ishida',
     note: '「三成に過ぎたるもの」とうたわれた家老。石田隊の前衛として黒田・細川らと戦い、鉄砲で負傷したとされる。' },
-  { id: 'gamo', name: '蒲生郷舎', side: 'W', n: 1000, lon: 136.4628, lat: 35.3744, face: 95, color: '#d4ccb2', place: '笹尾山前面', parent: 'ishida',
+  { id: 'gamo', name: '蒲生郷舎', side: 'W', n: 1000, lon: 136.461546, lat: 35.372596, pos: 'parent', face: 95, color: '#d4ccb2', place: '笹尾山前面', parent: 'ishida',
     note: '旧蒲生家臣で、のち石田家に仕えた。島左近とともに石田隊の前衛を担った。' },
-  { id: 'shimazu', name: '島津義弘', side: 'W', n: 900, lon: 136.4622, lat: 35.3706, face: 95, color: '#222222', place: '小池村',
+  { id: 'shimazu', name: '島津義弘', side: 'W', n: 900, lon: 136.459197, lat: 35.367067, pos: 'stele', face: 95, color: '#222222', place: '小池村',
     note: '兵は約1,500（諸説あり）と少数。三成の使者の出陣要請に応じず、陣に近づく者は敵味方を問わず寄せつけなかったと伝わる。最後は敵の正面を突破して戦場を離脱する「島津の退き口」。' },
-  { id: 'toyohisa', name: '島津豊久', side: 'W', n: 600, lon: 136.4642, lat: 35.3697, face: 95, color: '#333333', place: '小池村（前備）', parent: 'shimazu',
+  { id: 'toyohisa', name: '島津豊久', side: 'W', n: 600, lon: 136.461197, lat: 35.366167, pos: 'parent', face: 95, color: '#333333', place: '小池村（前備）', parent: 'shimazu',
     note: '義弘の甥。島津勢の前備。退き口で殿（しんがり）をつとめ、烏頭坂（うとうざか）付近で討死したとされる。' },
-  ...[1, 2, 3, 4, 5, 6, 7, 8].map((i) => ({ id: 'sute' + i, name: '島津 捨て奸', side: 'W', n: 60, lon: 136.4622, lat: 35.3706, face: 0, color: '#2a2a2a',
+  ...Array.from({ length: 16 }, (_, k) => k + 1).map((i) => ({ id: 'sute' + i, name: '島津 捨て奸', side: 'W', n: 60, lon: 136.4622, lat: 35.3706, face: 0, color: '#2a2a2a',
     place: '退き口の道筋', hidden: true, parent: 'shimazu',
     note: '退却する島津本隊から切り離され、道に残って追手を足止めする小部隊。座り込んで鉄砲で狙撃し、全滅するまで戦う（捨て奸）。' })),
-  { id: 'konishi', name: '小西行長', side: 'W', n: 4000, lon: 136.4592, lat: 35.3684, face: 95, color: '#c9a227', place: '北天満山',
+  { id: 'konishi', name: '小西行長', side: 'W', n: 4000, lon: 136.457925, lat: 35.365816, pos: 'stele', face: 95, color: '#c9a227', place: '北天満山',
     note: 'キリシタン大名。朝鮮出兵では加藤清正と先陣を争った。戦後、三成・安国寺恵瓊とともに京の六条河原で処刑された。' },
-  { id: 'ukita', name: '宇喜多秀家', side: 'W', n: 17000, lon: 136.4580, lat: 35.3640, face: 90, color: '#7a2d8c', place: '南天満山',
+  { id: 'ukita', name: '宇喜多秀家', side: 'W', n: 17000, lon: 136.454857, lat: 35.362810, pos: 'stele', face: 90, color: '#7a2d8c', place: '南天満山',
     note: '五大老の一人で、西軍最大の野戦部隊。先鋒の明石全登（掃部）が福島正則隊と押しつ押されつの激戦を演じた。' },
-  { id: 'otani', name: '大谷吉継', side: 'W', n: 600, lon: 136.4505, lat: 35.3588, face: 110, color: '#3a6fb0', place: '山中村',
+  { id: 'otani', name: '大谷吉継', side: 'W', n: 600, lon: 136.450496, lat: 35.359936, pos: 'stele', face: 110, color: '#3a6fb0', place: '山中村',
     note: '病を押して輿に乗り指揮したと伝わる。三成の盟友。小早川の裏切りを予期して松尾山に備えていたとされる。' },
-  { id: 'otani2', name: '大谷吉治・木下頼継', side: 'W', n: 2500, lon: 136.4538, lat: 35.3614, face: 95, color: '#4a7fc0', place: '山中村（前面）', parent: 'otani',
+  { id: 'otani2', name: '大谷吉治・木下頼継', side: 'W', n: 2500, lon: 136.453796, lat: 35.362536, pos: 'parent', face: 95, color: '#4a7fc0', place: '山中村（前面）', parent: 'otani',
     note: '吉継の子（吉治）と、吉継の娘婿とも伝わる木下頼継の隊。藤堂・京極隊と向き合った。' },
-  { id: 'hiratsuka', name: '戸田勝成・平塚為広', side: 'W', n: 900, lon: 136.4555, lat: 35.3592, face: 120, color: '#5a8fd0', place: '山中村（南）', parent: 'otani',
+  { id: 'hiratsuka', name: '戸田勝成・平塚為広', side: 'W', n: 900, lon: 136.455496, lat: 35.360336, pos: 'parent', face: 120, color: '#5a8fd0', place: '山中村（南）', parent: 'otani',
     note: '大谷隊とともに小早川勢・寝返り4隊を迎え撃ち、ともに討死した。' },
-  { id: 'wakisaka', name: '脇坂安治', side: 'W', n: 990, lon: 136.4588, lat: 35.3556, face: 20, color: '#7b8a3a', place: '松尾山北麓', betray: true,
+  { id: 'wakisaka', name: '脇坂安治', side: 'W', n: 990, lon: 136.457775, lat: 35.354179, pos: 'stele', face: 20, color: '#7b8a3a', place: '松尾山北麓', betray: true,
     note: '賤ヶ岳の七本槍の一人。小早川の寝返りに続いて大谷隊に攻めかかった。事前に東軍と通じていたとされる。' },
   { id: 'kutsuki', name: '朽木元綱', side: 'W', n: 600, lon: 136.4566, lat: 35.3545, face: 20, color: '#8a9a4a', place: '松尾山北麓', betray: true,
     note: '寝返り4隊の一つ。近江朽木谷の領主。' },
@@ -120,7 +122,7 @@ const UNITS = [
     note: '寝返り4隊のうち最大の兵力。戦後は改易された。' },
   { id: 'akaza', name: '赤座直保', side: 'W', n: 600, lon: 136.4634, lat: 35.3550, face: 30, color: '#9aaa5a', place: '松尾山北麓', betray: true,
     note: '寝返り4隊の一つ。戦後は所領を没収された。' },
-  { id: 'kobayakawa', name: '小早川秀秋', side: 'W', n: 15600, lon: 136.4552, lat: 35.3478, face: 15, color: '#d07a1c', place: '松尾山', betray: true,
+  { id: 'kobayakawa', name: '小早川秀秋', side: 'W', n: 15600, lon: 136.454304, lat: 35.347274, pos: 'stele', face: 15, color: '#d07a1c', place: '松尾山', betray: true,
     note: '秀吉の正室・北政所（ねね）の甥。開戦前日に松尾山に入った。東西双方から誘われ、その去就が戦いの帰趨を決めた。' },
   { id: 'mori', name: '毛利秀元', side: 'W', n: 16000, lon: 136.5060, lat: 35.3508, face: 330, color: '#4a5270', place: '南宮山', idle: true,
     note: '西軍総大将・毛利輝元の名代。南宮山上に大軍を置いたが、前に陣取る吉川広家が動かず下山できなかった。催促の使者に「兵に弁当を食べさせている」と答えたという「宰相殿の空弁当」の逸話がある。' },
@@ -134,25 +136,25 @@ const UNITS = [
     note: '土佐の大名。毛利勢の後方に布陣したため戦機を得られず、戦わずに撤退した。戦後に改易。' },
 
   // ───────── 東軍 ─────────
-  { id: 'ieyasu', name: '徳川家康', side: 'E', n: 30000, lon: 136.4890, lat: 35.3648, face: 270, color: '#f0c419', place: '桃配山', leaderMark: 'fan',
+  { id: 'ieyasu', name: '徳川家康', side: 'E', n: 30000, lon: 136.488411, lat: 35.365395, pos: 'stele', face: 270, color: '#f0c419', place: '桃配山', leaderMark: 'fan',
     note: '東軍総大将。最初に桃配山に本陣を置いた（壬申の乱で大海人皇子が兵に桃を配ったと伝わる地）。戦況を見て陣場野へ前進した。金扇の馬印。' },
-  { id: 'fukushima', name: '福島正則', side: 'E', n: 6000, lon: 136.4642, lat: 35.3634, face: 270, color: '#3d8c8c', place: '中山道沿い（春日神社付近）',
+  { id: 'fukushima', name: '福島正則', side: 'E', n: 6000, lon: 136.461031, lat: 35.359122, pos: 'stele', face: 270, color: '#3d8c8c', place: '中山道沿い（春日神社付近）',
     note: '東軍の先鋒とされていた。正面の宇喜多隊と激戦を繰り広げた。' },
-  { id: 'ii', name: '井伊直政', side: 'E', n: 3600, lon: 136.4680, lat: 35.3662, face: 270, color: '#c41e1e', armor: '#a8251c', place: '関ヶ原宿北',
+  { id: 'ii', name: '井伊直政', side: 'E', n: 3600, lon: 136.467500, lat: 35.364000, pos: 'stele', face: 270, color: '#c41e1e', armor: '#a8251c', place: '関ヶ原宿北',
     note: '徳川四天王の一人。具足を赤で揃えた「赤備え」。家康の四男・松平忠吉を伴って福島隊の前へ出て、開戦の口火を切ったとされる（抜け駆け）。' },
-  { id: 'tadayoshi', name: '松平忠吉', side: 'E', n: 3000, lon: 136.4698, lat: 35.3650, face: 270, color: '#d6d6d6', place: '関ヶ原宿北',
+  { id: 'tadayoshi', name: '松平忠吉', side: 'E', n: 3000, lon: 136.469000, lat: 35.363600, pos: 'stele', face: 270, color: '#d6d6d6', place: '関ヶ原宿北',
     note: '家康の四男で、井伊直政の娘婿。島津の退き口を追撃して負傷した。' },
-  { id: 'honda', name: '本多忠勝', side: 'E', n: 500, lon: 136.4735, lat: 35.3646, face: 270, color: '#1c1c1c', armor: '#1c1c1c', place: '関ヶ原宿東',
+  { id: 'honda', name: '本多忠勝', side: 'E', n: 500, lon: 136.472962, lat: 35.360164, pos: 'stele', face: 270, color: '#1c1c1c', armor: '#1c1c1c', place: '関ヶ原宿東',
     note: '徳川四天王の一人。主力は嫡男の忠政が率いて中山道を進む秀忠軍にいたため、手勢はわずかだった。名槍・蜻蛉切。' },
-  { id: 'kuroda', name: '黒田長政', side: 'E', n: 5400, lon: 136.4668, lat: 35.3760, face: 255, color: '#5a5a5a', place: '丸山（岡山）',
+  { id: 'kuroda', name: '黒田長政', side: 'E', n: 5400, lon: 136.470561, lat: 35.369519, pos: 'stele', face: 255, color: '#5a5a5a', place: '丸山（岡山）',
     note: '小早川・吉川らへの調略を担った。丸山に陣を置き、開戦の狼煙を上げたと伝わる。石田隊を攻め、島左近を鉄砲で狙わせたとされる。' },
-  { id: 'takenaka', name: '竹中重門', side: 'E', n: 200, lon: 136.4648, lat: 35.3748, face: 260, color: '#8a6f4a', place: '丸山麓',
+  { id: 'takenaka', name: '竹中重門', side: 'E', n: 200, lon: 136.468800, lat: 35.370200, pos: 'stele', face: 260, color: '#8a6f4a', place: '丸山麓',
     note: '竹中半兵衛の子。関ヶ原周辺の地元領主で、黒田長政とは旧縁があった。' },
-  { id: 'hosokawa', name: '細川忠興', side: 'E', n: 5000, lon: 136.4685, lat: 35.3736, face: 260, color: '#9c9c9c', place: '笹尾山正面',
+  { id: 'hosokawa', name: '細川忠興', side: 'E', n: 5000, lon: 136.4676, lat: 35.3685, face: 260, color: '#9c9c9c', place: '笹尾山正面',
     note: '妻のガラシャは三成挙兵の際、大坂で人質となるのを拒んで死去した。石田隊を攻めた。' },
-  { id: 'kato', name: '加藤嘉明', side: 'E', n: 3000, lon: 136.4690, lat: 35.3716, face: 265, color: '#6f8fa8', place: '笹尾山正面',
+  { id: 'kato', name: '加藤嘉明', side: 'E', n: 3000, lon: 136.4682, lat: 35.3669, face: 265, color: '#6f8fa8', place: '笹尾山正面',
     note: '賤ヶ岳の七本槍の一人。石田隊を攻めた。' },
-  { id: 'tanaka', name: '田中吉政', side: 'E', n: 3000, lon: 136.4712, lat: 35.3700, face: 265, color: '#a8865a', place: '笹尾山正面',
+  { id: 'tanaka', name: '田中吉政', side: 'E', n: 3000, lon: 136.465680, lat: 35.365192, pos: 'stele', face: 265, color: '#a8865a', place: '笹尾山正面',
     note: '戦後、伊吹山中に逃れた三成を捕らえた。' },
   { id: 'tsutsui', name: '筒井定次', side: 'E', n: 2850, lon: 136.4725, lat: 35.3682, face: 270, color: '#9b7fb0', place: '関ヶ原宿北',
     note: '筒井順慶の養子。伊賀上野の大名。' },
@@ -160,9 +162,9 @@ const UNITS = [
   { id: 'kanamori', name: '金森長近', side: 'E', n: 1140, lon: 136.4748, lat: 35.3725, face: 265, color: '#b0a37f', place: '第二線', note: '信長以来の古強者で、飛騨高山の大名。' },
   { id: 'furuta', name: '古田重勝', side: 'E', n: 1020, lon: 136.4755, lat: 35.3680, face: 270, color: '#a87f7f', place: '第二線', note: '伊勢松坂の大名。' },
   { id: 'oda', name: '織田有楽', side: 'E', n: 450, lon: 136.4712, lat: 35.3668, face: 270, color: '#c8b48c', place: '第二線', note: '信長の弟（長益）。茶人として知られ、東京の「有楽町」の名の由来とする説がある。' },
-  { id: 'todo', name: '藤堂高虎', side: 'E', n: 2490, lon: 136.4598, lat: 35.3603, face: 245, color: '#4f6fa0', place: '藤古川東岸',
+  { id: 'todo', name: '藤堂高虎', side: 'E', n: 2490, lon: 136.464000, lat: 35.359800, pos: 'stele', face: 245, color: '#4f6fa0', place: '藤古川東岸',
     note: '大谷隊と戦った。脇坂ら寝返り4隊への調略にかかわったとされる。主君を何度も替えた築城の名手。' },
-  { id: 'kyogoku', name: '京極高知', side: 'E', n: 3000, lon: 136.4624, lat: 35.3612, face: 250, color: '#8fa0c8', place: '藤古川東岸',
+  { id: 'kyogoku', name: '京極高知', side: 'E', n: 3000, lon: 136.465200, lat: 35.359000, pos: 'stele', face: 250, color: '#8fa0c8', place: '藤古川東岸',
     note: '兄の京極高次は、同じ頃に大津城で西軍の大軍を引きつけていた。' },
   { id: 'terazawa', name: '寺沢広高', side: 'E', n: 2400, lon: 136.4660, lat: 35.3614, face: 255, color: '#a0b08f', place: '福島隊南', note: '肥前唐津の大名。' },
   // 南宮山の押さえ
@@ -170,7 +172,7 @@ const UNITS = [
     note: '家康の娘婿。南宮山の毛利勢に備えて後方に布陣した。のちに姫路城を築く。' },
   { id: 'asano', name: '浅野幸長', side: 'E', n: 6510, lon: 136.5215, lat: 35.3662, face: 200, color: '#6e9c6e', place: '垂井付近（南宮山の押さえ）',
     note: '南宮山の毛利勢に備えた。' },
-  { id: 'yamauchi', name: '山内一豊', side: 'E', n: 2058, lon: 136.4985, lat: 35.3688, face: 180, color: '#b09ad0', place: '野上付近（南宮山の押さえ）',
+  { id: 'yamauchi', name: '山内一豊', side: 'E', n: 2058, lon: 136.492499, lat: 35.366874, pos: 'stele', face: 180, color: '#b09ad0', place: '野上付近（南宮山の押さえ）',
     note: '妻・千代の内助の功で知られる。小山評定で居城の掛川城を家康に差し出すと申し出て、戦後は土佐一国を得た。' },
   { id: 'arima', name: '有馬豊氏', side: 'E', n: 900, lon: 136.4950, lat: 35.3700, face: 180, color: '#d0b09a', place: '野上付近（南宮山の押さえ）', note: '南宮山に備えた。' },
 ];
@@ -418,7 +420,7 @@ const H = (h, m = 0) => h * 3600 + m * 60;
 // 部隊ごとの能力（q=戦闘力倍率, fort=陣地の守りの堅さ, morale=初期士気, msens=損害に対する士気の脆さ, retreat=敗走先）
 const PARAMS = {
   ishida: { q: 1.25, fort: 2.2, homeR: 400, msens: 0.7, retreat: [136.4470, 35.3890] },
-  sakon: { q: 1.4, fort: 1.8, retreat: [136.4470, 35.3890] },
+  sakon: { q: 1.4, fort: 1.8, msens: 0.6, retreat: [136.4470, 35.3890] },
   gamo: { q: 1.2, fort: 2.8, msens: 0.9, noRout: true, retreat: [136.4470, 35.3890] },
   shimazu: { q: 2.2, fort: 1.8, morale: 0.95, msens: 0.5, noRout: true },
   toyohisa: { q: 2.0, fort: 1.8, morale: 0.95, msens: 0.5, noRout: true },
@@ -436,9 +438,10 @@ const PARAMS = {
   kuroda: { q: 1.2 }, hosokawa: { q: 1.1 }, kato: { q: 1.1 }, todo: { q: 1.1 }, kyogoku: { q: 1.0 },
 };
 
-// もしも（if）の選択肢。先頭が史実（通説）。
+// もしも（if）の選択肢。先頭が通説。3つ目の要素で分類する: 'alt'＝異説（史料の読み方の違い。起きたことは同じ）。
+// 分類なし（通説以外）＝もしも（起きたことそのものを変える）。画面ではこの2つを分けて並べる
 const OPTIONS = [
-  { id: 'kobaya', label: '小早川秀秋', choices: [['history', '正午、問鉄砲を受けて寝返る（通説）'], ['early', '開戦まもなく寝返る（新説）'], ['neutral', '最後まで松尾山で傍観'], ['west', '西軍として東軍に攻めかかる']] },
+  { id: 'kobaya', label: '小早川秀秋', choices: [['history', '正午、問鉄砲を受けて寝返る'], ['early', '開戦まもなく寝返る（白峰旬らの説）', 'alt'], ['neutral', '最後まで松尾山で傍観'], ['west', '西軍として東軍に攻めかかる']] },
   { id: 'four', label: '脇坂ら4隊', choices: [['history', '小早川に続いて寝返る'], ['loyal', '西軍に留まり大谷隊を助ける']] },
   { id: 'kikkawa', label: '吉川広家', choices: [['history', '道を塞ぎ、南宮山の毛利勢は動かず'], ['open', '道を開け、毛利勢が家康の背後を突く']] },
   { id: 'shimazu', label: '島津義弘', choices: [['history', '要請を断り孤高、最後に敵中突破'], ['fight', '三成の要請に応じて参戦']] },
@@ -459,7 +462,7 @@ const EVENTS = {
   fog: { title: '霧が晴れはじめる', tag: '通説', cam: 'overview',
     body: '辰の刻（午前8時頃）、霧が薄れはじめる。100m先も見えないほどの濃霧の中で、両軍は互いの位置を探り合っていた。' },
   nukegake: { title: '先陣は誰か——井伊直政の抜け駆け', tag: '通説', focus: ['ii', 'tadayoshi'], slow: true,
-    body: '先鋒は福島正則と決められていた。しかし井伊直政は、初陣同然の娘婿・松平忠吉を連れて福島隊の脇をすり抜ける。福島家の可児才蔵に咎められると「物見（偵察）だ」と言って前に出て、宇喜多隊に鉄砲を撃ちかけた。家康の子に一番槍の功を立てさせるためとされる。' },
+    body: '先鋒は福島正則と決められていた。しかし井伊直政は、初陣同然の娘婿・松平忠吉を連れて福島隊の脇をすり抜ける。福島家の可児才蔵に咎められると「物見（偵察）だ」と言って前に出て、宇喜多隊に鉄砲を撃ちかけた。家康の子に一番槍の功を立てさせるためとされる。ただし、どちらが最初に撃ったかは当日の記録からは決められない。合戦2日後の東軍諸将の連署状（写）は、井伊と福島をともに先手に挙げ、合戦の時刻を巳の刻（午前10時前後）と記す。この再現は通説に従い、8時に開戦させている。' },
   fukushima_first: { title: 'もしも：福島正則が先陣', tag: 'もしも', focus: ['fukushima'], body: '予定どおり先鋒の福島正則が、一番に宇喜多隊へ攻めかかる。' },
   fukushima_clash: { title: '福島正則 vs 宇喜多秀家', tag: '通説', focus: ['fukushima', 'ukita'], slow: true,
     body: '先を越された福島隊が宇喜多隊に猛然と攻めかかる。宇喜多の先鋒・明石全登（掃部）との戦いは激しく、福島隊は何度も押し戻されて旗が後退したと伝わる。' },
@@ -475,6 +478,8 @@ const EVENTS = {
     body: '島左近は柵の外へ打って出ては敵を押し返した。その「かかれ、かかれ」という大音声と鬼気迫る姿は、戦いのあと何年も黒田家の兵の夢に出てうなされるほどだったと伝わる（江戸時代の逸話集『常山紀談』など）。' },
   ishida_hold: { title: '持ちこたえる石田隊', tag: 'うんちく', focus: ['ishida'],
     body: '東軍の攻撃が最も集中したのは石田隊だったが、隊は崩れなかった。三成が狼煙を上げ、松尾山・南宮山・島津へ使者を走らせ続けたのは、正面が持ちこたえているうちに側面と背後から挟み撃ちにしたかったからだ。午前の戦況は、西軍がむしろ優勢だったとも評される。' },
+  ishida_hold_early: { title: '持ちこたえる石田隊', tag: '異説', focus: ['ishida'],
+    body: '東軍の攻撃が最も集中したのは石田隊だったが、隊はまだ崩れていない。ただしこの回では、朝のうちに小早川が東軍へ転じ、南西の大谷隊はすでに崩れている。西軍の右翼が失われ、三成に残された望みは南宮山の毛利勢と島津だけになった。' },
   ieyasu_reserve: { title: '家康本陣は戦わない', tag: '通説', focus: ['ieyasu'],
     body: '家康が直接率いる約3万は、この日ほとんど戦っていない。最前線で血を流したのは福島・黒田・細川ら豊臣恩顧の大名と、井伊・本多・松平忠吉の一部だった。秀忠の主力が来ないなか、徳川の兵を温存したとも、豊臣系大名に手柄を立てさせて東軍に縛りつけたともいわれる。' },
   ishida_isolated: { title: '孤立する笹尾山', tag: '通説', focus: ['ishida'], slow: true,
@@ -497,6 +502,13 @@ const EVENTS = {
     body: '石田隊は大筒（大砲）を持ち出して東軍に撃ちかけたと伝わる。笹尾山の前は、鉄砲と大筒の硝煙に包まれた。' },
   noroshi: { title: '狼煙、上がる', tag: '通説', focus: ['ishida', 'kobayakawa', 'mori'], cam: 'overview', slow: true,
     body: '三成は笹尾山から狼煙を上げ、松尾山の小早川と南宮山の毛利勢に参戦を促した。挟み撃ちが成れば西軍の勝ちである。しかし、どちらも動かなかった。' },
+  // 「もしも」で条件を変えた回の狼煙。その回の展開と矛盾しない文面にする
+  noroshi_early: { title: '狼煙、上がる', tag: '異説', focus: ['ishida', 'mori'], cam: 'overview', slow: true,
+    body: '三成は笹尾山から狼煙を上げ、南宮山の毛利勢に参戦を促した。この回では、松尾山の小早川はすでに朝のうちに東軍へ転じている。頼みは南宮山の背後攻めだけだが、毛利勢は動かなかった。' },
+  noroshi_open: { title: '狼煙、上がる', tag: 'もしも', focus: ['ishida', 'kobayakawa', 'mori'], cam: 'overview', slow: true,
+    body: '三成は笹尾山から狼煙を上げ、松尾山の小早川と南宮山の毛利勢に参戦を促した。この回では吉川広家が道を開けており、南宮山の毛利勢が山を下る支度にかかる。松尾山はまだ動かない。' },
+  noroshi_early_open: { title: '狼煙、上がる', tag: 'もしも', focus: ['ishida', 'mori'], cam: 'overview', slow: true,
+    body: '三成は笹尾山から狼煙を上げ、南宮山の毛利勢に参戦を促した。松尾山の小早川はすでに朝のうちに東軍へ転じているが、この回では吉川広家が道を開けており、毛利勢が山を下る支度にかかる。' },
   bento: { title: '宰相殿の空弁当', tag: '逸話', focus: ['mori', 'kikkawa'], slow: true,
     body: '南宮山の毛利秀元は、前に陣取る吉川広家が動かないため下山できない。吉川は黒田長政を通じて東軍と内通し、毛利家の所領を守る約束を取りつけていた。参戦を催促する長束正家・安国寺恵瓊の使者に、秀元は「いま兵に弁当を食べさせている」と答えたという。秀元の官職（参議＝宰相）にちなんで「宰相殿の空弁当」と呼ばれる。' },
   mori_descend: { title: 'もしも：毛利勢、下山', tag: 'もしも', focus: ['mori', 'kikkawa', 'ikeda', 'asano'], slow: true,
@@ -512,11 +524,11 @@ const EVENTS = {
   tsume: { title: '爪を噛む家康', tag: '逸話', focus: ['ieyasu', 'kobayakawa'],
     body: '約束どおり寝返るはずの小早川秀秋が、なかなか動かない。苛立った家康は、若い頃からの癖である爪噛みをしながら「せがれめに謀られたか」とつぶやいたと伝わる。' },
   toi_deppo: { title: '問鉄砲', tag: '通説', focus: ['kobayakawa', 'ieyasu'], slow: true, cam: 'matsuo',
-    body: '業を煮やした家康は、松尾山に向けて鉄砲を撃ちかけさせ、秀秋に決断を迫ったという（問鉄砲）。ただし近年は、当時の手紙など一次史料に基づき、小早川は開戦と同時に寝返っていて問鉄砲はなかったとする説（白峰旬ら）も出ている。「もしも」の「新説」で、その展開を試せる。' },
+    body: '業を煮やした家康は、松尾山に向けて鉄砲を撃ちかけさせ、秀秋に決断を迫ったという（問鉄砲）。ただしこの話が見えるのは江戸中期の軍記（『関ヶ原軍記大成』など）で、幕府が編んだ『朝野旧聞裒藁』の本文は、軍監らが秀秋を催促したという話を採っている。白峰旬は問鉄砲を後世の創作と論じた。問鉄砲が疑わしいことと、小早川がいつ寝返ったかは別の問題で、開戦まもなく寝返ったとする説にも再検討がある（水野伍貴ら）。「もしも」欄の異説で、その展開を試せる。' },
   kobaya_betray: { title: '小早川秀秋、寝返る', tag: '通説', focus: ['kobayakawa', 'hiratsuka', 'otani'], slow: true, cam: 'matsuo',
     body: '松尾山の小早川勢1万5千余が山を駆け下り、西軍の大谷隊へ襲いかかった。勝敗の天秤が大きく傾く。' },
-  kobaya_early: { title: '新説：開戦まもなく小早川が寝返る', tag: '異説', focus: ['kobayakawa', 'otani'], slow: true, cam: 'matsuo',
-    body: '合戦直後に書かれた手紙などでは、小早川は開戦と同時に西軍を攻め、戦いは短時間で決着したと読める。問鉄砲の話は後世の軍記にしか見えない、というのがこの説の根拠である。' },
+  kobaya_early: { title: '異説：開戦まもなく小早川が寝返る', tag: '異説', focus: ['kobayakawa', 'otani'], slow: true, cam: 'matsuo',
+    body: '合戦直後に書かれた手紙などからは、小早川は開戦まもなく西軍を攻め、戦いは短時間で決着したとも読める（白峰旬らの説）。問鉄砲の話が後世の軍記にしか見えないことも根拠の一つである。ただし手紙の読み方には異論があり、定説にはなっていない。この回は、布陣は同じまま小早川の寝返りの時刻だけを変えている。' },
   kobaya_neutral: { title: 'もしも：小早川、動かず', tag: 'もしも', focus: ['kobayakawa'], slow: true, cam: 'matsuo',
     body: '問鉄砲にも秀秋は動かない。松尾山の1万5千は最後まで傍観を決めこむ。' },
   kobaya_west: { title: 'もしも：小早川、東軍を攻める', tag: 'もしも', focus: ['kobayakawa', 'todo'], slow: true, cam: 'matsuo',
@@ -524,7 +536,7 @@ const EVENTS = {
   otani_push: { title: '大谷吉継、裏切りを撃退', tag: '通説', focus: ['otani', 'hiratsuka', 'kobayakawa'], slow: true,
     body: '小早川の裏切りを予期していた吉継は、松尾山に備えていた兵で小早川勢を迎え撃ち、何度も押し返した。兵の数では大きく劣りながらの奮戦だった。' },
   four_betray: { title: '脇坂・朽木・小川・赤座も寝返る', tag: '通説', focus: ['wakisaka', 'ogawa', 'otani'], slow: true,
-    body: '大谷隊の備えの内側にいた脇坂安治・朽木元綱・小川祐忠・赤座直保の4隊が、一斉に大谷隊へ攻めかかる。脇坂は事前に東軍に通じていたとされる。挟まれた大谷隊はもはや支えきれない。' },
+    body: '大谷隊の備えの内側にいた脇坂安治・朽木元綱・小川祐忠・赤座直保の4隊が、一斉に大谷隊へ攻めかかる。脇坂は事前に東軍に通じていたとされる。挟まれた大谷隊はもはや支えきれない。なお、合戦2日後の東軍諸将の連署状（写）に加勢した者として名が見えるのは、小早川・脇坂・小川父子で、朽木・赤座の名はない。4隊がそろって寝返ったというのは後の記録による通説である。ただし、この一通に名がないことだけで、朽木・赤座の寝返りを否定することもできない。' },
   four_loyal: { title: 'もしも：4隊は踏みとどまる', tag: 'もしも', focus: ['wakisaka', 'otani'], body: '脇坂ら4隊は寝返らず、大谷隊とともに小早川勢を迎え撃つ。' },
   hiratsuka_die: { title: '平塚為広・戸田勝成、討死', tag: '通説', focus: ['hiratsuka'],
     body: '大谷隊とともに戦った平塚為広・戸田勝成が相次いで討死した。為広は討ち取った敵の首に辞世の歌を添えて吉継に送ったと伝わる。' },
@@ -541,7 +553,7 @@ const EVENTS = {
   breakout: { title: '島津の退き口——前へ退く', tag: '通説', focus: ['shimazu', 'toyohisa', 'ieyasu'], slow: true,
     body: '西軍が崩れ、島津勢は東軍のただ中に取り残された。義弘は退路を後ろの伊吹山ではなく前に求めた。敵の正面を突き破り、家康本陣の前をかすめて伊勢街道を南へ駆け抜ける。' },
   sutegamari: { title: '捨て奸（すてがまり）', tag: '通説', focus: ['sute1', 'shimazu', 'tadayoshi'], slow: true,
-    body: '追いすがる東軍に対し、島津勢は数人ずつを道に残して座り込ませ、鉄砲で狙撃させては死ぬまで足止めさせた。残った者が全滅すると、また次の組を残す。「捨て奸」と呼ばれる壮絶な撤退戦法である。' },
+    body: '追いすがる東軍に対し、島津勢は少人数の組を道に残して座り込ませ、鉄砲で狙撃させては死ぬまで足止めさせた（この再現では1組15〜30人）。残った者が全滅すると、また次の組を残す。「捨て奸」と呼ばれる壮絶な撤退戦法である。' },
   ii_wound: { title: '井伊直政、撃たれる', tag: '通説', focus: ['ii', 'shimazu'], slow: true,
     body: '島津を追った井伊直政は、島津兵（柏木源藤と伝わる）の鉄砲を受けて落馬した。この傷がもとで直政は2年後に没したとされる。松平忠吉も負傷した。' },
   honda_fall: { title: '本多忠勝、落馬', tag: '逸話', focus: ['honda', 'shimazu'],
@@ -614,16 +626,20 @@ function makeBrain(opts = DEFAULT_OPTS) {
   });
   at(H(8, 35), 'ishida_fence', (S) => S.emit('ishida_fence'));
   when('sakon_voice', (S) => S.t >= H(9, 15) && !isBroken(U(S, 'sakon')) && U(S, 'sakon').fighting, (S) => S.emit('sakon_voice'));
-  at(H(10, 25), 'ishida_hold', (S) => { if (!isBroken(U(S, 'ishida'))) S.emit('ishida_hold'); });
+  at(H(10, 25), 'ishida_hold', (S) => { if (!isBroken(U(S, 'ishida'))) S.emit(O.kobaya === 'early' ? 'ishida_hold_early' : 'ishida_hold'); });
   when('ieyasu_reserve', (S) => S.t >= H(12, 50) && !isBroken(U(S, 'ieyasu')), (S) => S.emit('ieyasu_reserve'));
   when('ishida_isolated', (S) => isBroken(U(S, 'ukita')) && isBroken(U(S, 'konishi')) && !isBroken(U(S, 'ishida')), (S) => S.emit('ishida_isolated'));
   when('sakon_last', (S) => S.fired.has('mitsunari_flee') && S.t >= (S.flags.sakonLastAt ||= S.t + 150), (S) => S.emit('sakon_last'));
-  when('breakout_ieyasu', (S) => U(S, 'shimazu').order.type === 'path' && Math.hypot(U(S, 'shimazu').x - U(S, 'ieyasu').x, U(S, 'shimazu').z - U(S, 'ieyasu').z) < 650, (S) => S.emit('breakout_ieyasu'));
+  when('breakout_ieyasu', (S) => U(S, 'shimazu').order.type === 'path' && Math.hypot(U(S, 'shimazu').x - U(S, 'ieyasu').x, U(S, 'shimazu').z - U(S, 'ieyasu').z) < 400, (S) => S.emit('breakout_ieyasu'));
   when('sakon', (S) => S.t >= H(9, 50) && U(S, 'sakon').fighting && !isBroken(U(S, 'sakon')), (S) => {
     const u = U(S, 'sakon'); u.morale -= 0.35; u.q *= 0.6; S.emit('sakon');
   });
   at(H(10, 12), 'taiho', (S) => { S.flags.cannon = S.t; S.emit('taiho'); });
-  at(H(10, 40), 'noroshi', (S) => { S.flags.noroshi = S.t; S.emit('noroshi'); });
+  at(H(10, 40), 'noroshi', (S) => {
+    S.flags.noroshi = S.t;
+    const early = O.kobaya === 'early', open = O.kikkawa === 'open';
+    S.emit(early && open ? 'noroshi_early_open' : early ? 'noroshi_early' : open ? 'noroshi_open' : 'noroshi');
+  });
   at(H(11, 0), 'mori', (S) => {
     if (O.kikkawa === 'history') S.emit('bento');
     else {
@@ -639,7 +655,8 @@ function makeBrain(opts = DEFAULT_OPTS) {
     else { attack(S, 'shimazu', 'ii'); attack(S, 'toyohisa', 'tadayoshi'); S.emit('shimazu_join'); }
   });
   at(H(11, 30), 'ieyasu_move', (S) => {
-    const [x, z] = S.xz(136.4760, 35.3668);
+    // 床几場（最後陣跡 136.465098, 35.365809）を隊の前面に置き、3万の兵はその後ろ（東）に広がるよう中心を東北東へずらす
+    const [x, z] = S.xz(136.4690, 35.3668);
     setOrder(S, 'ieyasu', { type: 'move', x, z }); U(S, 'ieyasu').speed = 0.7; S.emit('ieyasu_move');
   });
   at(H(11, 37), 'mitsunari_visit', (S) => { if (O.shimazu === 'history') S.emit('mitsunari_visit'); });
@@ -684,7 +701,8 @@ function makeBrain(opts = DEFAULT_OPTS) {
   });
   when('breakout_go', (S) => S.flags.breakoutReady && S.fired.has('shimazu_shoot') && S.t >= (S.flags.breakoutAt ||= S.t + 300), (S) => {
     const P = (lo, la) => S.xz(lo, la);
-    const route = [P(136.4668, 35.3672), P(136.4720, 35.3640), P(136.4752, 35.3608), P(136.4745, 35.3540), P(136.4770, 35.3478), P(136.4815, 35.3380), P(136.4850, 35.3300)];
+    // 島津陣から家康本陣（陣場野）の前面をかすめて関ヶ原宿へ出て、伊勢街道を南へ（data/geo.json の伊勢街道に沿う）
+    const route = [P(136.4625, 35.3650), P(136.4660, 35.3642), P(136.4700, 35.3590), P(136.4740, 35.3540), P(136.4780, 35.3460), P(136.4820, 35.3380), P(136.4850, 35.3300)];
     setOrder(S, 'shimazu', { type: 'path', pts: route.slice(), i: 0, speed: 1.35 });
     setOrder(S, 'toyohisa', { type: 'path', pts: route.slice(0, 5), i: 0, speed: 1.25 });
     S.flags.breakoutT = S.t;
@@ -695,13 +713,13 @@ function makeBrain(opts = DEFAULT_OPTS) {
     for (const id of ['ii', 'tadayoshi', 'honda']) U(S, id).speed = 1.5;
   });
   when('sutegamari', (S) => S.fired.has('sute:sute1'), (S) => S.emit('sutegamari'));
-  // 捨て奸: 退却中、数人ずつを道に残して死ぬまで足止めさせる（その兵は戻らない）
+  // 捨て奸: 退却中、少人数の組を道に残して死ぬまで足止めさせる（その兵は戻らない）
   rules.push({ id: 'sute_loop', repeat: true, when: (S) => S.flags.breakoutT && U(S, 'shimazu').order.type === 'path' && S.t >= (S.flags.suteNext ||= S.flags.breakoutT + 600), fn: (S) => {
-    S.flags.suteNext = S.t + 300;
+    S.flags.suteNext = S.t + 150;
     const s = U(S, 'shimazu');
     const d = S.units.find((u) => u.hidden && u.status === 'gone' && !u.used);
-    if (!d || s.n < 60) return;
-    const k = Math.round(s.n * 0.12);
+    if (!d || s.n < 80) return;
+    const k = Math.max(15, Math.min(30, Math.round(s.n * 0.04)));  // 1組20〜30人の小部隊
     s.n -= k;
     // 本隊の真後ろ（来た方向）に残し、追手の方を向かせる
     const back = (s.face + 180) % 360, rad = back * Math.PI / 180;
@@ -868,10 +886,10 @@ const MAPS = {
     body += label(P, [136.4795, 35.3445], '伊勢街道', { color: '#2f6a3a', size: 10, anchor: 'start' });
     body += dot(P, [136.4565, 35.3612], '不破関跡', { fill: '#7a3a8a', dy: 14, dx: -2, anchor: 'end', bold: true });
     body += dot(P, SEKI, '関ヶ原', { bold: true, size: 13 });
-    body += mtn(P, [136.4600, 35.3736], '笹尾山（三成）', { anchor: 'end', dx: -9, dy: -6 });
+    body += mtn(P, [136.4587, 35.3718], '笹尾山（三成）', { anchor: 'end', dx: -9, dy: -6 });
     body += mtn(P, [136.4541, 35.3464], '松尾山（小早川）', { dy: 14 });
     body += mtn(P, [136.5066, 35.3498], '南宮山（毛利）');
-    body += mtn(P, [136.4880, 35.3640], '桃配山（家康）', { dy: 14 });
+    body += mtn(P, [136.4884, 35.3654], '桃配山（家康）', { dy: 14 });
     return frame(w, h, body, '地形は国土地理院の標高から作成。街道は概略');
   },
   // 来ない3万8千（家康と秀忠の進路）
@@ -1631,7 +1649,7 @@ function simStep() {
     const u = SIM.byId.ishida; puff(u.x + 60, u.z + (Math.random() - 0.5) * 80, SIM.t, 1);
   }
   if (SIM.flags.noroshi && SIM.t - SIM.flags.noroshi < 1200 && Math.random() < 0.5) {
-    const [x, z] = ll2xz(136.4590, 35.3742); puff(x, z, SIM.t, 1.5);
+    const [x, z] = ll2xz(136.4587, 35.3720); puff(x, z, SIM.t, 1.5);
   }
   spawnCorpses();
 }
@@ -1809,7 +1827,7 @@ const PRESETS = {
   east: () => presetFrom(136.4830, 35.3640, 500, 136.4620, 35.3660),
   south: () => presetFrom(136.4750, 35.3300, 2400, 136.4650, 35.3620),
   top: () => presetFrom(136.4800, 35.3600, 7600, 136.4800, 35.3602),
-  ishida: () => presetFrom(136.4592, 35.3740, 60, 136.4720, 35.3660),
+  ishida: () => presetFrom(136.4579, 35.3722, 60, 136.4710, 35.3650),
   matsuo: () => presetFrom(136.4547, 35.3466, 60, 136.4600, 35.3610),
   ieyasu: () => presetFrom(136.4905, 35.3642, 50, 136.4620, 35.3660),
   nangu: () => presetFrom(136.5066, 35.3498, 40, 136.4800, 35.3660),
@@ -1869,7 +1887,10 @@ function bindUI() {
   const box = $('ifs');
   for (const o of OPTIONS) {
     const l = document.createElement('label');
-    l.innerHTML = `${o.label}<select data-opt="${o.id}">${o.choices.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select>`;
+    // 通説／異説（史料の読み方の違い）／もしも（起きたことを変える）を分けて並べる
+    const grp = (name, cs) => cs.length ? `<optgroup label="${name}">${cs.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</optgroup>` : '';
+    const [hist, ...rest] = o.choices;
+    l.innerHTML = `${o.label}<select data-opt="${o.id}">${grp('通説', [hist])}${grp('異説（史料の読み方の違い）', rest.filter((c) => c[2] === 'alt'))}${grp('もしも（起きたことを変える）', rest.filter((c) => c[2] !== 'alt'))}</select>`;
     box.appendChild(l);
   }
   $('ifRun').onclick = () => {

@@ -696,7 +696,7 @@ function simStep() {
     const u = SIM.byId.ishida; puff(u.x + 60, u.z + (Math.random() - 0.5) * 80, SIM.t, 1);
   }
   if (SIM.flags.noroshi && SIM.t - SIM.flags.noroshi < 1200 && Math.random() < 0.5) {
-    const [x, z] = ll2xz(136.4590, 35.3742); puff(x, z, SIM.t, 1.5);
+    const [x, z] = ll2xz(136.4587, 35.3720); puff(x, z, SIM.t, 1.5);
   }
   spawnCorpses();
 }
@@ -874,7 +874,7 @@ const PRESETS = {
   east: () => presetFrom(136.4830, 35.3640, 500, 136.4620, 35.3660),
   south: () => presetFrom(136.4750, 35.3300, 2400, 136.4650, 35.3620),
   top: () => presetFrom(136.4800, 35.3600, 7600, 136.4800, 35.3602),
-  ishida: () => presetFrom(136.4592, 35.3740, 60, 136.4720, 35.3660),
+  ishida: () => presetFrom(136.4579, 35.3722, 60, 136.4710, 35.3650),
   matsuo: () => presetFrom(136.4547, 35.3466, 60, 136.4600, 35.3610),
   ieyasu: () => presetFrom(136.4905, 35.3642, 50, 136.4620, 35.3660),
   nangu: () => presetFrom(136.5066, 35.3498, 40, 136.4800, 35.3660),
@@ -934,7 +934,10 @@ function bindUI() {
   const box = $('ifs');
   for (const o of OPTIONS) {
     const l = document.createElement('label');
-    l.innerHTML = `${o.label}<select data-opt="${o.id}">${o.choices.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select>`;
+    // 通説／異説（史料の読み方の違い）／もしも（起きたことを変える）を分けて並べる
+    const grp = (name, cs) => cs.length ? `<optgroup label="${name}">${cs.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</optgroup>` : '';
+    const [hist, ...rest] = o.choices;
+    l.innerHTML = `${o.label}<select data-opt="${o.id}">${grp('通説', [hist])}${grp('異説（史料の読み方の違い）', rest.filter((c) => c[2] === 'alt'))}${grp('もしも（起きたことを変える）', rest.filter((c) => c[2] !== 'alt'))}</select>`;
     box.appendChild(l);
   }
   $('ifRun').onclick = () => {
