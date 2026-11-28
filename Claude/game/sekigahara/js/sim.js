@@ -4,7 +4,8 @@
 export const T_START = 7.5 * 3600;   // 7:30
 export const T_END = 17 * 3600;      // 17:00 日没
 export const SIM_DT = 2;
-const K_FIRE = 0.0011;               // 戦闘力係数（人/秒/√人）
+const K_FIRE = 0.0011;
+export let PATH_EXPOSE = 2;               // 戦闘力係数（人/秒/√人）
 
 export function hhmm(t) {
   const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60);
@@ -110,7 +111,7 @@ export function stepSim(S, brain) {
     const a = U[i], b = U[j];
     if (!hostile(a, b)) continue;
     if ((a.order.type === 'idle' && b.order.type === 'idle')) continue;
-    const reach = a.r + b.r + 25 + ((a.order.type === 'aloof' || b.order.type === 'aloof') ? 40 : 0);
+    const reach = a.r + b.r + ((a.order.type === 'aloof' || b.order.type === 'aloof') ? -10 : 25);
     if (dist(a, b) < reach) { a.contacts.push(b); b.contacts.push(a); S.contacts.push([a, b]); }
   }
   // 射撃・白兵（Lanchester 風、正面幅で頭打ちになるよう √n）
@@ -133,6 +134,7 @@ export function stepSim(S, brain) {
       f *= flank;
       if (flank > 1) b.flanked = (b.flanked || 0) + 1;
       if (b.status === 'rout') f *= 2.5;
+      else if (b.order.type === 'path') f *= PATH_EXPOSE; // 敵中を駆け抜ける隊は四方から撃たれる
       else if (b.atHome) f /= b.fort;
       dmg.set(b, (dmg.get(b) || 0) + f);
     }
@@ -177,6 +179,7 @@ export function stepSim(S, brain) {
   for (const [a, b] of S.contacts) {
     if (a.side === b.side || isBroken(a) || isBroken(b)) continue;
     if (a.order.type === 'path' || b.order.type === 'path') continue;
+    if (a.order.type === 'aloof' || b.order.type === 'aloof') continue; // 島津は押し合いに加わらない
     const fa = a.fire, fb = b.fire;
     if (fa + fb <= 0) continue;
     const p = (fa - fb) / (fa + fb);
@@ -195,11 +198,14 @@ export function stepSim(S, brain) {
     const a = U[i], b = U[j];
     if (a.status === 'gone' || b.status === 'gone') continue;
     if (a.order.type === 'path' || b.order.type === 'path' || a.status === 'rout' || b.status === 'rout') continue;
-    const k = a.side === b.side ? 0.8 : 0.75;
+    const aloof = a.order.type === 'aloof' || b.order.type === 'aloof';
+    const k = aloof ? 1.05 : a.side === b.side ? 0.8 : 0.75;
     const d = dist(a, b), min = (a.r + b.r) * k;
     if (d < min && d > 0.01) {
       const push = (min - d) * 0.06, ux = (b.x - a.x) / d, uz = (b.z - a.z) / d;
-      a.x -= ux * push; a.z -= uz * push; b.x += ux * push; b.z += uz * push;
+      // 島津の陣には近づけない（島津側は動かず、相手だけが避ける）
+      const ma = b.order.type === 'aloof' ? 2 : a.order.type === 'aloof' ? 0 : 1, mb = a.order.type === 'aloof' ? 2 : b.order.type === 'aloof' ? 0 : 1;
+      a.x -= ux * push * ma; a.z -= uz * push * ma; b.x += ux * push * mb; b.z += uz * push * mb;
     }
   }
   // 向き

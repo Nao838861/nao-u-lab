@@ -254,6 +254,10 @@ export function makeBrain(opts = DEFAULT_OPTS) {
     for (const id of ['ii', 'tadayoshi', 'honda']) U(S, id).speed = 1.5;
   });
   when('sutegamari', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 900, (S) => S.emit('sutegamari'));
+  // 捨て奸: 退却中、数人ずつを道に残して死ぬまで足止めさせる（その兵は戻らない）
+  rules.push({ id: 'sute_loop', repeat: true, when: (S) => S.flags.breakoutT && U(S, 'shimazu').order.type === 'path' && S.t >= (S.flags.suteNext ||= S.flags.breakoutT + 600), fn: (S) => {
+    const s = U(S, 'shimazu'); const k = s.n * 0.11; s.n -= k; s.killed += k; S.flags.suteNext = S.t + 300;
+  } });
   when('ii_wound', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 1000 && (U(S, 'ii').fighting || S.t >= S.flags.breakoutT + 1600), (S) => {
     const ii = U(S, 'ii'), td = U(S, 'tadayoshi');
     ii.morale -= 0.3; setOrder(S, 'ii', { type: 'hold' }); setOrder(S, 'tadayoshi', { type: 'hold' }); td.morale -= 0.15;
@@ -314,7 +318,7 @@ export function makeBrain(opts = DEFAULT_OPTS) {
   when('flank', (S) => isBroken(U(S, 'otani')), (S) => { for (const id of ['ukita', 'konishi']) U(S, id).morale -= 0.15; });
   for (const [uid, ev] of Object.entries(ROUT_EVENTS)) when('re_' + uid, (S) => S.fired.has('rout:' + uid) || (S.byId[uid].status === 'gone'), (S) => S.emit(ev));
   const brain = (S) => {
-    for (const r of rules) if (!S.fired.has('rule:' + r.id) && r.when(S)) { S.fired.add('rule:' + r.id); r.fn(S); }
+    for (const r of rules) if ((r.repeat || !S.fired.has('rule:' + r.id)) && r.when(S)) { if (!r.repeat) S.fired.add('rule:' + r.id); r.fn(S); }
   };
   return brain;
 }
