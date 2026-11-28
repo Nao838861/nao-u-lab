@@ -50,6 +50,7 @@ controls.maxPolarAngle = Math.PI * 0.47;
 controls.minDistance = 8;
 controls.maxDistance = 16000;
 controls.screenSpacePanning = false;
+controls.zoomToCursor = true;
 
 // 空（朝の薄曇り）
 {
@@ -72,7 +73,7 @@ scene.add(sun);
 scene.add(new THREE.HemisphereLight(0xc4d0dc, 0x5a5040, 1.15));
 
 // ───────────────── 地形 ─────────────────
-let updateStubble;
+let updateStubble, terrain;
 {
   const geo = new THREE.PlaneGeometry(SX, SY, DW - 1, DH - 1);
   geo.rotateX(-Math.PI / 2);
@@ -91,7 +92,7 @@ let updateStubble;
   grain.wrapS = grain.wrapT = THREE.RepeatWrapping;
   grain.anisotropy = tex.anisotropy;
   applyGroundDetail(mat, cover, grain, SX, SY);
-  const terrain = new THREE.Mesh(geo, mat);
+  terrain = new THREE.Mesh(geo, mat);
   scene.add(terrain);
   // 外周の地面（地図の外を霧に溶かす）
   const outer = new THREE.Mesh(new THREE.PlaneGeometry(80000, 80000), new THREE.MeshLambertMaterial({ color: 0x6f6a4c }));
@@ -942,6 +943,57 @@ function select(V) {
 
 // ───────────────── 視点 ─────────────────
 let fly = null;
+const movementKeys = new Set();
+let draggingMap = false;
+const editingControl = (el) => el?.isContentEditable || el?.matches?.('select, input, textarea');
+addEventListener('keydown', (e) => {
+  if (!['KeyW', 'KeyA', 'KeyS', 'KeyD'].includes(e.code) || e.ctrlKey || e.metaKey || e.altKey ||
+      e.isComposing || editingControl(e.target)) return;
+  e.preventDefault();
+  movementKeys.add(e.code);
+  fly = null;
+});
+addEventListener('keyup', (e) => movementKeys.delete(e.code));
+addEventListener('focusin', (e) => { if (editingControl(e.target)) movementKeys.clear(); });
+function releaseCameraInputs() {
+  movementKeys.clear();
+  draggingMap = false;
+}
+addEventListener('blur', releaseCameraInputs);
+document.addEventListener('visibilitychange', () => { if (document.hidden) releaseCameraInputs(); });
+controls.addEventListener('start', () => { draggingMap = true; fly = null; });
+controls.addEventListener('end', () => { draggingMap = false; });
+renderer.domElement.addEventListener('pointercancel', () => { draggingMap = false; });
+
+function moveCamera(dt) {
+  if (!movementKeys.size) return;
+  const forward = Number(movementKeys.has('KeyW')) - Number(movementKeys.has('KeyS'));
+  const right = Number(movementKeys.has('KeyD')) - Number(movementKeys.has('KeyA'));
+  if (!forward && !right) return;
+  fly = null;
+  const heading = controls.getAzimuthalAngle();
+  const speed = THREE.MathUtils.clamp(controls.getDistance() * 0.45, 5, 2200);
+  const step = speed * dt / Math.hypot(forward, right);
+  const dx = (right * Math.cos(heading) - forward * Math.sin(heading)) * step;
+  const dz = (-right * Math.sin(heading) - forward * Math.cos(heading)) * step;
+  const eye = camera.position;
+  const dy = heightAt(eye.x + dx, eye.z + dz) - heightAt(eye.x, eye.z);
+  eye.x += dx; eye.y += dy; eye.z += dz;
+  controls.target.x += dx; controls.target.y += dy; controls.target.z += dz;
+}
+
+renderer.domElement.addEventListener('dblclick', (e) => {
+  const rect = renderer.domElement.getBoundingClientRect();
+  const cursor = new THREE.Vector2((e.clientX - rect.left) / rect.width * 2 - 1,
+                                   1 - (e.clientY - rect.top) / rect.height * 2);
+  const ray = new THREE.Raycaster();
+  ray.setFromCamera(cursor, camera);
+  const hit = ray.intersectObject(terrain, false)[0];
+  if (!hit) return;
+  const offset = camera.position.clone().sub(controls.target);
+  offset.setLength(THREE.MathUtils.clamp(hit.distance * 0.5, controls.minDistance, controls.maxDistance));
+  flyCam(offset.add(hit.point), hit.point, 0.65);
+});
 function flyCam(p1, t1, dur = 2.2) { fly = { p0: camera.position.clone(), t0: controls.target.clone(), p1, t1, k: 0, dur }; }
 function presetFrom(lon, lat, eyeH, lookLon, lookLat) {
   const [x, z] = ll2xz(lon, lat), [lx, lz] = ll2xz(lookLon, lookLat);
@@ -969,6 +1021,7 @@ function focusUnits(ids, minDist = 600) {
   flyCam(p, t);
 }
 function focusEvent(info) {
+  if (movementKeys.size || draggingMap) return;
   if (info.cam && PRESETS[info.cam]) PRESETS[info.cam]();
   else if (info.focus) focusUnits(info.focus);
 }
@@ -1092,6 +1145,7 @@ function loop() {
   smoke.m.uniforms.uNow.value = play.gameT;
   smoke.m.uniforms.uPx.value = renderer.domElement.height / (2 * Math.tan(camera.fov * Math.PI / 360));
   updateEnvironment(play.gameT);
+  moveCamera(dt);
   if (fly) {
     fly.k = Math.min(1, fly.k + dt / fly.dur);
     const e = fly.k < 0.5 ? 2 * fly.k * fly.k : 1 - Math.pow(-2 * fly.k + 2, 2) / 2;

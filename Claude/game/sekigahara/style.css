@@ -30,6 +30,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #c8ccc6; fon
 #panel { position: fixed; right: 12px; top: 12px; width: 230px; background: var(--paper); padding: 10px 12px; font-size: 13px;
   box-shadow: 0 2px 8px rgba(0,0,0,.3); max-height: calc(100vh - 60px); overflow: auto; }
 #panel h3 { margin: 0 0 6px; font-size: 13px; }
+.camera-help { margin: 6px 0 0; font-size: 12px; line-height: 1.5; }
 #panel section + section { margin-top: 10px; border-top: 1px solid rgba(0,0,0,.12); padding-top: 8px; }
 #panel label { display: block; margin: 4px 0; }
 #panel select, #panel input { width: 100%; font: inherit; }
