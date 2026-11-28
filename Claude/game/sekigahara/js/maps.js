@@ -55,20 +55,36 @@ function land(P) {
   const outline = JAPAN_COAST.map((ring) => path(P, ring) + 'Z').join('');
   return `<path d="${outline}" fill="#ded8b9" stroke="#818969" stroke-width=".8" stroke-linejoin="round"/>`;
 }
+function relief(P, area) {
+  const { w, e, s, n, url } = window.CARD_RELIEF[area];
+  const [left, top] = P([w, n]), [right, bottom] = P([e, s]);
+  return `<image href="${url}" x="${left}" y="${top}" width="${right-left}" height="${bottom-top}" preserveAspectRatio="none"/>`;
+}
 function regionalMap() {
-  const w = 280, h = 168;
-  const P = proj({ w: 135.79, e: 137.13, s: 34.89, n: 35.64 }, w, h);
-  return `<svg class="cardmap" role="img" aria-label="琵琶湖の東、現在の名古屋の北西にある関ヶ原" viewBox="0 0 ${w} ${h}">
-    <rect width="100%" height="100%" fill="#e1edf0"/>${land(P)}${water(P, BIWA)}
-    ${label(P, [136.12, 35.34], '琵琶湖', { color: '#355264', bold: true, size: 16 })}
-    ${dot(P, SEKI, '関ヶ原', { fill: '#962f25', color: '#81281f', bold: true, r: 5, size: 18, dx: 9, dy: -5 })}
-    ${dot(P, [136.91, 35.18], '名古屋', { anchor: 'end', dx: -8, dy: 8, size: 15 })}
+  const w = 322, h = 204;
+  const P = proj({ w: 135.80, e: 137.10, s: 34.90, n: 35.60 }, w, h);
+  // 番場・醒井・柏原・今須を経て、垂井・赤坂へ抜ける道筋の概略。
+  const road = [[136.29,35.305],[136.318,35.319],[136.35,35.325],[136.369,35.343],
+    [136.40,35.345],[136.425,35.348],[136.436,35.355],[136.45,35.357],SEKI,
+    [136.49,35.366],[136.531,35.373],[136.549,35.381],[136.584,35.387]];
+  return `<svg class="cardmap" role="img" aria-label="北の伊吹山地と南の鈴鹿山脈の間を、近江から濃尾平野へ向かう街道が通る。関ヶ原はその山あいにある。" viewBox="0 0 ${w} ${h}">
+    ${relief(P, 'region')}
+    ${route(P, road, '#fff9df', { w: 5 })}${route(P, road, '#8d3b24', { w: 2.5 })}
+    ${label(P, [136.09,35.33], '琵琶湖', { color: '#284957', bold: true, size: 14 })}
+    ${label(P, [136.44,35.52], '伊吹山地', { color: '#344d3c', size: 13 })}
+    ${label(P, [136.38,35.16], '鈴鹿山脈', { color: '#344d3c', size: 13 })}
+    ${label(P, [136.80,35.32], '濃尾平野', { color: '#695635', size: 14 })}
+    ${dot(P, SEKI, '関ヶ原', { fill: '#962f25', color: '#81281f', bold: true, r: 4.5, size: 17, dx: 4, dy: -11 })}
+    ${dot(P, [136.91,35.18], '名古屋', { anchor: 'end', dx: -7, dy: 7, size: 14 })}
+    <g transform="translate(10,187)"><rect x="-4" y="-12" width="135" height="19" rx="3" fill="#fff9eb" opacity=".94"/><path d="M2 0h18" stroke="#8d3b24" stroke-width="3"/><text x="26" y="4" font-size="12" fill="#482d22">東西の街道（概略）</text></g>
   </svg>`;
 }
 export function cardMaps(key) {
   const region = key === 'intro'
-    ? `<figure class="region"><figcaption>琵琶湖・名古屋から見た関ヶ原</figcaption>${regionalMap()}</figure>` : '';
-  return `${region}<figure class="detail"><figcaption>${mapTitles[key]}</figcaption>${MAPS[key]()}</figure>`;
+    ? `<figure class="region"><figcaption>近江と濃尾平野をつなぐ関ヶ原</figcaption>${regionalMap()}</figure>` : '';
+  const source = key === 'intro' || key === 'fuwa'
+    ? '<small class="relief-credit">緑は山地、淡い黄は平地。地形は<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">国土地理院の標高タイル</a>を加工</small>' : '';
+  return `${region}<figure class="detail"><figcaption>${mapTitles[key]}</figcaption>${MAPS[key]()}${source}</figure>`;
 }
 
 export const MAPS = {
@@ -77,8 +93,7 @@ export const MAPS = {
     const M = window.DEM_META, G = window.GEO, w = 420, h = 268;
     const b = { w: M.west, e: M.east, s: M.south, n: M.north };
     const P = proj(b, w, h);
-    const [x0, y0] = P([b.w, b.n]), [x1, y1] = P([b.e, b.s]);
-    let body = `<image href="${window.GROUND_JPG}" x="${x0}" y="${y0}" width="${x1 - x0}" height="${y1 - y0}" preserveAspectRatio="none" opacity="0.92"/>`;
+    let body = relief(P, 'local');
     const col = { '中山道': '#b0331f', '北国脇往還': '#2f55b4', '伊勢街道': '#2f6a3a' };
     for (const r of G.roads) body += route(P, r.pts, col[r.name] || '#333', { w: 4, op: 0.9 });
     body += label(P, [136.4315, 35.3545], '← 京・大坂へ', { color: '#b0331f', bold: true, anchor: 'start' });
@@ -94,7 +109,7 @@ export const MAPS = {
     body += mtn(P, [136.4541, 35.3464], '松尾山（小早川）', { dy: 14 });
     body += mtn(P, [136.5066, 35.3498], '南宮山（毛利）');
     body += mtn(P, [136.4884, 35.3654], '桃配山（家康）', { dy: 14 });
-    return frame(w, h, body, '地形は国土地理院の標高から作成。街道は概略');
+    return frame(w, h, body, '色線は三つの街道の概略');
   },
   // 来ない3万8千（家康と秀忠の進路）
   hidetada() {
@@ -140,13 +155,9 @@ export const MAPS = {
   intro() {
     const w = 420, h = 250;
     const P = proj(mapBounds.intro, w, h);
-    let body = `<rect width="${w}" height="${h}" fill="#efe7d4"/>`;
-    // 南宮山の山塊（概形）
-    body += `<path d="${path(P, [[136.483, 35.366], [136.50, 35.362], [136.52, 35.356], [136.535, 35.345], [136.54, 35.335], [136.525, 35.325], [136.505, 35.335], [136.49, 35.345], [136.478, 35.356]])}z" fill="#c9bf9f" stroke="#a89a70"/>`;
-    body += `<path d="${path(P, [[136.42, 35.395], [136.45, 35.38], [136.48, 35.377], [136.50, 35.385], [136.52, 35.41], [136.42, 35.41]])}z" fill="#c9bf9f" stroke="#a89a70"/>`;
-    body += route(P, [[136.42, 35.357], [136.447, 35.359], SEKI, [136.488, 35.366], [136.505, 35.3695], [136.528, 35.370], [136.575, 35.388], [136.611, 35.3635]], '#8a8070', { w: 2, op: 0.7 });
+    let body = relief(P, 'local');
     // 西軍: 大垣から南宮山の南を回って関ヶ原へ（雨の夜）
-    body += route(P, [[136.608, 35.357], [136.57, 35.335], [136.535, 35.326], [136.50, 35.328], [136.478, 35.345], [136.468, 35.358]], '#2f55b4', { w: 4, dash: '7 5', arrow: true });
+    body += route(P, [[136.608, 35.357], [136.566, 35.334], [136.544, 35.325], [136.536, 35.327], [136.527, 35.333], [136.503, 35.335], [136.486, 35.342], [136.476, 35.352], [136.468, 35.358]], '#2f55b4', { w: 4, dash: '7 5', arrow: true });
     // 東軍: 赤坂から中山道を西へ
     body += route(P, [[136.572, 35.392], [136.53, 35.374], [136.505, 35.372], [136.49, 35.369]], '#c4511c', { w: 4, arrow: true });
     body += dot(P, [136.6118, 35.3635], '大垣城', { fill: '#2f55b4', dx: 8, dy: 5, bold: true, size: 14 });
@@ -155,6 +166,6 @@ export const MAPS = {
     body += mtn(P, [136.5066, 35.3498], '南宮山');
     body += label(P, [136.54, 35.3175], '西軍　大垣城から山の南を迂回', { color: '#24478a', bold: true, size: 13 });
     body += label(P, [136.531, 35.393], '東軍　赤坂から西へ', { color: '#994019', bold: true, size: 13, anchor: 'end' });
-    return frame(w, h, body, '略図。経路は通説による概略');
+    return frame(w, h, body, '両軍の進路は通説に基づく概略');
   },
 };

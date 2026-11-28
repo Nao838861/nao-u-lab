@@ -130,6 +130,8 @@ button:hover { background: #efe6d2; }
 #card .withmap { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(0, 1.9fr); grid-template-areas: "copy detail"; gap: 8px 16px; align-items: start; }
 #card figure { margin: 0; min-width: 0; }
 #card .withmap:has(.region) { grid-template-areas: "region detail" "copy detail"; }
+#card .relief-credit { display: block; margin-top: 2px; color: #594e40; font-size: 11px; }
+#card .relief-credit a { color: inherit; }
 #card .region { grid-area: region; }
 #card .detail { grid-area: detail; }
 #card .map-copy { grid-area: copy; }
@@ -143,5 +145,5 @@ button:hover { background: #efe6d2; }
 }
 @media (max-width: 520px) {
   #card .withmap:has(.region) { grid-template-columns: 1fr; grid-template-areas: "region" "copy" "detail"; }
-  #card .region { width: min(100%, 280px); justify-self: center; }
+  #card .region { width: min(100%, 322px); justify-self: center; }
 }
