@@ -1595,7 +1595,7 @@ function focusEvent(info) {
 }
 
 // ───────────────── 時刻による霧と光 ─────────────────
-const FOG = { clear: 0.00005, haze: 0.00016, mist: 0.0011 };
+const FOG = { clear: 0.00005, haze: 0.00014, mist: 0.00024 };
 function updateEnvironment(t) {
   let dens;
   if (play.weather !== 'auto') dens = FOG[play.weather];
