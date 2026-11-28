@@ -5,9 +5,9 @@ const H = (h, m = 0) => h * 3600 + m * 60;
 
 // 部隊ごとの能力（q=戦闘力倍率, fort=陣地の守りの堅さ, morale=初期士気, msens=損害に対する士気の脆さ, retreat=敗走先）
 export const PARAMS = {
-  ishida: { q: 1.25, fort: 3.4, msens: 0.8, retreat: [136.4470, 35.3890] },
+  ishida: { q: 1.25, fort: 2.2, homeR: 400, msens: 0.7, retreat: [136.4470, 35.3890] },
   sakon: { q: 1.4, fort: 1.8, retreat: [136.4470, 35.3890] },
-  gamo: { q: 1.2, fort: 1.8, retreat: [136.4470, 35.3890] },
+  gamo: { q: 1.2, fort: 2.8, msens: 0.9, noRout: true, retreat: [136.4470, 35.3890] },
   shimazu: { q: 2.2, fort: 1.8, morale: 0.95, msens: 0.5, noRout: true },
   toyohisa: { q: 2.0, fort: 1.8, morale: 0.95, msens: 0.5, noRout: true },
   konishi: { q: 0.8, fort: 1.9, morale: 0.82, msens: 1.1, retreat: [136.4400, 35.3850] },
@@ -55,6 +55,8 @@ export const EVENTS = {
     body: '黒田長政・細川忠興・加藤嘉明・田中吉政・竹中重門らが、三成の笹尾山へ攻めかかる。三成への恨みを抱く豊臣恩顧の大名が多かった。前衛の島左近・蒲生郷舎が柵を盾にこれを迎え撃つ。' },
   otani_front: { title: '藤堂・京極 vs 大谷隊', tag: '通説', focus: ['todo', 'kyogoku', 'otani2'],
     body: '藤堂高虎・京極高知が大谷隊の前面に攻めかかる。戦場の南西では、松尾山の小早川勢がまだ動かずにいる。' },
+  gamo_merge: { title: '蒲生郷舎、石田本隊へ退く', tag: '戦況', focus: ['gamo', 'ishida'], slow: true,
+    body: '細川忠興・金森長近らの猛攻を受け続けた蒲生郷舎の前衛は、兵の多くを失い、残る兵を率いて笹尾山の石田本隊へ引き下がった。以後は三成の本陣とともに戦う。' },
   sakon: { title: '島左近、撃たれる', tag: '通説', focus: ['sakon', 'kuroda'], slow: true,
     body: '黒田隊は鉄砲隊の一部を側面の丘に回し、島左近の隊を横から撃たせた。左近は重傷を負って退いたとされる。「鬼左近」の最期には諸説あり、生き延びたという伝承も残る。' },
   taiho: { title: '石田隊の大筒', tag: '通説', focus: ['ishida'],
@@ -129,7 +131,11 @@ export const EVENTS = {
 // 敗走メッセージ（固有イベントのない部隊用）
 export function routText(S, e) {
   const u = S.byId[e.unit];
-  return { title: `${u.name}隊、潰走`, tag: '経過', focus: [u.id], body: `${u.name}隊（残り約${Math.round(u.n).toLocaleString()}）が崩れ、退いていく。` };
+  const by = (e.by || []).slice(0, 4).join('・');
+  const cause = e.why === 'loss' ? '兵の多くを失い' : e.why === 'collapse' ? '味方の総崩れに巻き込まれ' : '士気が持たずに';
+  const dir = u.origSide === 'W' ? (u.retreat ? '後方の山へ' : '西へ') : '東へ';
+  return { title: `${u.name}隊、崩れる`, tag: '戦況', focus: [u.id], slow: true, pause: true,
+    body: `${by ? by + 'の攻撃を受けて、' : ''}${u.name}隊が${cause}崩れた。残る約${Math.round(u.n).toLocaleString()}人が${dir}退いていく（死傷 約${Math.round(u.killed).toLocaleString()}人）。` };
 }
 
 // ── 判断ルール ──
@@ -297,6 +303,13 @@ export function makeBrain(opts = DEFAULT_OPTS) {
   when('end_w', (S) => S.result && S.result.winner === 'W' && S.t >= S.result.t + 2400, (S) => { S.over = true; });
   when('draw', (S) => !S.result && S.t >= H(17, 0) - 4, (S) => { S.result = { winner: 'D', t: S.t }; S.emit('draw'); S.over = true; });
 
+  // 蒲生郷舎は石田隊の前衛として最後まで踏みとどまり、本隊とともに崩れる
+  when('gamo_merge', (S) => !isBroken(U(S, 'gamo')) && !isBroken(U(S, 'ishida')) && U(S, 'gamo').n < 0.4 * U(S, 'gamo').n0, (S) => {
+    const g = U(S, 'gamo'), i = U(S, 'ishida');
+    S.emit('gamo_merge', { n: Math.round(g.n) });
+    i.n += g.n; i.morale = Math.min(i.morale0, i.morale + 0.05); g.n = 0; g.status = 'gone';
+  });
+  when('gamo_fall', (S) => isBroken(U(S, 'ishida')) && !isBroken(U(S, 'gamo')), (S) => { U(S, 'gamo').noRout = false; rout(S, U(S, 'gamo'), 'collapse'); });
   // 大谷隊の壊滅で西軍の南翼が開く
   when('flank', (S) => isBroken(U(S, 'otani')), (S) => { for (const id of ['ukita', 'konishi']) U(S, id).morale -= 0.15; });
   for (const [uid, ev] of Object.entries(ROUT_EVENTS)) when('re_' + uid, (S) => S.fired.has('rout:' + uid) || (S.byId[uid].status === 'gone'), (S) => S.emit(ev));

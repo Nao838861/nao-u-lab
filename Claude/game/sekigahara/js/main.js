@@ -666,7 +666,7 @@ function roofGeo(w, h, d) {
 
 // ───────────────── シミュレーション（再生） ─────────────────
 const HALF = { hx: SX / 2, hz: SY / 2 };
-const play = { opts: { ...DEFAULT_OPTS }, speed: 60, playing: false, gameT: T_START, slowUntil: 0, seeking: false, autoCam: true, slowEv: true, weather: 'auto' };
+const play = { opts: { ...DEFAULT_OPTS }, speed: 60, playing: false, gameT: T_START, slowUntil: 0, holdUntil: 0, seeking: false, autoCam: true, slowEv: true, weather: 'auto' };
 let SIM = null, BRAIN = null;
 function newSim() {
   SIM = prepare(createSim(UNITS, ll2xz, PARAMS, HALF));
@@ -729,9 +729,15 @@ const cardEl = document.getElementById('card'), logEl = document.getElementById(
 let cardTimer = 0;
 function evInfo(e) {
   if (EVENTS[e.id]) return EVENTS[e.id];
+  if (e.id.startsWith('gone:')) {
+    // 潰走を経ずに消えた（全滅した）部隊
+    const u = SIM.byId[e.unit];
+    if (SIM.fired.has('rout:' + u.id) || ['shimazu', 'toyohisa', 'gamo'].includes(u.id) || ROUT_EVENTS[u.id]) return null;
+    return { title: `${u.name}隊、壊滅`, tag: '戦況', focus: [u.id], slow: true, body: `${u.name}隊は最後まで踏みとどまり、討ち死にした（死傷 約${Math.round(u.killed).toLocaleString()}人）。` };
+  }
   if (e.id.startsWith('rout:')) {
     const u = SIM.byId[e.unit];
-    if (ROUT_EVENTS[u.id] || u.n0 < 400 || u.id === 'shimazu' || u.id === 'toyohisa') return null;
+    if (ROUT_EVENTS[u.id] || u.id === 'shimazu' || u.id === 'toyohisa') return null;
     return routText(SIM, e);
   }
   return null;
@@ -745,9 +751,11 @@ function onEvent(e) {
   li.onclick = () => { seek(Math.max(T_START, e.t - 30)); showCard(info, e); };
   logEl.prepend(li);
   if (play.seeking) return;
-  if (info.tag === '経過') return;
   showCard(info, e);
-  if (play.slowEv && info.slow) play.slowUntil = performance.now() + 9000;
+  if (play.slowEv && info.slow) {
+    // 寄って、しばらくゆっくり進める
+    play.slowUntil = performance.now() + 9000;
+  }
   if (play.autoCam) focusEvent(info);
   if (e.id === 'east_win' || e.id === 'west_win' || e.id === 'draw') setTimeout(showSummary, 100);
 }
@@ -924,7 +932,8 @@ function buildMarkers() {
   while (!S2.over && S2.t < T_END) stepSim(S2, br);
   const box = $('marks'); box.innerHTML = '';
   for (const e of S2.log) {
-    const info = EVENTS[e.id];
+    let info = EVENTS[e.id];
+    if (e.id.startsWith('rout:') && !ROUT_EVENTS[e.unit] && !['shimazu', 'toyohisa'].includes(e.unit)) info = { title: S2.byId[e.unit].name + '隊、崩れる', tag: '戦況', slow: true };
     if (!info || !info.slow) continue;
     const m = document.createElement('i');
     m.style.left = ((e.t - T_START) / (T_END - T_START) * 100) + '%';
@@ -942,7 +951,9 @@ function loop() {
   const dt = Math.min(0.1, clock.getDelta());
   SHARED.uTime.value += dt;
   if (play.playing && !SIM.over) {
-    const sp = performance.now() < play.slowUntil ? Math.min(play.speed, 12) : play.speed;
+    const now = performance.now();
+    const sp = now < play.holdUntil ? 0 : now < play.slowUntil ? Math.min(play.speed, 12) : play.speed;
+    $('timeline').classList.toggle('hold', now < play.holdUntil);
     play.gameT += dt * sp;
     let guard = 0;
     while (SIM.t < play.gameT && !SIM.over && guard++ < 400) simStep();

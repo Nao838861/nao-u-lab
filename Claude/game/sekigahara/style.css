@@ -101,3 +101,6 @@ button:hover { background: #efe6d2; }
 #marks i { position: absolute; top: 0; width: 9px; height: 11px; margin-left: -4px; background: #888; cursor: pointer; clip-path: polygon(0 0, 100% 0, 50% 100%); }
 #marks i.tag-通説 { background: #8a5a1a; } #marks i.tag-史実 { background: #2f6a3a; } #marks i.tag-逸話 { background: #7a3a8a; } #marks i.tag-もしも { background: #b0331f; } #marks i.tag-異説 { background: #1a5a8a; }
 @media (max-width: 900px) { #log { display: none; } #card { width: calc(100vw - 32px); top: auto; bottom: 90px; } }
+#timeline.hold .tm::after { content: "注目"; margin-left: 6px; font-size: 11px; padding: 1px 6px; background: #8a2a1a; color: #fff; }
+.tag-戦況 { background: #9a3a1a; } #log li.tag-戦況 { border-color: #9a3a1a; }
+#marks i.tag-戦況 { background: #9a3a1a; height: 7px; }

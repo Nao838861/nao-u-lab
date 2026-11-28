@@ -202,7 +202,7 @@ function createSim(units, xz, params, bounds) {
       q: p.q ?? 1, fort: p.fort ?? 1, x, z, hx: x, hz: z, face: d.face, homeFace: d.face,
       r: Math.min(190, Math.max(25, Math.sqrt(d.n) * 1.4)),
       order: { type: d.idle ? 'idle' : 'hold' }, status: 'hold', contacts: [],
-      moving: 0, fighting: 0, fire: 0, retreat: p.retreat ? xz(...p.retreat) : null, speed: p.speed ?? 0.9, noRout: !!p.noRout,
+      moving: 0, fighting: 0, fire: 0, retreat: p.retreat ? xz(...p.retreat) : null, speed: p.speed ?? 0.9, noRout: !!p.noRout, homeR: p.homeR ?? 150,
     };
     S.units.push(u); S.byId[d.id] = u;
   }
@@ -241,7 +241,7 @@ function rout(S, u, why) {
   if (!to) to = u.side === 'E' ? S.xz(136.545, 35.370) : S.xz(136.432, 35.378);
   u.order = { type: 'flee', x: to[0], z: to[1] };
   u.speed = 1.5;
-  S.emit('rout:' + u.id, { unit: u.id, why });
+  S.emit('rout:' + u.id, { unit: u.id, why, by: u.contacts.filter((c) => c.side !== u.side).map((c) => c.name) });
   // 周囲の味方の動揺
   for (const f of S.units) {
     if (f === u || f.side !== u.side || isBroken(f)) continue;
@@ -314,7 +314,7 @@ function stepSim(S, brain) {
   for (const [b, f] of dmg) {
     const real = Math.min(f, b.n);
     b.n -= real; b.killed += real;
-    if (b.n < 1) { b.n = 0; b.status = 'gone'; }
+    if (b.n < 1 && b.status !== 'gone') { b.n = 0; b.status = 'gone'; S.emit('gone:' + b.id, { unit: b.id }); }
     if (b.status !== 'rout') b.morale -= real / b.n0 * b.msens;
   }
   // 士気の回復・崩壊判定
@@ -345,7 +345,7 @@ function stepSim(S, brain) {
     } else if (o.type === 'hold' || o.type === 'aloof' || o.type === 'idle') {
       if (!u.fighting) moveToward(u, u.hx, u.hz, 0.25, dt);
     }
-    u.atHome = (o.type === 'hold' || o.type === 'aloof' || o.type === 'idle') && Math.hypot(u.x - u.def0x(), u.z - u.def0z()) < 150;
+    u.atHome = (o.type === 'hold' || o.type === 'aloof' || o.type === 'idle') && Math.hypot(u.x - u.def0x(), u.z - u.def0z()) < u.homeR;
   }
   // 押し合い（優勢な側へ戦線が動く）
   for (const [a, b] of S.contacts) {
@@ -407,9 +407,9 @@ const H = (h, m = 0) => h * 3600 + m * 60;
 
 // 部隊ごとの能力（q=戦闘力倍率, fort=陣地の守りの堅さ, morale=初期士気, msens=損害に対する士気の脆さ, retreat=敗走先）
 const PARAMS = {
-  ishida: { q: 1.25, fort: 3.4, msens: 0.8, retreat: [136.4470, 35.3890] },
+  ishida: { q: 1.25, fort: 2.2, homeR: 400, msens: 0.7, retreat: [136.4470, 35.3890] },
   sakon: { q: 1.4, fort: 1.8, retreat: [136.4470, 35.3890] },
-  gamo: { q: 1.2, fort: 1.8, retreat: [136.4470, 35.3890] },
+  gamo: { q: 1.2, fort: 2.8, msens: 0.9, noRout: true, retreat: [136.4470, 35.3890] },
   shimazu: { q: 2.2, fort: 1.8, morale: 0.95, msens: 0.5, noRout: true },
   toyohisa: { q: 2.0, fort: 1.8, morale: 0.95, msens: 0.5, noRout: true },
   konishi: { q: 0.8, fort: 1.9, morale: 0.82, msens: 1.1, retreat: [136.4400, 35.3850] },
@@ -457,6 +457,8 @@ const EVENTS = {
     body: '黒田長政・細川忠興・加藤嘉明・田中吉政・竹中重門らが、三成の笹尾山へ攻めかかる。三成への恨みを抱く豊臣恩顧の大名が多かった。前衛の島左近・蒲生郷舎が柵を盾にこれを迎え撃つ。' },
   otani_front: { title: '藤堂・京極 vs 大谷隊', tag: '通説', focus: ['todo', 'kyogoku', 'otani2'],
     body: '藤堂高虎・京極高知が大谷隊の前面に攻めかかる。戦場の南西では、松尾山の小早川勢がまだ動かずにいる。' },
+  gamo_merge: { title: '蒲生郷舎、石田本隊へ退く', tag: '戦況', focus: ['gamo', 'ishida'], slow: true,
+    body: '細川忠興・金森長近らの猛攻を受け続けた蒲生郷舎の前衛は、兵の多くを失い、残る兵を率いて笹尾山の石田本隊へ引き下がった。以後は三成の本陣とともに戦う。' },
   sakon: { title: '島左近、撃たれる', tag: '通説', focus: ['sakon', 'kuroda'], slow: true,
     body: '黒田隊は鉄砲隊の一部を側面の丘に回し、島左近の隊を横から撃たせた。左近は重傷を負って退いたとされる。「鬼左近」の最期には諸説あり、生き延びたという伝承も残る。' },
   taiho: { title: '石田隊の大筒', tag: '通説', focus: ['ishida'],
@@ -531,7 +533,11 @@ const EVENTS = {
 // 敗走メッセージ（固有イベントのない部隊用）
 function routText(S, e) {
   const u = S.byId[e.unit];
-  return { title: `${u.name}隊、潰走`, tag: '経過', focus: [u.id], body: `${u.name}隊（残り約${Math.round(u.n).toLocaleString()}）が崩れ、退いていく。` };
+  const by = (e.by || []).slice(0, 4).join('・');
+  const cause = e.why === 'loss' ? '兵の多くを失い' : e.why === 'collapse' ? '味方の総崩れに巻き込まれ' : '士気が持たずに';
+  const dir = u.origSide === 'W' ? (u.retreat ? '後方の山へ' : '西へ') : '東へ';
+  return { title: `${u.name}隊、崩れる`, tag: '戦況', focus: [u.id], slow: true, pause: true,
+    body: `${by ? by + 'の攻撃を受けて、' : ''}${u.name}隊が${cause}崩れた。残る約${Math.round(u.n).toLocaleString()}人が${dir}退いていく（死傷 約${Math.round(u.killed).toLocaleString()}人）。` };
 }
 
 // ── 判断ルール ──
@@ -699,6 +705,13 @@ function makeBrain(opts = DEFAULT_OPTS) {
   when('end_w', (S) => S.result && S.result.winner === 'W' && S.t >= S.result.t + 2400, (S) => { S.over = true; });
   when('draw', (S) => !S.result && S.t >= H(17, 0) - 4, (S) => { S.result = { winner: 'D', t: S.t }; S.emit('draw'); S.over = true; });
 
+  // 蒲生郷舎は石田隊の前衛として最後まで踏みとどまり、本隊とともに崩れる
+  when('gamo_merge', (S) => !isBroken(U(S, 'gamo')) && !isBroken(U(S, 'ishida')) && U(S, 'gamo').n < 0.4 * U(S, 'gamo').n0, (S) => {
+    const g = U(S, 'gamo'), i = U(S, 'ishida');
+    S.emit('gamo_merge', { n: Math.round(g.n) });
+    i.n += g.n; i.morale = Math.min(i.morale0, i.morale + 0.05); g.n = 0; g.status = 'gone';
+  });
+  when('gamo_fall', (S) => isBroken(U(S, 'ishida')) && !isBroken(U(S, 'gamo')), (S) => { U(S, 'gamo').noRout = false; rout(S, U(S, 'gamo'), 'collapse'); });
   // 大谷隊の壊滅で西軍の南翼が開く
   when('flank', (S) => isBroken(U(S, 'otani')), (S) => { for (const id of ['ukita', 'konishi']) U(S, id).morale -= 0.15; });
   for (const [uid, ev] of Object.entries(ROUT_EVENTS)) when('re_' + uid, (S) => S.fired.has('rout:' + uid) || (S.byId[uid].status === 'gone'), (S) => S.emit(ev));
@@ -1396,7 +1409,7 @@ function roofGeo(w, h, d) {
 
 // ───────────────── シミュレーション（再生） ─────────────────
 const HALF = { hx: SX / 2, hz: SY / 2 };
-const play = { opts: { ...DEFAULT_OPTS }, speed: 60, playing: false, gameT: T_START, slowUntil: 0, seeking: false, autoCam: true, slowEv: true, weather: 'auto' };
+const play = { opts: { ...DEFAULT_OPTS }, speed: 60, playing: false, gameT: T_START, slowUntil: 0, holdUntil: 0, seeking: false, autoCam: true, slowEv: true, weather: 'auto' };
 let SIM = null, BRAIN = null;
 function newSim() {
   SIM = prepare(createSim(UNITS, ll2xz, PARAMS, HALF));
@@ -1459,9 +1472,15 @@ const cardEl = document.getElementById('card'), logEl = document.getElementById(
 let cardTimer = 0;
 function evInfo(e) {
   if (EVENTS[e.id]) return EVENTS[e.id];
+  if (e.id.startsWith('gone:')) {
+    // 潰走を経ずに消えた（全滅した）部隊
+    const u = SIM.byId[e.unit];
+    if (SIM.fired.has('rout:' + u.id) || ['shimazu', 'toyohisa', 'gamo'].includes(u.id) || ROUT_EVENTS[u.id]) return null;
+    return { title: `${u.name}隊、壊滅`, tag: '戦況', focus: [u.id], slow: true, body: `${u.name}隊は最後まで踏みとどまり、討ち死にした（死傷 約${Math.round(u.killed).toLocaleString()}人）。` };
+  }
   if (e.id.startsWith('rout:')) {
     const u = SIM.byId[e.unit];
-    if (ROUT_EVENTS[u.id] || u.n0 < 400 || u.id === 'shimazu' || u.id === 'toyohisa') return null;
+    if (ROUT_EVENTS[u.id] || u.id === 'shimazu' || u.id === 'toyohisa') return null;
     return routText(SIM, e);
   }
   return null;
@@ -1475,9 +1494,11 @@ function onEvent(e) {
   li.onclick = () => { seek(Math.max(T_START, e.t - 30)); showCard(info, e); };
   logEl.prepend(li);
   if (play.seeking) return;
-  if (info.tag === '経過') return;
   showCard(info, e);
-  if (play.slowEv && info.slow) play.slowUntil = performance.now() + 9000;
+  if (play.slowEv && info.slow) {
+    // 寄って、しばらくゆっくり進める
+    play.slowUntil = performance.now() + 9000;
+  }
   if (play.autoCam) focusEvent(info);
   if (e.id === 'east_win' || e.id === 'west_win' || e.id === 'draw') setTimeout(showSummary, 100);
 }
@@ -1654,7 +1675,8 @@ function buildMarkers() {
   while (!S2.over && S2.t < T_END) stepSim(S2, br);
   const box = $('marks'); box.innerHTML = '';
   for (const e of S2.log) {
-    const info = EVENTS[e.id];
+    let info = EVENTS[e.id];
+    if (e.id.startsWith('rout:') && !ROUT_EVENTS[e.unit] && !['shimazu', 'toyohisa'].includes(e.unit)) info = { title: S2.byId[e.unit].name + '隊、崩れる', tag: '戦況', slow: true };
     if (!info || !info.slow) continue;
     const m = document.createElement('i');
     m.style.left = ((e.t - T_START) / (T_END - T_START) * 100) + '%';
@@ -1672,7 +1694,9 @@ function loop() {
   const dt = Math.min(0.1, clock.getDelta());
   SHARED.uTime.value += dt;
   if (play.playing && !SIM.over) {
-    const sp = performance.now() < play.slowUntil ? Math.min(play.speed, 12) : play.speed;
+    const now = performance.now();
+    const sp = now < play.holdUntil ? 0 : now < play.slowUntil ? Math.min(play.speed, 12) : play.speed;
+    $('timeline').classList.toggle('hold', now < play.holdUntil);
     play.gameT += dt * sp;
     let guard = 0;
     while (SIM.t < play.gameT && !SIM.over && guard++ < 400) simStep();

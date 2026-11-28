@@ -28,7 +28,7 @@ export function createSim(units, xz, params, bounds) {
       q: p.q ?? 1, fort: p.fort ?? 1, x, z, hx: x, hz: z, face: d.face, homeFace: d.face,
       r: Math.min(190, Math.max(25, Math.sqrt(d.n) * 1.4)),
       order: { type: d.idle ? 'idle' : 'hold' }, status: 'hold', contacts: [],
-      moving: 0, fighting: 0, fire: 0, retreat: p.retreat ? xz(...p.retreat) : null, speed: p.speed ?? 0.9, noRout: !!p.noRout,
+      moving: 0, fighting: 0, fire: 0, retreat: p.retreat ? xz(...p.retreat) : null, speed: p.speed ?? 0.9, noRout: !!p.noRout, homeR: p.homeR ?? 150,
     };
     S.units.push(u); S.byId[d.id] = u;
   }
@@ -67,7 +67,7 @@ export function rout(S, u, why) {
   if (!to) to = u.side === 'E' ? S.xz(136.545, 35.370) : S.xz(136.432, 35.378);
   u.order = { type: 'flee', x: to[0], z: to[1] };
   u.speed = 1.5;
-  S.emit('rout:' + u.id, { unit: u.id, why });
+  S.emit('rout:' + u.id, { unit: u.id, why, by: u.contacts.filter((c) => c.side !== u.side).map((c) => c.name) });
   // 周囲の味方の動揺
   for (const f of S.units) {
     if (f === u || f.side !== u.side || isBroken(f)) continue;
@@ -140,7 +140,7 @@ export function stepSim(S, brain) {
   for (const [b, f] of dmg) {
     const real = Math.min(f, b.n);
     b.n -= real; b.killed += real;
-    if (b.n < 1) { b.n = 0; b.status = 'gone'; }
+    if (b.n < 1 && b.status !== 'gone') { b.n = 0; b.status = 'gone'; S.emit('gone:' + b.id, { unit: b.id }); }
     if (b.status !== 'rout') b.morale -= real / b.n0 * b.msens;
   }
   // 士気の回復・崩壊判定
@@ -171,7 +171,7 @@ export function stepSim(S, brain) {
     } else if (o.type === 'hold' || o.type === 'aloof' || o.type === 'idle') {
       if (!u.fighting) moveToward(u, u.hx, u.hz, 0.25, dt);
     }
-    u.atHome = (o.type === 'hold' || o.type === 'aloof' || o.type === 'idle') && Math.hypot(u.x - u.def0x(), u.z - u.def0z()) < 150;
+    u.atHome = (o.type === 'hold' || o.type === 'aloof' || o.type === 'idle') && Math.hypot(u.x - u.def0x(), u.z - u.def0z()) < u.homeR;
   }
   // 押し合い（優勢な側へ戦線が動く）
   for (const [a, b] of S.contacts) {
