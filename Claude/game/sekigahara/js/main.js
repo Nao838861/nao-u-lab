@@ -791,6 +791,7 @@ function seek(t) {
 // ───────────────── イベント表示 ─────────────────
 const cardEl = document.getElementById('card'), logEl = document.getElementById('log');
 let cardTimer = 0;
+let inCardExtension = false;
 let waitingForNext = false;
 const pendingCards = [];
 function evInfo(e) {
@@ -819,7 +820,10 @@ function onEvent(e) {
   if (play.seeking) return;
   const totals = ['east_win', 'west_win', 'draw'].includes(e.id) ? sideTotals(SIM) : null;
   if (cardEl.hidden) showCard(info, e, totals);
-  else pendingCards.push({ info, e, totals });
+  else {
+    pendingCards.push({ info, e, totals });
+    if (inCardExtension) pauseForCard();
+  }
 }
 function showCard(info, e, totals = null) {
   if (play.slowEv && info.slow) {
@@ -840,14 +844,27 @@ function showCard(info, e, totals = null) {
     const next = pendingCards.shift();
     if (next) showCard(next.info, next.e, next.totals);
   };
+  const readTime = Math.max(9000, info.body.length * 110);
+  const duringBattle = e.t >= 8 * 3600 && e.id !== 'kubi' && !e.id.startsWith('epi_');
   cardTimer = setTimeout(() => {
-    waitingForNext = true;
-    cardEl.querySelector('[role="status"]').textContent = '読み終わるまで一時停止';
-    syncPlayButton();
-  }, Math.max(9000, info.body.length * 110));
+    if (duringBattle && pendingCards.length === 0) {
+      inCardExtension = true;
+      cardTimer = setTimeout(pauseForCard, 2 * readTime);
+    } else {
+      pauseForCard();
+    }
+  }, readTime);
+}
+function pauseForCard() {
+  clearTimeout(cardTimer);
+  inCardExtension = false;
+  waitingForNext = true;
+  cardEl.querySelector('[role="status"]').textContent = '読み終わるまで一時停止';
+  syncPlayButton();
 }
 function closeCard() {
   clearTimeout(cardTimer);
+  inCardExtension = false;
   waitingForNext = false;
   cardEl.hidden = true;
   syncPlayButton();
@@ -1048,7 +1065,8 @@ function loop() {
     $('timeline').classList.toggle('hold', now < play.holdUntil);
     play.gameT += dt * sp;
     let guard = 0;
-    while (SIM.t < play.gameT && !SIM.over && guard++ < 400) simStep();
+    while (SIM.t < play.gameT && !waitingForNext && !SIM.over && guard++ < 400) simStep();
+    if (waitingForNext) play.gameT = SIM.t;
     if (SIM.over) { play.gameT = SIM.t; setPlaying(false); }
   }
   // 部隊の描画を更新（シム2秒刻みの間を補間）
