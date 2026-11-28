@@ -464,7 +464,7 @@ const DEFAULT_OPTS = Object.fromEntries(OPTIONS.map((o) => [o.id, 'history']));
 // ── イベント（解説カード）。tag: 史実＝諸史料が一致 / 通説＝広く流布するが史料的検討の余地 / 逸話＝後世の軍記・伝承 / 異説 / うんちく / もしも
 const EVENTS = {
   intro: { map: 'intro', title: '関ヶ原、夜明け', tag: 'うんちく', cam: 'overview',
-    body: '慶長5年9月15日（1600年10月21日）。関ヶ原は今の岐阜県の西端、琵琶湖の東にある。前夜、西軍は大垣城を出て関ヶ原へ移った。東軍も赤坂から西へ進み、夜明けの盆地で両軍が向かい合う。' },
+    body: '慶長5年9月15日（1600年10月21日）。関ヶ原は琵琶湖の東、今の名古屋から見ると北西にある。前夜、西軍は大垣城を出て関ヶ原へ移った。東軍も赤坂から西へ進み、夜明けの盆地で両軍が向かい合う。' },
   fuwa: { map: 'fuwa', title: 'なぜ関ヶ原なのか', tag: 'うんちく', cam: 'top',
     body: '関ヶ原は三つの街道が交わる交通の要。古代には不破関が置かれ、壬申の乱の戦場にもなった。家康が陣を置いた桃配山は、大海人皇子が兵に桃を配ったという伝説の地だ。' },
   hidetada: { map: 'hidetada', title: '来ない3万8千', tag: '史実', cam: 'east', focus: ['ieyasu'],
@@ -1259,36 +1259,20 @@ function land(P) {
   const outline = JAPAN_COAST.map((ring) => path(P, ring) + 'Z').join('');
   return `<path d="${outline}" fill="#ded8b9" stroke="#818969" stroke-width=".8" stroke-linejoin="round"/>`;
 }
-function locator(bounds) {
-  const w = 220, h = 176;
-  const P = proj({ w: 128.0, e: 146.7, s: 30.0, n: 46.5 }, w, h);
-  const [x, y] = P(SEKI);
-  const [west, north] = P([bounds.w, bounds.n]), [east, south] = P([bounds.e, bounds.s]);
-  // 小さな戦場図は点で示す。広域図では同じ点に加えて拡大範囲を枠で示す。
-  const area = east - west > 8 ? `<rect x="${west}" y="${north}" width="${east-west}" height="${south-north}" fill="none" stroke="#884532" stroke-dasharray="3 2"/>` : '';
-  const islands = proj({ w: 122.3, e: 130.7, s: 24, n: 30.2 }, 49, 32);
-  const city = (ll, name, dx, dy) => {
-    const [cx, cy] = P(ll), tx = cx + dx, ty = cy + dy;
-    return `<path d="M${cx} ${cy}L${tx} ${ty}" fill="none" stroke="#58686b"/>
-      <circle cx="${cx}" cy="${cy}" r="1.7" fill="#425255"/>
-      <text x="${tx + Math.sign(dx)*2}" y="${ty+3}" text-anchor="${dx > 0 ? 'start' : 'end'}" font-size="12" fill="#374648">${name}</text>`;
-  };
-  return `<svg class="locator-map" role="img" aria-label="日本列島の本州中央部、岐阜県西端にある関ヶ原の位置" viewBox="0 0 ${w} ${h}">
-    <rect width="100%" height="100%" fill="#e1edf0"/>${land(P)}
-    <svg x="6" y="6" width="49" height="32" viewBox="0 0 49 32" overflow="hidden"><rect width="49" height="32" fill="#e1edf0" stroke="#9cb1b3"/>${land(islands)}</svg>
-    <text x="6" y="51" font-size="11" fill="#47575b">南西諸島</text>
-    ${area}${city([135.76,35.01], '京都', -17, -15)}${city([139.76,35.68], '東京', 12, -8)}
-    <circle cx="${x}" cy="${y}" r="4.6" fill="#962f25" stroke="#fff" stroke-width="1.6"/>
-    <path d="M${x+3} ${y+3}l12 13h9" fill="none" stroke="#962f25" stroke-width="1.5"/>
-    <text x="${x+27}" y="${y+20}" font-size="17" fill="#81281f" font-weight="bold">関ヶ原</text>
-    <text x="${x+27}" y="${y+35}" font-size="12" fill="#39474a">岐阜県西端</text>
+function regionalMap() {
+  const w = 280, h = 168;
+  const P = proj({ w: 135.79, e: 137.13, s: 34.89, n: 35.64 }, w, h);
+  return `<svg class="cardmap" role="img" aria-label="琵琶湖の東、現在の名古屋の北西にある関ヶ原" viewBox="0 0 ${w} ${h}">
+    <rect width="100%" height="100%" fill="#e1edf0"/>${land(P)}${water(P, BIWA)}
+    ${label(P, [136.12, 35.34], '琵琶湖', { color: '#355264', bold: true, size: 16 })}
+    ${dot(P, SEKI, '関ヶ原', { fill: '#962f25', color: '#81281f', bold: true, r: 5, size: 18, dx: 9, dy: -5 })}
+    ${dot(P, [136.91, 35.18], '名古屋', { anchor: 'end', dx: -8, dy: 8, size: 15 })}
   </svg>`;
 }
 function cardMaps(key) {
-  const m = window.DEM_META;
-  const bounds = mapBounds[key] || { w: m.west, e: m.east, s: m.south, n: m.north };
-  return `<figure class="national"><figcaption>日本列島の中の関ヶ原</figcaption>${locator(bounds)}</figure>
-    <figure class="detail"><figcaption>${mapTitles[key]}</figcaption>${MAPS[key]()}</figure>`;
+  const region = key === 'intro'
+    ? `<figure class="region"><figcaption>琵琶湖・名古屋から見た関ヶ原</figcaption>${regionalMap()}</figure>` : '';
+  return `${region}<figure class="detail"><figcaption>${mapTitles[key]}</figcaption>${MAPS[key]()}</figure>`;
 }
 
 const MAPS = {
