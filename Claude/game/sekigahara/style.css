@@ -69,7 +69,11 @@ button:hover { background: #efe6d2; }
 #card h2 { margin: 2px 0 4px; font-size: 22px; }
 #card p { margin: 0 0 4px; }
 #card .num { font-weight: 700; }
-#card .x, #summary .x, #info .x { position: absolute; right: 8px; top: 6px; border: none; background: none; font-size: 18px; }
+#card { max-height: calc(100vh - 115px); overflow-y: auto; }
+#card .card-actions { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 6px; }
+#card .card-actions span { font-size: 12px; }
+#card .card-actions button { background: #8a2a1a; color: white; padding: 5px 15px; }
+#summary .x, #info .x { position: absolute; right: 8px; top: 6px; border: none; background: none; font-size: 18px; }
 .tag { font-style: normal; font-size: 11px; padding: 1px 7px; color: #fff; background: #777; }
 .tag-史実 { background: #2f6a3a; } .tag-通説 { background: #8a5a1a; } .tag-逸話 { background: #7a3a8a; } .tag-異説 { background: #1a5a8a; }
 .tag-うんちく { background: #4a6a6a; } .tag-もしも { background: #b0331f; } .tag-経過 { background: #888; }

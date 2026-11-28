@@ -715,6 +715,8 @@ function spawnCorpses() {
   }
 }
 function seek(t) {
+  pendingCards.length = 0;
+  closeCard();
   play.seeking = true;
   for (const V of VIS) { V.ptr = 0; V.spread = 1; V.vis = V.def.hidden ? 0 : 1; }
   resetCorpses(); clearSmoke();
@@ -723,12 +725,13 @@ function seek(t) {
   while (SIM.t < t && !SIM.over) simStep();
   play.gameT = SIM.t;
   play.seeking = false;
-  hideCard();
 }
 
 // ───────────────── イベント表示 ─────────────────
 const cardEl = document.getElementById('card'), logEl = document.getElementById('log');
 let cardTimer = 0;
+let waitingForNext = false;
+const pendingCards = [];
 function evInfo(e) {
   if (EVENTS[e.id]) return EVENTS[e.id];
   if (e.id.startsWith('gone:')) {
@@ -750,30 +753,46 @@ function onEvent(e) {
   const li = document.createElement('li');
   li.className = 'tag-' + info.tag;
   li.innerHTML = `<time>${hhmm(e.t)}</time>${info.title}`;
-  li.onclick = () => { seek(Math.max(T_START, e.t - 30)); showCard(info, e); };
+  li.onclick = () => { seek(e.t); showCard(info, e); };
   logEl.prepend(li);
   if (play.seeking) return;
-  showCard(info, e);
+  const totals = ['east_win', 'west_win', 'draw'].includes(e.id) ? sideTotals(SIM) : null;
+  if (cardEl.hidden) showCard(info, e, totals);
+  else pendingCards.push({ info, e, totals });
+}
+function showCard(info, e, totals = null) {
   if (play.slowEv && info.slow) {
     // 寄って、しばらくゆっくり進める
     play.slowUntil = performance.now() + 9000;
   }
   if (play.autoCam) focusEvent(info);
-  if (e.id === 'east_win' || e.id === 'west_win' || e.id === 'draw') setTimeout(showSummary, 100);
-}
-function showCard(info, e) {
   const extra = e.id === 'shimazu_escape' && e.n !== undefined ? `<p class="num">戦場を離れた島津勢：約${e.n}人（この再現での値）</p>` : '';
-  cardEl.innerHTML = `<button class="x" title="閉じる">×</button><div class="meta"><time>${hhmm(e.t)}　${koku(e.t)}</time><i class="tag tag-${info.tag}">${info.tag}</i></div>
-    <h2>${info.title}</h2>${info.map && MAPS[info.map] ? `<div class="withmap">${MAPS[info.map]()}<div><p>${info.body}</p>${extra}</div></div>` : `<p>${info.body}</p>${extra}`}`;
+  cardEl.innerHTML = `<div class="meta"><time>${hhmm(e.t)}　${koku(e.t)}</time><i class="tag tag-${info.tag}">${info.tag}</i></div>
+    <h2>${info.title}</h2>${info.map && MAPS[info.map] ? `<div class="withmap">${MAPS[info.map]()}<div><p>${info.body}</p>${extra}</div></div>` : `<p>${info.body}</p>${extra}`}
+    <div class="card-actions"><span role="status"></span><button type="button">次に進む</button></div>`;
   cardEl.classList.toggle('wide', !!info.map);
   cardEl.hidden = false;
-  cardEl.querySelector('.x').onclick = hideCard;
-  clearTimeout(cardTimer);
-  cardTimer = setTimeout(hideCard, Math.max(9000, info.body.length * 110));
+  cardEl.scrollTop = 0;
+  cardEl.querySelector('button').onclick = () => {
+    closeCard();
+    if (totals) showSummary(totals);
+    const next = pendingCards.shift();
+    if (next) showCard(next.info, next.e, next.totals);
+  };
+  cardTimer = setTimeout(() => {
+    waitingForNext = true;
+    cardEl.querySelector('[role="status"]').textContent = '読み終わるまで一時停止';
+    syncPlayButton();
+  }, Math.max(9000, info.body.length * 110));
 }
-function hideCard() { cardEl.hidden = true; }
-function showSummary() {
-  const T = sideTotals(SIM), w = SIM.result?.winner;
+function closeCard() {
+  clearTimeout(cardTimer);
+  waitingForNext = false;
+  cardEl.hidden = true;
+  syncPlayButton();
+}
+function showSummary(T) {
+  const w = SIM.result?.winner;
   const head = w === 'E' ? '東軍の勝利' : w === 'W' ? '西軍の勝利' : '決着つかず';
   document.getElementById('summary').innerHTML = `<button class="x">×</button><h2>${head}</h2>
     <p>決着 ${SIM.result ? hhmm(SIM.result.t) : '-'}（${SIM.result ? koku(SIM.result.t) : ''}）</p>
@@ -925,8 +944,12 @@ function bindUI() {
   };
   addEventListener('keydown', (e) => { if (e.code === 'Space' && e.target === document.body) { e.preventDefault(); togglePlay(); } });
 }
-function setPlaying(v) { play.playing = v; $('playBtn').textContent = v ? '❚❚' : '▶'; $('start').hidden = true; }
-function togglePlay() { setPlaying(!play.playing); }
+function syncPlayButton() {
+  $('playBtn').disabled = waitingForNext;
+  $('playBtn').textContent = play.playing && !waitingForNext ? '❚❚' : '▶';
+}
+function setPlaying(v) { play.playing = v; syncPlayButton(); $('start').hidden = true; }
+function togglePlay() { if (!waitingForNext) setPlaying(!play.playing); }
 // 先に最後まで計算して、年表に主な出来事の印をつける
 function buildMarkers() {
   const S2 = prepare(createSim(UNITS, ll2xz, PARAMS, HALF));
@@ -953,7 +976,8 @@ let frames = 0, fpsT = 0;
 function loop() {
   const dt = Math.min(0.1, clock.getDelta());
   SHARED.uTime.value += dt;
-  if (play.playing && !SIM.over) {
+  const running = play.playing && !waitingForNext && !SIM.over;
+  if (running) {
     const now = performance.now();
     const sp = now < play.holdUntil ? 0 : now < play.slowUntil ? Math.min(play.speed, 12) : play.speed;
     $('timeline').classList.toggle('hold', now < play.holdUntil);
@@ -976,7 +1000,7 @@ function loop() {
     U.uLost.value = Math.min(1, u.killed / u.n0);
     V.vis += ((u.status === 'gone' ? 0 : 1) - V.vis) * Math.min(1, dt * 0.7);
     U.uVis.value = V.vis;
-    U.uMove.value = play.playing && u.moving ? 1 : 0;
+    U.uMove.value = running && u.moving ? 1 : 0;
     const d = camera.position.distanceTo(tmp.set(x, heightAt(x, z), z));
     V.mats.foot.opacity = THREE.MathUtils.clamp((d - 700) / 2200, 0, 0.6) * V.vis * (u.status === 'rout' ? 0.5 : 1);
     V.mats.foot.visible = V.mats.foot.opacity > 0.01;
