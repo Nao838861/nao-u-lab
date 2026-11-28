@@ -1,0 +1,52 @@
+:root { --w: #3f5fa8; --e: #b8862a; --ink: #1d1a16; --paper: rgba(246, 241, 230, 0.92); }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #c8ccc6; font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif; color: var(--ink); }
+#view canvas { display: block; }
+#labels { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+.lbl { position: absolute; left: 0; top: 0; pointer-events: auto; cursor: pointer; white-space: nowrap;
+  padding: 2px 7px 2px 9px; background: var(--paper); border-left: 5px solid var(--c); font-size: 13px; line-height: 1.25;
+  box-shadow: 0 1px 3px rgba(0,0,0,.35); transform-origin: 50% 100%; }
+.lbl::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 26px; background: rgba(20,20,20,.55); }
+.lbl b { font-weight: 700; margin-right: 6px; }
+.lbl span { font-size: 11px; font-family: system-ui, sans-serif; opacity: .75; }
+.lbl.W { box-shadow: inset 0 -3px 0 var(--w), 0 1px 3px rgba(0,0,0,.35); }
+.lbl.E { box-shadow: inset 0 -3px 0 var(--e), 0 1px 3px rgba(0,0,0,.35); }
+.lbl.betray b::before { content: "⚑ "; color: #b0331f; }
+.lbl.idle { opacity: .82; }
+.lbl.idle b::before { content: "◇ "; color: #666; }
+.lbl.sel { outline: 2px solid #b0331f; }
+#title { position: fixed; left: 16px; top: 12px; pointer-events: none; text-shadow: 0 0 6px rgba(255,255,255,.8); }
+#title h1 { margin: 0; font-size: 28px; letter-spacing: .1em; }
+#title h1 small { font-size: 13px; letter-spacing: 0; margin-left: 10px; }
+#title p { margin: 2px 0 0; font-size: 13px; }
+#panel { position: fixed; right: 12px; top: 12px; width: 230px; background: var(--paper); padding: 10px 12px; font-size: 13px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3); max-height: calc(100vh - 60px); overflow: auto; }
+#panel h3 { margin: 0 0 6px; font-size: 13px; }
+#panel section + section { margin-top: 10px; border-top: 1px solid rgba(0,0,0,.12); padding-top: 8px; }
+#panel label { display: block; margin: 4px 0; }
+#panel select, #panel input { width: 100%; font: inherit; }
+.btns { display: flex; flex-wrap: wrap; gap: 4px; }
+button { font: inherit; font-size: 12px; padding: 3px 7px; background: #fff; border: 1px solid #8a8070; cursor: pointer; }
+button:hover { background: #efe6d2; }
+.stats { font-family: system-ui, sans-serif; font-size: 11px; line-height: 1.6; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; }
+.lg::before { content: ""; display: inline-block; width: 18px; height: 4px; margin-right: 4px; vertical-align: middle; }
+.lg.W::before { background: var(--w); } .lg.E::before { background: var(--e); }
+.lg.betray::before { content: "⚑"; width: auto; height: auto; color: #b0331f; }
+.lg.idle::before { content: "◇"; width: auto; height: auto; color: #666; }
+#info { position: fixed; left: 16px; bottom: 40px; width: min(380px, calc(100vw - 32px)); background: var(--paper); padding: 12px 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35); font-size: 14px; line-height: 1.7; }
+#info .hd { border-bottom: 3px solid var(--w); margin-bottom: 6px; }
+#info .hd.E { border-color: var(--e); }
+#info .side { font-size: 12px; }
+#info h2 { margin: 0; font-size: 22px; display: inline-block; margin-right: 8px; }
+#info .tag { font-style: normal; font-size: 11px; padding: 1px 6px; margin-right: 4px; color: #fff; }
+#info .tag.b { background: #b0331f; } #info .tag.i { background: #777; }
+#info dl { display: grid; grid-template-columns: auto 1fr; gap: 0 12px; margin: 4px 0; font-size: 13px; }
+#info dt { opacity: .7; } #info dd { margin: 0; }
+#info p { margin: 6px 0; }
+#info .caveat { font-size: 11px; opacity: .65; }
+#credit { position: fixed; left: 0; right: 0; bottom: 0; padding: 4px 16px; font-size: 11px; font-family: system-ui, sans-serif;
+  background: rgba(30,28,24,.55); color: #eee; }
+@media (max-width: 640px) { #panel { width: 180px; font-size: 12px; } #title h1 { font-size: 20px; } #title h1 small { display: block; margin: 0; } }
+#info { position: fixed; } #info .x { position: absolute; right: 8px; top: 6px; border: none; background: none; font-size: 18px; }
