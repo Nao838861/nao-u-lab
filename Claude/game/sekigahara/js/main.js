@@ -6,6 +6,7 @@ import { UNITS, SIDE } from './units.js';
 import { createSim, stepSim, prepare, hhmm, koku, sideTotals, T_START, T_END, SIM_DT } from './sim.js';
 import { cardMaps } from './maps.js';
 import { officerProfile, loadOfficerPortrait } from './officers.js';
+import { initZukan } from './zukan.js';
 import { applyGroundDetail, nearbyStubble } from './terrain.js';
 import { PARAMS, makeBrain, retarget, EVENTS, DEFAULT_OPTS, OPTIONS, ROUT_EVENTS, routText } from './scenario.js';
 
@@ -981,11 +982,12 @@ function select(V) {
     ${officerProfile(d)}
     <dl><dt>兵数（通説）</dt><dd>${d.n.toLocaleString()}</dd><dt>いま</dt><dd>${Math.round(u.n).toLocaleString()}（士気 ${Math.round(Math.max(0, u.morale) * 100)}）</dd><dt>陣所</dt><dd>${d.place}</dd></dl>
     <p>${d.note}</p><p class="caveat">位置・兵数は通説に基づく概略。</p>
-    <button id="goto">この隊へ寄る</button>`;
+    <button id="goto">この隊へ寄る</button> <button id="toZukan">図鑑で読む</button>`;
   p.hidden = false;
   loadOfficerPortrait(p, d);
   p.querySelector('.x').onclick = () => { p.hidden = true; };
   document.getElementById('goto').onclick = () => focusUnits([V.id], 420);
+  document.getElementById('toZukan').onclick = () => zukan.open(V.id);
 }
 
 // ───────────────── 視点 ─────────────────
@@ -1105,6 +1107,7 @@ function bindUI() {
   document.querySelectorAll('[data-view]').forEach((b) => (b.onclick = () => PRESETS[b.dataset.view]()));
   $('playBtn').onclick = togglePlay;
   $('startBtn').onclick = () => { $('start').hidden = true; setPlaying(true); };
+  $('zukanBtn').onclick = $('zukanStart').onclick = () => zukan.open();
   $('speed').onchange = (e) => { play.speed = +e.target.value; };
   $('seek').oninput = (e) => { $('clock').textContent = hhmm(+e.target.value); };
   $('seek').onchange = (e) => { seek(+e.target.value); };
@@ -1126,6 +1129,12 @@ function bindUI() {
   };
   addEventListener('keydown', (e) => { if (e.code === 'Space' && e.target === document.body) { e.preventDefault(); togglePlay(); } });
 }
+// 武将図鑑：開くと再生を止める。「戦場でこの隊を見る」で解説パネルを開いてカメラを寄せる
+const zukan = initZukan({
+  units: UNITS,
+  onOpen: () => { if (play.playing) togglePlay(); },
+  onLocate: (id) => { const V = VIS.find((v) => v.id === id); if (V) { select(V); focusUnits([id], 420); } },
+});
 function syncPlayButton() {
   $('playBtn').disabled = waitingForNext;
   $('playBtn').textContent = play.playing && !waitingForNext ? '❚❚' : '▶';
@@ -1243,6 +1252,7 @@ buildMarkers();
   if (q.get('focus')) { focusUnits(q.get('focus').split(',')); fin(); }
   if (q.get('play')) { setPlaying(true); }
   if (q.get('speed')) { play.speed = +q.get('speed'); }
+  if (q.has('zukan')) { zukan.open(q.get('zukan') || undefined); }
 }
 window.__ready = true;
 window.__sim = () => SIM;

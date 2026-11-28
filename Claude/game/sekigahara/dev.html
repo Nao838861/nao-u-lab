@@ -15,6 +15,7 @@
 </header>
 
 <aside id="panel">
+  <button id="zukanBtn" class="zk-open">武将図鑑 <small>顔・能力・逸話</small></button>
   <section>
     <h3>視点</h3>
     <div class="btns">
@@ -62,7 +63,7 @@
 <article id="card" hidden></article>
 <article id="summary" hidden></article>
 <ol id="log"></ol>
-<div id="start"><button id="startBtn">▶ 合戦を見る</button><p>午前7時30分から。出来事ごとに解説が出ます（スペースキーで一時停止）</p></div>
+<div id="start"><button id="startBtn">▶ 合戦を見る</button><br><button id="zukanStart" class="zk-open">先に武将図鑑を見る</button><p>午前7時30分から。出来事ごとに解説が出ます（スペースキーで一時停止）</p></div>
 <nav id="timeline">
   <button id="playBtn">▶</button>
   <div class="tm"><b id="clock">7:30</b><small id="koku">辰の刻</small></div>
@@ -70,7 +71,7 @@
   <select id="speed"><option value="15">ゆっくり</option><option value="60" selected>標準（1秒=1分）</option><option value="180">速い</option><option value="480">とても速い</option></select>
 </nav>
 
-<footer id="credit">地形：国土地理院 標高タイル（DEM10B）を加工 ／ 布陣・兵数・推移：通説に基づく簡易モデル ／ 武将名にカーソルで能力、クリックで解説</footer>
+<footer id="credit">地形：国土地理院 標高タイル（DEM10B）を加工 ／ 布陣・兵数・推移：通説に基づく簡易モデル ／ 武将名にカーソルで能力、クリックで解説 ／ 右上の「武将図鑑」で全武将の逸話</footer>
 
 <script src="data/dem.js"></script>
 <script src="data/ground.js"></script>

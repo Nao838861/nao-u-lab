@@ -6,7 +6,7 @@ rd = lambda p: open(os.path.join(R, p), encoding='utf-8').read()
 def strip(src):
     src = re.sub(r"^import \{[^}]*\} from '\./[a-z]+\.js';\n", '', src, flags=re.M)
     return re.sub(r'^export ', '', src, flags=re.M)
-units = '\n'.join(strip(rd('js/' + f)) for f in ['units.js', 'sim.js', 'scenario.js', 'coast.js', 'maps.js', 'terrain.js', 'officers.js'])
+units = '\n'.join(strip(rd('js/' + f)) for f in ['units.js', 'sim.js', 'scenario.js', 'coast.js', 'maps.js', 'terrain.js', 'officers.js', 'episodes.js', 'zukan.js'])
 main = strip(rd('js/main.js'))
 html = rd('dev.html').replace('<script type="module" src="js/main.js"></script>',
     '<!-- 生成物: tools/build.py が js/units.js と js/main.js を埋め込む。編集は js/ 側で -->\n<script type="module">\n' + units + '\n' + main + '\n</script>')

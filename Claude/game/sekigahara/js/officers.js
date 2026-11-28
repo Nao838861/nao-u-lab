@@ -45,6 +45,8 @@ const ratings = {
   arima:      [69, 71, 68, 75],
 };
 
+export const officerRatings = ratings, officerTraits = traits;
+
 export function officerProfile(def) {
   const stats = ratings[def.id];
   if (!stats) return '';
