@@ -1,4 +1,4 @@
 {
  "opening": 2400, "layers": 120, "ground": 6100, "vertical": 6540, "horizon": 6400, "cmp": 2200, "trees": 3240, "trees_x": 20, "trees_y": 70,
- "sound": 7800, "pal81": 600, "pal81_x": 4, "pal81_y": 84, "darkgreen": 3480, "thumb": 600, "hwOpen": 1500, "hwEnd": 3000
+ "sound": 600, "pal81": 600, "pal81_x": 4, "pal81_y": 84, "darkgreen": 3480, "thumb": 600, "hwOpen": 1500, "hwEnd": 3000
 }
