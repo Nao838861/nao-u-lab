@@ -28,6 +28,7 @@
       <button data-view="nangu">南宮山（毛利）</button>
       <button data-view="road">街道と刈田</button>
     </div>
+    <p class="camera-help">WASDで前後左右に移動。ドラッグで地図を移動、Shift＋ドラッグで回転・傾斜。ホイールでズーム、地面をダブルクリックでその地点に接近。</p>
   </section>
   <section>
     <label>1体あたりの人数
@@ -454,126 +455,126 @@ const DEFAULT_OPTS = Object.fromEntries(OPTIONS.map((o) => [o.id, 'history']));
 // ── イベント（解説カード）。tag: 史実＝諸史料が一致 / 通説＝広く流布するが史料的検討の余地 / 逸話＝後世の軍記・伝承 / 異説 / うんちく / もしも
 const EVENTS = {
   intro: { map: 'intro', title: '関ヶ原、夜明け', tag: 'うんちく', cam: 'overview',
-    body: '慶長5年9月15日（1600年10月21日）。前夜からの雨の中、石田三成ら西軍は大垣城を出て夜のうちに関ヶ原へ移り、西側の山々に陣を敷いた。東軍もこれを追って盆地に入る。盆地には深い霧が立ちこめていた。' },
+    body: '黒田隊は鉄砲隊を側面の丘に回し、島左近を横から撃たせた。左近は深手を負い、柵の内へ運ばれた。' },
   fuwa: { map: 'fuwa', title: 'なぜ関ヶ原なのか', tag: 'うんちく', cam: 'top',
-    body: '関ヶ原は古代の三関の一つ「不破関」が置かれた交通の要衝で、中山道・北国脇往還・伊勢街道がここで交わる。672年の壬申の乱でも戦場になった。家康が最初に陣を置いた桃配山は、大海人皇子が兵に桃を配ったという伝承の地。' },
+    body: '関ヶ原は三つの街道が交わる交通の要。古代には不破関が置かれ、壬申の乱の戦場にもなった。家康が陣を置いた桃配山は、大海人皇子が兵に桃を配ったという伝説の地だ。' },
   hidetada: { map: 'hidetada', title: '来ない3万8千', tag: '史実', cam: 'east', focus: ['ieyasu'],
-    body: '徳川の主力のうち約3万8千は、家康の子・秀忠が率いて中山道を進んでいたが、信濃の上田城で真田昌幸に足止めされ、この日の合戦に間に合わなかった。家康の手元の兵の多くは、豊臣恩顧の大名たちだった。' },
+    body: '徳川の主力3万8千を率いる秀忠は、信濃の上田城で真田昌幸に足止めされ、この日に間に合わなかった。家康のまわりにいるのは、豊臣恩顧の大名たちが中心だ。' },
   otsu: { map: 'otsu', title: 'もう一つの戦場、大津城', tag: '史実',
-    body: '同じ頃、近江の大津城では東軍の京極高次（京極高知の兄）が籠城し、立花宗茂ら西軍1万以上を引きつけていた。大津城は15日に開城したが、この西軍の精鋭は関ヶ原に間に合わなかった。' },
+    body: '同じ頃、近江の大津城では京極高次が籠城し、立花宗茂ら西軍の精鋭1万以上を引きつけていた。彼らもまた、関ヶ原には来られなかった。' },
   fog: { title: '霧が晴れはじめる', tag: '通説', cam: 'overview',
-    body: '辰の刻（午前8時頃）、霧が薄れはじめる。100m先も見えないほどの濃霧の中で、両軍は互いの位置を探り合っていた。' },
+    body: '午前8時頃、霧が薄れはじめる。100m先も見えない霧の中で、両軍は息をひそめて互いを探り合っていた。' },
   nukegake: { title: '先陣は誰か——井伊直政の抜け駆け', tag: '通説', focus: ['ii', 'tadayoshi'], slow: true,
-    body: '先鋒は福島正則と決められていた。しかし井伊直政は、初陣同然の娘婿・松平忠吉を連れて福島隊の脇をすり抜ける。福島家の可児才蔵に咎められると「物見（偵察）だ」と言って前に出て、宇喜多隊に鉄砲を撃ちかけた。家康の子に一番槍の功を立てさせるためとされる。ただし、どちらが最初に撃ったかは当日の記録からは決められない。合戦2日後の東軍諸将の連署状（写）は、井伊と福島をともに先手に挙げ、合戦の時刻を巳の刻（午前10時前後）と記す。この再現は通説に従い、8時に開戦させている。' },
+    body: '先鋒は福島正則のはずだった。だが井伊直政は、家康の四男・松平忠吉を連れて福島隊の脇をすり抜け、「物見だ」と言い張って宇喜多隊に鉄砲を撃ちかけた。徳川の手で口火を切るための抜け駆けだった。' },
   fukushima_first: { title: 'もしも：福島正則が先陣', tag: 'もしも', focus: ['fukushima'], body: '予定どおり先鋒の福島正則が、一番に宇喜多隊へ攻めかかる。' },
   fukushima_clash: { title: '福島正則 vs 宇喜多秀家', tag: '通説', focus: ['fukushima', 'ukita'], slow: true,
-    body: '先を越された福島隊が宇喜多隊に猛然と攻めかかる。宇喜多の先鋒・明石全登（掃部）との戦いは激しく、福島隊は何度も押し戻されて旗が後退したと伝わる。' },
+    body: '先を越された福島隊が、宇喜多隊へ猛然と襲いかかる。宇喜多の先鋒・明石全登も一歩も引かず、福島隊の旗は何度も押し戻された。' },
   ishida_attack: { title: '石田隊へ殺到する東軍', tag: '通説', focus: ['ishida', 'kuroda', 'hosokawa'], slow: true,
-    body: '黒田長政・細川忠興・加藤嘉明・田中吉政・竹中重門らが、三成の笹尾山へ攻めかかる。三成への恨みを抱く豊臣恩顧の大名が多かった。前衛の島左近・蒲生郷舎が柵を盾にこれを迎え撃つ。' },
+    body: '黒田・細川・加藤・田中らが、三成の笹尾山へ殺到する。三成を憎む豊臣恩顧の大名たちだ。前衛の島左近・蒲生郷舎が柵を盾に迎え撃つ。' },
   otani_front: { title: '藤堂・京極 vs 大谷隊', tag: '通説', focus: ['todo', 'kyogoku', 'otani2'],
-    body: '藤堂高虎・京極高知が大谷隊の前面に攻めかかる。戦場の南西では、松尾山の小早川勢がまだ動かずにいる。' },
+    body: '藤堂高虎・京極高知が大谷隊に攻めかかる。南西の松尾山では、小早川の1万5千がまだ動かない。' },
   gamo_merge: { title: '蒲生郷舎、石田本隊へ退く', tag: '戦況', focus: ['gamo', 'ishida'], slow: true,
-    body: '細川忠興・金森長近らの猛攻を受け続けた蒲生郷舎の前衛は、兵の多くを失い、残る兵を率いて笹尾山の石田本隊へ引き下がった。以後は三成の本陣とともに戦う。' },
+    body: '猛攻を受け続けた蒲生郷舎の前衛は、兵の多くを失い、笹尾山の三成本隊へ退いた。' },
   ishida_fence: { title: '笹尾山の二重の柵', tag: '通説', focus: ['ishida', 'sakon', 'kuroda'], slow: true,
-    body: '石田隊は笹尾山の斜面に陣取り、前面に竹矢来（竹の柵）を二重に結って、その内側から鉄砲を撃ちかけた。兵は前衛の島左近・蒲生郷舎を合わせて約6千。攻め寄せる黒田・細川・加藤・田中・竹中らは合わせて2万近い。数では3倍以上の相手を、柵と高所を頼りに迎え撃つ。' },
+    body: '笹尾山の斜面には竹の柵が二重に結われ、その内側から鉄砲が火を噴く。石田隊約6千に対し、攻め手は2万近い。頼みは柵と高所だ。' },
   sakon_voice: { title: '鬼左近の「かかれ」', tag: '逸話', focus: ['sakon'],
-    body: '島左近は柵の外へ打って出ては敵を押し返した。その「かかれ、かかれ」という大音声と鬼気迫る姿は、戦いのあと何年も黒田家の兵の夢に出てうなされるほどだったと伝わる（江戸時代の逸話集『常山紀談』など）。' },
+    body: '島左近は柵の外へ打って出ては敵を押し返した。「かかれ、かかれ」という大音声は、戦のあと何年も黒田家の兵の夢に出て、彼らをうなされさせたという。' },
   ishida_hold: { title: '持ちこたえる石田隊', tag: 'うんちく', focus: ['ishida'],
-    body: '東軍の攻撃が最も集中したのは石田隊だったが、隊は崩れなかった。三成が狼煙を上げ、松尾山・南宮山・島津へ使者を走らせ続けたのは、正面が持ちこたえているうちに側面と背後から挟み撃ちにしたかったからだ。午前の戦況は、西軍がむしろ優勢だったとも評される。' },
+    body: '東軍の攻撃が集中しても、石田隊は崩れない。正面が持ちこたえるうちに、松尾山と南宮山の味方が敵の側面と背後を突けば勝てる。午前の戦いは、むしろ西軍が押していた。' },
   ishida_hold_early: { title: '持ちこたえる石田隊', tag: '異説', focus: ['ishida'],
-    body: '東軍の攻撃が最も集中したのは石田隊だったが、隊はまだ崩れていない。ただしこの回では、朝のうちに小早川が東軍へ転じ、南西の大谷隊はすでに崩れている。西軍の右翼が失われ、三成に残された望みは南宮山の毛利勢と島津だけになった。' },
+    body: '石田隊はまだ持ちこたえている。だが朝のうちに小早川が寝返り、南西の大谷隊はすでに崩れた。三成に残る望みは、南宮山の毛利勢と島津だけだ。' },
   ieyasu_reserve: { title: '家康本陣は戦わない', tag: '通説', focus: ['ieyasu'],
-    body: '家康が直接率いる約3万は、この日ほとんど戦っていない。最前線で血を流したのは福島・黒田・細川ら豊臣恩顧の大名と、井伊・本多・松平忠吉の一部だった。秀忠の主力が来ないなか、徳川の兵を温存したとも、豊臣系大名に手柄を立てさせて東軍に縛りつけたともいわれる。' },
+    body: '家康直属の3万は、この日ほとんど戦っていない。血を流したのは福島・黒田ら豊臣恩顧の大名たちだった。徳川の兵を温存し、彼らに手柄を立てさせて味方に縛りつけたともいわれる。' },
   ishida_isolated: { title: '孤立する笹尾山', tag: '通説', focus: ['ishida'], slow: true,
-    body: '小西・宇喜多の隊が崩れ、手の空いた東軍の諸隊が次々と笹尾山へ押し寄せる。寝返った小早川勢や脇坂らも加わり、石田隊は正面と側面の三方から攻められる。朝から6時間近く柵を守ってきた兵も、ついに数で押しつぶされていく。' },
+    body: '小西・宇喜多が崩れ、手の空いた東軍が次々と笹尾山へ押し寄せる。寝返った小早川勢も加わり、石田隊は三方から攻められる。朝から柵を守ってきた兵も、ついに数に呑まれていく。' },
   sakon_last: { title: '島左近の最期', tag: '逸話', focus: ['ishida'],
-    body: '島左近の最期ははっきりしない。午前に撃たれて退いたのち、石田隊が崩れる間際に再び打って出て討ち死にしたとも、戦場を落ち延びて生きながらえたとも伝わり、遺体は見つかっていない。各地に「左近の墓」と称するものが残る。' },
+    body: '島左近の最期ははっきりしない。最後に再び打って出て討ち死にしたとも、落ち延びたとも伝わる。遺体は見つからず、各地に「左近の墓」が残る。' },
   breakout_ieyasu: { title: '家康本陣の目の前を', tag: '通説', focus: ['shimazu', 'ieyasu'], slow: true,
-    body: '島津勢は家康の本陣のすぐ前をかすめて南へ駆け抜けた。3万の本陣は動かず、追撃は井伊・本多・松平忠吉らにまかされた。勝敗が決まったあとで、決死の島津勢とぶつかって損害を出すのを避けたともいわれる。' },
+    body: '島津勢は家康本陣の目の前をかすめて駆け抜けた。3万の本陣は動かない。勝ちが決まった後で、死に物狂いの島津とぶつかるのを避けたのだろう。' },
   epi_capture: { title: 'その後①：三成、捕らわる', tag: '史実', focus: ['ishida'], slow: true,
-    body: '戦場を逃れた三成は、わずかな供とともに伊吹山中から近江の故郷方面へ逃れた。6日後の9月21日、古橋村（現・長浜市木之本町）の山中に潜んでいたところを、田中吉政の手の者に捕らえられた。腹をこわして弱っていたと伝わる。' },
+    body: '伊吹山中へ逃れた三成は、6日後、近江の古橋村の山中で捕らえられた。腹をこわし、すっかり弱っていたという。' },
   epi_gate: { title: 'その後②：大津城の門前で', tag: '逸話', focus: ['ishida'], slow: true,
-    body: '三成は大津城の門前に縛られて晒された。通りかかった福島正則が「無益な戦を起こして、そのざまは何だ」と罵ると、三成は「武運がなく、そなたを生け捕りにできなかったのが残念だ」と言い返したという。黒田長政は馬を下りて礼をとり、自分の羽織を着せかけたとも伝わる。' },
+    body: '大津城の門前に晒された三成を、福島正則が「そのざまは何だ」と罵った。三成は「そなたを生け捕りにできなかったのが残念だ」と言い返したという。黒田長政は馬を下り、自分の羽織を着せかけた。' },
   epi_kaki: { title: 'その後③：干し柿の逸話', tag: '逸話', focus: ['ishida'], slow: true,
-    body: '京で引き回されたのち、処刑場へ向かう途中で三成が湯を所望すると、警固の者は「湯はないが干し柿ならある」と差し出した。三成は「柿は痰の毒だ」と断る。「これから首を斬られる者が毒を気にするのか」と笑われると、「大志を抱く者は、最期の瞬間まで命を大事にするものだ」と答えたと伝わる。' },
+    body: '処刑場へ向かう途中、三成は湯を所望した。代わりに出された干し柿を「痰の毒だ」と断り、「これから死ぬ者が毒を気にするのか」と笑われると、「大志ある者は最期まで命を惜しむものだ」と答えたという。' },
   epi_execution: { title: 'その後④：六条河原', tag: '史実', focus: ['ishida'], slow: true,
-    body: '10月1日、三成は小西行長・安国寺恵瓊とともに京の六条河原で処刑され、首は三条大橋のたもとに晒された。41歳（数え）。三成の居城・佐和山城は、合戦の数日後に小早川秀秋らに攻め落とされていた。' },
+    body: '10月1日、三成は小西行長・安国寺恵瓊とともに京の六条河原で斬られた。41歳。居城の佐和山城は、すでに小早川らに落とされていた。' },
   sakon: { title: '島左近、撃たれる', tag: '通説', focus: ['sakon', 'kuroda'], slow: true,
     body: '黒田隊は鉄砲隊の一部を側面の丘に回し、島左近の隊を横から撃たせた。左近は重傷を負って退いたとされる。「鬼左近」の最期には諸説あり、生き延びたという伝承も残る。' },
   taiho: { title: '石田隊の大筒', tag: '通説', focus: ['ishida'],
-    body: '石田隊は大筒（大砲）を持ち出して東軍に撃ちかけたと伝わる。笹尾山の前は、鉄砲と大筒の硝煙に包まれた。' },
+    body: '石田隊が大筒（大砲）を撃ち放つ。笹尾山の前は硝煙に包まれた。' },
   noroshi: { title: '狼煙、上がる', tag: '通説', focus: ['ishida', 'kobayakawa', 'mori'], cam: 'overview', slow: true,
-    body: '三成は笹尾山から狼煙を上げ、松尾山の小早川と南宮山の毛利勢に参戦を促した。挟み撃ちが成れば西軍の勝ちである。しかし、どちらも動かなかった。' },
+    body: '三成は笹尾山から狼煙を上げ、松尾山の小早川と南宮山の毛利勢に合図を送った。いま動けば挟み撃ちで勝てる。だが、どちらも動かない。' },
   // 「もしも」で条件を変えた回の狼煙。その回の展開と矛盾しない文面にする
   noroshi_early: { title: '狼煙、上がる', tag: '異説', focus: ['ishida', 'mori'], cam: 'overview', slow: true,
-    body: '三成は笹尾山から狼煙を上げ、南宮山の毛利勢に参戦を促した。この回では、松尾山の小早川はすでに朝のうちに東軍へ転じている。頼みは南宮山の背後攻めだけだが、毛利勢は動かなかった。' },
+    body: '三成は狼煙を上げ、南宮山の毛利勢に合図を送った。松尾山の小早川は、すでに敵に回っている。頼みの毛利勢も、動かない。' },
   noroshi_open: { title: '狼煙、上がる', tag: 'もしも', focus: ['ishida', 'kobayakawa', 'mori'], cam: 'overview', slow: true,
-    body: '三成は笹尾山から狼煙を上げ、松尾山の小早川と南宮山の毛利勢に参戦を促した。この回では吉川広家が道を開けており、南宮山の毛利勢が山を下る支度にかかる。松尾山はまだ動かない。' },
+    body: '三成は狼煙を上げ、松尾山と南宮山に合図を送った。松尾山は動かない。だが南宮山では、毛利勢が山を下る支度を始めた。' },
   noroshi_early_open: { title: '狼煙、上がる', tag: 'もしも', focus: ['ishida', 'mori'], cam: 'overview', slow: true,
-    body: '三成は笹尾山から狼煙を上げ、南宮山の毛利勢に参戦を促した。松尾山の小早川はすでに朝のうちに東軍へ転じているが、この回では吉川広家が道を開けており、毛利勢が山を下る支度にかかる。' },
+    body: '三成は狼煙を上げ、南宮山の毛利勢に合図を送った。小早川はすでに敵に回ったが、南宮山では毛利勢が山を下る支度を始めた。' },
   bento: { title: '宰相殿の空弁当', tag: '逸話', focus: ['mori', 'kikkawa'], slow: true,
-    body: '南宮山の毛利秀元は、前に陣取る吉川広家が動かないため下山できない。吉川は黒田長政を通じて東軍と内通し、毛利家の所領を守る約束を取りつけていた。参戦を催促する長束正家・安国寺恵瓊の使者に、秀元は「いま兵に弁当を食べさせている」と答えたという。秀元の官職（参議＝宰相）にちなんで「宰相殿の空弁当」と呼ばれる。' },
+    body: '南宮山の毛利秀元は、前に陣取る吉川広家が動かないため山を下りられない。吉川はひそかに東軍と通じていたのだ。催促の使者に、秀元は「いま兵に弁当を食べさせている」と答えるしかなかった。世にいう「宰相殿の空弁当」である。' },
   mori_descend: { title: 'もしも：毛利勢、下山', tag: 'もしも', focus: ['mori', 'kikkawa', 'ikeda', 'asano'], slow: true,
     body: '吉川広家が道を開けた。南宮山の毛利秀元・長宗我部盛親ら2万8千が山を下り、家康の背後を押さえる池田輝政・浅野幸長らに襲いかかる。' },
   shimazu_envoy: { title: '島津、動かず', tag: '逸話', focus: ['shimazu'], slow: true,
-    body: '三成の使者・八十島助左衛門が島津の陣に来て加勢を求めた。馬から下りずに口上を述べたため、島津勢は無礼だと怒鳴り返したという。島津豊久は「今日はそれぞれが自分の戦をするまで」と突き放した。前夜の夜襲の献策を三成が退けたことが、確執の原因とも語られる（後世の軍記による）。' },
+    body: '三成の使者が馬上から加勢を求めると、島津勢は「無礼者」と怒鳴り返した。島津豊久は「今日はそれぞれが自分の戦をするまで」と突き放す。' },
   mitsunari_visit: { title: '三成みずから島津陣へ', tag: '逸話', focus: ['shimazu', 'ishida'],
-    body: '三成自身が馬を飛ばして島津陣を訪れ、出陣を頼んだ。答えは同じだった。島津勢は兵約1,500。陣に近づく者は敵味方を問わず寄せつけず、孤高を保つ。' },
+    body: '三成みずから島津の陣へ馬を飛ばし、出陣を頼んだ。答えは同じ。島津の1,500は、近づく者を敵味方なく寄せつけない。' },
   shimazu_join: { title: 'もしも：島津、参戦', tag: 'もしも', focus: ['shimazu', 'toyohisa'], slow: true,
     body: '島津義弘が三成の要請に応じた。「鬼島津」の精兵が正面の東軍に斬り込む。' },
   ieyasu_move: { title: '家康、本陣を前へ', tag: '通説', focus: ['ieyasu'],
-    body: '戦況が膠着するなか、家康は桃配山から陣場野へ本陣を進め、諸隊を督励した。' },
+    body: '戦が膠着するなか、家康は桃配山から陣場野へ本陣を進め、諸隊を励ました。' },
   tsume: { title: '爪を噛む家康', tag: '逸話', focus: ['ieyasu', 'kobayakawa'],
-    body: '約束どおり寝返るはずの小早川秀秋が、なかなか動かない。苛立った家康は、若い頃からの癖である爪噛みをしながら「せがれめに謀られたか」とつぶやいたと伝わる。' },
+    body: '寝返るはずの小早川が、なかなか動かない。苛立った家康は爪を噛みながら「せがれめに謀られたか」とつぶやいたという。' },
   toi_deppo: { title: '問鉄砲', tag: '通説', focus: ['kobayakawa', 'ieyasu'], slow: true, cam: 'matsuo',
-    body: '業を煮やした家康は、松尾山に向けて鉄砲を撃ちかけさせ、秀秋に決断を迫ったという（問鉄砲）。ただしこの話が見えるのは江戸中期の軍記（『関ヶ原軍記大成』など）で、幕府が編んだ『朝野旧聞裒藁』の本文は、軍監らが秀秋を催促したという話を採っている。白峰旬は問鉄砲を後世の創作と論じた。問鉄砲が疑わしいことと、小早川がいつ寝返ったかは別の問題で、開戦まもなく寝返ったとする説にも再検討がある（水野伍貴ら）。「もしも」欄の異説で、その展開を試せる。' },
+    body: '業を煮やした家康は、松尾山へ鉄砲を撃ちかけさせ、秀秋に決断を迫った。世にいう「問鉄砲」だ。後世の作り話だとする説もある。' },
   kobaya_betray: { title: '小早川秀秋、寝返る', tag: '通説', focus: ['kobayakawa', 'hiratsuka', 'otani'], slow: true, cam: 'matsuo',
-    body: '松尾山の小早川勢1万5千余が山を駆け下り、西軍の大谷隊へ襲いかかった。勝敗の天秤が大きく傾く。' },
+    body: '松尾山の小早川勢1万5千が山を駆け下り、大谷隊へ襲いかかった。勝敗の天秤が、大きく傾く。' },
   kobaya_early: { title: '異説：開戦まもなく小早川が寝返る', tag: '異説', focus: ['kobayakawa', 'otani'], slow: true, cam: 'matsuo',
-    body: '合戦直後に書かれた手紙などからは、小早川は開戦まもなく西軍を攻め、戦いは短時間で決着したとも読める（白峰旬らの説）。問鉄砲の話が後世の軍記にしか見えないことも根拠の一つである。ただし手紙の読み方には異論があり、定説にはなっていない。この回は、布陣は同じまま小早川の寝返りの時刻だけを変えている。' },
+    body: '小早川は開戦まもなく山を下り、西軍に襲いかかった。問鉄砲はなかったとする説にもとづく展開で、戦いは早く決着に向かう。' },
   kobaya_neutral: { title: 'もしも：小早川、動かず', tag: 'もしも', focus: ['kobayakawa'], slow: true, cam: 'matsuo',
     body: '問鉄砲にも秀秋は動かない。松尾山の1万5千は最後まで傍観を決めこむ。' },
   kobaya_west: { title: 'もしも：小早川、東軍を攻める', tag: 'もしも', focus: ['kobayakawa', 'todo'], slow: true, cam: 'matsuo',
     body: '秀秋は西軍として松尾山を下り、藤堂・京極隊の側面に襲いかかった。' },
   otani_push: { title: '大谷吉継、裏切りを撃退', tag: '通説', focus: ['otani', 'hiratsuka', 'kobayakawa'], slow: true,
-    body: '小早川の裏切りを予期していた吉継は、松尾山に備えていた兵で小早川勢を迎え撃ち、何度も押し返した。兵の数では大きく劣りながらの奮戦だった。' },
+    body: '小早川の裏切りを読んでいた吉継は、備えの兵でこれを迎え撃ち、何度も押し返した。数では大きく劣りながらの奮戦だった。' },
   four_betray: { title: '脇坂・朽木・小川・赤座も寝返る', tag: '通説', focus: ['wakisaka', 'ogawa', 'otani'], slow: true,
-    body: '大谷隊の備えの内側にいた脇坂安治・朽木元綱・小川祐忠・赤座直保の4隊が、一斉に大谷隊へ攻めかかる。脇坂は事前に東軍に通じていたとされる。挟まれた大谷隊はもはや支えきれない。なお、合戦2日後の東軍諸将の連署状（写）に加勢した者として名が見えるのは、小早川・脇坂・小川父子で、朽木・赤座の名はない。4隊がそろって寝返ったというのは後の記録による通説である。ただし、この一通に名がないことだけで、朽木・赤座の寝返りを否定することもできない。' },
+    body: '大谷隊の脇を固めていた脇坂・朽木・小川・赤座の4隊までが寝返り、大谷隊に襲いかかる。挟まれた大谷隊は、もう支えきれない。' },
   four_loyal: { title: 'もしも：4隊は踏みとどまる', tag: 'もしも', focus: ['wakisaka', 'otani'], body: '脇坂ら4隊は寝返らず、大谷隊とともに小早川勢を迎え撃つ。' },
   hiratsuka_die: { title: '平塚為広・戸田勝成、討死', tag: '通説', focus: ['hiratsuka'],
-    body: '大谷隊とともに戦った平塚為広・戸田勝成が相次いで討死した。為広は討ち取った敵の首に辞世の歌を添えて吉継に送ったと伝わる。' },
+    body: '大谷隊とともに戦った平塚為広・戸田勝成が討死した。為広は討ち取った敵の首に辞世の歌を添えて、吉継に送ったという。' },
   yoshitsugu: { title: '大谷吉継、自害', tag: '通説', focus: ['otani'], slow: true,
-    body: '隊が崩れたのを見て、吉継は自害した。家臣の湯浅五助が主の首を敵に渡さぬよう埋め、その後討ち取られたという。五助を討った藤堂家の藤堂高刑は、首の在処を秘す約束を守ったと伝わる。' },
+    body: '隊の崩壊を見て、吉継は自害した。家臣の湯浅五助は主の首を敵に渡さぬよう埋め、自らも討たれた。首の在処は、ついに明かされなかった。' },
   konishi_flee: { title: '小西隊、崩れる', tag: '通説', focus: ['konishi'],
-    body: '大谷隊の壊滅で側面が開き、小西行長の隊が崩れた。行長は伊吹山中へ逃れたが、のちに捕らえられた。' },
+    body: '大谷隊が崩れて側面が開き、小西隊も崩れた。行長は伊吹山中へ逃れたが、のちに捕らえられる。' },
   ukita_flee: { title: '宇喜多隊、総崩れ', tag: '通説', focus: ['ukita'], slow: true,
-    body: '西軍最大の宇喜多隊も支えきれずに崩れた。秀家は「金吾（秀秋）めを討ち果たす」と小早川勢へ斬り込もうとして、家臣に止められたという。秀家は落ち延びて薩摩の島津家に匿われ、のちに八丈島へ流された。' },
+    body: '西軍最大の宇喜多隊も崩れた。秀家は「金吾（秀秋）めを斬る」と小早川勢へ突っ込もうとして、家臣に止められた。のちに八丈島へ流され、そこで長い余生を送る。' },
   mitsunari_flee: { title: '石田隊、潰走——三成は伊吹山へ', tag: '史実', focus: ['ishida'], slow: true,
-    body: '西軍の諸隊のなかで最後まで踏みとどまった石田隊も、ついに崩れた。三成は再起を期して自害を選ばず、わずかな供と笹尾山の裏から伊吹山の山中へ逃れた。笹尾山の陣には、主を失った陣幕と旗が残された。' },
+    body: '最後まで踏みとどまった石田隊も、ついに崩れた。三成は自害せず、再起を期して伊吹山中へ逃れる。笹尾山には、主を失った陣幕と旗が残された。' },
   shimazu_shoot: { title: '味方であっても撃つ', tag: '逸話', focus: ['shimazu'], slow: true,
-    body: '崩れた西軍の兵が島津の陣に逃げ込もうとした。島津勢は陣が乱れるのを嫌い、味方であろうと近づく者に容赦なく鉄砲を撃ちかけたという。' },
+    body: '崩れた西軍の兵が島津の陣へ逃げ込もうとする。島津勢は陣が乱れるのを嫌い、味方であろうと容赦なく撃ちかけた。' },
   breakout: { title: '島津の退き口——前へ退く', tag: '通説', focus: ['shimazu', 'toyohisa', 'ieyasu'], slow: true,
-    body: '西軍が崩れ、島津勢は東軍のただ中に取り残された。義弘は退路を後ろの伊吹山ではなく前に求めた。敵の正面を突き破り、家康本陣の前をかすめて伊勢街道を南へ駆け抜ける。' },
+    body: '島津勢は敵中に取り残された。義弘が選んだ退路は、後ろの山ではなく前。敵の正面を突き破り、伊勢街道を南へ駆け抜ける。' },
   sutegamari: { title: '捨て奸（すてがまり）', tag: '通説', focus: ['sute1', 'shimazu', 'tadayoshi'], slow: true,
-    body: '追いすがる東軍に対し、島津勢は少人数の組を道に残して座り込ませ、鉄砲で狙撃させては死ぬまで足止めさせた（この再現では1組15〜30人）。残った者が全滅すると、また次の組を残す。「捨て奸」と呼ばれる壮絶な撤退戦法である。' },
+    body: '追いすがる東軍に対し、島津勢は少人数の組を道に残して座り込ませた。鉄砲で狙い撃ち、死ぬまで敵を足止めする。一組が全滅すると、また次の組を残す。「捨て奸」と呼ばれる壮絶な退き方だ。' },
   ii_wound: { title: '井伊直政、撃たれる', tag: '通説', focus: ['ii', 'shimazu'], slow: true,
-    body: '島津を追った井伊直政は、島津兵（柏木源藤と伝わる）の鉄砲を受けて落馬した。この傷がもとで直政は2年後に没したとされる。松平忠吉も負傷した。' },
+    body: '島津を追う井伊直政が、島津兵の鉄砲に撃たれて落馬した。この傷がもとで、直政は2年後に世を去る。' },
   honda_fall: { title: '本多忠勝、落馬', tag: '逸話', focus: ['honda', 'shimazu'],
-    body: '本多忠勝も追撃に加わったが、乗馬を撃たれて落馬したという。生涯の戦いで傷一つ負わなかったと伝わる猛将である。' },
+    body: '追撃する本多忠勝の馬が撃たれ、忠勝は落馬した。生涯の戦で傷一つ負わなかったと伝わる猛将である。' },
   toyohisa_die: { title: '島津豊久、討死', tag: '通説', focus: ['toyohisa'], slow: true,
-    body: '殿（しんがり）をつとめた甥の豊久が、烏頭坂（うとうざか）付近で討死した。伯父の義弘を逃がすための戦いだった。' },
+    body: '殿をつとめた甥の豊久が、烏頭坂のあたりで討死した。伯父の義弘を逃がすための戦いだった。' },
   chojuin: { title: '長寿院盛淳、身代わりに', tag: '通説', focus: ['shimazu'],
-    body: '家老の長寿院盛淳は、義弘から拝領した陣羽織を着て「島津兵庫頭（義弘）である」と名乗り、敵を引きつけて討死した。' },
+    body: '家老の長寿院盛淳は、義弘の陣羽織をまとって「我こそ島津兵庫頭」と名乗り、敵を引きつけて討死した。' },
   shimazu_escape: { title: '島津義弘、戦場を離脱', tag: '通説', focus: ['shimazu'], slow: true,
-    body: '義弘は伊勢街道から伊賀・大坂を経て、海路で薩摩へ帰り着いた。関ヶ原に入った約1,500のうち、帰国できたのは80余人だったという。島津家はその後の交渉で所領を守り抜いた。' },
+    body: '義弘は伊賀・大坂を経て、海路で薩摩へ帰り着いた。関ヶ原に入った約1,500のうち、帰れたのは80余人だったという。' },
   nangu_withdraw: { title: '南宮山の諸隊、戦わずに退く', tag: '史実', focus: ['mori', 'chosokabe'], cam: 'nangu',
-    body: '本戦が決着し、南宮山の毛利秀元・長宗我部盛親・長束正家・安国寺恵瓊らは一戦も交えずに退いた。吉川広家の内通で守ったはずの毛利家は、戦後に120万石から周防・長門の約30万石に減らされた。' },
+    body: '南宮山の毛利秀元らは、一戦も交えずに退いた。吉川の内通で守ったはずの毛利家は、戦後に120万石から約30万石へ減らされる。' },
   east_win: { title: '東軍の勝利', tag: '史実', cam: 'overview', slow: true,
-    body: '西軍の主力が崩れ、天下分け目の戦いは東軍の勝利に終わった。戦いが続いたのはおよそ半日だった。' },
+    body: '西軍の主力が崩れ、天下分け目の戦いは東軍の勝利に終わった。勝負は、わずか半日で決した。' },
   west_win: { title: 'もしも：西軍の勝利', tag: 'もしも', cam: 'overview', slow: true, body: '東軍が崩れた。歴史は別の道を歩みはじめる。' },
   draw: { title: '日没——決着つかず', tag: 'もしも', cam: 'overview', slow: true, body: '日が暮れ、両軍は兵を収めた。勝敗は翌日以降に持ち越される。' },
   kubi: { title: '勝って兜の緒を締めよ', tag: '逸話', focus: ['ieyasu'], slow: true,
-    body: '戦いのあと、家康は藤川台で首実検を行った。このとき初めて兜をかぶり、緒を締めながら「勝って兜の緒を締めよ」と言ったと伝わる。小早川秀秋は戦後に備前・美作を与えられたが、2年後に21歳で没した。' },
+    body: '戦いのあと、家康は首実検の場で初めて兜をかぶり、緒を締めながら「勝って兜の緒を締めよ」と言ったという。' },
 };
 
 // 敗走メッセージ（固有イベントのない部隊用）
@@ -632,7 +633,7 @@ function makeBrain(opts = DEFAULT_OPTS) {
   when('ieyasu_reserve', (S) => S.t >= H(12, 50) && !isBroken(U(S, 'ieyasu')), (S) => S.emit('ieyasu_reserve'));
   when('ishida_isolated', (S) => isBroken(U(S, 'ukita')) && isBroken(U(S, 'konishi')) && !isBroken(U(S, 'ishida')), (S) => S.emit('ishida_isolated'));
   when('sakon_last', (S) => S.fired.has('mitsunari_flee') && S.t >= (S.flags.sakonLastAt ||= S.t + 150), (S) => S.emit('sakon_last'));
-  when('breakout_ieyasu', (S) => U(S, 'shimazu').order.type === 'path' && Math.hypot(U(S, 'shimazu').x - U(S, 'ieyasu').x, U(S, 'shimazu').z - U(S, 'ieyasu').z) < 400, (S) => S.emit('breakout_ieyasu'));
+  when('breakout_ieyasu', (S) => U(S, 'shimazu').order.type === 'path' && Math.hypot(U(S, 'shimazu').x - U(S, 'ieyasu').x, U(S, 'shimazu').z - U(S, 'ieyasu').z) < 520, (S) => S.emit('breakout_ieyasu'));
   when('sakon', (S) => S.t >= H(9, 50) && U(S, 'sakon').fighting && !isBroken(U(S, 'sakon')), (S) => {
     const u = U(S, 'sakon'); u.morale -= 0.35; u.q *= 0.6; S.emit('sakon');
   });
@@ -703,17 +704,33 @@ function makeBrain(opts = DEFAULT_OPTS) {
   });
   when('breakout_go', (S) => S.flags.breakoutReady && S.fired.has('shimazu_shoot') && S.t >= (S.flags.breakoutAt ||= S.t + 300), (S) => {
     const P = (lo, la) => S.xz(lo, la);
-    // 島津陣から家康本陣（陣場野）の前面をかすめて関ヶ原宿へ出て、伊勢街道を南へ（data/geo.json の伊勢街道に沿う）
-    const route = [P(136.4625, 35.3650), P(136.4660, 35.3642), P(136.4700, 35.3590), P(136.4740, 35.3540), P(136.4780, 35.3460), P(136.4820, 35.3380), P(136.4850, 35.3300)];
+    // 島津陣から家康本陣（陣場野）の前面をかすめて関ヶ原宿へ出て、伊勢街道を南へ
+    // （data/geo.json の伊勢街道を 40m の許容で間引き、折り返しのとげを除いたもの。街道を引き直したら合わせる）
+    const route = [P(136.4625, 35.3650), P(136.4672, 35.3629), P(136.4680, 35.3621), P(136.4685, 35.3571), P(136.4692, 35.3558), P(136.4715, 35.3548),
+      P(136.4739, 35.3526), P(136.4786, 35.3539), P(136.4817, 35.3530), P(136.4815, 35.3489), P(136.4817, 35.3454), P(136.4840, 35.3428),
+      P(136.4856, 35.3413), P(136.4892, 35.3377), P(136.4899, 35.3347), P(136.4946, 35.3321), P(136.4944, 35.3306)];
     setOrder(S, 'shimazu', { type: 'path', pts: route.slice(), i: 0, speed: 1.35 });
-    setOrder(S, 'toyohisa', { type: 'path', pts: route.slice(0, 5), i: 0, speed: 1.25 });
-    S.flags.breakoutT = S.t;
+    setOrder(S, 'toyohisa', { type: 'path', pts: route.slice(0, 10), i: 0, speed: 1.25 }); // 街道を約2km下った所で踏みとどまる
+    S.flags.breakoutT = S.t; S.flags.route = route;
     S.emit('breakout', { shimazuN: Math.round(U(S, 'shimazu').n) });
   });
   when('pursuit', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 420, (S) => {
-    attack(S, 'ii', 'shimazu'); attack(S, 'tadayoshi', 'shimazu'); attack(S, 'honda', 'shimazu');
-    for (const id of ['ii', 'tadayoshi', 'honda']) U(S, id).speed = 1.5;
+    // 追手はまず島津と同じ道筋（家康本陣の前→伊勢街道）に入る。島津へ一直線に向かうと家康本隊にぶつかって進めないため
+    const R = S.flags.route, s = U(S, 'shimazu');
+    for (const id of ['ii', 'tadayoshi', 'honda']) {
+      const u = U(S, id);
+      // 自分に近い経由点から、島津がいる区間の手前まで道をたどる
+      let i0 = 0;
+      for (let i = 1; i < R.length; i++) if (Math.hypot(R[i][0] - u.x, R[i][1] - u.z) < Math.hypot(R[i0][0] - u.x, R[i0][1] - u.z)) i0 = i;
+      const i1 = Math.max(i0 + 1, s.order.i || 1);
+      setOrder(S, id, { type: 'path', pts: R.slice(i0, i1), i: 0, speed: 1.5, chase: true });
+      u.speed = 1.5;
+    }
   });
+  // 道をたどり終えた追手は、島津本隊を直接追う
+  rules.push({ id: 'chase_attack', repeat: true, when: (S) => S.flags.route && ['ii', 'tadayoshi', 'honda'].some((id) => { const o = U(S, id).order; return o.chase && o.i >= o.pts.length; }), fn: (S) => {
+    for (const id of ['ii', 'tadayoshi', 'honda']) { const o = U(S, id).order; if (o.chase && o.i >= o.pts.length) attack(S, id, 'shimazu'); }
+  } });
   when('sutegamari', (S) => S.fired.has('sute:sute1'), (S) => S.emit('sutegamari'));
   // 捨て奸: 退却中、少人数の組を道に残して死ぬまで足止めさせる（その兵は戻らない）
   rules.push({ id: 'sute_loop', repeat: true, when: (S) => S.flags.breakoutT && U(S, 'shimazu').order.type === 'path' && S.t >= (S.flags.suteNext ||= S.flags.breakoutT + 600), fn: (S) => {
@@ -731,12 +748,13 @@ function makeBrain(opts = DEFAULT_OPTS) {
     const x0 = d.x, z0 = d.z; d.def0x = () => x0; d.def0z = () => z0;
     S.emit('sute:' + d.id, { unit: d.id, n: k });
   } });
-  when('ii_wound', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 1000 && (U(S, 'ii').fighting || S.t >= S.flags.breakoutT + 1600), (S) => {
+  const vsShimazu = (u) => u.contacts.some((c) => c.id === 'shimazu' || c.id === 'toyohisa' || (c.hidden && c.side !== u.side));
+  when('ii_wound', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 600 && vsShimazu(U(S, 'ii')), (S) => {
     const ii = U(S, 'ii'), td = U(S, 'tadayoshi');
     ii.morale -= 0.3; setOrder(S, 'ii', { type: 'hold' }); td.morale -= 0.1; // 井伊隊は止まるが、忠吉・本多は追い続ける
     S.emit('ii_wound');
   });
-  when('honda_fall', (S) => S.fired.has('ii_wound') && S.t >= S.flags.breakoutT + 1300, (S) => {
+  when('honda_fall', (S) => S.flags.breakoutT && S.t >= S.flags.breakoutT + 600 && vsShimazu(U(S, 'honda')), (S) => {
     U(S, 'honda').morale -= 0.1; S.emit('honda_fall');
   });
   when('toyohisa_stop', (S) => { const o = U(S, 'toyohisa').order; return o.type === 'path' && o.i >= o.pts.length; }, (S) => {
@@ -1118,6 +1136,7 @@ controls.maxPolarAngle = Math.PI * 0.47;
 controls.minDistance = 8;
 controls.maxDistance = 16000;
 controls.screenSpacePanning = false;
+controls.zoomToCursor = true;
 
 // 空（朝の薄曇り）
 {
@@ -1140,7 +1159,7 @@ scene.add(sun);
 scene.add(new THREE.HemisphereLight(0xc4d0dc, 0x5a5040, 1.15));
 
 // ───────────────── 地形 ─────────────────
-let updateStubble;
+let updateStubble, terrain;
 {
   const geo = new THREE.PlaneGeometry(SX, SY, DW - 1, DH - 1);
   geo.rotateX(-Math.PI / 2);
@@ -1159,7 +1178,7 @@ let updateStubble;
   grain.wrapS = grain.wrapT = THREE.RepeatWrapping;
   grain.anisotropy = tex.anisotropy;
   applyGroundDetail(mat, cover, grain, SX, SY);
-  const terrain = new THREE.Mesh(geo, mat);
+  terrain = new THREE.Mesh(geo, mat);
   scene.add(terrain);
   // 外周の地面（地図の外を霧に溶かす）
   const outer = new THREE.Mesh(new THREE.PlaneGeometry(80000, 80000), new THREE.MeshLambertMaterial({ color: 0x6f6a4c }));
@@ -2010,6 +2029,57 @@ function select(V) {
 
 // ───────────────── 視点 ─────────────────
 let fly = null;
+const movementKeys = new Set();
+let draggingMap = false;
+const editingControl = (el) => el?.isContentEditable || el?.matches?.('select, input, textarea');
+addEventListener('keydown', (e) => {
+  if (!['KeyW', 'KeyA', 'KeyS', 'KeyD'].includes(e.code) || e.ctrlKey || e.metaKey || e.altKey ||
+      e.isComposing || editingControl(e.target)) return;
+  e.preventDefault();
+  movementKeys.add(e.code);
+  fly = null;
+});
+addEventListener('keyup', (e) => movementKeys.delete(e.code));
+addEventListener('focusin', (e) => { if (editingControl(e.target)) movementKeys.clear(); });
+function releaseCameraInputs() {
+  movementKeys.clear();
+  draggingMap = false;
+}
+addEventListener('blur', releaseCameraInputs);
+document.addEventListener('visibilitychange', () => { if (document.hidden) releaseCameraInputs(); });
+controls.addEventListener('start', () => { draggingMap = true; fly = null; });
+controls.addEventListener('end', () => { draggingMap = false; });
+renderer.domElement.addEventListener('pointercancel', () => { draggingMap = false; });
+
+function moveCamera(dt) {
+  if (!movementKeys.size) return;
+  const forward = Number(movementKeys.has('KeyW')) - Number(movementKeys.has('KeyS'));
+  const right = Number(movementKeys.has('KeyD')) - Number(movementKeys.has('KeyA'));
+  if (!forward && !right) return;
+  fly = null;
+  const heading = controls.getAzimuthalAngle();
+  const speed = THREE.MathUtils.clamp(controls.getDistance() * 0.45, 5, 2200);
+  const step = speed * dt / Math.hypot(forward, right);
+  const dx = (right * Math.cos(heading) - forward * Math.sin(heading)) * step;
+  const dz = (-right * Math.sin(heading) - forward * Math.cos(heading)) * step;
+  const eye = camera.position;
+  const dy = heightAt(eye.x + dx, eye.z + dz) - heightAt(eye.x, eye.z);
+  eye.x += dx; eye.y += dy; eye.z += dz;
+  controls.target.x += dx; controls.target.y += dy; controls.target.z += dz;
+}
+
+renderer.domElement.addEventListener('dblclick', (e) => {
+  const rect = renderer.domElement.getBoundingClientRect();
+  const cursor = new THREE.Vector2((e.clientX - rect.left) / rect.width * 2 - 1,
+                                   1 - (e.clientY - rect.top) / rect.height * 2);
+  const ray = new THREE.Raycaster();
+  ray.setFromCamera(cursor, camera);
+  const hit = ray.intersectObject(terrain, false)[0];
+  if (!hit) return;
+  const offset = camera.position.clone().sub(controls.target);
+  offset.setLength(THREE.MathUtils.clamp(hit.distance * 0.5, controls.minDistance, controls.maxDistance));
+  flyCam(offset.add(hit.point), hit.point, 0.65);
+});
 function flyCam(p1, t1, dur = 2.2) { fly = { p0: camera.position.clone(), t0: controls.target.clone(), p1, t1, k: 0, dur }; }
 function presetFrom(lon, lat, eyeH, lookLon, lookLat) {
   const [x, z] = ll2xz(lon, lat), [lx, lz] = ll2xz(lookLon, lookLat);
@@ -2037,6 +2107,7 @@ function focusUnits(ids, minDist = 600) {
   flyCam(p, t);
 }
 function focusEvent(info) {
+  if (movementKeys.size || draggingMap) return;
   if (info.cam && PRESETS[info.cam]) PRESETS[info.cam]();
   else if (info.focus) focusUnits(info.focus);
 }
@@ -2160,6 +2231,7 @@ function loop() {
   smoke.m.uniforms.uNow.value = play.gameT;
   smoke.m.uniforms.uPx.value = renderer.domElement.height / (2 * Math.tan(camera.fov * Math.PI / 360));
   updateEnvironment(play.gameT);
+  moveCamera(dt);
   if (fly) {
     fly.k = Math.min(1, fly.k + dt / fly.dur);
     const e = fly.k < 0.5 ? 2 * fly.k * fly.k : 1 - Math.pow(-2 * fly.k + 2, 2) / 2;
