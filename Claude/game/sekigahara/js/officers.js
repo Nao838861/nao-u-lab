@@ -60,5 +60,5 @@ export function loadOfficerPortrait(container, def) {
   const image = new Image();
   image.alt = def.name.includes('・') ? '合同隊の代表肖像（想像図）' : def.name + 'の肖像（想像図）';
   image.onload = () => slot.replaceChildren(image);
-  image.src = 'img/faces/' + def.id + '.jpg';
+  image.src = 'img/faces/' + (def.portrait ?? def.id + '.jpg');
 }

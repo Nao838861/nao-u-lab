@@ -9,7 +9,7 @@ export const SIDE = { W: '西軍', E: '東軍' };
 
 export const UNITS = [
   // ───────── 西軍 ─────────
-  { id: 'ishida', name: '石田三成', side: 'W', n: 4000, lon: 136.458746, lat: 35.371796, pos: 'stele', face: 100, color: '#ece6d4', place: '笹尾山',
+  { id: 'ishida', name: '石田三成', portrait: 'ishida-painted.jpg', side: 'W', n: 4000, lon: 136.458746, lat: 35.371796, pos: 'stele', face: 100, color: '#ece6d4', place: '笹尾山',
     note: '西軍の実質的な総指揮者。笹尾山に本陣を置き、前面に柵（竹矢来）を二重に構えた。旗印「大一大万大吉」で知られる。' },
   { id: 'sakon', name: '島左近', side: 'W', n: 1000, lon: 136.461746, lat: 35.370596, pos: 'parent', face: 100, color: '#ddd5bc', place: '笹尾山前面', parent: 'ishida',
     note: '「三成に過ぎたるもの」とうたわれた家老。石田隊の前衛として黒田・細川らと戦い、鉄砲で負傷したとされる。' },
