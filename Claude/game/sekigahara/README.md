@@ -1,6 +1,8 @@
 # 関ヶ原 1600（M0 モック）
 
-ES モジュールを使うため、file:// では開けない。フォルダをWebサーバで配信して index.html を開く（例: `python -m http.server` → http://localhost:8000/）。
+index.html をダブルクリックで開ける（three.js は CDN から読むのでネット接続は必要）。
+
+開発時は js/ を編集して `python tools/build.py` で index.html を再生成する。dev.html は js/ をモジュールとして直接読む開発用（Webサーバ経由でのみ動く）。
 
 - ドラッグ：移動 ／ 右ドラッグ：回転 ／ ホイール：ズーム
 - 名札クリック：武将の解説、「この陣へ寄る」

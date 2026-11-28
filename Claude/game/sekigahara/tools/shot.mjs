@@ -21,7 +21,7 @@ page.on('request', (req) => {
 page.on('console', (m) => console.log('[console]', m.type(), m.text()));
 page.on('pageerror', (e) => console.log('[pageerror]', e.message));
 await page.goto(url, { waitUntil: 'load', timeout: 120000 });
-await page.waitForFunction('window.__ready === true', { timeout: 120000 });
+await page.waitForFunction('window.__ready === true', { timeout: 20000 }).catch(() => console.log('NOT READY'));
 await new Promise((r) => setTimeout(r, 6000));
 console.log(await page.evaluate(() => [document.getElementById('count').textContent, document.getElementById('trees').textContent, document.getElementById('fps').textContent].join(' | ')));
 await page.screenshot({ path: out });

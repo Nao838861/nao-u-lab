@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>関ヶ原 1600</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="view"></div>
+<div id="labels"></div>
+
+<header id="title">
+  <h1>関ヶ原 <small>慶長5年9月15日（1600年10月21日）辰の刻前</small></h1>
+  <p>両軍布陣 — M0 モック（静止表示）</p>
+</header>
+
+<aside id="panel">
+  <section>
+    <h3>視点</h3>
+    <div class="btns">
+      <button data-view="overview">全景</button>
+      <button data-view="east">東軍の背後から</button>
+      <button data-view="south">南から</button>
+      <button data-view="top">真上</button>
+      <button data-view="ishida">笹尾山（三成）</button>
+      <button data-view="matsuo">松尾山（小早川）</button>
+      <button data-view="ieyasu">桃配山（家康）</button>
+      <button data-view="nangu">南宮山（毛利）</button>
+    </div>
+  </section>
+  <section>
+    <label>1体あたりの人数
+      <select id="ratio"><option value="1">1人（全員）</option><option value="4">4人</option><option value="10">10人</option></select>
+    </label>
+    <label>兵の大きさ <span id="scaleV">1.6倍</span>
+      <input id="scale" type="range" min="1" max="4" step="0.2" value="1.6">
+    </label>
+    <label>天候
+      <select id="fog"><option value="clear">晴れ</option><option value="haze" selected>薄霞</option><option value="mist">朝霧（開戦前）</option></select>
+    </label>
+    <label>名札
+      <select id="labelsSel"><option value="all">すべて</option><option value="major">主要のみ</option><option value="none">なし</option></select>
+    </label>
+  </section>
+  <section class="stats"><div id="count"></div><div id="trees"></div><div id="fps"></div></section>
+  <section class="legend">
+    <span class="lg W">西軍</span><span class="lg E">東軍</span><span class="lg betray">寝返り</span><span class="lg idle">戦わず</span>
+  </section>
+</aside>
+
+<article id="info" hidden></article>
+
+<footer id="credit">地形：国土地理院 標高タイル（DEM10B）を加工 ／ 布陣・兵数：通説に基づく概略（検証中） ／ 名札クリックで解説</footer>
+
+<script src="data/dem.js"></script>
+<script src="data/ground.js"></script>
+<script src="data/geo.js"></script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
