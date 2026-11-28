@@ -5,7 +5,7 @@ const H = (h, m = 0) => h * 3600 + m * 60;
 
 // 部隊ごとの能力（q=戦闘力倍率, fort=陣地の守りの堅さ, morale=初期士気, msens=損害に対する士気の脆さ, retreat=敗走先）
 export const PARAMS = {
-  ishida: { q: 1.25, fort: 2.2, homeR: 400, msens: 0.7, retreat: [136.4470, 35.3890] },
+  ishida: { fixedHQ: true, q: 1.25, fort: 2.2, homeR: 400, msens: 0.7, retreat: [136.4579, 35.3740] },
   sakon: { q: 1.4, fort: 1.8, msens: 0.6, retreat: [136.4470, 35.3890] },
   gamo: { q: 1.2, fort: 2.8, msens: 0.9, noRout: true, retreat: [136.4470, 35.3890] },
   shimazu: { q: 2.2, fort: 1.8, morale: 0.95, msens: 0.5, noRout: true },
@@ -69,7 +69,7 @@ export const EVENTS = {
   ieyasu_reserve: { title: '家康本陣は戦わない', tag: '通説', focus: ['ieyasu'],
     body: '家康直属の3万は、この日ほとんど戦っていない。血を流したのは福島・黒田ら豊臣恩顧の大名たちだった。徳川の兵を温存し、彼らに手柄を立てさせて味方に縛りつけたともいわれる。' },
   ishida_isolated: { title: '孤立する笹尾山', tag: '通説', focus: ['ishida'], slow: true,
-    body: '小西・宇喜多が崩れ、手の空いた東軍が次々と笹尾山へ押し寄せる。寝返った小早川勢も加わり、石田隊は三方から攻められる。朝から柵を守ってきた兵も、ついに数に呑まれていく。' },
+    body: '小西・宇喜多の両隊が崩れ、笹尾山の南に並んでいた味方の陣が空いた。三成の馬印はまだ笹尾山にある。東軍と向き合う石田隊を支える味方は、もう少ない。' },
   sakon_last: { title: '島左近の最期', tag: '逸話', focus: ['ishida'],
     body: '島左近の最期ははっきりしない。最後に再び打って出て討ち死にしたとも、落ち延びたとも伝わる。遺体は見つからず、各地に「左近の墓」が残る。' },
   breakout_ieyasu: { title: '家康本陣の目の前を', tag: '通説', focus: ['shimazu', 'ieyasu'], slow: true,
@@ -102,7 +102,7 @@ export const EVENTS = {
   shimazu_envoy: { title: '島津、動かず', tag: '逸話', focus: ['shimazu'], slow: true,
     body: '三成の使者が馬上から加勢を求めると、島津勢は「無礼者」と怒鳴り返した。島津豊久は「今日はそれぞれが自分の戦をするまで」と突き放す。' },
   mitsunari_visit: { title: '三成みずから島津陣へ', tag: '逸話', focus: ['shimazu', 'ishida'],
-    body: '三成みずから島津の陣へ馬を飛ばし、出陣を頼んだ。答えは同じ。島津の1,500は、近づく者を敵味方なく寄せつけない。' },
+    body: '三成が自ら島津義弘の陣へ出向き、出陣を頼んだという逸話がある。義弘は応じなかった。画面の馬印は笹尾山に残る石田本隊を示す。' },
   shimazu_join: { title: 'もしも：島津、参戦', tag: 'もしも', focus: ['shimazu', 'toyohisa'], slow: true,
     body: '島津義弘が三成の要請に応じた。「鬼島津」の精兵が正面の東軍に斬り込む。' },
   ieyasu_move: { title: '家康、本陣を前へ', tag: '通説', focus: ['ieyasu'],
@@ -132,8 +132,8 @@ export const EVENTS = {
     body: '大谷隊が崩れて側面が開き、小西隊も崩れた。行長は伊吹山中へ逃れたが、のちに捕らえられる。' },
   ukita_flee: { title: '宇喜多隊、総崩れ', tag: '通説', focus: ['ukita'], slow: true,
     body: '西軍最大の宇喜多隊も崩れた。秀家は「金吾（秀秋）めを斬る」と小早川勢へ突っ込もうとして、家臣に止められた。のちに八丈島へ流され、そこで長い余生を送る。' },
-  mitsunari_flee: { title: '石田隊、潰走——三成は伊吹山へ', tag: '史実', focus: ['ishida'], slow: true,
-    body: '最後まで踏みとどまった石田隊も、ついに崩れた。三成は自害せず、再起を期して伊吹山中へ逃れる。笹尾山には、主を失った陣幕と旗が残された。' },
+  mitsunari_flee: { title: '石田隊が崩れ、三成が笹尾山を離れる', tag: '通説', focus: ['ishida'], slow: true,
+    body: '石田隊が崩れ、三成は笹尾山を離れた。ここからは一隊としての足取りを追えない。画面では本陣の北で隊の表示が消える。その後、三成は伊吹山方面に逃れたと伝わる。' },
   shimazu_shoot: { title: '味方であっても撃つ', tag: '逸話', focus: ['shimazu'], slow: true,
     body: '崩れた西軍の兵が島津の陣へ逃げ込もうとする。島津勢は陣が乱れるのを嫌い、味方であろうと容赦なく撃ちかけた。' },
   shimazu_alone: { title: '取り残された島津', tag: '逸話', focus: ['shimazu', 'toyohisa'], slow: true,
@@ -224,7 +224,11 @@ export function makeBrain(opts = DEFAULT_OPTS) {
   when('sakon_voice', (S) => S.t >= H(9, 15) && !isBroken(U(S, 'sakon')) && U(S, 'sakon').fighting, (S) => S.emit('sakon_voice'));
   at(H(10, 25), 'ishida_hold', (S) => { if (!isBroken(U(S, 'ishida'))) S.emit(O.kobaya === 'early' ? 'ishida_hold_early' : 'ishida_hold'); });
   when('ieyasu_reserve', (S) => S.t >= H(12, 50) && !isBroken(U(S, 'ieyasu')), (S) => S.emit('ieyasu_reserve'));
-  when('ishida_isolated', (S) => isBroken(U(S, 'ukita')) && isBroken(U(S, 'konishi')) && !isBroken(U(S, 'ishida')), (S) => S.emit('ishida_isolated'));
+  when('ishida_isolated', (S) => isBroken(U(S, 'ukita')) && isBroken(U(S, 'konishi')) && !isBroken(U(S, 'ishida')), (S) => {
+    // 両隣の戦線がなくなれば、正面を固めた陣の防御補正を解く。
+    U(S, 'ishida').fort = 1;
+    S.emit('ishida_isolated');
+  });
   when('sakon_last', (S) => S.fired.has('mitsunari_flee') && S.t >= (S.flags.sakonLastAt ||= S.t + 150), (S) => S.emit('sakon_last'));
   when('breakout_ieyasu', (S) => U(S, 'shimazu').order.type === 'path' && Math.hypot(U(S, 'shimazu').x - U(S, 'ieyasu').x, U(S, 'shimazu').z - U(S, 'ieyasu').z) < 520, (S) => S.emit('breakout_ieyasu'));
   when('sakon', (S) => S.t >= H(9, 50) && U(S, 'sakon').fighting && !isBroken(U(S, 'sakon')), (S) => {
@@ -260,7 +264,9 @@ export function makeBrain(opts = DEFAULT_OPTS) {
   // 小早川
   const betray = (S) => {
     const k = U(S, 'kobayakawa'); k.side = 'E'; k.speed = 1.1;
-    attack(S, 'kobayakawa', 'hiratsuka');
+    // 松尾山を下った本隊は大谷方面で戦う。四隊が西軍に残る分岐ではその反撃にも応じる。
+    setOrder(S, k.id, { type: 'attack', target: 'hiratsuka',
+      targets: ['hiratsuka', 'otani', 'otani2', ...(O.four === 'loyal' ? ['wakisaka', 'kutsuki', 'ogawa', 'akaza'] : [])] });
     S.flags.betrayT = S.t;
   };
   if (O.kobaya === 'history') {
@@ -452,7 +458,7 @@ export function makeBrain(opts = DEFAULT_OPTS) {
   });
   when('mop', (S) => S.result && S.result.winner === 'E', (S) => {
     // 残る西軍への掃討
-    for (const u of S.units) if (u.side === 'E' && u.order.type === 'hold' && !['ieyasu', 'ikeda', 'asano', 'yamauchi', 'arima', 'ii', 'tadayoshi', 'honda'].includes(u.id)) {
+    for (const u of S.units) if (u.side === 'E' && u.order.type === 'hold' && !['ieyasu', 'ikeda', 'asano', 'yamauchi', 'arima', 'ii', 'tadayoshi', 'honda', 'kobayakawa'].includes(u.id)) {
       const e = S.units.find((w) => w.side === 'W' && !isBroken(w) && w.order.type !== 'aloof' && w.order.type !== 'idle' && w.order.type !== 'path' && Math.hypot(w.x - u.x, w.z - u.z) < 1500);
       if (e) setOrder(S, u.id, { type: 'attack', target: e.id });
     }

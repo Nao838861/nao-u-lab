@@ -13,30 +13,44 @@ export function run(opts = {}, trace = false) {
   S.retarget = retarget;
   const brain = makeBrain({ ...DEFAULT_OPTS, ...opts });
   const ev = [];
+  const { ishida, shimazu, kobayakawa, otani } = S.byId;
+  let maxCampOffset = 0, atBreakout = null;
+  S.listeners.push((e) => {
+    if (e.id === 'breakout') atBreakout = {
+      ishidaDispersed: ishida.status === 'gone' && ishida.n > 0,
+      kobayaHolding: kobayakawa.order.type === 'hold',
+      toShimazu: Math.hypot(kobayakawa.x - shimazu.x, kobayakawa.z - shimazu.z),
+      toOtaniCamp: Math.hypot(kobayakawa.x - otani.def0x(), kobayakawa.z - otani.def0z()),
+    };
+  });
   S.listeners.push((e) => ev.push(`${hhmm(e.t)} ${e.id}${e.n !== undefined ? ' n=' + e.n : ''}`));
   let lastTrace = 0;
   while (!S.over && S.t < 17 * 3600 + 60) {
     stepSim(S, brain);
+    if (!isBroken(ishida)) maxCampOffset = Math.max(maxCampOffset, Math.hypot(ishida.x - ishida.def0x(), ishida.z - ishida.def0z()));
     if (trace && S.t - lastTrace >= 1800) {
       lastTrace = S.t;
       console.log('--', hhmm(S.t), S.units.filter((u) => !['mori','kikkawa','ankokuji','natsuka','chosokabe','ikeda','asano','yamauchi','arima'].includes(u.id))
         .map((u) => `${u.name.slice(0, 4)}${u.side}:${Math.round(u.n)}/${u.morale.toFixed(2)}${u.status === 'rout' ? 'R' : u.status === 'gone' ? 'G' : ''}`).join(' '));
     }
   }
-  return { S, ev };
+  return { S, ev, maxCampOffset, atBreakout };
 }
 
 const args = process.argv.slice(2);
 const opt = {};
 const i = args.indexOf('--if');
 if (i >= 0) for (const kv of args[i + 1].split(',')) { const [k, v] = kv.split('='); opt[k] = v; }
-const { S, ev } = run(opt, args.includes('--trace'));
+const { S, ev, maxCampOffset, atBreakout } = run(opt, args.includes('--trace'));
 console.log(ev.filter((e) => !e.includes('gone:')).join('\n'));
 const T = sideTotals(S);
 console.log(`結果: ${S.result?.winner} @${S.result ? hhmm(S.result.t) : '-'}  西軍損害 ${Math.round(T.W.killed)} / 東軍損害 ${Math.round(T.E.killed)}`);
 if (!Object.keys(opt).length) {
   const t = (id) => { const e = S.log.find((x) => x.id === id); return e ? e.t / 3600 : null; };
   const checks = [
+    [`石田本隊は潰走まで笹尾山の本陣を維持（最大変位 ${maxCampOffset.toFixed(1)} m）`, maxCampOffset < 1],
+    ['島津が動くまでに石田隊の残兵は戦場を離脱', atBreakout?.ishidaDispersed],
+    [`退き口開始時、小早川は大谷陣跡付近で停止（大谷まで ${atBreakout?.toOtaniCamp.toFixed(0)} m、島津まで ${atBreakout?.toShimazu.toFixed(0)} m）`, atBreakout?.kobayaHolding && atBreakout.toOtaniCamp < 450 && atBreakout.toShimazu > 650],
     ['小早川寝返り 12:00±30分', Math.abs(t('kobaya_betray') - 12.1) <= 0.5],
     ['大谷吉継の自害 12:40〜13:50', t('yoshitsugu') >= 12.66 && t('yoshitsugu') <= 13.84],
     ['東軍勝利 13:00〜14:45', t('east_win') >= 13 && t('east_win') <= 14.75],

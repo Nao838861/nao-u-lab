@@ -417,12 +417,18 @@ function buildArmies() {
       }
       depthAcc = Math.max(depthAcc, -v);
     }
-    const shift = depthAcc / 2;
+    // 笹尾山の座標は備の中央ではなく三成本陣の跡。陣幕・馬印・名札の原点を合わせる。
+    const hq = PARAMS[u.id]?.fixedHQ && honjinAt;
+    const originU = hq ? hq[0] : 0, originV = hq ? hq[1] : -depthAcc / 2;
     // 部隊ローカル座標（x=左右, z=前後, 前が+z）
-    const L = (lu, lv) => [-lu, lv + shift];
+    const L = (lu, lv) => [originU - lu, lv - originV];
     const front = bb[3], back = bb[2];
     const rankOf = (lv) => Math.min(0.999, 0.5 * rnd() + 0.5 * (1 - (lv - back) / Math.max(1, front - back)));
-    const toWorld = (lu, lv) => { const lvv = lv + shift; const x = cx + rx * lu + fx * lvv, z = cz + rz * lu + fz * lvv; return [x, heightAt(x, z), z]; };
+    const toWorld = (lu, lv) => {
+      const [lx, lz] = L(lu, lv);
+      const x = cx - rx * lx + fx * lz, z = cz - rz * lx + fz * lz;
+      return [x, heightAt(x, z), z];
+    };
     const mats = unitMaterials(u.color);
     const armorCol = C(u.armor || '#3a302a');
     const flagCol = C(u.color);

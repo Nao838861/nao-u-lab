@@ -27,6 +27,7 @@ export function createSim(units, xz, params, bounds) {
       id: d.id, def: d, name: d.name, side: d.side, origSide: d.side,
       n: d.n, n0: d.n, killed: 0, morale: p.morale ?? 0.9, morale0: p.morale ?? 0.9, msens: p.msens ?? 1.6,
       q: p.q ?? 1, fort: p.fort ?? 1, x, z, hx: x, hz: z, face: d.face, homeFace: d.face,
+      fixedHQ: !!p.fixedHQ,
       r: Math.min(190, Math.max(25, Math.sqrt(d.n) * 1.4)),
       order: { type: d.idle ? 'idle' : 'hold' }, status: d.hidden ? 'gone' : 'hold', hidden: !!d.hidden, contacts: [],
       moving: 0, fighting: 0, fire: 0, retreat: p.retreat ? xz(...p.retreat) : null, speed: p.speed ?? 0.9, noRout: !!p.noRout, homeR: p.homeR ?? 150,
@@ -157,7 +158,9 @@ export function stepSim(S, brain) {
     if (o.type === 'attack') {
       let T = S.byId[o.target];
       if (!T || isBroken(T) || T.side === u.side) {
-        T = (S.retarget && S.retarget(S, u)) || nearestEnemy(S, u, 1600);
+        T = o.targets
+          ? nearestEnemy(S, u, 2200, (e) => o.targets.includes(e.id))
+          : (S.retarget && S.retarget(S, u)) || nearestEnemy(S, u, 1600);
         if (T) o.target = T.id; else { setOrder(S, u.id, { type: 'hold' }); }
       }
       // 捨て奸に接していれば、それを片づけるまで先へ進めない（足止め）
@@ -189,6 +192,7 @@ export function stepSim(S, brain) {
     const d = dist(a, b) || 1, ux = (b.x - a.x) / d, uz = (b.z - a.z) / d;
     const s = p * 0.3 * dt;
     for (const u of [a, b]) {
+      if (u.fixedHQ && u.order.type === 'hold') continue;
       u.x += ux * s; u.z += uz * s;
       if (u.order.type === 'hold') { // 持ち場から離れすぎない
         const hx = u.x - u.hx, hz = u.z - u.hz, hd = Math.hypot(hx, hz);
@@ -207,7 +211,9 @@ export function stepSim(S, brain) {
     if (d < min && d > 0.01) {
       const push = (min - d) * 0.06, ux = (b.x - a.x) / d, uz = (b.z - a.z) / d;
       // 島津の陣には近づけない（島津側は動かず、相手だけが避ける）
-      const ma = b.order.type === 'aloof' ? 2 : a.order.type === 'aloof' ? 0 : 1, mb = a.order.type === 'aloof' ? 2 : b.order.type === 'aloof' ? 0 : 1;
+      const fixedA = a.order.type === 'aloof' || (a.fixedHQ && a.order.type === 'hold');
+      const fixedB = b.order.type === 'aloof' || (b.fixedHQ && b.order.type === 'hold');
+      const ma = fixedA ? 0 : fixedB ? 2 : 1, mb = fixedB ? 0 : fixedA ? 2 : 1;
       a.x -= ux * push * ma; a.z -= uz * push * ma; b.x += ux * push * mb; b.z += uz * push * mb;
     }
   }
