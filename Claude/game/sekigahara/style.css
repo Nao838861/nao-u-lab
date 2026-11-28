@@ -109,7 +109,16 @@ button:hover { background: #efe6d2; }
 #timeline.hold .tm::after { content: "注目"; margin-left: 6px; font-size: 11px; padding: 1px 6px; background: #8a2a1a; color: #fff; }
 .tag-戦況 { background: #9a3a1a; } #log li.tag-戦況 { border-color: #9a3a1a; }
 #marks i.tag-戦況 { background: #9a3a1a; height: 7px; }
-#card.wide { width: min(900px, calc(100vw - 300px)); }
-#card .withmap { display: flex; gap: 14px; align-items: flex-start; }
-#card .cardmap { width: 420px; max-width: 55%; flex: none; border: 1px solid #b8ab8a; background: #efe7d4; font-family: "Yu Mincho", serif; }
-@media (max-width: 900px) { #card .withmap { flex-direction: column; } #card .cardmap { max-width: 100%; width: 100%; } }
+#card.wide { width: min(900px, calc(100vw - 300px)); z-index: 1; background: #f6f1e6; }
+#card .withmap { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(0, 1.9fr); grid-template-areas: "national detail" "copy detail"; gap: 8px 16px; align-items: start; }
+#card figure { margin: 0; min-width: 0; }
+#card .national { grid-area: national; }
+#card .detail { grid-area: detail; }
+#card .map-copy { grid-area: copy; }
+#card figcaption { margin-bottom: 3px; color: #504737; font: 600 13px/1.5 system-ui, sans-serif; }
+#card .cardmap, #card .locator-map { display: block; width: 100%; border: 1px solid #b8ab8a; background: #efe7d4; font-family: system-ui, sans-serif; }
+@media (max-width: 900px) {
+  #card.wide { width: min(650px, calc(100vw - 20px)); min-width: 0; }
+  #card .withmap { grid-template-columns: minmax(130px, .95fr) minmax(0, 1.15fr); grid-template-areas: "national copy" "detail detail"; }
+  #card .map-copy { align-self: center; }
+}

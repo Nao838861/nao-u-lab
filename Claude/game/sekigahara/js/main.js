@@ -4,7 +4,7 @@ import { MapControls } from 'three/addons/controls/MapControls.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { UNITS, SIDE } from './units.js';
 import { createSim, stepSim, prepare, hhmm, koku, sideTotals, T_START, T_END, SIM_DT } from './sim.js';
-import { MAPS } from './maps.js';
+import { cardMaps } from './maps.js';
 import { applyGroundDetail, nearbyStubble } from './terrain.js';
 import { PARAMS, makeBrain, retarget, EVENTS, DEFAULT_OPTS, OPTIONS, ROUT_EVENTS, routText } from './scenario.js';
 
@@ -834,7 +834,7 @@ function showCard(info, e, totals = null) {
   if (play.autoCam) focusEvent(info);
   const extra = e.id === 'shimazu_escape' && e.n !== undefined ? `<p class="num">戦場を離れた島津勢：約${e.n}人（この再現での値）</p>` : '';
   cardEl.innerHTML = `<div class="meta"><time>${hhmm(e.t)}　${koku(e.t)}</time><i class="tag tag-${info.tag}">${info.tag}</i></div>
-    <h2>${info.title}</h2>${info.map && MAPS[info.map] ? `<div class="withmap">${MAPS[info.map]()}<div><p>${info.body}</p>${extra}</div></div>` : `<p>${info.body}</p>${extra}`}
+    <h2>${info.title}</h2>${info.map ? `<div class="withmap">${cardMaps(info.map)}<div class="map-copy"><p>${info.body}</p>${extra}</div></div>` : `<p>${info.body}</p>${extra}`}
     <div class="card-actions"><span role="status"></span><button type="button">次に進む</button></div>`;
   cardEl.classList.toggle('wide', !!info.map);
   cardEl.hidden = false;
