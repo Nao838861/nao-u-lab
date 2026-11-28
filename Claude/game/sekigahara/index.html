@@ -2298,16 +2298,19 @@ const MAT = { body: bodyMaterial(), flag: flagMaterial() };
 
 // ───────────────── 動く部隊のシェーダ ─────────────────
 // 兵一人ひとりの「部隊内の位置」を instanceMatrix に持ち、部隊の中心・向き・散開・損耗は uniform で渡す。
+// 隊形は板のように回さない。向きが大きく変わった時だけ「組み直し」(uYawA→uYawB) をし、兵は時間差で新しい持ち場へ直線で歩く。
+// 体の向き・足踏み・行軍の伸び縮み・戦闘中の前進と突き引きは、兵ごとの乱数と時刻から頂点シェーダで決める（兵ごとの状態は持たない）。
 // 地面の高さは DEM テクスチャから頂点シェーダで引く。
 const demTex = new THREE.DataTexture(DEM, DW, DH, THREE.RedFormat, THREE.FloatType);
 demTex.needsUpdate = true;
 const SHARED = {
-  uDem: { value: demTex }, uDemInfo: { value: new THREE.Vector4(DW, DH, SX, SY) }, uTime: { value: 0 },
+  uDem: { value: demTex }, uDemInfo: { value: new THREE.Vector4(DW, DH, SX, SY) }, uTime: { value: 0 }, uAnim: { value: 0 }, uNow: { value: 0 },
 };
 const UNIT_PARS = `
 uniform vec2 uCenter; uniform float uYaw; uniform float uSpread; uniform float uLost; uniform float uVis; uniform float uMove;
-uniform float uTime; uniform sampler2D uDem; uniform vec4 uDemInfo;
-attribute float aRank;
+uniform float uYawA; uniform float uYawB; uniform float uT0; uniform float uDur; uniform float uFace; uniform float uFight;
+uniform float uTime; uniform float uAnim; uniform float uNow; uniform sampler2D uDem; uniform vec4 uDemInfo;
+attribute float aRank; attribute float aFront;
 float demH(vec2 p) {
   vec2 g = clamp((p / uDemInfo.zw + 0.5) * (uDemInfo.xy - 1.0), vec2(0.0), uDemInfo.xy - 1.001);
   ivec2 i = ivec2(floor(g)); vec2 f = fract(g);
@@ -2316,22 +2319,50 @@ float demH(vec2 p) {
   return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
 }
 vec2 rotY(vec2 v, float a) { float c = cos(a), s = sin(a); return vec2(c * v.x + s * v.y, -s * v.x + c * v.y); }
+float wrapA(float a) { return mod(a + PI, 2.0 * PI) - PI; }
+float hash1(float n) { return fract(sin(n) * 43758.5453); }
+// 兵一人の足元（ワールド xz）と体の向き。yaw は rotY の角度（前 = (sin, cos)）。act は動きの大きさ（上下動用）
+void unitPose(out vec2 foot, out float yaw, out float act) {
+  vec2 slot = vec2(instanceMatrix[3].x, instanceMatrix[3].z);
+  float sd = hash1(aRank * 97.13 + slot.x * 0.137 + slot.y * 0.311), sd2 = hash1(sd * 71.7 + 3.1);
+  vec2 s = slot + slot * (uSpread - 1.0) * 0.6 + vec2(sin(aRank * 913.0), cos(aRank * 517.0)) * (uSpread - 1.0) * 9.0;
+  // 組み直し：古い持ち場から新しい持ち場へ、時間差をつけてまっすぐ歩く
+  vec2 pA = rotY(s, uYawA), pB = rotY(s, uYawB), dir = pB - pA;
+  float k = clamp((uNow - uT0) / max(uDur, 0.001) * 1.4 - sd * 0.4, 0.0, 1.0);
+  vec2 p = mix(pA, pB, smoothstep(0.0, 1.0, k));
+  float walk = length(dir) > 1.5 ? clamp(sin(k * PI) * 3.0, 0.0, 1.0) : 0.0;
+  // 体は（隊形ではなく）一人ずつ敵・進む方へ向く。少しずつばらつく
+  yaw = uFace + (sd2 - 0.5) * 0.4 + sin(uAnim * 0.4 + sd * 40.0) * 0.12;
+  yaw += wrapA(atan(dir.x, dir.y) - yaw) * walk;
+  vec2 fw = vec2(sin(uFace), cos(uFace)), rt = vec2(fw.y, -fw.x);
+  p += vec2(sin(uAnim * 0.31 + sd * 50.0), cos(uAnim * 0.27 + sd2 * 50.0)) * 0.35; // 足踏み
+  p -= fw * uMove * (0.5 + 0.5 * sin(uAnim * 0.9 + sd * 30.0)) * 1.4;              // 行軍の伸び縮み
+  // 戦闘：前列は前へ出て入り混じり、それぞれの間合いで突いては引く。後列は詰める
+  float fz = uFight * (1.0 - smoothstep(0.18, 0.5, aFront));
+  float per = 1.6 + sd2 * 2.2, ph = fract(uAnim / per + sd);
+  float lunge = smoothstep(0.0, 0.12, ph) * (1.0 - smoothstep(0.3, 0.55, ph));
+  p += fw * fz * (4.0 + 10.0 * sd + lunge * (2.5 + 3.0 * sd2)) + rt * fz * sin(uAnim * 0.45 + sd * 20.0) * 3.5;
+  p += fw * uFight * (1.0 - aFront) * 2.5;
+  yaw += sin(uAnim * 2.1 + sd * 60.0) * 0.35 * fz;
+  act = max(walk, max(uMove, fz * (0.4 + lunge)));
+  foot = uCenter + p;
+}
 `;
 const UNIT_NORMAL = `
+vec2 uFoot; float uBodyYaw, uAct;
+unitPose(uFoot, uBodyYaw, uAct);
 vec3 transformedNormal = mat3(instanceMatrix) * objectNormal;
-transformedNormal.xz = rotY(transformedNormal.xz, uYaw);
+transformedNormal.xz = rotY(transformedNormal.xz, uBodyYaw);
 transformedNormal = normalMatrix * transformedNormal;
 #ifdef FLIP_SIDED
   transformedNormal = - transformedNormal;
 #endif
 `;
 const UNIT_PROJECT = `
-vec4 lp = instanceMatrix * vec4(transformed, 1.0);
-vec2 foot = vec2(instanceMatrix[3].x, instanceMatrix[3].z);
-vec2 so = foot * (uSpread - 1.0) * 0.6 + vec2(sin(aRank * 913.0), cos(aRank * 517.0)) * (uSpread - 1.0) * 9.0;
-vec2 footW = uCenter + rotY(foot + so, uYaw);
-vec2 pw = uCenter + rotY(lp.xz + so, uYaw);
-float bob = uMove * abs(sin(uTime * 9.0 + aRank * 60.0)) * 0.15;
+vec3 lp = mat3(instanceMatrix) * transformed;
+vec2 footW = uFoot;
+vec2 pw = footW + rotY(lp.xz, uBodyYaw);
+float bob = uAct * abs(sin(uAnim * 9.0 + aRank * 60.0)) * 0.15;
 vec3 wpos = vec3(pw.x, lp.y + demH(footW) + bob, pw.y);
 if (aRank < uLost || uVis < 0.02) wpos = vec3(0.0, -500.0, 0.0);
 vec4 mvPosition = viewMatrix * vec4(wpos, 1.0);
@@ -2340,6 +2371,7 @@ gl_Position = projectionMatrix * mvPosition;
 function unitMaterials(color) {
   const uni = {
     uCenter: { value: new THREE.Vector2() }, uYaw: { value: 0 }, uSpread: { value: 1 }, uLost: { value: 0 }, uVis: { value: 1 }, uMove: { value: 0 },
+    uYawA: { value: 0 }, uYawB: { value: 0 }, uT0: { value: -1e9 }, uDur: { value: 1 }, uFace: { value: 0 }, uFight: { value: 0 },
   };
   const hook = (s) => { Object.assign(s.uniforms, SHARED, uni); };
   const body = new THREE.MeshLambertMaterial({ vertexColors: true });
@@ -2506,6 +2538,7 @@ function buildArmies() {
       if (!list.length) return;
       const g = GEO[geoKey].clone();
       g.setAttribute('aRank', new THREE.InstancedBufferAttribute(ranks, 1));
+      g.setAttribute('aFront', new THREE.InstancedBufferAttribute(new Float32Array(list.map((p) => (front - p[1]) / Math.max(1, front - back))), 1));
       const mesh = new THREE.InstancedMesh(g, isFlag ? mats.flag : mats.body, list.length);
       const col = new THREE.Color();
       list.forEach((p, i) => {
@@ -2556,6 +2589,7 @@ function buildArmies() {
       anchorL = L(hu, hv);
       const ug = umaGeo(u);
       ug.setAttribute('aRank', new THREE.InstancedBufferAttribute(new Float32Array([2]), 1));
+      ug.setAttribute('aFront', new THREE.InstancedBufferAttribute(new Float32Array([1]), 1));
       const um = new THREE.InstancedMesh(ug, mats.body, 1);
       dummy.position.set(anchorL[0], 0, anchorL[1]); dummy.rotation.set(0, 0, 0); dummy.scale.setScalar(Math.max(1.4, S * 1.1)); dummy.updateMatrix();
       um.setMatrixAt(0, dummy.matrix); um.setColorAt(0, flagCol); um.frustumCulled = false;
@@ -2574,7 +2608,7 @@ function buildArmies() {
     fm.frustumCulled = false; fm.renderOrder = 1;
     armyGroup.add(fm);
     if (!u.hidden) { total += 0; }
-    VIS.push({ id: u.id, def: u, mats, soldiers, ptr: 0, armorCol, spread: 1, vis: u.hidden ? 0 : 1, anchorL, radius: Math.max(bb[1] - bb[0], bb[3] - bb[2]) / 2 });
+    VIS.push({ id: u.id, def: u, mats, soldiers, ptr: 0, armorCol, spread: 1, vis: u.hidden ? 0 : 1, anchorL, fa: null, fb: 0, t0: -1e9, dur: 1, yaw: 0, fight: 0, radius: Math.max(bb[1] - bb[0], bb[3] - bb[2]) / 2 });
   }
   // 陣幕
   const P = [], CC = [];
@@ -2842,7 +2876,7 @@ function spawnCorpses() {
   for (const V of VIS) {
     const u = SIM.byId[V.id];
     const lost = Math.min(1, u.killed / u.n0);
-    const yaw = Math.PI - u.face * Math.PI / 180;
+    const yaw = V.fa === null ? Math.PI - u.face * Math.PI / 180 : V.fb;
     const c = Math.cos(yaw), s = Math.sin(yaw);
     while (V.ptr < V.soldiers.length && V.soldiers[V.ptr][2] < lost) {
       const [lx, lz, rk, ry] = V.soldiers[V.ptr++];
@@ -2856,7 +2890,7 @@ function seek(t) {
   pendingCards.length = 0;
   closeCard();
   play.seeking = true;
-  for (const V of VIS) { V.ptr = 0; V.spread = 1; V.vis = V.def.hidden ? 0 : 1; }
+  for (const V of VIS) { V.ptr = 0; V.spread = 1; V.vis = V.def.hidden ? 0 : 1; V.fa = null; V.fight = 0; }
   resetCorpses(); clearSmoke();
   newSim();
   logEl.innerHTML = '';
@@ -3023,7 +3057,7 @@ function updateLabels() {
     L.n.textContent = st === 'gone' ? (u.id === 'shimazu' ? '離脱' : u.id === 'toyohisa' ? '討死' : u.hidden ? '全滅' : '潰走') : Math.round(u.n).toLocaleString();
     L.bar.style.width = (Math.max(0, u.n / u.n0) * 100).toFixed(0) + '%';
     const V = L.V;
-    const c = Math.cos(Math.PI - u.face * Math.PI / 180), s = Math.sin(Math.PI - u.face * Math.PI / 180);
+    const c = Math.cos(V.yaw), s = Math.sin(V.yaw);
     const ax = u.x + c * V.anchorL[0] + s * V.anchorL[1], az = u.z - s * V.anchorL[0] + c * V.anchorL[1];
     tmp.set(ax, heightAt(ax, az) + 40, az);
     const d = camPos.distanceTo(tmp);
@@ -3232,10 +3266,26 @@ function buildMarkers() {
 // ───────────────── ループ ─────────────────
 const clock = new THREE.Clock();
 let frames = 0, fpsT = 0;
+// 隊形の組み直し：向きが35°以上ずれたら、古い持ち場(fa)から新しい持ち場(fb)へ兵を歩かせる。
+// 歩く速さは毎秒1.6m、所要は20秒〜4分（ゲーム内時間）。それ以下のずれは兵が体の向きだけを変える
+const wrapPI = (a) => ((a % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
+function reform(V, want, now) {
+  if (V.fa === null || now < V.t0) { V.fa = V.fb = V.yaw = want; V.t0 = -1e9; return; }
+  if (now - V.t0 >= V.dur) {
+    const d = wrapPI(want - V.fb);
+    if (Math.abs(d) > 0.61) {
+      V.fa = V.fb; V.fb = V.fa + d; V.t0 = now;
+      V.dur = THREE.MathUtils.clamp(2 * V.radius * Math.sin(Math.abs(d) / 2) / 1.6, 20, 240);
+    }
+  }
+  const e = Math.min(1, Math.max(0, (now - V.t0) / V.dur));
+  V.yaw = V.fa + (V.fb - V.fa) * e * e * (3 - 2 * e);
+}
 function loop() {
   const dt = Math.min(0.1, clock.getDelta());
   SHARED.uTime.value += dt;
   const running = play.playing && !waitingForNext && !SIM.over;
+  if (running) SHARED.uAnim.value += dt;
   if (running) {
     const now = performance.now();
     const sp = now < play.holdUntil ? 0 : now < play.slowUntil ? Math.min(play.speed, 12) : play.speed;
@@ -3254,7 +3304,12 @@ function loop() {
     let df = ((u.face - u.pface + 540) % 360) - 180;
     const face = u.pface + df * a;
     U.uCenter.value.set(x, z);
-    U.uYaw.value = Math.PI - face * Math.PI / 180;
+    const want = Math.PI - face * Math.PI / 180;
+    reform(V, want, play.gameT);
+    U.uFace.value = want; U.uYawA.value = V.fa; U.uYawB.value = V.fb; U.uT0.value = V.t0; U.uDur.value = V.dur;
+    U.uYaw.value = V.yaw;
+    if (running) V.fight += ((u.fighting && u.status !== 'rout' && u.status !== 'gone' ? 1 : 0) - V.fight) * Math.min(1, dt * 1.5);
+    U.uFight.value = V.fight;
     V.spread += ((u.status === 'rout' || u.status === 'gone' ? 2.6 : 1) - V.spread) * Math.min(1, dt * 0.8);
     U.uSpread.value = V.spread;
     U.uLost.value = Math.min(1, u.killed / u.n0);
@@ -3267,6 +3322,7 @@ function loop() {
   }
   if (smoke.dirty) { smoke.g.attributes.position.needsUpdate = true; smoke.g.attributes.aBirth.needsUpdate = true; smoke.g.attributes.aBig.needsUpdate = true; smoke.dirty = false; }
   smoke.m.uniforms.uNow.value = play.gameT;
+  SHARED.uNow.value = play.gameT;
   smoke.m.uniforms.uPx.value = renderer.domElement.height / (2 * Math.tan(camera.fov * Math.PI / 360));
   updateEnvironment(play.gameT);
   moveCamera(dt);
